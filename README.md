@@ -17,4 +17,4 @@ Gitlab: https://vm-2d21.inf.h-brs.de/inf_se2_2022_Rabbyte/inf_se2_2022_Rabbyte
 
 Jenkins: https://sepp-jenkins.inf.h-brs.de/view/SE2%20WiSE%202022/job/Rabbyte/
 
-sepp-test : http://sepp-test.inf.h-brs.de:8080/main
+sepp-test : http://sepp-test.inf.h-brs.de:8080/Rabbyte/
