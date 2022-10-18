@@ -19,4 +19,4 @@ Jenkins: https://sepp-jenkins.inf.h-brs.de/view/SE2%20WiSE%202022/job/Rabbyte/
 
 Sonarqube: https://sepp-sonar.inf.h-brs.de/dashboard?id=Rabbyte
 
-sepp-test : http://sepp-test.inf.h-brs.de:8080/Rabbyte/
+Sepp-test : http://sepp-test.inf.h-brs.de:8080/Rabbyte/
