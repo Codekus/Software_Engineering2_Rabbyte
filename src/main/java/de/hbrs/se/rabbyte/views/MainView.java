@@ -1,4 +1,4 @@
-package de.hbrs.se.Rabbyte.views;
+package de.hbrs.se.rabbyte.views;
 
 
 import com.vaadin.flow.component.button.Button;
