@@ -7,7 +7,7 @@
 
 # Links zu Ressourcen
 
-Jira: http://10.20.129.92:8080/secure/Dashboard.jspa
+Jira: http://10.20.129.72:8080/browse/RAB
 
 Carlook: https://github.com/aldaGit/carlook
 
