@@ -1,7 +1,5 @@
 package de.hbrs.se.rabbyte.entities;
 
-import de.hbrs.se.rabbyte.dtos.BusinessDTO;
-
 import javax.persistence.*;
 
 

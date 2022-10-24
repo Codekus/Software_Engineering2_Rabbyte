@@ -2,7 +2,6 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 
-import java.util.Objects;
 
 /**
  * A DTO for the {@link de.hbrs.se.rabbyte.entities.GeneralUser} entity

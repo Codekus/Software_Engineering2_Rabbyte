@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Student", schema = "rabbyte")
 public class Student extends GeneralUser {
-;
+
 
     private String faculty;
     private String firstName;
