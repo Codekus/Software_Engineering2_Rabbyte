@@ -3,8 +3,8 @@ package de.hbrs.se.rabbyte.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Student", schema = "rabbyte", catalog = "ihbib2s")
-public class Student extends User {
+@Table(name = "Student", schema = "rabbyte")
+public class Student extends GeneralUser {
 ;
 
     private String faculty;

@@ -4,8 +4,8 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "Nutzer", schema = "rabbyte", catalog = "ihbib2s")
-public class User {
+@Table(name = "nutzer", schema = "rabbyte")
+public class GeneralUser {
 
     private int id;
     private String email;
@@ -31,7 +31,7 @@ public class User {
         return id;
     }
 
-    public User setId(int id) {
+    public GeneralUser setId(int id) {
         this.id = id;
         return this;
     }
@@ -41,7 +41,7 @@ public class User {
         return email;
     }
 
-    public User setEmail(String email) {
+    public GeneralUser setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -51,7 +51,7 @@ public class User {
         return password;
     }
 
-    public User setPassword(String password) {
+    public GeneralUser setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -62,7 +62,7 @@ public class User {
         return plz;
     }
 
-    public User setPlz(String plz) {
+    public GeneralUser setPlz(String plz) {
         this.plz = plz;
         return this;
     }
@@ -73,7 +73,7 @@ public class User {
         return city;
     }
 
-    public User setCity(String city) {
+    public GeneralUser setCity(String city) {
         this.city = city;
         return this;
     }
@@ -83,7 +83,7 @@ public class User {
         return state;
     }
 
-    public User setLand(String state) {
+    public GeneralUser setLand(String state) {
         this.state = state;
         return this;
     }
@@ -93,7 +93,7 @@ public class User {
         return street;
     }
 
-    public User setStreet(String street) {
+    public GeneralUser setStreet(String street) {
         this.street = street;
         return this;
     }
@@ -103,7 +103,7 @@ public class User {
         return streetNumber;
     }
 
-    public User setStreetNumber(int streetNumber) {
+    public GeneralUser setStreetNumber(int streetNumber) {
         this.streetNumber = streetNumber;
         return this;
     }
