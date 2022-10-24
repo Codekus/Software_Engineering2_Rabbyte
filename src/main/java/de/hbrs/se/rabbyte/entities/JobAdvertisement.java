@@ -1,5 +1,7 @@
 package de.hbrs.se.rabbyte.entities;
 
+import de.hbrs.se.rabbyte.dtos.BusinessDTO;
+
 import javax.persistence.*;
 
 
@@ -10,8 +12,7 @@ public class JobAdvertisement {
     private int id;
     private String text;
     private String title;
-
-    private Student student;
+    private Business business;
 
     @Id
     @GeneratedValue(
@@ -50,12 +51,11 @@ public class JobAdvertisement {
 
     @ManyToOne()
     @JoinColumn(name="nutzer_id")
-    public Student getStudent() {
-        return student;
+    public Business getBusiness() {
+        return business;
     }
-
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 
 }
