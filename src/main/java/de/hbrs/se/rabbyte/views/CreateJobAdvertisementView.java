@@ -1,5 +1,6 @@
 package de.hbrs.se.rabbyte.views;
 
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.textfield.TextArea;
@@ -13,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @PageTitle("Neue Stellenausschreibung")
 public class CreateJobAdvertisementView {
 
-    private TextField title = new TextField("Job Titel");
+    private TextField title = new TextField("Stellen Titel");
     private TextField contact = new TextField("Kontaktperson");
+
+    //Eventuell custom field zur überprüfung, dass die mail legit ist
     private TextField mail = new TextField("E-Mail-Adresse");
 
     private TextArea description = new TextArea("Stellenbeschreibung");
@@ -22,12 +25,13 @@ public class CreateJobAdvertisementView {
 
     private DatePicker applicationTime = new DatePicker("Bewerbungsfrist");
 
-    //ToDo Beschäftigungsarten Types für das fragezeichen
-    private ComboBox<?> type = new ComboBox<>("Beschäftigungsart");
+    private ComboBox<String> type = new ComboBox<>("Beschäftigungsart");
 
     //ToDo PhoneNumberField innere class erstellen
     //private PhoneNumberField phone = new PhoneNumberField("Telefonnummer");
 
+    private Button cancel = new Button("Abbrechen");
+    private Button save = new Button("Veröffentlichen");
 
     //public CreateJobAdvertisementView(JobAdvertControl jobAdvertControl){}
 }

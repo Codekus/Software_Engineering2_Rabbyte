@@ -21,6 +21,7 @@ public class JobAdvertControl {
                 this.repository.save(jobAdvertisement);
         }
 
+        //ToDo
         /*
         public List<JobAdvertisementDTO> readAllJobAdverts() {
                 return repository.findJobAdvertisementBy...?;
