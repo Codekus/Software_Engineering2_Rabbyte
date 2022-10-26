@@ -12,7 +12,7 @@ public class GeneralUser {
     private String password;
     private String plz;
     private String city;
-    private String state;
+    private String country;
     private String street;
     private int streetNumber;
 
@@ -79,12 +79,12 @@ public class GeneralUser {
     }
     @Basic
     @Column(name = "land")
-    public String getLand() {
-        return state;
+    public String getCountry() {
+        return country;
     }
 
-    public GeneralUser setLand(String state) {
-        this.state = state;
+    public GeneralUser setCountry(String state) {
+        this.country = state;
         return this;
     }
     @Basic
