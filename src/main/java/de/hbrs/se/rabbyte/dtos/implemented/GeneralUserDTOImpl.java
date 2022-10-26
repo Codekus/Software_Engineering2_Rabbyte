@@ -15,7 +15,7 @@ public class GeneralUserDTOImpl implements GeneralUserDTO {
     private String city;
     private String country;
     private String street;
-    private int houseNumber;
+    private int streetNumber;
 
     public int getId() {
         return id;
@@ -80,11 +80,11 @@ public class GeneralUserDTOImpl implements GeneralUserDTO {
     }
 
     @Override
-    public int getHouseNumber() {
-        return houseNumber;
+    public int getStreetNumber() {
+        return streetNumber;
     }
 
-    public void setHouseNumber(int houseNumber) {
-        this.houseNumber = houseNumber;
+    public void setStreetNumber(int houseNumber) {
+        this.streetNumber = houseNumber;
     }
 }
