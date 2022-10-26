@@ -13,11 +13,11 @@ public class Business extends GeneralUser {
 
     @Basic
     @Column(name = "unternehmensname", nullable = false, length = 30)
-    public String getUnternehmensname() {
+    public String getBusinessName() {
         return businessName;
     }
 
-    public void setUnternehmensname(String unternehmensname) {
+    public void setBusinessName(String unternehmensname) {
         this.businessName = unternehmensname;
     }
 
