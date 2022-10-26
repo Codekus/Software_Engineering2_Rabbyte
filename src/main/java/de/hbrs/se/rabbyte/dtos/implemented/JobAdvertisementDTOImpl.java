@@ -1,0 +1,49 @@
+package de.hbrs.se.rabbyte.dtos.implemented;
+
+import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
+import de.hbrs.se.rabbyte.entities.Business;
+
+public class JobAdvertisementDTOImpl implements JobAdvertisementDTO {
+
+
+    private int id;
+    private String text;
+    private String title;
+    private Business business;
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
+    }
+}
