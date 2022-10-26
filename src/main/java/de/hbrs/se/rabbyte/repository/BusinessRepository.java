@@ -4,7 +4,7 @@ import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.entities.Business;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BusinessRepository extends JpaRepository<Business , Integer> {
+public interface BusinessRepository extends JpaRepository<Business, Integer> {
 
-    BusinessDTO findBusinessById(int id);
+    public BusinessDTO findBusinessByBusinessName(String name);
 }
