@@ -6,15 +6,15 @@ import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import de.hbrs.se.rabbyte.repository.JobAdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
-
+@Component
 public class JobAdvertControl {
 
         @Autowired
         private JobAdvertisementRepository repository;
 
-        public void creatJobAdvert(JobAdvertisementDTO jobAdvertisementDTO, BusinessDTO businessDTO){
+        public void createJobAdvert(JobAdvertisementDTO jobAdvertisementDTO, BusinessDTO businessDTO){
 
                 JobAdvertisement jobAdvertisement = JobAdvertPublisher.publishJobAdvert(jobAdvertisementDTO, businessDTO);
 
