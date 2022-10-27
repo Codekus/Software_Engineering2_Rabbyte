@@ -14,24 +14,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 @PageTitle("Neue Stellenausschreibung")
 public class CreateJobAdvertisementView {
 
+    //ToDo for first sprint
     private TextField title = new TextField("Stellen Titel");
-    private TextField contact = new TextField("Kontaktperson");
+    private TextArea description = new TextArea("Stellenbeschreibung");
+    private ComboBox<String> type = new ComboBox<>("Beschäftigungsart");
+    private Button save = new Button("Veröffentlichen");
+    private Button back = new Button("Zurück");
 
+    //Ideas for 2nd sprint
+    private TextField contact = new TextField("Kontaktperson");
     //Eventuell custom field zur überprüfung, dass die mail legit ist
     private TextField mail = new TextField("E-Mail-Adresse");
-
-    private TextArea description = new TextArea("Stellenbeschreibung");
     private TextArea requirements = new TextArea("Anforderungsprofil & Qualifikationen");
-
     private DatePicker applicationTime = new DatePicker("Bewerbungsfrist");
-
-    private ComboBox<String> type = new ComboBox<>("Beschäftigungsart");
-
     //ToDo PhoneNumberField innere class erstellen
     //private PhoneNumberField phone = new PhoneNumberField("Telefonnummer");
-
-    private Button cancel = new Button("Abbrechen");
-    private Button save = new Button("Veröffentlichen");
 
     //public CreateJobAdvertisementView(JobAdvertControl jobAdvertControl){}
 }
