@@ -53,6 +53,8 @@ public class CreateJobAdvertisementView extends Div {
         add(createFormLayout());
         add(createButtonLayout());
 
+        type.setAllowCustomValue(true);
+
         binder.bindInstanceFields(this);
         clearForm();
 
