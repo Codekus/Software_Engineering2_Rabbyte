@@ -7,6 +7,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -22,9 +23,9 @@ import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route(value = "create_JobAdvert")
+@Route(value = "create_JobAdvert", layout = AppView.class)
 @PageTitle("Neue Stellenausschreibung")
-public class CreateJobAdvertisementView {
+public class CreateJobAdvertisementView extends Div {
 
     //ToDo for first sprint
     private TextField title = new TextField("Stellen Titel");
@@ -57,13 +58,12 @@ public class CreateJobAdvertisementView {
 
         back.addClickListener(event -> clearForm());
 
-
         save.addClickListener(e -> {
             // Speicherung der Daten über das zuhörige Control-Object.
             BusinessDTO businessDTO = (BusinessDTO) UI.getCurrent().getSession().getAttribute("current_user");
             jobAdvertControl.createJobAdvert(binder.getBean() ,  businessDTO );
 
-            Notification.show("Car details stored.");
+            Notification.show("Veröffentlicht");
             clearForm();
         });
     }
