@@ -9,16 +9,16 @@ import java.util.Objects;
 @Table(name = "Unternehmen", schema = "rabbyte")
 public class Business extends GeneralUser {
 
-    private String unternehmensname;
+    private String businessName;
 
     @Basic
     @Column(name = "unternehmensname", nullable = false, length = 30)
-    public String getUnternehmensname() {
-        return unternehmensname;
+    public String getBusinessName() {
+        return businessName;
     }
 
-    public void setUnternehmensname(String unternehmensname) {
-        this.unternehmensname = unternehmensname;
+    public void setBusinessName(String unternehmensname) {
+        this.businessName = unternehmensname;
     }
 
 
@@ -29,11 +29,11 @@ public class Business extends GeneralUser {
 
         Business business = (Business) o;
 
-        return unternehmensname.equals(business.unternehmensname);
+        return businessName.equals(business.businessName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash( unternehmensname);
+        return Objects.hash( businessName);
     }
 }

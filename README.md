@@ -1,3 +1,8 @@
+# Accountdaten
+Username: user
+
+Passwort: userpass
+
 # Links zu Übungen
 Übung 1:  https://docs.google.com/document/d/1kOuNIS8aeCo43_MvqeC-ufkOzDcM1pXgg9NSoUHy3Jg/edit?usp=sharing
 
