@@ -6,7 +6,9 @@ import de.hbrs.se.rabbyte.repository.StudentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RegistrationControl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationControl.class);
