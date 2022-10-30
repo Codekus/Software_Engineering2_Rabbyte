@@ -7,12 +7,17 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.router.Route;
+import de.hbrs.se.rabbyte.control.RegistrationControl;
+import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "registration" )
 public class RegistrationView extends VerticalLayout {
+
+    @Autowired
+    private RegistrationControl registrationControl;
 
 
     //Basic User Fields
@@ -20,7 +25,23 @@ public class RegistrationView extends VerticalLayout {
     PasswordField passwordField = new PasswordField("Password");
     PasswordField passwordFieldRepeat = new PasswordField("Password wiederholen");
 
+    TextField plzField = new TextField("Plz");
 
+    TextField cityField = new TextField("Stadt");
+
+    TextField countryField = new TextField("Land");
+
+    TextField streetField = new TextField( "Street");
+
+    IntegerField streetNumber = new IntegerField ("Hausnummer");
+
+    // StudentUser
+
+    TextField facultyField = new TextField("Fachbereich");
+
+    TextField firstName = new TextField("Vorname");
+
+    TextField lastName = new TextField("Nachnahme");
     class UserForm extends Div {
 
         UserForm() {
@@ -32,11 +53,26 @@ public class RegistrationView extends VerticalLayout {
             passwordFieldRepeat.setMinLength(5);
 
             FormLayout formLayout = new FormLayout();
-            formLayout.add(emailField , passwordField , passwordFieldRepeat);
+            formLayout.add(emailField, passwordField, passwordFieldRepeat);
 
             this.add(formLayout);
         }
 
+    }
+
+    public StudentDTOImpl createNewStudentDTO() {
+        StudentDTOImpl newStudent = new StudentDTOImpl();
+        newStudent.setEmail(emailField.getValue());
+        newStudent.setPassword(passwordField.getValue());
+        newStudent.setPlz(plzField.getValue());
+        newStudent.setCity(cityField.getValue());
+        newStudent.setCountry(countryField.getValue());
+        newStudent.setStreet(streetField.getValue());
+        newStudent.setStreetNumber(streetNumber.getValue());
+
+        newStudent.setFaculty(facultyField.getValue());
+        newStudent.setFirstName(firstName.getValue());
+        newStudent.setLastName(lastName.getValue());
     }
 
     public RegistrationView() {
