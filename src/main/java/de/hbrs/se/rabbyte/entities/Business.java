@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Unternehmen", schema = "rabbyte")
-public class Business extends GeneralUser {
+@Table(name = "unternehmen", schema = "rabbyte")
+public class Business extends User {
 
     private String businessName;
 

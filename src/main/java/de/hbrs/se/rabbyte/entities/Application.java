@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "Bewerbung", schema = "rabbyte" )
+@Table(name = "bewerbung", schema = "rabbyte" )
 public class Application {
 
     private int id;
