@@ -5,7 +5,7 @@ import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Student;
 
-public class StudentFactory {
+public class UserFactory {
     public static Student createStudent(StudentDTO studentDTO) {
         Student student = new Student();
 
