@@ -25,19 +25,19 @@ public class RegistrationView extends VerticalLayout {
     PasswordField passwordField = new PasswordField("Password");
     PasswordField passwordFieldRepeat = new PasswordField("Password wiederholen");
 
-    TextField plzField = new TextField("Plz");
+    //TextField plzField = new TextField("Plz");
 
-    TextField cityField = new TextField("Stadt");
+    //TextField cityField = new TextField("Stadt");
 
-    TextField countryField = new TextField("Land");
+    //TextField countryField = new TextField("Land");
 
-    TextField streetField = new TextField( "Street");
+    //TextField streetField = new TextField( "Street");
 
-    IntegerField streetNumber = new IntegerField ("Hausnummer");
+    //IntegerField streetNumber = new IntegerField ("Hausnummer");
 
     // StudentUser
 
-    TextField facultyField = new TextField("Fachbereich");
+    //TextField facultyField = new TextField("Fachbereich");
 
     TextField firstName = new TextField("Vorname");
 
@@ -48,44 +48,50 @@ public class RegistrationView extends VerticalLayout {
             emailField.setRequiredIndicatorVisible(true);
             passwordField.setRequiredIndicatorVisible(true);
             passwordFieldRepeat.setRequiredIndicatorVisible(true);
-
+            firstName.setRequiredIndicatorVisible(true);
+            lastName.setRequiredIndicatorVisible(true);
             passwordField.setMinLength(5);
             passwordFieldRepeat.setMinLength(5);
 
+
+
             FormLayout formLayout = new FormLayout();
-            formLayout.add(emailField, passwordField, passwordFieldRepeat);
+            formLayout.add(emailField, passwordField, passwordFieldRepeat, firstName,lastName);
 
             this.add(formLayout);
         }
 
+        public StudentDTOImpl createNewStudentDTO() {
+            StudentDTOImpl newStudent = new StudentDTOImpl();
+            newStudent.setEmail(emailField.getValue());
+            newStudent.setPassword(passwordField.getValue());
+            newStudent.setFirstName(firstName.getValue());
+            newStudent.setLastName(lastName.getValue());
+
+            return newStudent;
+        }
     }
 
-    public StudentDTOImpl createNewStudentDTO() {
-        StudentDTOImpl newStudent = new StudentDTOImpl();
-        newStudent.setEmail(emailField.getValue());
-        newStudent.setPassword(passwordField.getValue());
-        newStudent.setPlz(plzField.getValue());
-        newStudent.setCity(cityField.getValue());
-        newStudent.setCountry(countryField.getValue());
-        newStudent.setStreet(streetField.getValue());
-        newStudent.setStreetNumber(streetNumber.getValue());
 
-        newStudent.setFaculty(facultyField.getValue());
-        newStudent.setFirstName(firstName.getValue());
-        newStudent.setLastName(lastName.getValue());
-    }
 
     public RegistrationView() {
 
         VerticalLayout verticalLayout = new VerticalLayout();
 
-        verticalLayout.setWidth("80%");
+        verticalLayout.setWidth("60%");
         H1 h1 = new H1("Registrierung");
 
         UserForm form = new UserForm();
 
-        verticalLayout.add(h1,form);
+        Button register_button = new Button("Registrieren");
+
+        verticalLayout.add(h1,form,register_button);
         add(verticalLayout);
 
+        register_button.addClickListener( e -> {
+            StudentDTOImpl dto = form.createNewStudentDTO();
+
+            registrationControl.registerStudent(dto);
+        });
     }
 }
