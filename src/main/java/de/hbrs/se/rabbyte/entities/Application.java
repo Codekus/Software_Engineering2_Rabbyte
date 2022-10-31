@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "bewerbung", schema = "rabbyte" )
+@Table(name = "application", schema = "rabbyte" )
 public class Application {
 
     private int id;
@@ -19,14 +19,14 @@ public class Application {
     @Id
     @GeneratedValue(
             strategy=GenerationType.AUTO,
-            generator = "bewerbung_id"
+            generator = "application_id"
     )
     @SequenceGenerator(
             name = "application_id",
             sequenceName = "rabbyte.seq_bewerbung_id",
             allocationSize=1
     )
-    @Column(name = "bewerbung_id")
+    @Column(name = "application_id")
     public int getId() {
         return id;
     }
@@ -35,7 +35,7 @@ public class Application {
     }
 
     @ManyToOne
-    @JoinColumn(name = "stellenauschreibung_id", referencedColumnName = "stellenausschreibung_id", nullable = false)
+    @JoinColumn(name = "jobAdvertisement_id", referencedColumnName = "jobAdvertisement_id", nullable = false)
     public JobAdvertisement getJobAdvertisement() {
         return jobAdvertisement;
     }
@@ -44,7 +44,7 @@ public class Application {
     }
 
     @ManyToOne()
-    @JoinColumn(name="nutzer_ID")
+    @JoinColumn(name="user_Id")
     public Student getStudent() {
         return student;
     }
@@ -62,7 +62,7 @@ public class Application {
     }
 
     @Basic
-    @Column(name = "bewerbung_inhalt")
+    @Column(name = "inhalt")
     public String getApplicationText() {
         return applicationText;
     }
