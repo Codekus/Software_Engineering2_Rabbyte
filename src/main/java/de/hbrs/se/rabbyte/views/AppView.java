@@ -24,10 +24,12 @@ import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.PWA;
 import de.hbrs.se.rabbyte.dtos.*;
 
+import de.hbrs.se.rabbyte.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
 import java.util.Optional;
+
+import static de.hbrs.se.rabbyte.security.SecurityUtils.*;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -41,14 +43,12 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
     private H1 viewTitle;
     private H1 helloUser;
 
+    @Autowired
+    private SecurityService securityService;
+
     public AppView() {
-        Integer x = 1;
-        // getCurrentUser() todo
-        if (x == null) {
-            System.out.println("LOG: In Constructor of App View - No User given!");
-        } else {
-            setUpUI();
-        }
+
+        setUpUI();
     }
 
     public void setUpUI() {
@@ -69,16 +69,27 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
     private boolean checkIfUserIsLoggedIn() {
         // Falls der Benutzer nicht eingeloggt ist, dann wird er auf die Startseite gelenkt
 
-        /*
-        UserDTO userDTO = this.getCurrentUser();
-        if (userDTO == null) {
-            UI.getCurrent().navigate(Globals.Pages.LOGIN_VIEW);
+        if(securityService.getAuthenticatedUser() == null){
+            UI.getCurrent().navigate("login");
             return false;
         }
         return true;
+    }
 
-         */
-        return false;
+    @Override
+    protected void afterNavigation() {
+        System.out.println("after Navi");
+        super.afterNavigation();
+
+        // Falls der Benutzer nicht eingeloggt ist, dann wird er auf die Startseite gelenkt
+        if ( !checkIfUserIsLoggedIn() ) return;
+
+        // Der aktuell-selektierte Tab wird gehighlighted.
+
+        // Setzen des aktuellen Names des Tabs
+        viewTitle.setText(getCurrentPageTitle());
+
+        // Setzen des Vornamens von dem aktuell eingeloggten Benutzer
     }
 
 
@@ -115,17 +126,10 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
 
         MenuItem move = bar.addItem("Mein Profil");
         SubMenu moveSubMenu = move.getSubMenu();
-        moveSubMenu.addItem("Logout",  e -> logoutUser());
+        moveSubMenu.addItem("Logout",  e -> securityService.logout());
 
         layout.add( topRightPanel );
         return layout;
-    }
-
-    private void logoutUser() {
-
-        UI ui = this.getUI().get();
-        ui.getPage().setLocation("/");
-        ui.getSession().close();
     }
 
     /**
@@ -250,13 +254,9 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
 
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
 
-        // TODO: richtig implementieren
-        /*
-        if (getCurrentUser() == null){
-            beforeEnterEvent.rerouteTo("login");    TODO: globals erstellen
+        if (!isUserLoggedIn()){
+            beforeEnterEvent.rerouteTo("login");
         }
-
-         */
 
 
 
