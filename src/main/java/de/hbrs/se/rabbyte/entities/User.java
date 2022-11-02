@@ -4,13 +4,13 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "nutzer", schema = "rabbyte")
-public class GeneralUser {
+@Table(name = "user", schema = "rabbyte")
+public class User {
 
     private int id;
     private String email;
     private String password;
-    private String plz;
+    private int plz;
     private String city;
     private String country;
     private String street;
@@ -19,21 +19,20 @@ public class GeneralUser {
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,
-            generator = "nutzer_id"
+            generator = "user_id"
     )
     @SequenceGenerator(
-            name = "nutzer_id",
+            name = "user_id",
             sequenceName = "rabbyte.seq_nutzer_id",
             allocationSize=1
     )
-    @Column(name = "nutzer_id")
+    @Column(name = "user_id")
     public int getId() {
         return id;
     }
 
-    public GeneralUser setId(int id) {
+    public void setId(int id) {
         this.id = id;
-        return this;
     }
     @Basic
     @Column(name = "email")
@@ -41,9 +40,9 @@ public class GeneralUser {
         return email;
     }
 
-    public GeneralUser setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
-        return this;
+
     }
     @Basic
     @Column(name = "passwort")
@@ -51,20 +50,20 @@ public class GeneralUser {
         return password;
     }
 
-    public GeneralUser setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
-        return this;
+
     }
 
     @Basic
     @Column(name = "plz")
-    public String getPlz() {
+    public int getPlz() {
         return plz;
     }
 
-    public GeneralUser setPlz(String plz) {
+    public void setPlz(int plz) {
         this.plz = plz;
-        return this;
+
     }
 
     @Basic
@@ -73,9 +72,8 @@ public class GeneralUser {
         return city;
     }
 
-    public GeneralUser setCity(String city) {
+    public void setCity(String city) {
         this.city = city;
-        return this;
     }
     @Basic
     @Column(name = "land")
@@ -83,9 +81,9 @@ public class GeneralUser {
         return country;
     }
 
-    public GeneralUser setCountry(String state) {
+    public void setCountry(String state) {
         this.country = state;
-        return this;
+
     }
     @Basic
     @Column(name = "strasse")
@@ -93,9 +91,9 @@ public class GeneralUser {
         return street;
     }
 
-    public GeneralUser setStreet(String street) {
+    public void setStreet(String street) {
         this.street = street;
-        return this;
+
     }
     @Basic
     @Column(name = "hausnummer")
@@ -103,8 +101,8 @@ public class GeneralUser {
         return streetNumber;
     }
 
-    public GeneralUser setStreetNumber(int streetNumber) {
+    public void setStreetNumber(int streetNumber) {
         this.streetNumber = streetNumber;
-        return this;
+
     }
 }
