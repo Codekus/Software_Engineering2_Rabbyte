@@ -1,7 +1,10 @@
 package de.hbrs.se.rabbyte.control;
 
 import de.hbrs.se.rabbyte.control.factory.UserFactory;
+import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
+import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.BusinessDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Student;
@@ -18,6 +21,7 @@ public class RegistrationControl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationControl.class);
 
+    private RegistrationResultDTO registrationResultDTO;
 
     @Autowired
     GeneralUserRepository generalUserRepository;
@@ -29,14 +33,61 @@ public class RegistrationControl {
     BusinessRepository businessRepository;
 
 
-    public void registerStudent(StudentDTOImpl studentDTOImpl) {
+    public RegistrationResultDTO registerStudent(StudentDTOImpl studentDTOImpl) {
 
+        registrationResultDTO = new RegistrationResultDTOImpl();
         Student newStudent = UserFactory.createStudent(studentDTOImpl);
-        this.studentRepository.save(newStudent);
+
+        if(inspectIfEmailIsAlreadyInUse(studentDTOImpl.getEmail())) {
+            registrationResultDTO.setReason("Email in use");
+        }
+
+        if(registrationResultDTO.getReasons().isEmpty()) {
+            this.studentRepository.save(newStudent);
+            registrationResultDTO.setRegistrationResult(true);
+        } else {
+            registrationResultDTO.setRegistrationResult(false);
+        }
+        return registrationResultDTO;
+
     }
 
-    public void registerBusiness(BusinessDTOImpl businessDTO) {
+    public RegistrationResultDTO registerBusiness(BusinessDTOImpl businessDTO) {
+
+        registrationResultDTO = new RegistrationResultDTOImpl();
+
         Business newBusiness = UserFactory.createBusiness(businessDTO);
         this.businessRepository.save(newBusiness);
+
+        return registrationResultDTO;
+    }
+
+    public boolean inspectIfEmailIsAlreadyInUse(String email) {
+        GeneralUserDTO generalUser = generalUserRepository.findByEmail(email);
+
+        return (generalUser != null && generalUser.getId() > 0);
+    }
+
+    public void inspectIfSamePassword(String password , String repeatPassword) {
+
+        if(password.equals(repeatPassword)) {
+            registrationResultDTO.setReason("Same Password");
+        }
+    }
+
+    public void validateEmailName() {
+
+    }
+
+    public void validateFirstName() {
+
+    }
+
+    public void validateLastName() {
+
+    }
+
+    public void validateBusinessName() {
+
     }
 }

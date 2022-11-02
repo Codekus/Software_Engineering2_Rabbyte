@@ -13,8 +13,10 @@ import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.router.Route;
 import de.hbrs.se.rabbyte.control.RegistrationControl;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
+import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.BusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
+import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "registration" )
@@ -131,7 +133,14 @@ public class RegistrationView extends VerticalLayout {
         registerButtonStudent.addClickListener(e -> {
             StudentDTOImpl studentDTO = studentForm.createNewStudentDTO();
 
-            registrationControl.registerStudent(studentDTO);
+            RegistrationResultDTO registrationResult = registrationControl.registerStudent(studentDTO);
+
+            if(registrationResult.getRegistrationResult()) {
+                Utils.triggerDialogMessage("Registrierung erfolgreich" , "Weiterleitung per login wenn implementiert");
+            } else {
+                Utils.triggerDialogMessage("Registrieung fehlgeschlagen" , "Nicht erfolgreich");
+            }
+
         });
 
         registerButtonBusiness = new Button("Registrieren");

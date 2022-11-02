@@ -12,6 +12,7 @@ public interface GeneralUserRepository extends JpaRepository<User, Integer> {
     GeneralUserDTO findByEmail(String email);
 
 
+
     GeneralUserDTO findGeneralUserById(int nutzerid);
 
 }
