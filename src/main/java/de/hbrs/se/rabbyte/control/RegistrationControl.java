@@ -5,6 +5,7 @@ import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.BusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Student;
@@ -33,12 +34,12 @@ public class RegistrationControl {
     BusinessRepository businessRepository;
 
 
-    public RegistrationResultDTO registerStudent(StudentDTOImpl studentDTOImpl) {
+    public RegistrationResultDTO registerStudent(RegistrationStudentDTOImpl registrationStudentDTO) {
 
         registrationResultDTO = new RegistrationResultDTOImpl();
-        Student newStudent = UserFactory.createStudent(studentDTOImpl);
+        Student newStudent = UserFactory.createStudent(registrationStudentDTO.getStudentDTO());
 
-        if(inspectIfEmailIsAlreadyInUse(studentDTOImpl.getEmail())) {
+        if(inspectIfEmailIsAlreadyInUse(registrationStudentDTO.getStudentDTO().getEmail())) {
             registrationResultDTO.setReason("Email in use");
         }
 

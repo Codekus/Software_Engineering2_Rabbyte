@@ -5,21 +5,23 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 import de.hbrs.se.rabbyte.control.RegistrationControl;
-import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.BusinessDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "registration" )
+@Theme(value = Lumo.class)
 public class RegistrationView extends VerticalLayout {
 
     @Autowired
@@ -41,14 +43,16 @@ public class RegistrationView extends VerticalLayout {
     TextField businessName = new TextField("Business");
 
 
+    //Tabs
     private final Tab student;
     private final Tab business;
 
+    //Buttons
     Button registerButtonStudent;
     Button registerButtonBusiness;
 
+    //Layouts
     VerticalLayout verticalLayout;
-
     VerticalLayout tabsLayout;
     class StudentForm extends Div {
 
@@ -64,7 +68,6 @@ public class RegistrationView extends VerticalLayout {
 
             FormLayout formLayout = new FormLayout();
             formLayout.add(emailFieldStudent, passwordFieldStudent, passwordFieldRepeatStudent, firstNameStudent, lastNameStudent);
-
 
             this.add(formLayout);
         }
@@ -96,12 +99,11 @@ public class RegistrationView extends VerticalLayout {
         FormLayout formLayout = new FormLayout();
         formLayout.add(emailFieldBusiness,passwordFieldBusiness, passwordFieldRepeatBusiness , businessName);
 
-
-
         this.add(formLayout);
     }
 
     public BusinessDTOImpl createNewBusiness() {
+
         BusinessDTOImpl businessDTO = new BusinessDTOImpl();
 
         businessDTO.setBusinessName(businessName.getValue());
@@ -119,26 +121,23 @@ public class RegistrationView extends VerticalLayout {
 
         verticalLayout = new VerticalLayout();
         tabsLayout = new VerticalLayout();
-        verticalLayout.setWidth("60%");
         H1 h1 = new H1("Registrierung");
 
         StudentForm studentForm = new StudentForm();
         BusinessForm businessForm = new BusinessForm();
 
-
         verticalLayout.add(h1);
-        add(verticalLayout);
 
         registerButtonStudent = new Button("Registrieren");
         registerButtonStudent.addClickListener(e -> {
             StudentDTOImpl studentDTO = studentForm.createNewStudentDTO();
-
-            RegistrationResultDTO registrationResult = registrationControl.registerStudent(studentDTO);
+            RegistrationStudentDTOImpl registrationStudent = new RegistrationStudentDTOImpl(studentDTO , passwordFieldRepeatStudent.getValue());
+            RegistrationResultDTO registrationResult = registrationControl.registerStudent(registrationStudent);
 
             if(registrationResult.getRegistrationResult()) {
                 Utils.triggerDialogMessage("Registrierung erfolgreich" , "Weiterleitung per login wenn implementiert");
             } else {
-                Utils.triggerDialogMessage("Registrieung fehlgeschlagen" , "Nicht erfolgreich");
+                Utils.triggerDialogMessage("Registrierung fehlgeschlagen" , "Nicht erfolgreich");
             }
 
         });
@@ -150,8 +149,6 @@ public class RegistrationView extends VerticalLayout {
             registrationControl.registerBusiness(businessDTO);
         });
 
-
-
         student = new Tab("Student");
         business = new Tab("Business");
         Tabs tabs = new Tabs(student,business);
@@ -160,9 +157,9 @@ public class RegistrationView extends VerticalLayout {
              setContent(event.getSelectedTab())
         );
 
-        tabsLayout.setSpacing(false);
         setContent(tabs.getSelectedTab());
-
+        verticalLayout.add(h1);
+        add(verticalLayout);
         add(tabs,tabsLayout);
 
     }
@@ -174,7 +171,6 @@ public class RegistrationView extends VerticalLayout {
         if(tab.equals(student)) {
             tabsLayout.add(new StudentForm());
             tabsLayout.add(registerButtonStudent);
-
 
         }
         else {
