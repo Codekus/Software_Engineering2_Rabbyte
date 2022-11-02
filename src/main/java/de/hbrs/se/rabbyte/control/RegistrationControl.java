@@ -6,7 +6,6 @@ import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.BusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
-import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
@@ -16,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.regex.Pattern;
 
 @Component
 public class RegistrationControl {
@@ -43,6 +44,11 @@ public class RegistrationControl {
             registrationResultDTO.setReason("Email in use");
         }
 
+        inspectIfSamePassword(registrationStudentDTO.getRepeatPassword() , registrationStudentDTO.getStudentDTO().getPassword());
+
+        validateEmailName(registrationStudentDTO.getStudentDTO().getEmail());
+        validateFirstName(registrationStudentDTO.getStudentDTO().getFirstName());
+        validateLastName(registrationStudentDTO.getStudentDTO().getLastName());
         if(registrationResultDTO.getReasons().isEmpty()) {
             this.studentRepository.save(newStudent);
             registrationResultDTO.setRegistrationResult(true);
@@ -71,21 +77,30 @@ public class RegistrationControl {
 
     public void inspectIfSamePassword(String password , String repeatPassword) {
 
-        if(password.equals(repeatPassword)) {
-            registrationResultDTO.setReason("Same Password");
+        if(!password.equals(repeatPassword)) {
+            registrationResultDTO.setReason("Passwords are different");
         }
     }
 
-    public void validateEmailName() {
+    public void validateEmailName(String email) {
+         String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
+                + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
+        if(!Pattern.compile(regexPattern).matcher(email).matches()) {
+            registrationResultDTO.setReason("Invalid Email");
+        }
     }
 
-    public void validateFirstName() {
-
+    public void validateFirstName(String firstName) {
+        if(!firstName.matches( "[A-Z][a-z]*")){
+            registrationResultDTO.setReason("Invalid First Name");
+        }
     }
 
-    public void validateLastName() {
-
+    public void validateLastName(String lastName) {
+        if(!lastName.matches( "[A-Z][a-z]*")){
+            registrationResultDTO.setReason("Invalid First Name");
+        }
     }
 
     public void validateBusinessName() {

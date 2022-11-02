@@ -137,7 +137,7 @@ public class RegistrationView extends VerticalLayout {
             if(registrationResult.getRegistrationResult()) {
                 Utils.triggerDialogMessage("Registrierung erfolgreich" , "Weiterleitung per login wenn implementiert");
             } else {
-                Utils.triggerDialogMessage("Registrierung fehlgeschlagen" , "Nicht erfolgreich");
+                Utils.triggerDialogMessage("Registrierung fehlgeschlagen" , registrationResult.getReasons().toString());
             }
 
         });
