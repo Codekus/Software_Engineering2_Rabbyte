@@ -11,7 +11,8 @@ public interface GeneralUserRepository extends JpaRepository<User, Integer> {
     @Query("select g from User g where g.email = ?1")
     GeneralUserDTO findByEmail(String email);
 
-
+    @Query("select g from User g where g.email = ?1 AND g.password = ?2")
+    GeneralUserDTO findByEmailAndPassword(String email, String password);
 
     GeneralUserDTO findGeneralUserById(int nutzerid);
 

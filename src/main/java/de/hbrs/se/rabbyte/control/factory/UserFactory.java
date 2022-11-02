@@ -4,12 +4,13 @@ import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Student;
+import org.apache.commons.codec.digest.DigestUtils;
 
 public class UserFactory {
     public static Student createStudent(StudentDTO studentDTO) {
         Student student = new Student();
 
-        student.setPassword(studentDTO.getPassword());
+        student.setPassword(DigestUtils.sha256Hex(studentDTO.getPassword()));
         student.setEmail(studentDTO.getEmail());
         student.setFirstName(studentDTO.getFirstName());
         student.setLastName(studentDTO.getLastName());

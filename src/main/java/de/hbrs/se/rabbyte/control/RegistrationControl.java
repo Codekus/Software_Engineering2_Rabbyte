@@ -36,7 +36,6 @@ public class RegistrationControl {
 
 
     public RegistrationResultDTO registerStudent(RegistrationStudentDTOImpl registrationStudentDTO) {
-
         registrationResultDTO = new RegistrationResultDTOImpl();
         Student newStudent = UserFactory.createStudent(registrationStudentDTO.getStudentDTO());
 
@@ -56,7 +55,6 @@ public class RegistrationControl {
             registrationResultDTO.setRegistrationResult(false);
         }
         return registrationResultDTO;
-
     }
 
     public RegistrationResultDTO registerBusiness(BusinessDTOImpl businessDTO) {
@@ -99,7 +97,7 @@ public class RegistrationControl {
 
     public void validateLastName(String lastName) {
         if(!lastName.matches( "[A-Z][a-z]*")){
-            registrationResultDTO.setReason("Invalid First Name");
+            registrationResultDTO.setReason("Invalid Last Name");
         }
     }
 
