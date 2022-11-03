@@ -24,6 +24,7 @@ import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.PWA;
 import de.hbrs.se.rabbyte.dtos.*;
 
+import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
@@ -61,8 +62,8 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         // Erstellung der vertikalen Navigationsleiste (Drawer)
 
 
-        // menu = createMenu();
-        // addToDrawer(createDrawerContent(menu));
+        menu = createMenu();
+        addToDrawer(createDrawerContent(menu));
     }
 
 
@@ -98,7 +99,11 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         layout.setJustifyContentMode( FlexComponent.JustifyContentMode.EVENLY );
 
         // Hinzufügen des Toogle ('Big Mac') zum Ein- und Ausschalten des Drawers
-        layout.add(new DrawerToggle());
+        DrawerToggle drawerToggle = new DrawerToggle();
+        setDrawerOpened(false);
+
+        layout.add(drawerToggle);
+
         viewTitle = new H1();
         viewTitle.setWidthFull();
         layout.add( viewTitle );
@@ -149,8 +154,8 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         // Hinzufügen des Logos
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("images/logo.png", "HelloCar logo"));
-        logoLayout.add(new H1("HelloCar"));
+        logoLayout.add(new Image("images/logo.png", "Logo"));
+        logoLayout.add(new H1("Logo"));
 
         // Hinzufügen des Menus inklusive der Tabs
         layout.add(logoLayout, menu);
@@ -162,7 +167,7 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
      * Erzeugung des Menu auf der vertikalen Leiste (Drawer)
      * @return
      */
-    /*
+
     private Tabs createMenu() {
 
         // Anlegen der Grundstruktur
@@ -175,32 +180,36 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         tabs.add(createMenuItems());
         return tabs;
     }
-    */
 
-    /*
+
+
     private Component[] createMenuItems() {
         // Abholung der Referenz auf den Authorisierungs-Service
-        authorizationControl = new AuthorizationControl();
+        //authorizationControl = new AuthorizationControl();
 
         // Jeder User sollte Autos sehen können, von daher wird dieser schon mal erzeugt und
         // und dem Tabs-Array hinzugefügt. In der Methode createTab wird ein (Key, Value)-Pair übergeben:
         // Key: der sichtbare String des Menu-Items
         // Value: Die UI-Component, die nach dem Klick auf das Menuitem angezeigt wird.
-        Tab[] tabs = new Tab[]{ createTab( "Show Cars", ShowCarsView.class) };
+        //ToDo Sicherstellen dass es sich um ein Unternehmens account handelt
+        Tab[] tabs = new Tab[]{ createTab( "Startseite", MainView.class) };
+        tabs = Utils.append( tabs , createTab("Neue Stellenausschreibung", CreateJobAdvertisementView.class));
 
         // Falls er Admin-Rechte hat, sollte der User auch Autos hinzufügen können
         // (Alternative: Verwendung der Methode 'isUserisAllowedToAccessThisFeature')
+
+        /*
         if ( this.authorizationControl.isUserInRole( this.getCurrentUser() , Globals.Roles.ADMIN ) ) {
             System.out.println("User is Admin!");
             tabs = Utils.append( tabs , createTab("Enter Car", EnterCarView.class)  );
         }
-
+         */
 
 
         return tabs;
     }
 
-     */
+
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
         final Tab tab = new Tab();
