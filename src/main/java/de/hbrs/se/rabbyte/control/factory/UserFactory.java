@@ -6,6 +6,10 @@ import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Student;
 
 public class UserFactory {
+
+    private UserFactory() {
+        throw new IllegalStateException("Factory Class");
+    }
     public static Student createStudent(StudentDTO studentDTO) {
         Student student = new Student();
 

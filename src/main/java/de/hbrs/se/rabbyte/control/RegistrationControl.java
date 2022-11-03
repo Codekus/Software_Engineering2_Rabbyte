@@ -3,7 +3,6 @@ package de.hbrs.se.rabbyte.control;
 import de.hbrs.se.rabbyte.control.factory.UserFactory;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
-import de.hbrs.se.rabbyte.dtos.implemented.BusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
@@ -39,6 +38,7 @@ public class RegistrationControl {
 
     public RegistrationResultDTO registerStudent(RegistrationStudentDTOImpl registrationStudentDTO) {
 
+        try {
         registrationResultDTO = new RegistrationResultDTOImpl();
         Student newStudent = UserFactory.createStudent(registrationStudentDTO.getStudentDTO());
 
@@ -56,6 +56,10 @@ public class RegistrationControl {
             registrationResultDTO.setRegistrationResult(true);
         } else {
             registrationResultDTO.setRegistrationResult(false);
+        }} catch (Exception exception) {
+            registrationResultDTO.setRegistrationResult(false);
+            registrationResultDTO.setReason("Error");
+            LOGGER.info("INFO:" ,  exception.getMessage());
         }
         return registrationResultDTO;
 
@@ -63,20 +67,26 @@ public class RegistrationControl {
 
     public RegistrationResultDTO registerBusiness(RegistrationBusinessDTOImpl registrationBusinessDTO) {
 
-        registrationResultDTO = new RegistrationResultDTOImpl();
-        inspectIfSamePassword(registrationBusinessDTO.getBusinessDTO().getPassword() , registrationBusinessDTO.getRepeatPassword());
+        try {
+            registrationResultDTO = new RegistrationResultDTOImpl();
+            inspectIfSamePassword(registrationBusinessDTO.getBusinessDTO().getPassword(), registrationBusinessDTO.getRepeatPassword());
 
-        if(inspectIfEmailIsAlreadyInUse(registrationBusinessDTO.getBusinessDTO().getEmail())) {
-            registrationResultDTO.setReason("Email in use");
-        }
-        Business newBusiness = UserFactory.createBusiness(registrationBusinessDTO.getBusinessDTO());
-        if(registrationResultDTO.getReasons().isEmpty()) {
-            this.businessRepository.save(newBusiness);
-            registrationResultDTO.setRegistrationResult(true);
-        } else {
+            if (inspectIfEmailIsAlreadyInUse(registrationBusinessDTO.getBusinessDTO().getEmail())) {
+                registrationResultDTO.setReason("Email in use");
+            }
+            Business newBusiness = UserFactory.createBusiness(registrationBusinessDTO.getBusinessDTO());
+
+            if (registrationResultDTO.getReasons().isEmpty()) {
+                this.businessRepository.save(newBusiness);
+                registrationResultDTO.setRegistrationResult(true);
+            } else {
+                registrationResultDTO.setRegistrationResult(false);
+            }
+        } catch(Exception exception) {
             registrationResultDTO.setRegistrationResult(false);
+            registrationResultDTO.setReason("Error");
+            LOGGER.info("INFO" , exception.getMessage());
         }
-
 
         return registrationResultDTO;
     }
@@ -118,7 +128,7 @@ public class RegistrationControl {
         }
     }
 
-    public void validateBusinessName(String BusinessName) {
+    public void validateBusinessName(String businessName) {
 
     }
 }

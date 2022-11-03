@@ -20,10 +20,7 @@ import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 
-import javax.annotation.security.PermitAll;
 
 
 @Route(value = "registration" )
