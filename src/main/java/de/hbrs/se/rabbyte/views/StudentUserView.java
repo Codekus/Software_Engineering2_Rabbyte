@@ -2,56 +2,77 @@ package de.hbrs.se.rabbyte.views;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 
 @Route("user/student")
 @PageTitle("User")
+@Theme(value = Lumo.class)
 public class StudentUserView extends VerticalLayout //implements View
 {
     //GeneralUser attributes
-
-    private final FormLayout formLayout;
     EmailField emailField = new EmailField("Email");
-    private final TextField plz = new TextField("PLZ");
-    private final TextField city = new TextField("City");
-    private final TextField state = new TextField("State");
-    private final TextField street = new TextField("Street");
-    private final TextField streetNr = new TextField("StreetNr");
+    TextField plz = new TextField("PLZ");
+    TextField city = new TextField("City");
+    TextField state = new TextField("State");
+    TextField street = new TextField("Street");
+    TextField streetNr = new TextField("StreetNr");
 
     //Student attributes
-    private final TextField firstName = new TextField("First Name");
-    private final TextField lastName = new TextField("Last Name");
-    private final TextField faculty = new TextField("Faculty");
+    TextField firstName = new TextField("First Name");
+    TextField lastName = new TextField("Last Name");
+    TextField faculty = new TextField("Faculty");
     //   private TextField birthDate = new TextField("Date of Birth");
-    private final Button cancel = new Button("Cancel");
-    private final Button save = new Button("Save");
+    Tab studentTab;
+    Button cancel;
+    Button save;
+
+    VerticalLayout verticalLayout;
+    VerticalLayout tabsLayout;
+
+    class StudentForm extends Div {
+
+        StudentForm() {
+            emailField.setRequiredIndicatorVisible(true);
+            //emailField.setValue(student.getEmail());
+            firstName.setRequiredIndicatorVisible(true);
+            //firstName.setValue(student.getFirstName());
+            lastName.setRequiredIndicatorVisible(true);
+            //lastName.setValue(student.getLastName());
+
+            FormLayout formLayout = new FormLayout();
+            formLayout.setMaxWidth("80 vw");
+            formLayout.add(emailField, firstName, lastName, plz, street, streetNr, state, faculty);
+
+            this.add(formLayout);
+        }
+
+
+    }
 
     public StudentUserView() {
-        addClassName("userView");
-        setSizeFull();
-        setAlignItems(Alignment.CENTER);
-        setMargin(true);
-        //setJustifyContentMode(JustifyContentMode.CENTER);
 
-        H3 title = new H3("Signup form");
+        verticalLayout = new VerticalLayout();
+        tabsLayout = new VerticalLayout();
+        H1 h1 = new H1("User details");
 
-        cancel.addClickListener(e -> {
-            clearForm();
-            Notification.show("User form cleared.");
-        });
+        StudentForm studentForm = new StudentForm();
 
+        verticalLayout.add(h1);
+        verticalLayout.setMaxWidth("80 vw");
+        save = new Button("Save");
         save.addClickListener(e -> {
-            // Speicherung der Daten über das zuhörige Control-Object.
-            // Daten des Autos werden aus Formular erfasst und als DTO übergeben.
-            // Zusätzlich wird das aktuelle StudentDTO übergeben.
-            //GeneralUserDTO userDTO = (GeneralUserDTO) UI.getCurrent().getSession().getAttribute("user");
             //StudentDTO studentUserDTO = (StudentDTO) UI.getCurrent().getSession().getAttribute("student");
             //studentService.createStudent(binder.getBean() ,  studentDTO );
 
@@ -61,13 +82,37 @@ public class StudentUserView extends VerticalLayout //implements View
                     ui.navigate(""));
         });
 
-        formLayout = new FormLayout(title, emailField, firstName, lastName, plz, city, street, streetNr, state,
-                faculty, cancel, save);
+        cancel = new Button("Cancel");
+        cancel.addClickListener(e -> {
+            clearForm();
+            Notification.show("User form cleared.");
+        });
 
-        // Restrict maximum width and center on page
-        formLayout.setMaxWidth("500px");
-        formLayout.getStyle().set("margin", "0 auto");
-        add(new H1("User form"), formLayout);
+        studentTab = new Tab("Student");
+        Tabs tabs = new Tabs(studentTab);
+
+        tabs.addSelectedChangeListener(event ->
+                setContent(event.getSelectedTab())
+        );
+
+        setContent(tabs.getSelectedTab());
+        verticalLayout.add(h1);
+        add(verticalLayout);
+        add(tabs, tabsLayout);
+
+    }
+
+    private void setContent(Tab tab) {
+
+        tabsLayout.removeAll();
+
+        tabsLayout.add(new StudentUserView.StudentForm());
+        HorizontalLayout buttonLayout = new HorizontalLayout();
+        buttonLayout.setAlignItems(Alignment.START);
+        buttonLayout.add(save, cancel);
+        tabsLayout.add(buttonLayout);
+
+
     }
 
     private void clearForm() {
@@ -81,13 +126,4 @@ public class StudentUserView extends VerticalLayout //implements View
         state.setValue("");
         faculty.setValue("");
     }
-
-    //private void showSuccess(Student detailsBean) {
-        //Notification notification = Notification.show("Data saved, welcome " + detailsBean.getFirstName());
-        //notification.addThemeVariants(NotificationVariant.LUMO_SUCCESS);
-
-        // Here you'd typically redirect the user to another view
-    //}
-
-
 }

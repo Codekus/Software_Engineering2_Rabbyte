@@ -4,7 +4,9 @@ import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     public StudentDTO findStudentById(int id);

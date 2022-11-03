@@ -1,17 +1,18 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
+import de.hbrs.se.rabbyte.entities.User;
 
 
 /**
- * A DTO for the {@link de.hbrs.se.rabbyte.entities.GeneralUser} entity
+ * A DTO for the {@link User} entity
  */
 public class GeneralUserDTOImpl implements GeneralUserDTO {
 
     private int id;
     private String email;
     private String password;
-    private String plz;
+    private int plz;
     private String city;
     private String country;
     private String street;
@@ -44,11 +45,11 @@ public class GeneralUserDTOImpl implements GeneralUserDTO {
     }
 
     @Override
-    public String getPlz() {
+    public int getPlz() {
         return plz;
     }
 
-    public void setPlz(String plz) {
+    public void setPlz(int plz) {
         this.plz = plz;
     }
 

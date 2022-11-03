@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name ="Stellenauschreibung" , schema = "rabbyte")
+@Table(name ="jobAdvertisement" , schema = "rabbyte")
 public class JobAdvertisement {
 
     private int id;
@@ -15,14 +15,14 @@ public class JobAdvertisement {
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,
-            generator = "stellenausschreibung_id"
+            generator = "jobAdvertisement_id"
     )
     @SequenceGenerator(
-            name = "stellenausschreibung_id",
+            name = "jobAdvertisement_id",
             sequenceName = "rabbyte.seq_stellenausschreibung_id",
             allocationSize=1
     )
-    @Column(name = "stellenausschreibung_id")
+    @Column(name = "jobAdvertisement_id")
     public int getId() {
         return id;
     }
@@ -48,7 +48,7 @@ public class JobAdvertisement {
 
 
     @ManyToOne()
-    @JoinColumn(name="nutzer_id")
+    @JoinColumn(name="user_id")
     public Business getBusiness() {
         return business;
     }
