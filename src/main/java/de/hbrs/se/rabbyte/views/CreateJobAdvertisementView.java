@@ -5,12 +5,15 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.combobox.GeneratedVaadinComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.HasStyle;
@@ -22,6 +25,10 @@ import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.swing.*;
+import javax.swing.text.StyledEditorKit;
+import java.util.ArrayList;
 
 @Route(value = "create_JobAdvert", layout = AppView.class)
 @PageTitle("Neue Stellenausschreibung")
@@ -49,11 +56,17 @@ public class CreateJobAdvertisementView extends Div {
     public CreateJobAdvertisementView(JobAdvertControl jobAdvertControl){
         addClassName("create-jobAdvert-view");
 
+        add(createButtonLayoutBack());
         add(createTitle());
         add(createFormLayout());
-        add(createButtonLayout());
+        add(createButtonLayoutSubmit());
 
-        type.setAllowCustomValue(true);
+        type.setItems("Vollzeit", "Teilzeit", "Praktikum", "Projektarbeit", "Bachelor/ Master");
+        type.setWidth("200px");
+        title.setWidth("300px");
+        description.setWidth("550px");
+        description.setMinHeight("300px");
+        description.setMaxHeight("450px");
 
         binder.bindInstanceFields(this);
         clearForm();
@@ -75,21 +88,48 @@ public class CreateJobAdvertisementView extends Div {
     }
 
     private Component createTitle() {
-        return new H3("Stellenausschreibung");
+        VerticalLayout layoutVer = new VerticalLayout();
+        layoutVer.add(new H3("Stellenausschreibung"));
+        layoutVer.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.valueOf("CENTER"));
+        return layoutVer;
     }
 
     private Component createFormLayout() {
-        FormLayout formLayout = new FormLayout();
-        formLayout.add(title, type, description);
-        return formLayout;
+        VerticalLayout vert1 = new VerticalLayout();
+        VerticalLayout vert2 = new VerticalLayout();
+        VerticalLayout vert3 = new VerticalLayout();
+        HorizontalLayout hor1 = new HorizontalLayout();
+        HorizontalLayout hor2 = new HorizontalLayout();
+
+        vert1.add(title);
+        vert2.add(type);
+        hor1.add(vert1, vert2);
+        hor2.add(description);
+        hor2.setHeightFull();
+        vert3.add(hor1, hor2);
+        vert3.setWidthFull();
+        vert3.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
+        return vert3;
     }
 
-    private Component createButtonLayout() {
+    private Component createButtonLayoutSubmit() {
         HorizontalLayout buttonLayout = new HorizontalLayout();
+        VerticalLayout buttonLayoutVert = new VerticalLayout();
         buttonLayout.addClassName("button-layout");
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buttonLayout.add(save);
+        buttonLayoutVert.add(buttonLayout);
+        buttonLayout.setAlignSelf(FlexComponent.Alignment.valueOf("END"));
+        //buttonLayout.setAlignItems(FlexComponent.Alignment.valueOf("END"));
+        buttonLayoutVert.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.valueOf("CENTER"));
+        return buttonLayoutVert;
+    }
+
+    private Component createButtonLayoutBack() {
+        FormLayout buttonLayout = new FormLayout();
         buttonLayout.add(back);
+        buttonLayout.setWidth("100px");
         return buttonLayout;
     }
 }
+
