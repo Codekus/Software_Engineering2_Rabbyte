@@ -4,6 +4,7 @@ import de.hbrs.se.rabbyte.control.factory.UserFactory;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.BusinessDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
@@ -60,12 +61,22 @@ public class RegistrationControl {
 
     }
 
-    public RegistrationResultDTO registerBusiness(BusinessDTOImpl businessDTO) {
+    public RegistrationResultDTO registerBusiness(RegistrationBusinessDTOImpl registrationBusinessDTO) {
 
         registrationResultDTO = new RegistrationResultDTOImpl();
+        inspectIfSamePassword(registrationBusinessDTO.getBusinessDTO().getPassword() , registrationBusinessDTO.getRepeatPassword());
 
-        Business newBusiness = UserFactory.createBusiness(businessDTO);
-        this.businessRepository.save(newBusiness);
+        if(inspectIfEmailIsAlreadyInUse(registrationBusinessDTO.getBusinessDTO().getEmail())) {
+            registrationResultDTO.setReason("Email in use");
+        }
+        Business newBusiness = UserFactory.createBusiness(registrationBusinessDTO.getBusinessDTO());
+        if(registrationResultDTO.getReasons().isEmpty()) {
+            this.businessRepository.save(newBusiness);
+            registrationResultDTO.setRegistrationResult(true);
+        } else {
+            registrationResultDTO.setRegistrationResult(false);
+        }
+
 
         return registrationResultDTO;
     }
@@ -107,7 +118,7 @@ public class RegistrationControl {
         }
     }
 
-    public void validateBusinessName() {
+    public void validateBusinessName(String BusinessName) {
 
     }
 }

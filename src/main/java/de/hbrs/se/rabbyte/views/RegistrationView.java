@@ -15,10 +15,16 @@ import com.vaadin.flow.theme.lumo.Lumo;
 import de.hbrs.se.rabbyte.control.RegistrationControl;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.BusinessDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
+
+import javax.annotation.security.PermitAll;
+
 
 @Route(value = "registration" )
 @Theme(value = Lumo.class)
@@ -144,9 +150,19 @@ public class RegistrationView extends VerticalLayout {
 
         registerButtonBusiness = new Button("Registrieren");
         registerButtonBusiness.addClickListener( e -> {
-            BusinessDTOImpl businessDTO = businessForm.createNewBusiness();
 
-            registrationControl.registerBusiness(businessDTO);
+
+            BusinessDTOImpl businessDTO = businessForm.createNewBusiness();
+            RegistrationBusinessDTOImpl registrationBusinessDTO = new RegistrationBusinessDTOImpl(businessDTO , passwordFieldRepeatBusiness.getValue());
+            RegistrationResultDTO registrationResultDTO = registrationControl.registerBusiness(registrationBusinessDTO);
+            registrationControl.registerBusiness(registrationBusinessDTO);
+
+            if(registrationResultDTO.getRegistrationResult()) {
+                Utils.triggerDialogMessage("Registrierung erfolgreich" , "Weiterleitung per login wenn implementiert");
+            } else {
+                Utils.triggerDialogMessage("Registrierung fehlgeschlagen" , registrationResultDTO.getReasons().toString());
+            }
+
         });
 
         student = new Tab("Student");
