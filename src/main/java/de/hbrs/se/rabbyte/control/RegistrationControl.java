@@ -40,7 +40,6 @@ public class RegistrationControl {
 
         try {
         registrationResultDTO = new RegistrationResultDTOImpl();
-        Student newStudent = UserFactory.createStudent(registrationStudentDTO.getStudentDTO());
 
         if(inspectIfEmailIsAlreadyInUse(registrationStudentDTO.getStudentDTO().getEmail())) {
             registrationResultDTO.setReason("Email in use");
@@ -52,6 +51,8 @@ public class RegistrationControl {
         validateFirstName(registrationStudentDTO.getStudentDTO().getFirstName());
         validateLastName(registrationStudentDTO.getStudentDTO().getLastName());
         if(registrationResultDTO.getReasons().isEmpty()) {
+
+            Student newStudent = UserFactory.createStudent(registrationStudentDTO.getStudentDTO());
             this.studentRepository.save(newStudent);
             registrationResultDTO.setRegistrationResult(true);
         } else {
@@ -77,6 +78,7 @@ public class RegistrationControl {
             Business newBusiness = UserFactory.createBusiness(registrationBusinessDTO.getBusinessDTO());
 
             if (registrationResultDTO.getReasons().isEmpty()) {
+
                 this.businessRepository.save(newBusiness);
                 registrationResultDTO.setRegistrationResult(true);
             } else {
@@ -131,4 +133,6 @@ public class RegistrationControl {
     public void validateBusinessName(String businessName) {
 
     }
+
+
 }
