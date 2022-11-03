@@ -1,5 +1,6 @@
 package de.hbrs.se.rabbyte.views;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.login.LoginForm;
@@ -15,6 +16,7 @@ import de.hbrs.se.rabbyte.security.SecurityService;
 @Route("login")
 @PageTitle("Login | Vaadin CRM")
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
+
 
     private final LoginForm login = new LoginForm();
 

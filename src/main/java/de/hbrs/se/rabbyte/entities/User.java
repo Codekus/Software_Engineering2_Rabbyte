@@ -15,6 +15,7 @@ public class User {
     private String country;
     private String street;
     private String streetNumber;
+    private Role role;
 
     @Id
     @GeneratedValue(
@@ -103,6 +104,17 @@ public class User {
 
     public void setStreetNumber(String streetNumber) {
         this.streetNumber = streetNumber;
+
+    }
+
+    @Basic
+    @Column(name = "rolle")
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
 
     }
 }
