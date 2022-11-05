@@ -34,6 +34,6 @@ class CryptographyUtilTest {
 
     @Test
     void encryptPassword() throws NoSuchAlgorithmException {
-        assertEquals(cryptographyUtil.encryptPassword(password).length() , 128);
+        assertEquals(cryptographyUtil.encryptPassword(password, arraySalt).length()  , 128);
     }
 }

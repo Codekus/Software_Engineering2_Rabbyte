@@ -9,19 +9,19 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Random;
 
-public class CryptographyUtil {
+public  class CryptographyUtil {
 
     private static final int HASH_BYTE_SIZE = 64; // 512 bits
     private static final int PBKDF2_ITERATIONS = 10000;
 
-    public byte[] generateSalt() {
+    public static byte[] generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] bytes = new byte[HASH_BYTE_SIZE];
         random.nextBytes(bytes);
         return bytes;
     }
 
-    public  byte[] hashPassword( final char[] password, final byte[] salt ) {
+    public static byte[] hashPassword( final char[] password, final byte[] salt ) {
 
         try {
             PBEKeySpec spec = new PBEKeySpec(password, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE * 8);
@@ -34,14 +34,14 @@ public class CryptographyUtil {
         }
     }
 
-    public String encryptPassword(String plainPassword) throws NoSuchAlgorithmException {
+    public static String encryptPassword(String plainPassword, final byte[] salt) throws NoSuchAlgorithmException {
 
-        return toHex(hashPassword(plainPassword.toCharArray() , generateSalt()));
+        return toHex(hashPassword(plainPassword.toCharArray() , salt));
 
 
     }
 
-    private static String toHex(byte[] array) throws NoSuchAlgorithmException
+    public static String toHex(byte[] array) throws NoSuchAlgorithmException
     {
         BigInteger bi = new BigInteger(1, array);
         String hex = bi.toString(16);
