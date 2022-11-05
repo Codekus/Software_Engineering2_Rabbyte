@@ -43,7 +43,7 @@ public class UserFactory {
         try {
             byte[] salt = CryptographyUtil.generateSalt();
             business.setSalt(CryptographyUtil.toHex(salt));
-            business.setPassword(businessDTO.getPassword());
+            business.setPassword(cryptographyUtil.encryptPassword(businessDTO.getPassword() , salt));
         } catch (NoSuchAlgorithmException exception) {
             LOGGER.info(exception.getMessage());
         }
