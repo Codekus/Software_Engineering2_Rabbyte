@@ -6,13 +6,15 @@ import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.util.CryptographyUtil;
 
+import java.security.NoSuchAlgorithmException;
+
 public class UserFactory {
 
     static CryptographyUtil cryptographyUtil = new CryptographyUtil();
     private UserFactory() {
         throw new IllegalStateException("Factory Class");
     }
-    public static Student createStudent(StudentDTO studentDTO) {
+    public static Student createStudent(StudentDTO studentDTO) throws NoSuchAlgorithmException {
         Student student = new Student();
 
 

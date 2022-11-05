@@ -10,6 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.security.NoSuchAlgorithmException;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
@@ -24,7 +26,7 @@ class UserFactoryTest {
     private User user;
 
     @Test
-    void createStudent() {
+    void createStudent() throws NoSuchAlgorithmException {
         Student student;
         when(studentDTO.getPassword()).thenReturn("password");
         when(studentDTO.getEmail()).thenReturn("max@mustermann.de");
