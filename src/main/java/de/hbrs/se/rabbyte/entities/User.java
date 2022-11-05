@@ -15,7 +15,7 @@ public class User {
     private String country;
     private String street;
     private int streetNumber;
-
+    private String salt;
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,
@@ -104,5 +104,15 @@ public class User {
     public void setStreetNumber(int streetNumber) {
         this.streetNumber = streetNumber;
 
+    }
+
+    @Basic
+    @Column(name = "salt")
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
