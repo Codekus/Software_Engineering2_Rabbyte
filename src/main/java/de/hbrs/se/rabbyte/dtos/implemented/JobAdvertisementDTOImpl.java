@@ -9,6 +9,7 @@ public class JobAdvertisementDTOImpl implements JobAdvertisementDTO {
     private int id;
     private String text;
     private String title;
+    private String type;
     private Business business;
 
     @Override
@@ -38,6 +39,13 @@ public class JobAdvertisementDTOImpl implements JobAdvertisementDTO {
         this.title = title;
     }
 
+    public String getType(){
+        return type;
+    }
+
+    public void setType(String type){
+        this.type = type;
+    }
     @Override
     public Business getBusiness() {
         return business;

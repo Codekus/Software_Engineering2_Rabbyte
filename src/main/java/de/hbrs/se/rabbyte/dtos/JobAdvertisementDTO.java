@@ -9,7 +9,7 @@ public interface JobAdvertisementDTO {
     public String getText();
 
     public String getTitle();
-
+    public String getType();
     public Business getBusiness();
 
 }
