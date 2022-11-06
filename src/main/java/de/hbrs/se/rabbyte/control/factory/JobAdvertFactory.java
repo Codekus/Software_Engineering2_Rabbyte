@@ -12,6 +12,7 @@ public class JobAdvertFactory {
 
                 jobAdvertisement.setId( jobAdvertisementDTO.getId() );
                 jobAdvertisement.setText( jobAdvertisementDTO.getText() );
+                jobAdvertisement.setType( jobAdvertisementDTO.getType() );
                 jobAdvertisement.setTitle( jobAdvertisementDTO.getTitle() );
                 jobAdvertisement.setBusiness( jobAdvertisementDTO.getBusiness() );
 

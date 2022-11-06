@@ -12,6 +12,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -46,7 +47,7 @@ import java.util.Optional;
 public class AppView extends AppLayout implements BeforeEnterObserver {
 
     private Tabs menu;
-    private H1 viewTitle;
+    private H3 viewTitle;
     private H1 helloUser;
 
     @Autowired
@@ -120,7 +121,7 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
 
         layout.add(drawerToggle);
 
-        viewTitle = new H1();
+        viewTitle = new H3();
         viewTitle.setWidthFull();
         layout.add( viewTitle );
 

@@ -10,6 +10,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -56,7 +57,7 @@ public class CreateJobAdvertisementView extends Div {
     public CreateJobAdvertisementView(JobAdvertControl jobAdvertControl){
         addClassName("create-jobAdvert-view");
 
-        add(createButtonLayoutBack());
+        //add(createButtonLayoutBack());
         add(createTitle());
         add(createFormLayout());
         add(createButtonLayoutSubmit());
@@ -125,11 +126,14 @@ public class CreateJobAdvertisementView extends Div {
         return buttonLayoutVert;
     }
 
+    /*
     private Component createButtonLayoutBack() {
         FormLayout buttonLayout = new FormLayout();
         buttonLayout.add(back);
         buttonLayout.setWidth("100px");
         return buttonLayout;
     }
+
+     */
 }
 
