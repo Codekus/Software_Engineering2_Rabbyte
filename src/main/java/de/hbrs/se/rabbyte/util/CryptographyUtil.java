@@ -11,7 +11,6 @@ import java.security.spec.InvalidKeySpecException;
 
 public  class CryptographyUtil {
 
-
     private CryptographyUtil() {
         throw new IllegalStateException("Utility Class");
     }

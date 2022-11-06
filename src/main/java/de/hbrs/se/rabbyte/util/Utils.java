@@ -12,7 +12,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class Utils {
-
     private Utils() {
         throw new IllegalStateException("Utility Class");
     }
@@ -36,9 +35,7 @@ public class Utils {
 
         H3 header = new H3(headerText);
         Label contentText = new Label(message);
-
         Button ok = new Button("Ok");
-
 
         ok.addClickListener(e -> dialog.close());
 

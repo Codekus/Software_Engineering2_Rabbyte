@@ -64,7 +64,6 @@ public class RegistrationControl {
             LOGGER.info("INFO:" ,  exception.getMessage());
         }
         return registrationResultDTO;
-
     }
 
 
@@ -92,7 +91,6 @@ public class RegistrationControl {
             registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.GENERAL_ERROR);
             LOGGER.info("INFO" , exception.getMessage());
         }
-
         return registrationResultDTO;
     }
 
