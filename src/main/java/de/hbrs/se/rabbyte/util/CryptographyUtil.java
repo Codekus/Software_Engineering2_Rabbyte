@@ -9,6 +9,7 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
 
+
 public  class CryptographyUtil {
 
 
@@ -43,25 +44,22 @@ public  class CryptographyUtil {
 
     public static String toHex(byte[] array)
     {
-        BigInteger bi = new BigInteger(1, array);
-        String hex = bi.toString(16);
-
-        int paddingLength = (array.length * 2) - hex.length();
-        if(paddingLength > 0)
-        {
-            return String.format("%0"  +paddingLength + "d", 0) + hex;
-        }else{
-            return hex;
-        }
+        BigInteger bigInteger = new BigInteger(1, array);
+        return String.format(
+                "%0" + (array.length << 1) + "x", bigInteger);
     }
 
     public static byte[] fromHex(String hex)
     {
-        byte[] bytes = new byte[hex.length() / 2];
-        for(int i = 0; i < bytes.length ;i++)
-        {
-            bytes[i] = (byte)Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
+        byte[] byteArray = new BigInteger(hex, 16)
+                .toByteArray();
+        if (byteArray[0] == 0) {
+            byte[] output = new byte[byteArray.length - 1];
+            System.arraycopy(
+                    byteArray, 1, output,
+                    0, output.length);
+            return output;
         }
-        return bytes;
+        return byteArray;
     }
 }

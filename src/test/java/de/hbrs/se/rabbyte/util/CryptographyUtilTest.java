@@ -2,14 +2,18 @@ package de.hbrs.se.rabbyte.util;
 
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CryptographyUtilTest {
 
+    private final String error = "class de.hbrs.se.rabbyte.util.CryptographyUtilTest cannot access a member of class de.hbrs.se.rabbyte.util.CryptographyUtil with modifiers \"private\"";
 
 
     private String password = "Password";
@@ -33,5 +37,25 @@ class CryptographyUtilTest {
     @Test
     void encryptPassword() throws InvalidKeySpecException, NoSuchAlgorithmException {
         assertEquals(128  , CryptographyUtil.encryptPassword(password, arraySalt).length());
+    }
+
+    @Test
+    void ThrowIllegalAccesExceptionWhenInstancingCryptographyUtil() throws NoSuchMethodException {
+        Constructor<CryptographyUtil> constructor = CryptographyUtil.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);
+        assertEquals(error, exceptionThatWasThrown.getMessage());
+        constructor.setAccessible(true);
+        assertThrows(ReflectiveOperationException.class,constructor::newInstance);
+
+    }
+
+    @Test
+    void fromHex() {
+        byte[] byteArray = CryptographyUtil.fromHex("FFFF");
+        assertEquals(1 , CryptographyUtil.fromHex("FF").length);
+        assertEquals(2 , CryptographyUtil.fromHex("FFFF").length);
+        assertEquals( Base64.getEncoder().encodeToString(byteArray) , Base64.getEncoder().encodeToString(CryptographyUtil.fromHex("FFFF")));
+
     }
 }
