@@ -11,7 +11,7 @@ import com.vaadin.flow.server.PWA;
 
 
 
-@Route(value = "" )
+@Route(value = "", layout = AppView.class)
 @RouteAlias(value = "frontPage" )
 @PWA(name = "Rabbyte", shortName = "Rabbyte")
 public class MainView extends VerticalLayout {
