@@ -44,7 +44,8 @@ public class RegistrationControl {
         if(inspectIfEmailIsAlreadyInUse(registrationStudentDTO.getStudentDTO().getEmail())) {
             registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.EMAIL_IN_USE);
         }
-
+        inspectIfPasswordIsTooShort(registrationStudentDTO.getStudentDTO().getPassword());
+        inspectIfRepeatPasswordIsTooShort(registrationStudentDTO.getRepeatPassword());
         inspectIfSamePassword(registrationStudentDTO.getRepeatPassword() , registrationStudentDTO.getStudentDTO().getPassword());
 
         validateEmailName(registrationStudentDTO.getStudentDTO().getEmail());
@@ -65,6 +66,8 @@ public class RegistrationControl {
         return registrationResultDTO;
 
     }
+
+
 
     public RegistrationResultDTO registerBusiness(RegistrationBusinessDTOImpl registrationBusinessDTO) {
 
@@ -136,5 +139,20 @@ public class RegistrationControl {
         }
     }
 
+    public void inspectIfRepeatPasswordIsTooShort(String repeatPassword) {
+        if(passwordTooShort(repeatPassword)) {
+            registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.PASSWORD_REPEAT_TO_SHORT);
+        }
+    }
+
+    public void inspectIfPasswordIsTooShort(String password) {
+        if(passwordTooShort(password)) {
+            registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.PASSWORD_TO_SHORT);
+        }
+    }
+
+    private boolean passwordTooShort(String password) {
+        return (password.length() < 5);
+    }
 
 }
