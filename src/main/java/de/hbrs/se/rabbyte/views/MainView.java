@@ -9,8 +9,7 @@ import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.PWA;
 
 
-
-@Route(value = "" )
+@Route("")
 @RouteAlias(value = "main" )
 @PWA(name = "Rabbyte", shortName = "Rabbyte")
 public class MainView extends VerticalLayout {
