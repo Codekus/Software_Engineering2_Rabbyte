@@ -24,6 +24,8 @@ import com.vaadin.flow.router.Route;
 import de.hbrs.se.rabbyte.control.JobAdvertControl;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
+import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
+import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -77,11 +79,21 @@ public class CreateJobAdvertisementView extends Div {
         save.addClickListener(e -> {
             // Speicherung der Daten über das zuhörige Control-Object.
             BusinessDTO businessDTO = (BusinessDTO) UI.getCurrent().getSession().getAttribute("current_user");
-            jobAdvertControl.createJobAdvert(binder.getBean() ,  businessDTO );
+            jobAdvertControl.createJobAdvert(createNewJobAdvert() ,  businessDTO );
 
             Notification.show("Veröffentlicht");
             clearForm();
         });
+    }
+
+    public JobAdvertisementDTO createNewJobAdvert(){
+        JobAdvertisementDTOImpl jobAdvertisementDTO = new JobAdvertisementDTOImpl();
+
+        jobAdvertisementDTO.setTitle(title.getValue());
+        jobAdvertisementDTO.setType(type.getValue());
+        jobAdvertisementDTO.setText(description.getValue());
+
+        return jobAdvertisementDTO;
     }
 
     private void clearForm() {
