@@ -1,9 +1,10 @@
 package de.hbrs.se.rabbyte.util;
 
+import de.hbrs.se.rabbyte.exception.HashingException;
 import org.junit.jupiter.api.Test;
 
-import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,11 +17,11 @@ class CryptographyUtilTest {
     private byte[] arraySalt = new byte[64];
     @Test
     void generateSalt() {
-        assertEquals(CryptographyUtil.generateSalt().length , 64);
+        assertEquals(64 , CryptographyUtil.generateSalt().length);
     }
 
     @Test
-    void hashPassword() {
+    void hashPassword() throws HashingException, InvalidKeySpecException, NoSuchAlgorithmException {
         String password = "Password";
         byte[] arraySalt = new byte[64];
         byte[] hashedPassword = CryptographyUtil.hashPassword(password.toCharArray() , arraySalt);
@@ -31,7 +32,7 @@ class CryptographyUtilTest {
     }
 
     @Test
-    void encryptPassword() throws NoSuchAlgorithmException {
+    void encryptPassword() throws HashingException, InvalidKeySpecException, NoSuchAlgorithmException {
         assertEquals(128  , CryptographyUtil.encryptPassword(password, arraySalt).length());
     }
 }
