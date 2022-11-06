@@ -12,7 +12,7 @@ public interface JobAdvertisementRepository extends JpaRepository<JobAdvertiseme
 
 
     JobAdvertisementDTO findJobAdvertisementById(int id);
-    List<JobAdvertisementDTO> findJobAdvertisementByIdIsNotNull();
+    List<JobAdvertisementDTO> findJobAdvertisementByBusinessIsNotNull();
 
 
 

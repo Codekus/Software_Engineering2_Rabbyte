@@ -2,7 +2,6 @@ package de.hbrs.se.rabbyte.service;
 
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import de.hbrs.se.rabbyte.repository.*;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,12 +27,6 @@ public class CrmService {
     }
 
     public List<JobAdvertisement> findJobAdvertisements(String searchText){
-        //return nothing if no search input is given
-        //else return everything that contains the search input
-
-        /*if(searchText == null || searchText.isEmpty()){
-            return null;
-        }else{ */
         return jobAdvertisementRepository.search(searchText);
 
     }

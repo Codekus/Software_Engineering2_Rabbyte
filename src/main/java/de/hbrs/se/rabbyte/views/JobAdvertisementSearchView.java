@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Scope;
 
 @org.springframework.stereotype.Component
 @Scope("prototype")
+//routing not final
 @Route(value = "student/search-view")
 @RouteAlias(value ="user/student/main")
 @PageTitle("Search For Job-Advertisements")
@@ -51,7 +52,7 @@ public class JobAdvertisementSearchView extends VerticalLayout {
 
     private Component getSearchFieldComp() {
         addClassName("job-advertisement-search-view-searchFieldComp");
-        searchField.setPlaceholder("search for job advertisements");
+        searchField.setPlaceholder("Nach Ausschreibungen suchen...");
         searchField.setClearButtonVisible(true);
         searchField.setValueChangeMode(ValueChangeMode.LAZY);
         searchField.addValueChangeListener(e -> updateList());
