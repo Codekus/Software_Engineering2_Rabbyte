@@ -55,7 +55,7 @@ public  class CryptographyUtil {
         }
     }
 
-    private static byte[] fromHex(String hex) throws NoSuchAlgorithmException
+    public static byte[] fromHex(String hex) throws NoSuchAlgorithmException
     {
         byte[] bytes = new byte[hex.length() / 2];
         for(int i = 0; i < bytes.length ;i++)
