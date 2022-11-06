@@ -10,30 +10,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CryptographyUtilTest {
 
-    CryptographyUtil cryptographyUtil = new CryptographyUtil();
+
 
     private String password = "Password";
     private byte[] arraySalt = new byte[64];
     @Test
     void generateSalt() {
-
-        assertTrue(cryptographyUtil.generateSalt().length == 64);
+        assertEquals(CryptographyUtil.generateSalt().length , 64);
     }
 
     @Test
     void hashPassword() {
         String password = "Password";
         byte[] arraySalt = new byte[64];
-        byte[] hashedPassword = cryptographyUtil.hashPassword(password.toCharArray() , arraySalt);
-
+        byte[] hashedPassword = CryptographyUtil.hashPassword(password.toCharArray() , arraySalt);
         assertEquals(
-                "42DNDeYe/9Vudnh9lMKlPvfgiN1IThX8M2ykKjWcCHT9B8kQqZbmg1uhnidHFjdlYzFMdBwDYpJkCszQsHWOCg=="
+                "TEXCUUrE+64UKyGjM1yumW4Ez9gPJYzMnkOvseWaT57s5a+vfMaYovu7ggMa0DC9cN9JXA0N7YucIgSuDEnrYQ=="
                 , Base64.getEncoder().encodeToString(hashedPassword));;
 
     }
 
     @Test
     void encryptPassword() throws NoSuchAlgorithmException {
-        assertEquals(cryptographyUtil.encryptPassword(password, arraySalt).length()  , 128);
+        assertEquals(128  , CryptographyUtil.encryptPassword(password, arraySalt).length());
     }
 }

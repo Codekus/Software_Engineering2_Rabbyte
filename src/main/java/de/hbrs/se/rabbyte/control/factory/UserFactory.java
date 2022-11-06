@@ -12,9 +12,7 @@ import org.slf4j.LoggerFactory;
 
 
 public class UserFactory {
-
     private static final Logger LOGGER = LoggerFactory.getLogger(UserFactory.class);
-
 
     private UserFactory() {
         throw new IllegalStateException("Factory Class");
