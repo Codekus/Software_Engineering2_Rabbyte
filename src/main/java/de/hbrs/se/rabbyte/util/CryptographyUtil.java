@@ -25,7 +25,7 @@ public  class CryptographyUtil {
 
         try {
             PBEKeySpec spec = new PBEKeySpec(password, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE * 8);
-            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
             byte[] hash = skf.generateSecret(spec).getEncoded();
 
             return hash;
