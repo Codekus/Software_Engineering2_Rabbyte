@@ -42,7 +42,7 @@ public class RegistrationControl {
         registrationResultDTO = new RegistrationResultDTOImpl();
 
         if(inspectIfEmailIsAlreadyInUse(registrationStudentDTO.getStudentDTO().getEmail())) {
-            registrationResultDTO.setReason("Email in use");
+            registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.EMAIL_IN_USE);
         }
 
         inspectIfSamePassword(registrationStudentDTO.getRepeatPassword() , registrationStudentDTO.getStudentDTO().getPassword());
@@ -59,7 +59,7 @@ public class RegistrationControl {
             registrationResultDTO.setRegistrationResult(false);
         }} catch (Exception exception) {
             registrationResultDTO.setRegistrationResult(false);
-            registrationResultDTO.setReason("Error");
+            registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.GENERAL_ERROR);
             LOGGER.info("INFO:" ,  exception.getMessage());
         }
         return registrationResultDTO;
@@ -73,7 +73,7 @@ public class RegistrationControl {
             inspectIfSamePassword(registrationBusinessDTO.getBusinessDTO().getPassword(), registrationBusinessDTO.getRepeatPassword());
 
             if (inspectIfEmailIsAlreadyInUse(registrationBusinessDTO.getBusinessDTO().getEmail())) {
-                registrationResultDTO.setReason("Email in use");
+                registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.EMAIL_IN_USE);
             }
             Business newBusiness = UserFactory.createBusiness(registrationBusinessDTO.getBusinessDTO());
 
@@ -86,7 +86,7 @@ public class RegistrationControl {
             }
         } catch(Exception exception) {
             registrationResultDTO.setRegistrationResult(false);
-            registrationResultDTO.setReason("Error");
+            registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.GENERAL_ERROR);
             LOGGER.info("INFO" , exception.getMessage());
         }
 
@@ -102,7 +102,7 @@ public class RegistrationControl {
     public void inspectIfSamePassword(String password , String repeatPassword) {
 
         if(!password.equals(repeatPassword)) {
-            registrationResultDTO.setReason("Passwords are different");
+            registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.PASSWORD_DIFFERENT);
         }
     }
 
@@ -114,24 +114,26 @@ public class RegistrationControl {
 
         Matcher matcher = pattern.matcher(email);
         if(!matcher.find()) {
-            registrationResultDTO.setReason("Invalid Email");
+            registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.INVALID_EMAIL);
         }
     }
 
     public void validateFirstName(String firstName) {
         if(!firstName.matches( "[A-Z][a-z]*")){
-            registrationResultDTO.setReason("Invalid First Name");
+            registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.INVALID_FIRST_NAME);
         }
     }
 
     public void validateLastName(String lastName) {
         if(!lastName.matches( "[A-Z][a-z]*")){
-            registrationResultDTO.setReason("Invalid First Name");
+            registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.INVALID_LAST_NAME);
         }
     }
 
     public void validateBusinessName(String businessName) {
-
+        if(!businessName.matches("^(?!\\s)(?!.*\\s$)(?=.*[a-zA-Z0-9])[a-zA-Z0-9 '&]{2,10}$")) {
+            registrationResultDTO.setReason(RegistrationResultDTO.RegistrationResultType.INVALID_BUSINESS_NAME);
+        }
     }
 
 

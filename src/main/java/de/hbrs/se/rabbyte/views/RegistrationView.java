@@ -21,6 +21,7 @@ import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 
 
 @Route(value = "registration" )
@@ -140,7 +141,7 @@ public class RegistrationView extends VerticalLayout {
             if(registrationResult.getRegistrationResult()) {
                 Utils.triggerDialogMessage("Registrierung erfolgreich" , "Weiterleitung per login wenn implementiert");
             } else {
-                Utils.triggerDialogMessage("Registrierung fehlgeschlagen" , registrationResult.getReasons().toString());
+                setStudentErrorFields(registrationResult.getReasons());
             }
 
         });
@@ -193,4 +194,47 @@ public class RegistrationView extends VerticalLayout {
         }
 
     }
+
+    private void setStudentErrorFields(List<RegistrationResultDTO.RegistrationResultType> reasons) {
+        for(RegistrationResultDTO.RegistrationResultType registrationResultType : reasons) {
+            switch(registrationResultType) {
+                case EMAIL_IN_USE:
+                    emailFieldStudent.setErrorMessage("Diese E-Mail wird bereits verwendet");
+                    emailFieldStudent.setInvalid(true);
+                    break;
+                case INVALID_EMAIL:
+                    emailFieldStudent.setErrorMessage("Das Format der Email ist nicht gültig ");
+                    emailFieldStudent.setInvalid(true);
+                    break;
+                case PASSWORD_TO_SHORT:
+                    passwordFieldStudent.setErrorMessage("Das Password muss mindestens 5 Zeichen sein");
+                    passwordFieldStudent.setInvalid(true);
+                    break;
+                case PASSWORD_REPEAT_TO_SHORT:
+                    passwordFieldRepeatStudent.setErrorMessage("Das Password muss mindestens 5 Zeichen sein");
+                    passwordFieldRepeatStudent.setInvalid(true);
+                    break;
+                case PASSWORD_DIFFERENT:
+                    passwordFieldStudent.setErrorMessage("Unterschiedliches Password");
+                    passwordFieldStudent.setInvalid(true);
+                    passwordFieldRepeatStudent.setInvalid(true);
+                    break;
+                case INVALID_FIRST_NAME:
+                    firstNameStudent.setErrorMessage("Ungültiger Vorname");
+                    firstNameStudent.setInvalid(true);
+                    break;
+                case INVALID_LAST_NAME:
+                    lastNameStudent.setErrorMessage("Ungültiger Nachname");
+                    lastNameStudent.setInvalid(true);
+                    break;
+                default:
+                    break;
+
+            }
+        }
+
+
+    }
+
+
 }
