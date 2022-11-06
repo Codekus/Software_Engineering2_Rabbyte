@@ -1,6 +1,6 @@
 package de.hbrs.se.rabbyte.control;
 
-import de.hbrs.se.rabbyte.control.publisher.JobAdvertPublisher;
+import de.hbrs.se.rabbyte.control.factory.JobAdvertFactory;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
@@ -16,7 +16,7 @@ public class JobAdvertControl {
 
         public void createJobAdvert(JobAdvertisementDTO jobAdvertisementDTO, BusinessDTO businessDTO){
 
-                JobAdvertisement jobAdvertisement = JobAdvertPublisher.publishJobAdvert(jobAdvertisementDTO, businessDTO);
+                JobAdvertisement jobAdvertisement = JobAdvertFactory.publishJobAdvert(jobAdvertisementDTO, businessDTO);
 
                 this.repository.save(jobAdvertisement);
         }

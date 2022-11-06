@@ -1,10 +1,10 @@
-package de.hbrs.se.rabbyte.control.publisher;
+package de.hbrs.se.rabbyte.control.factory;
 
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 
-public class JobAdvertPublisher {
+public class JobAdvertFactory {
 
         public static JobAdvertisement publishJobAdvert(JobAdvertisementDTO jobAdvertisementDTO, BusinessDTO businessDTO) {
 
