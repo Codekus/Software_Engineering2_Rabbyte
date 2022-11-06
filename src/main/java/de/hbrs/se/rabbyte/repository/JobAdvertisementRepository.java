@@ -1,20 +1,19 @@
 package de.hbrs.se.rabbyte.repository;
-
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Component;
 import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 
 @Component
 public interface JobAdvertisementRepository extends JpaRepository<JobAdvertisement , Integer> {
 
 
-    List<JobAdvertisementDTO> findJobAdvertisementByIdIsNotNull();
     JobAdvertisementDTO findJobAdvertisementById(int id);
+    List<JobAdvertisementDTO> findJobAdvertisementByIdIsNotNull();
+
 
 
     @Query("select j from JobAdvertisement j " +

@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Scope;
 
 @org.springframework.stereotype.Component
 @Scope("prototype")
-@Route(value = "")
+@Route(value = "student/search-view")
 @RouteAlias(value ="user/student/main")
 @PageTitle("Search For Job-Advertisements")
 @CssImport("./styles/views/JobAdvertisementSearchView/job-advertisements-search-view.css")
@@ -58,7 +58,6 @@ public class JobAdvertisementSearchView extends VerticalLayout {
         searchField.setPrefixComponent(VaadinIcon.SEARCH.create());
         searchField.setMinWidth("20vW");
 
-        //HorizontalLayout searchFieldComp = new HorizontalLayout(searchField);
         return searchField;
     }
 
@@ -66,9 +65,9 @@ public class JobAdvertisementSearchView extends VerticalLayout {
         grid.addClassName("job-advertisement-grid");
         grid.setSizeFull();
         grid.removeAllColumns();
-        grid.addColumn(jobAdvertisement -> jobAdvertisement.getBusiness().getBusinessName()).setHeader("Business");
-        grid.addColumn(jobAdvertisement -> jobAdvertisement.getTitle()).setHeader("Title");
-        grid.addColumn(jobAdvertisement -> jobAdvertisement.getText()).setHeader("Description");
+        grid.addColumn(jobAdvertisement -> jobAdvertisement.getBusiness().getBusinessName()).setHeader("Unternehmen");
+        grid.addColumn(jobAdvertisement -> jobAdvertisement.getTitle()).setHeader("Titel");
+        grid.addColumn(jobAdvertisement -> jobAdvertisement.getText()).setHeader("Beschreibung");
         grid.getColumns().forEach(col-> col.setAutoWidth(true));
     }
 
