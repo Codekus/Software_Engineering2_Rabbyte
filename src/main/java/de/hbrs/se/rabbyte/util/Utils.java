@@ -1,4 +1,8 @@
 package de.hbrs.se.rabbyte.util;
+
+import java.util.Arrays;
+
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H3;
@@ -13,6 +17,19 @@ public class Utils {
 
     private Utils() {
         throw new IllegalStateException("Utility Class");
+    }
+
+    /**
+     * Nützliche Methdode zur Erweiterung eines bestehendes Arrays
+     * Oma hätte gesagt, so eine Methode 'fällt nicht durch' ;-)
+     * <p>
+     * https://stackoverflow.com/questions/2843366/how-to-add-new-elements-to-an-array
+     */
+    public static <T> T[] append(T[] arr, T element) {
+        final int N = arr.length;
+        arr = Arrays.copyOf(arr, N + 1);
+        arr[N] = element;
+        return arr;
     }
 
 
