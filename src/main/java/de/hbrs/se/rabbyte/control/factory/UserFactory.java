@@ -41,7 +41,7 @@ public class UserFactory {
             byte[] salt = CryptographyUtil.generateSalt();
             business.setSalt(CryptographyUtil.toHex(salt));
             business.setPassword(CryptographyUtil.encryptPassword(businessDTO.getPassword() , salt));
-        } catch (Exception exception) {
+        } catch (Exception  exception) {
             LOGGER.info(exception.getMessage());
         }
         business.setEmail(businessDTO.getEmail());

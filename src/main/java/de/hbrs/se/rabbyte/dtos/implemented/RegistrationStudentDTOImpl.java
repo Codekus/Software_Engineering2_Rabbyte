@@ -1,6 +1,5 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
-import com.vaadin.flow.component.textfield.PasswordField;
 import de.hbrs.se.rabbyte.dtos.RegistrationStudentDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
 

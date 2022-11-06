@@ -11,6 +11,7 @@ import java.security.spec.InvalidKeySpecException;
 
 public  class CryptographyUtil {
 
+
     private CryptographyUtil() {
         throw new IllegalStateException("Utility Class");
     }
@@ -24,20 +25,16 @@ public  class CryptographyUtil {
         return bytes;
     }
 
-    public static byte[] hashPassword( final char[] password, final byte[] salt ) {
+    public static byte[] hashPassword( final char[] password, final byte[] salt ) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
-        try {
+
             PBEKeySpec spec = new PBEKeySpec(password, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE * 8);
             SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             return  skf.generateSecret(spec).getEncoded();
 
-
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e ) {
-            throw new RuntimeException( e );
-        }
     }
 
-    public static String encryptPassword(String plainPassword, final byte[] salt)  {
+    public static String encryptPassword(String plainPassword, final byte[] salt) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
         return toHex(hashPassword(plainPassword.toCharArray() , salt));
 
