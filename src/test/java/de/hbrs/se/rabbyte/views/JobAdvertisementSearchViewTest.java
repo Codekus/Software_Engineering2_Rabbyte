@@ -23,9 +23,8 @@ public class JobAdvertisementSearchViewTest {
         JobAdvertisement firstJobAdvertisement = getFirstItem(grid);
 
         grid.asSingleSelect().setValue(firstJobAdvertisement);
-
         //not yet finished
-        Assert.assertEquals(firstJobAdvertisement.getBusiness(),"");
+        Assert.assertEquals(firstJobAdvertisement.getBusiness().getBusinessName(),"");
     }
 
     private JobAdvertisement getFirstItem(Grid<JobAdvertisement>grid){
