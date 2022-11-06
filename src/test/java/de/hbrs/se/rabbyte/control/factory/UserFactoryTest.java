@@ -37,10 +37,11 @@ class UserFactoryTest {
         student = UserFactory.createStudent(studentDTO);
 
         assertTrue(student instanceof Student);
-        assertEquals("password" , student.getPassword());
+        assertEquals(128 , student.getPassword().length());
         assertEquals("max@mustermann.de" , student.getEmail());
         assertEquals("Max" , student.getFirstName());
         assertEquals("Mustermann" , student.getLastName());
+        assertEquals(128 , student.getSalt().length());
 
     }
 
@@ -53,9 +54,10 @@ class UserFactoryTest {
         when(businessDTO.getBusinessName()).thenReturn("Mustermann Gmbh");
 
         business = UserFactory.createBusiness(businessDTO);
-        assertEquals("password" , business.getPassword());
+        assertEquals(128 , business.getPassword().length());
         assertEquals("musterman@gmbh.de" , business.getEmail());
         assertEquals("Mustermann Gmbh" , business.getBusinessName());
+        assertEquals(128 , business.getSalt().length());
 
     }
 }
