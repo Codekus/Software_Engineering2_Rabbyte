@@ -1,6 +1,5 @@
 package de.hbrs.se.rabbyte.util;
 
-import de.hbrs.se.rabbyte.exception.HashingException;
 import org.junit.jupiter.api.Test;
 
 import java.security.NoSuchAlgorithmException;
@@ -21,7 +20,7 @@ class CryptographyUtilTest {
     }
 
     @Test
-    void hashPassword() throws HashingException, InvalidKeySpecException, NoSuchAlgorithmException {
+    void hashPassword() throws  InvalidKeySpecException, NoSuchAlgorithmException {
         String password = "Password";
         byte[] arraySalt = new byte[64];
         byte[] hashedPassword = CryptographyUtil.hashPassword(password.toCharArray() , arraySalt);
@@ -32,7 +31,7 @@ class CryptographyUtilTest {
     }
 
     @Test
-    void encryptPassword() throws HashingException, InvalidKeySpecException, NoSuchAlgorithmException {
+    void encryptPassword() throws InvalidKeySpecException, NoSuchAlgorithmException {
         assertEquals(128  , CryptographyUtil.encryptPassword(password, arraySalt).length());
     }
 }
