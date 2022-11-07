@@ -1,12 +1,11 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
-import com.vaadin.flow.component.textfield.PasswordField;
 import de.hbrs.se.rabbyte.dtos.RegistrationStudentDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
 
 public class RegistrationStudentDTOImpl extends RegistrationDTOImpl implements RegistrationStudentDTO {
     
-    private StudentDTO studentDTO;
+    private StudentDTOImpl studentDTO;
 
     public RegistrationStudentDTOImpl(StudentDTOImpl studentDTO, String passwordFieldRepeatStudent) {
         this.setStudentDTO(studentDTO);
@@ -18,7 +17,7 @@ public class RegistrationStudentDTOImpl extends RegistrationDTOImpl implements R
         return studentDTO;
     }
     
-    public void setStudentDTO(StudentDTO studentDTO) {
+    public void setStudentDTO(StudentDTOImpl studentDTO) {
         this.studentDTO = studentDTO;
     }
 }

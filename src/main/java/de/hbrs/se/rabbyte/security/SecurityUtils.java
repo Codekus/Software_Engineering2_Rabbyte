@@ -22,7 +22,7 @@ public final class SecurityUtils {
                 .anyMatch(r -> r.getIdentifier().equals(parameterValue));
     }
 
-    static boolean isUserLoggedIn() {
+    public static boolean isUserLoggedIn() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication != null
                 && !(authentication instanceof AnonymousAuthenticationToken)
