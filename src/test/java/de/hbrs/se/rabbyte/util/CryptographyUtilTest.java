@@ -29,7 +29,7 @@ class CryptographyUtilTest {
         byte[] arraySalt = new byte[64];
         byte[] hashedPassword = CryptographyUtil.hashPassword(password.toCharArray() , arraySalt);
         assertEquals(
-                "TEXCUUrE+64UKyGjM1yumW4Ez9gPJYzMnkOvseWaT57s5a+vfMaYovu7ggMa0DC9cN9JXA0N7YucIgSuDEnrYQ=="
+                "EXzc11qKyYLTWF/ujw0m/3lxnScZUZ1xrWxvPxxlT9AESueP3DwmqTevv5Nl2Py+X5FpCgnEFusiZsM3BdMh6Q=="
                 , Base64.getEncoder().encodeToString(hashedPassword));;
 
     }
