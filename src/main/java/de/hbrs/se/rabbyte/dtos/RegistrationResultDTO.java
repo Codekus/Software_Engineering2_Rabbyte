@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface RegistrationResultDTO {
 
-    enum RegistrationResultType {
+    enum Result {
         EMAIL_IN_USE,
         INVALID_EMAIL,
         PASSWORD_TO_SHORT,
@@ -21,7 +21,7 @@ public interface RegistrationResultDTO {
     public void setRegistrationResult(boolean result);
     public boolean getRegistrationResult();
 
-    public void setReason(RegistrationResultType reason);
+    public void setReason(Result reason);
 
-    public List<RegistrationResultType> getReasons();
+    public List<Result> getReasons();
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class RegistrationResultDTOImpl implements RegistrationResultDTO {
     private boolean result;
-    private List<RegistrationResultType> reasons;
+    private List<Result> reasons;
 
     public RegistrationResultDTOImpl() {
         this.reasons = new ArrayList<>();
@@ -25,12 +25,12 @@ public class RegistrationResultDTOImpl implements RegistrationResultDTO {
     }
 
     @Override
-    public void setReason(RegistrationResultType reason) {
+    public void setReason(Result reason) {
         reasons.add(reason);
     }
 
     @Override
-    public List<RegistrationResultType> getReasons() {
+    public List<Result> getReasons() {
         return reasons;
     }
 }
