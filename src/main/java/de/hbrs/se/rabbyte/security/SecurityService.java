@@ -4,12 +4,8 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinServletRequest;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
-import de.hbrs.se.rabbyte.entities.Role;
 import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
-import de.hbrs.se.rabbyte.views.CreateJobAdvertisementView;
-import de.hbrs.se.rabbyte.views.JobAdvertisementSearchView;
-import de.hbrs.se.rabbyte.views.MainView;
-import de.hbrs.se.rabbyte.views.StudentUserView;
+import de.hbrs.se.rabbyte.views.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
@@ -42,7 +38,7 @@ public class SecurityService  {
     }
 
     private void createRoutes(GeneralUserDTO user){
-        getAuthorizedRoutes(user).stream().forEach(route -> RouteConfiguration.forSessionScope().setRoute(route.route, route.name, route.view));
+        getAuthorizedRoutes(user).stream().forEach(route -> RouteConfiguration.forSessionScope().setRoute(route.route, route.view, AppView.class));
     }
 
     public List<AuthorizedRoute> getAuthorizedRoutes(GeneralUserDTO user){
