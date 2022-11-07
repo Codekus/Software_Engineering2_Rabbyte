@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // Allow all Vaadin internal requests.
                 .requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
-
+                .antMatchers("/registration").permitAll()
                 // Allow all requests by logged-in users.
                 .anyRequest().authenticated()
 
@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // Configure logout
                 .and().logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL);
-        RouteConfiguration.forApplicationScope().setRoute("register", RegistrationView.class);
+
     }
 
     /*@Bean
