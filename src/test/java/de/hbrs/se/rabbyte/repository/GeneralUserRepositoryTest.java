@@ -4,12 +4,16 @@ import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
+@TestExecutionListeners(listeners = { SqlScriptsTestExecutionListener.class })
 @AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY )
-@Sql(scripts = {"/rabbyte_schema.sql", "/rabbyte_data.sql"})
+@Sql(scripts = {"file:src/test/ressources/rabbyte_data.sql ", "file:src/test/ressources/rabbyte_data.sql"})
 @AutoConfigureEmbeddedDatabase
 
 class GeneralUserRepositoryTest {
