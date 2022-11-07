@@ -1,11 +1,13 @@
 package de.hbrs.se.rabbyte.security;
 
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinServletRequest;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.entities.Role;
 import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
+import de.hbrs.se.rabbyte.views.CreateJobAdvertisementView;
+import de.hbrs.se.rabbyte.views.JobAdvertisementSearchView;
 import de.hbrs.se.rabbyte.views.MainView;
 import de.hbrs.se.rabbyte.views.StudentUserView;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,10 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
-import de.hbrs.se.rabbyte.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +31,6 @@ public class SecurityService  {
 
     }
 
-    public record AuthorizedRoute(String route, String name, Class <? extends Component> view){
-
-    }
-
     public void authenticate(String username, String password) throws AuthException {
 
 
@@ -42,22 +38,22 @@ public class SecurityService  {
         if (user == null) {
             throw new AuthException();
         }
-        createRoutes(user.getRoles());
+        createRoutes(user);
     }
 
-    private void createRoutes(Role role){
-
+    private void createRoutes(GeneralUserDTO user){
+        getAuthorizedRoutes(user).stream().forEach(route -> RouteConfiguration.forSessionScope().setRoute(route.route, route.name, route.view));
     }
 
-    public List<AuthorizedRoute> getAuthorizedRoutes(Role role){
+    public List<AuthorizedRoute> getAuthorizedRoutes(GeneralUserDTO user){
         var routes = new ArrayList<AuthorizedRoute>();
         routes.add(new AuthorizedRoute("home", "Home", MainView.class));
-        if (role.equals(Role.STUDENT)){
+        if (generalUserRepository.getStudent(user.getId()) != null){
             routes.add(new AuthorizedRoute("student", "Student", StudentUserView.class));
-        } else if (role.equals(Role.BUSINESS)) {
-            
-        } else if (role.equals(Role.ADMIN)) {
-            
+            routes.add(new AuthorizedRoute("search", "Search Job Advertisement", JobAdvertisementSearchView.class));
+        } else if (generalUserRepository.getBusiness(user.getId()) != null) {
+            routes.add(new AuthorizedRoute("create", "Create Job Advertisement", CreateJobAdvertisementView.class));
+
         }
         return routes;
     }
