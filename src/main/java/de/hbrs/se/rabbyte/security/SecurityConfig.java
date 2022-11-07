@@ -1,8 +1,5 @@
 package de.hbrs.se.rabbyte.security;
 
-import com.vaadin.flow.router.RouteConfiguration;
-import de.hbrs.se.rabbyte.views.AppView;
-import de.hbrs.se.rabbyte.views.RegistrationView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -15,6 +15,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import de.hbrs.se.rabbyte.security.SecurityService;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 
 @Route("login")
 @PageTitle("Login | Vaadin CRM")
@@ -36,6 +39,8 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
                 securityService.authenticate(event.getUsername(), event.getPassword());
             } catch (SecurityService.AuthException e) {
                 Notification.show("Wrong credentials");
+            } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
             }
             UI.getCurrent().navigate("main");
         });

@@ -5,6 +5,7 @@ import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinServletRequest;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
+import de.hbrs.se.rabbyte.util.CryptographyUtil;
 import de.hbrs.se.rabbyte.views.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class SecurityService  {
@@ -27,13 +31,17 @@ public class SecurityService  {
 
     }
 
-    public void authenticate(String username, String password) throws AuthException {
+    public void authenticate(String username, String password) throws AuthException, InvalidKeySpecException, NoSuchAlgorithmException {
 
 
-        GeneralUserDTO user = generalUserRepository.findByEmailAndPassword(username, DigestUtils.sha256Hex(password) );
-        if (user == null) {
+        GeneralUserDTO user = generalUserRepository.findByEmail(username);
+        String dbpassword = user.getPassword();
+        String salt = user.getSalt();
+                //generalUserRepository.findByEmailAndPassword(username, CryptographyUtil.encryptPassword(studentDTO.getPassword() , salt) );
+        if (user == null || !Objects.equals(dbpassword, CryptographyUtil.encryptPassword(password, CryptographyUtil.fromHex(salt)))) {
             throw new AuthException();
         }
+
         createRoutes(user);
     }
 
