@@ -19,7 +19,7 @@ CREATE SEQUENCE rabbyte."Bewerbung_bewerbung_id_seq"
     NO MAXVALUE
     CACHE 1;
 
-CREATE TABLE rabbyte."user" (
+CREATE TABLE rabbyte.user (
                                 user_id integer NOT NULL,
                                 email character varying(50) NOT NULL,
                                 passwort character varying(128) NOT NULL,
