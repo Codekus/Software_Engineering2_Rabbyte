@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StudentDTOImplTest {
 
-    StudentDTOImpl studentDTO = new StudentDTOImpl();
+    StudentDTOImplGeneral studentDTO = new StudentDTOImplGeneral();
 
     private String firstName = "Max";
     private String lastName = "Mustermann";

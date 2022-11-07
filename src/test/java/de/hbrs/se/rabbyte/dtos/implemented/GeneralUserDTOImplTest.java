@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserDTOImplTest {
+class GeneralUserDTOImplTest {
 
-    UserDTOImpl generalUserDTO = new UserDTOImpl();
+    GeneralUserDTOImpl generalUserDTO = new GeneralUserDTOImpl();
     private int id = 100;
     private String email = "max@mustermann.de";
     private String password = "password";
