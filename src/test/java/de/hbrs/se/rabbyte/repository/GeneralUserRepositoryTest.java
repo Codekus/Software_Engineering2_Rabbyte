@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DataJpaTest
 @TestExecutionListeners(listeners = { SqlScriptsTestExecutionListener.class })
 @AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY )
-@Sql(scripts = {"file:src/test/ressources/rabbyte_data.sql ", "file:src/test/ressources/rabbyte_data.sql"})
+@Sql(scripts = {"file:src/test/ressources/rabbyte_schema.sql ", "file:src/test/ressources/rabbyte_data.sql"})
 @AutoConfigureEmbeddedDatabase
 
 class GeneralUserRepositoryTest {
