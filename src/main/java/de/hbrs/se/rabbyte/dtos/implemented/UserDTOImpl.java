@@ -7,7 +7,7 @@ import de.hbrs.se.rabbyte.entities.User;
 /**
  * A DTO for the {@link User} entity
  */
-public class GeneralUserDTOImpl implements GeneralUserDTO {
+public class UserDTOImpl implements GeneralUserDTO {
 
     private int id;
     private String email;
