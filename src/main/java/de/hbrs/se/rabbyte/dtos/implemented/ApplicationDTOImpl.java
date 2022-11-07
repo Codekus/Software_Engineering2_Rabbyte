@@ -3,9 +3,13 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 import de.hbrs.se.rabbyte.dtos.ApplicationDTO;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import de.hbrs.se.rabbyte.entities.Student;
+
+
 import java.time.LocalDate;
 
-
+/**
+ * A DTO for the {@link de.hbrs.se.rabbyte.entities.Application} entity
+ */
 public class ApplicationDTOImpl implements ApplicationDTO {
 
     private JobAdvertisement jobAdvertisement;
