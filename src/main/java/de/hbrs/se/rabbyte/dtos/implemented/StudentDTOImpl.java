@@ -7,7 +7,7 @@ import de.hbrs.se.rabbyte.dtos.StudentDTO;
 /**
  * A DTO for the {@link de.hbrs.se.rabbyte.entities.Student} entity
  */
-public class StudentDTOImpl extends UserDTOImpl implements StudentDTO {
+public class StudentDTOImpl extends GeneralUserDTOImpl implements StudentDTO {
 
     private String faculty;
     private String firstName;

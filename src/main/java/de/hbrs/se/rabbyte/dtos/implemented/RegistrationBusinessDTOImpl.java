@@ -5,9 +5,9 @@ import de.hbrs.se.rabbyte.dtos.RegistrationBusinessDTO;
 
 public class RegistrationBusinessDTOImpl extends RegistrationDTOImpl implements RegistrationBusinessDTO {
 
-    private BusinessDTOImpl businessDTO;
+    private BusinessDTOImpl  businessDTO;
 
-    public RegistrationBusinessDTOImpl(BusinessDTOImpl businessDTO, String repeatPassword) {
+    public RegistrationBusinessDTOImpl(BusinessDTOImpl  businessDTO, String repeatPassword) {
         this.businessDTO = businessDTO;
         this.setRepeatPassword(repeatPassword);
     }
@@ -18,7 +18,7 @@ public class RegistrationBusinessDTOImpl extends RegistrationDTOImpl implements 
         return businessDTO;
     }
 
-    public void setBusinessDTO(BusinessDTOImpl businessDTO) {
+    public void setBusinessDTO(BusinessDTOImpl  businessDTO) {
         this.businessDTO = businessDTO;
     }
 
