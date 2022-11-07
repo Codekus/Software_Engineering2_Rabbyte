@@ -7,17 +7,15 @@ import java.lang.reflect.Modifier;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
-
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CryptographyUtilTest {
 
-    private final String error = "class de.hbrs.se.rabbyte.util.CryptographyUtilTest cannot access a member of class de.hbrs.se.rabbyte.util.CryptographyUtil with modifiers \"private\"";
+    private static final String error = "class de.hbrs.se.rabbyte.util.CryptographyUtilTest cannot access a member of class de.hbrs.se.rabbyte.util.CryptographyUtil with modifiers \"private\"";
 
 
-    private String password = "Password";
-    private byte[] arraySalt = new byte[64];
+    private static final String password = "Password";
+    private byte[] arraySalt =  new byte[64];
     @Test
     void generateSalt() {
         assertEquals(64 , CryptographyUtil.generateSalt().length);
@@ -25,13 +23,11 @@ class CryptographyUtilTest {
 
     @Test
     void hashPassword() throws  InvalidKeySpecException, NoSuchAlgorithmException {
-        String password = "Password";
-        byte[] arraySalt = new byte[64];
+
         byte[] hashedPassword = CryptographyUtil.hashPassword(password.toCharArray() , arraySalt);
         assertEquals(
                 "EXzc11qKyYLTWF/ujw0m/3lxnScZUZ1xrWxvPxxlT9AESueP3DwmqTevv5Nl2Py+X5FpCgnEFusiZsM3BdMh6Q=="
-                , Base64.getEncoder().encodeToString(hashedPassword));;
-
+                , Base64.getEncoder().encodeToString(hashedPassword));
     }
 
     @Test

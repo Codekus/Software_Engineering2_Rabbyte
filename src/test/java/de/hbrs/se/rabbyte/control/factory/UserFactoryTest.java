@@ -9,18 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
-import java.security.NoSuchAlgorithmException;
-
-import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class UserFactoryTest {
 
-    private final String exceptionMessage =
+    private static final String exceptionMessage =
             "class de.hbrs.se.rabbyte.control.factory.UserFactoryTest cannot access a member of class de.hbrs.se.rabbyte.control.factory.UserFactory with modifiers \"private\"";
     @Mock
     private StudentDTO studentDTO;
@@ -29,13 +25,13 @@ class UserFactoryTest {
     @Mock
     private User user;
 
-    private final String password = "password";
-    private final String emailStudent = "max@mustermann.de";
-    private final String studentFirstName = "Max";
-    private final String studentLastName = "Mustermann";
+    private static final String password = "password";
+    private static final String emailStudent = "max@mustermann.de";
+    private static final String studentFirstName = "Max";
+    private static final String studentLastName = "Mustermann";
 
-    private final String businessMail = "musterman@gmbh.de";
-    private final String businessName = "Mustermann Gmbh";
+    private static final String businessMail = "musterman@gmbh.de";
+    private static final String businessName = "Mustermann Gmbh";
     @Test
     void createStudent()  {
         Student student;
@@ -73,7 +69,7 @@ class UserFactoryTest {
     }
 
     @Test
-    void ThrowIllegalAccesExceptionWhenInstancingUserFactory() throws NoSuchMethodException {
+    void throwIllegalAccesExceptionWhenInstancingUserFactory() throws NoSuchMethodException {
         Constructor<UserFactory> constructor = UserFactory.class.getDeclaredConstructor();
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);

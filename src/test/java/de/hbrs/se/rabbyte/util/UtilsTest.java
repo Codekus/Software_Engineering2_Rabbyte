@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UtilsTest {
 
-    private final String exceptionMessage = "class de.hbrs.se.rabbyte.util.UtilsTest cannot access a member of class de.hbrs.se.rabbyte.util.Utils with modifiers \"private\"";
+    private static final String exceptionMessage = "class de.hbrs.se.rabbyte.util.UtilsTest cannot access a member of class de.hbrs.se.rabbyte.util.Utils with modifiers \"private\"";
     @Test
     void append() {
     }
@@ -19,7 +19,7 @@ class UtilsTest {
     }
 
     @Test
-    void ThrowIllegalAccesExceptionWhenInstancingUtils() throws NoSuchMethodException {
+    void throwIllegalAccesExceptionWhenInstancingUtils() throws NoSuchMethodException {
         Constructor<Utils> constructor = Utils.class.getDeclaredConstructor();
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);
