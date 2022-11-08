@@ -54,4 +54,11 @@ class CryptographyUtilTest {
         assertEquals( Base64.getEncoder().encodeToString(byteArray) , Base64.getEncoder().encodeToString(CryptographyUtil.fromHex("FFFF")));
 
     }
+
+    @Test
+    void conversionTest() {
+        byte[] byteArray = CryptographyUtil.generateSalt();
+        String hex = CryptographyUtil.toHex(byteArray);
+        assertArrayEquals(byteArray , CryptographyUtil.fromHex(hex));
+    }
 }
