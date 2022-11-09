@@ -69,10 +69,11 @@ public class SecurityService  {
                 if(RouteConfiguration.forSessionScope().isPathRegistered(route.route)){
                     RouteConfiguration.forSessionScope().removeRoute(route.route);
                 }
-                RouteConfiguration.forSessionScope().setRoute(route.route, route.view);
+                //RouteConfiguration.forSessionScope().setRoute(route.route, route.view);
+                RouteConfiguration.forSessionScope().setRoute(route.route, route.view, AppView.class);
             }else{
-                RouteConfiguration.forSessionScope().setRoute(route.route, route.view);
-                //RouteConfiguration.forSessionScope().setRoute(route.route, route.view, AppView.class);
+                //RouteConfiguration.forSessionScope().setRoute(route.route, route.view);
+                RouteConfiguration.forSessionScope().setRoute(route.route, route.view, AppView.class);
             }
 
         });
@@ -92,7 +93,7 @@ public class SecurityService  {
     }
     public List<AuthorizedRoute> getAuthorizedRoutes(GeneralUserDTO user){
         var routes = new ArrayList<AuthorizedRoute>();
-    //    routes.add(new AuthorizedRoute("appview", "AppView", AppView.class));
+        routes.add(new AuthorizedRoute("appview", "AppView", AppView.class));
         if (Objects.equals(getRole(user), "Student")){
             routes.add(new AuthorizedRoute("student", "Student", StudentUserView.class));
             routes.add(new AuthorizedRoute("main", "Search Job Advertisement", JobAdvertisementSearchView.class));
