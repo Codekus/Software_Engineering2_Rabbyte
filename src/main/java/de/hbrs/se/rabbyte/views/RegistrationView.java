@@ -5,6 +5,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -67,6 +68,8 @@ public class RegistrationView extends VerticalLayout {
     class StudentForm extends Div {
 
         StudentForm() {
+
+
             emailFieldStudent.setRequiredIndicatorVisible(true);
             passwordFieldStudent.setRequiredIndicatorVisible(true);
             passwordFieldRepeatStudent.setRequiredIndicatorVisible(true);
@@ -77,8 +80,11 @@ public class RegistrationView extends VerticalLayout {
 
 
             FormLayout formLayout = new FormLayout();
-            formLayout.add(emailFieldStudent, passwordFieldStudent, passwordFieldRepeatStudent, firstNameStudent, lastNameStudent);
+            formLayout.add(firstNameStudent, lastNameStudent, passwordFieldStudent, passwordFieldRepeatStudent, emailFieldStudent);
 
+            formLayout.setColspan(emailFieldStudent , 2);
+            setSizeFull();
+            setAlignItems(Alignment.CENTER);
             this.add(formLayout);
         }
 
@@ -98,6 +104,7 @@ public class RegistrationView extends VerticalLayout {
 
         BusinessForm() {
 
+            setAlignItems(Alignment.CENTER);
             emailFieldBusiness.setRequiredIndicatorVisible(true);
             passwordFieldBusiness.setRequiredIndicatorVisible(true);
             passwordFieldRepeatBusiness.setRequiredIndicatorVisible(true);
@@ -107,8 +114,11 @@ public class RegistrationView extends VerticalLayout {
             emailFieldBusiness.setMinLength(5);
 
             FormLayout formLayout = new FormLayout();
-            formLayout.add(emailFieldBusiness, passwordFieldBusiness, passwordFieldRepeatBusiness, businessNameField);
+            formLayout.add(businessNameField, passwordFieldBusiness, passwordFieldRepeatBusiness, emailFieldBusiness);
 
+            formLayout.setColspan(businessNameField , 2);
+            formLayout.setColspan(emailFieldBusiness , 2);
+            setSizeFull();
             this.add(formLayout);
         }
 
@@ -128,12 +138,15 @@ public class RegistrationView extends VerticalLayout {
 
     public RegistrationView() {
 
+        setAlignItems(Alignment.CENTER);
+
         verticalLayout = new VerticalLayout();
         tabsLayout = new VerticalLayout();
         H1 h1 = new H1("Registrierung");
 
         StudentForm studentForm = new StudentForm();
         BusinessForm businessForm = new BusinessForm();
+
 
         verticalLayout.add(h1);
 
@@ -171,16 +184,21 @@ public class RegistrationView extends VerticalLayout {
 
         student = new Tab("Student");
         business = new Tab("Business");
+
         Tabs tabs = new Tabs(student, business);
 
         tabs.addSelectedChangeListener(event ->
                 setContent(event.getSelectedTab())
         );
 
+        tabsLayout.setAlignItems(Alignment.CENTER);
+
         setContent(tabs.getSelectedTab());
+        verticalLayout.setWidth("50%");
         verticalLayout.add(h1);
+        verticalLayout.add(tabs , tabsLayout);
         add(verticalLayout);
-        add(tabs, tabsLayout);
+
 
     }
 
