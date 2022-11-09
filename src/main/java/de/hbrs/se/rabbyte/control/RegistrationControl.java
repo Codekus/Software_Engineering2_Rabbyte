@@ -110,25 +110,25 @@ public class RegistrationControl {
 
     }
 
-    public boolean businessNameInUse(String businessName) {
+    private boolean businessNameInUse(String businessName) {
         BusinessDTO businessDTO = businessRepository.findBusinessByBusinessName(businessName);
         return ( businessDTO != null && businessDTO.getId() > 0);
     }
 
-    public boolean inspectIfEmailIsAlreadyInUse(String email) {
+    private boolean inspectIfEmailIsAlreadyInUse(String email) {
         GeneralUserDTO generalUser = generalUserRepository.findByEmail(email);
 
         return (generalUser != null && generalUser.getId() > 0);
     }
 
-    public void inspectIfSamePassword(String password , String repeatPassword) {
+    private void inspectIfSamePassword(String password , String repeatPassword) {
 
         if(!password.equals(repeatPassword)) {
             registrationResultDTO.setReason(RegistrationResultDTO.Result.PASSWORD_DIFFERENT);
         }
     }
 
-    public void validateEmailName(String email) {
+    private void validateEmailName(String email) {
 
 
         Pattern pattern =
@@ -140,31 +140,31 @@ public class RegistrationControl {
         }
     }
 
-    public void validateFirstName(String firstName) {
+    private void validateFirstName(String firstName) {
         if(!firstName.matches( "[A-Z][a-z]*")){
             registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_FIRST_NAME);
         }
     }
 
-    public void validateLastName(String lastName) {
+    private void validateLastName(String lastName) {
         if(!lastName.matches( "[A-Z][a-z]*")){
             registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_LAST_NAME);
         }
     }
 
-    public void validateBusinessName(String businessName) {
+    private void validateBusinessName(String businessName) {
         if(!businessName.matches("^(?!\\s)(?!.*\\s)(?=.*[a-zA-Z0-9])[a-zA-Z0-9 '&]{2,10}$")) {
             registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_BUSINESS_NAME);
         }
     }
 
-    public void inspectIfRepeatPasswordIsTooShort(String repeatPassword) {
+    private void inspectIfRepeatPasswordIsTooShort(String repeatPassword) {
         if(passwordTooShort(repeatPassword)) {
             registrationResultDTO.setReason(RegistrationResultDTO.Result.PASSWORD_REPEAT_TO_SHORT);
         }
     }
 
-    public void inspectIfPasswordIsTooShort(String password) {
+    private void inspectIfPasswordIsTooShort(String password) {
         if(passwordTooShort(password)) {
             registrationResultDTO.setReason(RegistrationResultDTO.Result.PASSWORD_TO_SHORT);
         }
