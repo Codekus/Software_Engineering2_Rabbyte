@@ -11,7 +11,7 @@ class RegistrationStudentDTOImplTest {
 
     private RegistrationStudentDTOImpl registrationStudentDTO;
 
-    private String password = "password";
+    private final String studentRepeatPw = "12345";
 
     @Mock
     private StudentDTOImpl studentDTO;
@@ -20,7 +20,7 @@ class RegistrationStudentDTOImplTest {
     void setUp() {
 
         studentDTO = new StudentDTOImpl();
-        registrationStudentDTO = new RegistrationStudentDTOImpl(studentDTO , password);
+        registrationStudentDTO = new RegistrationStudentDTOImpl(studentDTO , studentRepeatPw);
     }
 
     @Test

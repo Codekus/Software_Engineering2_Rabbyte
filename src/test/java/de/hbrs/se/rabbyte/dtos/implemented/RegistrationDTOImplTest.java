@@ -8,14 +8,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class RegistrationDTOImplTest {
 
     private RegistrationDTOImpl registrationDTO = new RegistrationDTOImpl();
-    private String repeatPassword;
+    private String registrationRepeatPw = "12345";
     @AfterEach
     void tearDown() {
-        repeatPassword = "password";
-        registrationDTO.setRepeatPassword(repeatPassword);
+        registrationDTO.setRepeatPassword(registrationRepeatPw);
     }
     @Test
     void getPassword() {
-        assertEquals(repeatPassword , registrationDTO.getRepeatPassword());
+        assertEquals(registrationRepeatPw , registrationDTO.getRepeatPassword());
     }
 }

@@ -15,13 +15,12 @@ class RegistrationBusinessDTOImplTest {
 
     @Mock
     BusinessDTOImpl  businessDTO;
-    private String password;
+    private final String businesspw  = "12345";
 
     @BeforeEach
     void setUp() {
         businessDTO = new BusinessDTOImpl();
-        password = "password";
-        registrationBusinessDTO = new RegistrationBusinessDTOImpl(businessDTO , password);
+        registrationBusinessDTO = new RegistrationBusinessDTOImpl(businessDTO , businesspw);
     }
 
     @Test
