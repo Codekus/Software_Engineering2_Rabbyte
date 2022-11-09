@@ -3,18 +3,23 @@ package de.hbrs.se.rabbyte.security;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinServletRequest;
+import com.vaadin.flow.server.VaadinSession;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
 import de.hbrs.se.rabbyte.util.CryptographyUtil;
 import de.hbrs.se.rabbyte.views.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
@@ -26,6 +31,8 @@ public class SecurityService  {
 
     @Autowired
     GeneralUserRepository generalUserRepository;
+
+    private GeneralUserDTO generalUserDTO;
 
     public class AuthException extends Exception {
 
@@ -42,12 +49,17 @@ public class SecurityService  {
             throw new AuthException();
         }
 
+        generalUserDTO = user;
+        UI.getCurrent().getSession().setAttribute("CURRENT USER", generalUserDTO );
         createRoutes(user);
+
     }
+
 
     private void createRoutes(GeneralUserDTO user){
         getAuthorizedRoutes(user).stream().forEach(route -> RouteConfiguration.forSessionScope().setRoute(route.route, route.view, AppView.class));
     }
+
 
     public List<AuthorizedRoute> getAuthorizedRoutes(GeneralUserDTO user){
         var routes = new ArrayList<AuthorizedRoute>();
@@ -75,10 +87,14 @@ public class SecurityService  {
     }
 
     public void logout() {
-        UI.getCurrent().getPage().setLocation(LOGOUT_SUCCESS_URL);
-        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
-        logoutHandler.logout(
-                VaadinServletRequest.getCurrent().getHttpServletRequest(), null,
-                null);
+       // UI.getCurrent().getPage().setLocation(LOGOUT_SUCCESS_URL);
+       // SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+       // logoutHandler.logout(
+       //         VaadinServletRequest.getCurrent().getHttpServletRequest(), null,
+       //         null);
+
+        UI.getCurrent().getPage().setLocation("login");
+        VaadinSession.getCurrent().getSession().invalidate();
+        VaadinSession.getCurrent().close();
     }
 }

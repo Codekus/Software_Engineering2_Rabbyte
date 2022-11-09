@@ -85,11 +85,10 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
 
     @Override
     protected void afterNavigation() {
-        System.out.println("after Navi");
         super.afterNavigation();
 
         // Falls der Benutzer nicht eingeloggt ist, dann wird er auf die Startseite gelenkt
-        if ( !checkIfUserIsLoggedIn() ) return;
+        //if ( !checkIfUserIsLoggedIn() ) return;
 
         // Der aktuell-selektierte Tab wird gehighlighted.
 

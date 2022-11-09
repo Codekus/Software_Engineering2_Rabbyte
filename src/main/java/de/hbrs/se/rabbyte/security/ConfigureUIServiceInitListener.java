@@ -26,5 +26,8 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
             }
             event.rerouteTo(LoginView.class);
         }
+
+
+        System.out.println("yoo");
     }
 }

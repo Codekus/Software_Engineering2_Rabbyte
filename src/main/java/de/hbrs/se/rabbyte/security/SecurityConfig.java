@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
                 .antMatchers("/registration").permitAll()
                 // Allow all requests by logged-in users.
-                .anyRequest().authenticated()
+                //.anyRequest().authenticated()
 
                 // Configure the login page.
                 .and().formLogin()
