@@ -11,7 +11,7 @@ class RegistrationDTOImplTest {
     private RegistrationDTOImpl registrationDTO = new RegistrationDTOImpl();
     private String registrationRepeatPw = "12345";
     @BeforeEach
-    void tearDown() {
+    void setup() {
         registrationDTO.setRepeatPassword(registrationRepeatPw);
     }
     @Test
