@@ -26,7 +26,6 @@ import java.util.List;
 
 
 @Route(value = "registration" )
-@Theme(value = Lumo.class)
 public class RegistrationView extends VerticalLayout {
     private static final String DIFFERENT_PASSWORDS = "Unterschiedliches Password";
     private static final String PASSWORD_TOO_SHORT = "Das Password muss mindestens 5 Zeichen sein";

@@ -32,8 +32,6 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
-        login.setAction("login");
-
         login.addLoginListener(event -> {
             try {
                 securityService.authenticate(event.getUsername(), event.getPassword());

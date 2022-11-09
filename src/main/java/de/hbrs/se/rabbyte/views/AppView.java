@@ -42,7 +42,7 @@ import java.util.Optional;
  * The main view is a top-level placeholder for other views.
  */
 
-//@Route("main")
+@Route("appview")
 //@PWA(name = "HelloCar", shortName = "HelloCar", enableInstallPrompt = false) TODO: whats this??
 public class AppView extends AppLayout implements BeforeEnterObserver {
 

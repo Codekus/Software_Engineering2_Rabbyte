@@ -57,24 +57,47 @@ public class SecurityService  {
         context.setAuthentication(authentication);
         SecurityContextHolder.setContext(context);
         createRoutes(user);
-
-
+        System.out.println("y");
     }
 
 
     private void createRoutes(GeneralUserDTO user){
-        getAuthorizedRoutes(user).stream().forEach(route -> RouteConfiguration.forSessionScope().setRoute(route.route, route.view, AppView.class));
+        getAuthorizedRoutes(user).stream().forEach(route ->{
+            //To set a Route we need both the path and the view to be unused, so we check for both and remove both before adding them.
+            if(RouteConfiguration.forSessionScope().isRouteRegistered(route.view)){
+                RouteConfiguration.forSessionScope().removeRoute(route.route);
+                if(RouteConfiguration.forSessionScope().isPathRegistered(route.route)){
+                    RouteConfiguration.forSessionScope().removeRoute(route.route);
+                }
+                RouteConfiguration.forSessionScope().setRoute(route.route, route.view);
+            }else{
+                RouteConfiguration.forSessionScope().setRoute(route.route, route.view);
+                //RouteConfiguration.forSessionScope().setRoute(route.route, route.view, AppView.class);
+            }
+
+        });
     }
 
 
+    public String getRole(GeneralUserDTO user){
+        if (generalUserRepository.getStudent(user.getId()) != null){
+            return "Student";
+        }
+        else if (generalUserRepository.getBusiness(user.getId()) != null){
+            return "Business";
+        }
+        else{
+            return "None";
+        }
+    }
     public List<AuthorizedRoute> getAuthorizedRoutes(GeneralUserDTO user){
         var routes = new ArrayList<AuthorizedRoute>();
-        routes.add(new AuthorizedRoute("home", "Home", MainView.class));
-        if (generalUserRepository.getStudent(user.getId()) != null){
+    //    routes.add(new AuthorizedRoute("appview", "AppView", AppView.class));
+        if (Objects.equals(getRole(user), "Student")){
             routes.add(new AuthorizedRoute("student", "Student", StudentUserView.class));
-            routes.add(new AuthorizedRoute("search", "Search Job Advertisement", JobAdvertisementSearchView.class));
-        } else if (generalUserRepository.getBusiness(user.getId()) != null) {
-            routes.add(new AuthorizedRoute("create", "Create Job Advertisement", CreateJobAdvertisementView.class));
+            routes.add(new AuthorizedRoute("main", "Search Job Advertisement", JobAdvertisementSearchView.class));
+        } else if (Objects.equals(getRole(user), "Business")) {
+            routes.add(new AuthorizedRoute("main", "Create Job Advertisement", CreateJobAdvertisementView.class));
 
         }
         return routes;

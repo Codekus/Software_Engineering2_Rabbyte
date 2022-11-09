@@ -11,7 +11,7 @@ import com.vaadin.flow.server.PWA;
 
 
 
-@Route(value = "main", layout = AppView.class)
+//@Route(value = "main", layout = AppView.class)
 @PWA(name = "Rabbyte", shortName = "Rabbyte")
 public class MainView extends VerticalLayout {
 
