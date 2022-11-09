@@ -2,14 +2,16 @@ package de.hbrs.se.rabbyte.views;
 
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.component.textfield.*;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
@@ -20,13 +22,15 @@ import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
+import de.hbrs.se.rabbyte.util.Globals;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 
-@Route(value = "registration" )
+@Route(value = Globals.Path.REGISTRATION_VIEW)
+@PageTitle(Globals.PageTitle.REGISTRATION_VIEW)
 @Theme(value = Lumo.class)
 public class RegistrationView extends VerticalLayout {
     private static final String DIFFERENT_PASSWORDS = "Unterschiedliches Password";
@@ -45,6 +49,9 @@ public class RegistrationView extends VerticalLayout {
     TextField firstNameStudent = new TextField("Vorname");
     TextField lastNameStudent = new TextField("Nachnahme");
 
+    ComboBox<String> facultyComboBox = new ComboBox<>("Fachbereich");
+
+
 
     //Business Fields
     EmailField emailFieldBusiness = new EmailField("E-Mail");
@@ -54,8 +61,8 @@ public class RegistrationView extends VerticalLayout {
 
 
     //Tabs
-    private final Tab student;
-    private final Tab business;
+    private final Tab studentTab;
+    private final Tab businessTab;
 
     //Buttons
     Button registerButtonStudent;
@@ -78,9 +85,14 @@ public class RegistrationView extends VerticalLayout {
             passwordFieldStudent.setMinLength(5);
             passwordFieldRepeatStudent.setMinLength(5);
 
+            facultyComboBox.setAllowCustomValue(false);
+            facultyComboBox.setPlaceholder("Wähle Fachbereich");
+            facultyComboBox.setItems("Angewandte Naturwissenschaften" , "Elektrotechnik, Maschinenbau & Technikjournalismus" ,
+                    "Informatik" , "Sozialpolitik und Soziale Sicherung" , "Wirtschaftswissenschaften" );
 
             FormLayout formLayout = new FormLayout();
-            formLayout.add(firstNameStudent, lastNameStudent, passwordFieldStudent, passwordFieldRepeatStudent, emailFieldStudent);
+            formLayout.add(firstNameStudent, lastNameStudent, passwordFieldStudent, passwordFieldRepeatStudent,
+                    facultyComboBox , emailFieldStudent);
 
             formLayout.setColspan(emailFieldStudent , 2);
             setSizeFull();
@@ -95,6 +107,7 @@ public class RegistrationView extends VerticalLayout {
             newStudent.setFirstName(firstNameStudent.getValue());
             newStudent.setLastName(lastNameStudent.getValue());
 
+            newStudent.setFaculty(facultyComboBox.getValue());
             return newStudent;
         }
     }
@@ -147,7 +160,6 @@ public class RegistrationView extends VerticalLayout {
         StudentForm studentForm = new StudentForm();
         BusinessForm businessForm = new BusinessForm();
 
-
         verticalLayout.add(h1);
 
         registerButtonStudent = new Button("Registrieren");
@@ -182,16 +194,16 @@ public class RegistrationView extends VerticalLayout {
 
         });
 
-        student = new Tab("Student");
-        business = new Tab("Business");
+        studentTab = new Tab("Student");
+        businessTab = new Tab("Business");
 
-        Tabs tabs = new Tabs(student, business);
 
+        Tabs tabs = new Tabs(studentTab, businessTab);
+        tabs.addThemeVariants(TabsVariant.LUMO_CENTERED);
         tabs.addSelectedChangeListener(event ->
                 setContent(event.getSelectedTab())
         );
 
-        tabsLayout.setAlignItems(Alignment.CENTER);
 
         setContent(tabs.getSelectedTab());
         verticalLayout.setWidth("50%");
@@ -206,7 +218,7 @@ public class RegistrationView extends VerticalLayout {
 
         tabsLayout.removeAll();
 
-        if (tab.equals(student)) {
+        if (tab.equals(studentTab)) {
             tabsLayout.add(new StudentForm());
             tabsLayout.add(registerButtonStudent);
 

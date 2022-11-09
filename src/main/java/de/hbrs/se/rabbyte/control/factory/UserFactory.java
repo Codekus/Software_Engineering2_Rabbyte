@@ -30,7 +30,7 @@ public class UserFactory {
         student.setEmail(studentDTO.getEmail());
         student.setFirstName(studentDTO.getFirstName());
         student.setLastName(studentDTO.getLastName());
-
+        student.setFaculty(studentDTO.getFaculty());
         return student;
     }
 
