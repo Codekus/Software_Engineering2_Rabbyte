@@ -55,7 +55,6 @@ public class SecurityService  {
                 new UsernamePasswordAuthenticationToken(username, "[REDACTED]", Collections.emptyList());
 
         context.setAuthentication(authentication);
-
         SecurityContextHolder.setContext(context);
         createRoutes(user);
 

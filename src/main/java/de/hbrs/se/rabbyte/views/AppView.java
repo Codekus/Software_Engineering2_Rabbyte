@@ -267,10 +267,12 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
      */
 
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-
+/*
         if (!isUserLoggedIn()){
             beforeEnterEvent.rerouteTo("login");
         }
+
+ */
 
 
 
