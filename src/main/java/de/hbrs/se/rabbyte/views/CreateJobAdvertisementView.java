@@ -33,7 +33,7 @@ import javax.swing.*;
 import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 
-@Route(value = "create_JobAdvert", layout = AppView.class)
+@Route(value = "create", layout = AppView.class)
 @PageTitle("Neue Stellenausschreibung")
 public class CreateJobAdvertisementView extends Div {
 

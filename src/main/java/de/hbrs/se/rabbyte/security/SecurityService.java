@@ -23,6 +23,7 @@ import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,9 +50,15 @@ public class SecurityService  {
             throw new AuthException();
         }
 
-        generalUserDTO = user;
-        UI.getCurrent().getSession().setAttribute("CURRENT USER", generalUserDTO );
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(username, "[REDACTED]", Collections.emptyList());
+
+        context.setAuthentication(authentication);
+
+        SecurityContextHolder.setContext(context);
         createRoutes(user);
+
 
     }
 
