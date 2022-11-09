@@ -26,6 +26,9 @@ public final class SecurityUtils {
     }
 
     public static boolean isUserLoggedIn() {
-        return UI.getCurrent().getSession().getSession().getAttribute("CURRENT USER") != null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication != null
+                && !(authentication instanceof AnonymousAuthenticationToken)
+                && authentication.isAuthenticated();
     }
 }
