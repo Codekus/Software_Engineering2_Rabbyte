@@ -1,6 +1,6 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
-import de.hbrs.se.rabbyte.dtos.BusinessDTO;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

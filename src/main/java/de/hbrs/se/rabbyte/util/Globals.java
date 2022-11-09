@@ -1,8 +1,5 @@
 package de.hbrs.se.rabbyte.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Globals {
 
     private Globals(){
