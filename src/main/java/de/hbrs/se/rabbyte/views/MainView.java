@@ -20,7 +20,7 @@ public class MainView extends VerticalLayout {
         Button button = new Button("Click me",
                 event -> {
                     Notification.show("Clicked!");
-                    UI.getCurrent().navigate("main");
+                    UI.getCurrent().navigate("student/search-view");
                 });
 
         add(button);

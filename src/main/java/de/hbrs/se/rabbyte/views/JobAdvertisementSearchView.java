@@ -18,9 +18,9 @@ import org.springframework.context.annotation.Scope;
 @org.springframework.stereotype.Component
 @Scope("prototype")
 //routing not final
-@Route(value = "student/search-view")
+@Route(value = "student/search-view", layout = AppView.class)
 @RouteAlias(value ="user/student/main")
-@PageTitle("Search For Job-Advertisements")
+//@PageTitle("Search For Job-Advertisements")
 @CssImport("./styles/views/JobAdvertisementSearchView/job-advertisements-search-view.css")
 public class JobAdvertisementSearchView extends VerticalLayout {
     Grid<JobAdvertisement> grid = new Grid<>(JobAdvertisement.class);

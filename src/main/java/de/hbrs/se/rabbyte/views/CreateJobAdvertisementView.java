@@ -27,6 +27,7 @@ import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
+import de.hbrs.se.rabbyte.service.CrmService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
@@ -34,7 +35,7 @@ import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 
 @Route(value = "create_JobAdvert", layout = AppView.class)
-@PageTitle("Neue Stellenausschreibung")
+//@PageTitle("Neue Stellenausschreibung")
 public class CreateJobAdvertisementView extends Div {
 
     //ToDo for first sprint
@@ -54,13 +55,15 @@ public class CreateJobAdvertisementView extends Div {
     //private PhoneNumberField phone = new PhoneNumberField("Telefonnummer");
 
 
+    private CrmService service;
     private Binder<JobAdvertisementDTOImpl> binder = new Binder(JobAdvertisementDTOImpl.class);
 
     public CreateJobAdvertisementView(JobAdvertControl jobAdvertControl){
+        this.service = service;
         addClassName("create-jobAdvert-view");
 
         //add(createButtonLayoutBack());
-        add(createTitle());
+        //add(createTitle());
         add(createFormLayout());
         add(createButtonLayoutSubmit());
 
