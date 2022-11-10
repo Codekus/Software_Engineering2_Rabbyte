@@ -16,7 +16,7 @@ class UserTest {
     private String city = "Mustercity";
     private String country = "DE";
     private String street = "Mustermannstraße";
-    private int  streetNumber = 1;
+    private String  streetNumber = "1";
     private String salt = "FFFFFFFFF";
 
     @BeforeEach
