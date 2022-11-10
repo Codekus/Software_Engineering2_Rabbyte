@@ -49,7 +49,7 @@ public class RegistrationView extends VerticalLayout {
     TextField firstNameStudent = new TextField("Vorname");
     TextField lastNameStudent = new TextField("Nachnahme");
 
-    ComboBox<String> facultyComboBox = new ComboBox<>("Fachbereich");
+    ComboBox<String> facultyComboBox;
 
 
 
@@ -85,10 +85,7 @@ public class RegistrationView extends VerticalLayout {
             passwordFieldStudent.setMinLength(5);
             passwordFieldRepeatStudent.setMinLength(5);
 
-            facultyComboBox.setAllowCustomValue(false);
-            facultyComboBox.setPlaceholder("Wähle Fachbereich");
-            facultyComboBox.setItems("Angewandte Naturwissenschaften" , "Elektrotechnik, Maschinenbau & Technikjournalismus" ,
-                    "Informatik" , "Sozialpolitik und Soziale Sicherung" , "Wirtschaftswissenschaften" );
+            facultyComboBox = Globals.facultyComboBox(facultyComboBox);
 
             FormLayout formLayout = new FormLayout();
             formLayout.add(firstNameStudent, lastNameStudent, passwordFieldStudent, passwordFieldRepeatStudent,
@@ -110,6 +107,13 @@ public class RegistrationView extends VerticalLayout {
             newStudent.setFaculty(facultyComboBox.getValue());
             return newStudent;
         }
+    }
+
+    private void facultyComboBox() {
+        facultyComboBox.setAllowCustomValue(false);
+        facultyComboBox.setPlaceholder("Wähle Fachbereich");
+        facultyComboBox.setItems("Angewandte Naturwissenschaften" , "Elektrotechnik, Maschinenbau & Technikjournalismus" ,
+                "Informatik" , "Sozialpolitik und Soziale Sicherung" , "Wirtschaftswissenschaften" );
     }
 
     class BusinessForm extends Div {

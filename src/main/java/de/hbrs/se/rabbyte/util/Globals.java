@@ -1,10 +1,23 @@
 package de.hbrs.se.rabbyte.util;
 
+import com.vaadin.flow.component.combobox.ComboBox;
+
 public class Globals {
 
     private Globals(){
         throw new IllegalStateException("Utility Class");
     }
+
+    public static ComboBox<String> facultyComboBox(ComboBox<String> facultyComboBox) {
+        facultyComboBox = new ComboBox<>("Fachbereich");
+        facultyComboBox.setAllowCustomValue(false);
+        facultyComboBox.setPlaceholder("Wähle Fachbereich");
+        facultyComboBox.setItems("Angewandte Naturwissenschaften" , "Elektrotechnik, Maschinenbau & Technikjournalismus" ,
+                "Informatik" , "Sozialpolitik und Soziale Sicherung" , "Wirtschaftswissenschaften" );
+        return facultyComboBox;
+    }
+
+
 
     public static class Path {
         private Path() { throw new IllegalStateException("Utility");}
