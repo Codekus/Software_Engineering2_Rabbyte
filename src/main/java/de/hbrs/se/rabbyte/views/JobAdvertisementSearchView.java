@@ -13,6 +13,7 @@ import com.vaadin.flow.router.RouteAlias;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import com.vaadin.flow.component.textfield.TextField;
 import de.hbrs.se.rabbyte.service.CrmService;
+
 import org.springframework.context.annotation.Scope;
 
 @org.springframework.stereotype.Component
@@ -25,6 +26,8 @@ import org.springframework.context.annotation.Scope;
 public class JobAdvertisementSearchView extends VerticalLayout {
     Grid<JobAdvertisement> grid = new Grid<>(JobAdvertisement.class);
     TextField searchField = new TextField();
+    H1 infoMessage = new H1();
+
     private CrmService service;
 
 
@@ -43,9 +46,17 @@ public class JobAdvertisementSearchView extends VerticalLayout {
 
     private void updateList() {
         if(!searchField.isEmpty()) {
-            add(grid);
-            grid.setItems(service.findJobAdvertisements(searchField.getValue()));
+            if(!service.findJobAdvertisements(searchField.getValue()).isEmpty()) {
+                remove(infoMessage);
+                add(grid);
+                grid.setItems(service.findJobAdvertisements(searchField.getValue()));
+            }else{
+                noResults();
+                remove(grid);
+                add(infoMessage);
+            }
         }else {
+            remove(infoMessage);
             remove(grid);
         }
     }
@@ -67,13 +78,17 @@ public class JobAdvertisementSearchView extends VerticalLayout {
         grid.setSizeFull();
         grid.removeAllColumns();
         grid.addColumn(jobAdvertisement -> jobAdvertisement.getBusiness().getBusinessName()).setHeader("Unternehmen");
-        grid.addColumn(jobAdvertisement -> jobAdvertisement.getTitle()).setHeader("Titel");
-        grid.addColumn(jobAdvertisement -> jobAdvertisement.getText()).setHeader("Beschreibung");
+        grid.addColumn(JobAdvertisement::getTitle).setHeader("Titel");
+        grid.addColumn(JobAdvertisement::getText).setHeader("Beschreibung");
         grid.getColumns().forEach(col-> col.setAutoWidth(true));
     }
 
 
     private Component createTitle() {
         return new H1("Rabbyte");
+    }
+
+    private void noResults(){
+        infoMessage.setText("Keine Übereinstimmungen!");
     }
 }
