@@ -9,7 +9,7 @@ public class Globals {
     }
 
     public static ComboBox<String> facultyComboBox(ComboBox<String> facultyComboBox) {
-        facultyComboBox = new ComboBox<>("Fachbereich");
+
         facultyComboBox.setAllowCustomValue(false);
         facultyComboBox.setPlaceholder("Wähle Fachbereich");
         facultyComboBox.setItems("Angewandte Naturwissenschaften" , "Elektrotechnik, Maschinenbau & Technikjournalismus" ,

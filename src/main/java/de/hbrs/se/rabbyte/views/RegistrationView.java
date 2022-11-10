@@ -49,7 +49,7 @@ public class RegistrationView extends VerticalLayout {
     TextField firstNameStudent = new TextField("Vorname");
     TextField lastNameStudent = new TextField("Nachnahme");
 
-    ComboBox<String> facultyComboBox;
+    ComboBox<String> facultyComboBox = new ComboBox<>("Fachbereich");
 
 
 
