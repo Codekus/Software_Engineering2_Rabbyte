@@ -3,6 +3,7 @@ package de.hbrs.se.rabbyte.util;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.xml.bind.DatatypeConverter;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -44,9 +45,7 @@ public  class CryptographyUtil {
 
     public static String toHex(byte[] array)
     {
-        BigInteger bigInteger = new BigInteger(1, array);
-        return String.format(
-                "%0" + (array.length << 1) + "x", bigInteger);
+        return DatatypeConverter.printHexBinary(array);
     }
 
     public static byte[] fromHex(String hex)

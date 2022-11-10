@@ -21,19 +21,4 @@ public class Business extends User {
         this.businessName = unternehmensname;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Business business = (Business) o;
-
-        return businessName.equals(business.businessName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash( businessName);
-    }
 }

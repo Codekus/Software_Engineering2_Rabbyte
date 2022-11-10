@@ -13,6 +13,7 @@ public interface GeneralUserRepository extends JpaRepository<User, Integer> {
 
 
 
+
     GeneralUserDTO findGeneralUserById(int nutzerid);
 
 }
