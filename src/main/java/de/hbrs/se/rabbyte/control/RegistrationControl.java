@@ -1,6 +1,7 @@
 package de.hbrs.se.rabbyte.control;
 
 import de.hbrs.se.rabbyte.control.factory.UserFactory;
+import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
@@ -42,15 +43,10 @@ public class RegistrationControl {
         registrationResultDTO = new RegistrationResultDTOImpl();
 
         if(inspectIfEmailIsAlreadyInUse(registrationStudentDTO.getStudentDTO().getEmail())) {
-            registrationResultDTO.setReason("Email in use");
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.EMAIL_IN_USE);
         }
-
-        inspectIfSamePassword(registrationStudentDTO.getRepeatPassword() , registrationStudentDTO.getStudentDTO().getPassword());
-
-        validateEmailName(registrationStudentDTO.getStudentDTO().getEmail());
-        validateFirstName(registrationStudentDTO.getStudentDTO().getFirstName());
-        validateLastName(registrationStudentDTO.getStudentDTO().getLastName());
-        if(registrationResultDTO.getReasons().isEmpty()) {
+            validateStudent(registrationStudentDTO);
+            if(registrationResultDTO.getReasons().isEmpty()) {
 
             Student newStudent = UserFactory.createStudent(registrationStudentDTO.getStudentDTO());
             this.studentRepository.save(newStudent);
@@ -59,26 +55,32 @@ public class RegistrationControl {
             registrationResultDTO.setRegistrationResult(false);
         }} catch (Exception exception) {
             registrationResultDTO.setRegistrationResult(false);
-            registrationResultDTO.setReason("Error");
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.GENERAL_ERROR);
             LOGGER.info("INFO:" ,  exception.getMessage());
         }
         return registrationResultDTO;
-
     }
+
+    private void validateStudent(RegistrationStudentDTOImpl registrationStudentDTO) {
+        inspectIfPasswordIsTooShort(registrationStudentDTO.getStudentDTO().getPassword());
+        inspectIfRepeatPasswordIsTooShort(registrationStudentDTO.getRepeatPassword());
+        inspectIfSamePassword(registrationStudentDTO.getRepeatPassword() , registrationStudentDTO.getStudentDTO().getPassword());
+
+        validateEmailName(registrationStudentDTO.getStudentDTO().getEmail());
+        validateFirstName(registrationStudentDTO.getStudentDTO().getFirstName());
+        validateLastName(registrationStudentDTO.getStudentDTO().getLastName());
+    }
+
 
     public RegistrationResultDTO registerBusiness(RegistrationBusinessDTOImpl registrationBusinessDTO) {
 
         try {
             registrationResultDTO = new RegistrationResultDTOImpl();
-            inspectIfSamePassword(registrationBusinessDTO.getBusinessDTO().getPassword(), registrationBusinessDTO.getRepeatPassword());
 
-            if (inspectIfEmailIsAlreadyInUse(registrationBusinessDTO.getBusinessDTO().getEmail())) {
-                registrationResultDTO.setReason("Email in use");
-            }
-            Business newBusiness = UserFactory.createBusiness(registrationBusinessDTO.getBusinessDTO());
+            validateBusiness(registrationBusinessDTO);
 
             if (registrationResultDTO.getReasons().isEmpty()) {
-
+                Business newBusiness = UserFactory.createBusiness(registrationBusinessDTO.getBusinessDTO());
                 this.businessRepository.save(newBusiness);
                 registrationResultDTO.setRegistrationResult(true);
             } else {
@@ -86,27 +88,47 @@ public class RegistrationControl {
             }
         } catch(Exception exception) {
             registrationResultDTO.setRegistrationResult(false);
-            registrationResultDTO.setReason("Error");
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.GENERAL_ERROR);
             LOGGER.info("INFO" , exception.getMessage());
         }
-
         return registrationResultDTO;
     }
 
-    public boolean inspectIfEmailIsAlreadyInUse(String email) {
+    private void validateBusiness(RegistrationBusinessDTOImpl registrationBusinessDTO) {
+        if (inspectIfEmailIsAlreadyInUse(registrationBusinessDTO.getBusinessDTO().getEmail())) {
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.EMAIL_IN_USE);
+        }
+
+        if(businessNameInUse(registrationBusinessDTO.getBusinessDTO().getBusinessName())) {
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.BUSINESS_NAME_IN_USE);
+        }
+        inspectIfPasswordIsTooShort(registrationBusinessDTO.getBusinessDTO().getPassword());
+        inspectIfRepeatPasswordIsTooShort(registrationBusinessDTO.getRepeatPassword());
+        inspectIfSamePassword(registrationBusinessDTO.getRepeatPassword() , registrationBusinessDTO.getBusinessDTO().getPassword());
+        validateEmailName(registrationBusinessDTO.getBusinessDTO().getEmail());
+        validateBusinessName(registrationBusinessDTO.getBusinessDTO().getBusinessName());
+
+    }
+
+    private boolean businessNameInUse(String businessName) {
+        BusinessDTO businessDTO = businessRepository.findBusinessByBusinessName(businessName);
+        return ( businessDTO != null && businessDTO.getId() > 0);
+    }
+
+    private boolean inspectIfEmailIsAlreadyInUse(String email) {
         GeneralUserDTO generalUser = generalUserRepository.findByEmail(email);
 
         return (generalUser != null && generalUser.getId() > 0);
     }
 
-    public void inspectIfSamePassword(String password , String repeatPassword) {
+    private void inspectIfSamePassword(String password , String repeatPassword) {
 
         if(!password.equals(repeatPassword)) {
-            registrationResultDTO.setReason("Passwords are different");
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.PASSWORD_DIFFERENT);
         }
     }
 
-    public void validateEmailName(String email) {
+    private void validateEmailName(String email) {
 
 
         Pattern pattern =
@@ -114,25 +136,42 @@ public class RegistrationControl {
 
         Matcher matcher = pattern.matcher(email);
         if(!matcher.find()) {
-            registrationResultDTO.setReason("Invalid Email");
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_EMAIL);
         }
     }
 
-    public void validateFirstName(String firstName) {
+    private void validateFirstName(String firstName) {
         if(!firstName.matches( "[A-Z][a-z]*")){
-            registrationResultDTO.setReason("Invalid First Name");
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_FIRST_NAME);
         }
     }
 
-    public void validateLastName(String lastName) {
+    private void validateLastName(String lastName) {
         if(!lastName.matches( "[A-Z][a-z]*")){
-            registrationResultDTO.setReason("Invalid First Name");
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_LAST_NAME);
         }
     }
 
-    public void validateBusinessName(String businessName) {
-
+    private void validateBusinessName(String businessName) {
+        if(!businessName.matches("^(?!\\s)(?!.*\\s)(?=.*[a-zA-Z0-9])[a-zA-Z0-9 '&]{2,10}$")) {
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_BUSINESS_NAME);
+        }
     }
 
+    private void inspectIfRepeatPasswordIsTooShort(String repeatPassword) {
+        if(passwordTooShort(repeatPassword)) {
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.PASSWORD_REPEAT_TO_SHORT);
+        }
+    }
+
+    private void inspectIfPasswordIsTooShort(String password) {
+        if(passwordTooShort(password)) {
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.PASSWORD_TO_SHORT);
+        }
+    }
+
+    private boolean passwordTooShort(String password) {
+        return (password.length() < 5);
+    }
 
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class SecurityService {
 
     private static final String LOGOUT_SUCCESS_URL = "/";
-
+    private static final String SETTINGS_URL = "settings";
     public UserDetails getAuthenticatedUser() {
         SecurityContext context = SecurityContextHolder.getContext();
         Object principal = context.getAuthentication().getPrincipal();
@@ -29,5 +29,8 @@ public class SecurityService {
         logoutHandler.logout(
                 VaadinServletRequest.getCurrent().getHttpServletRequest(), null,
                 null);
+    }
+    public void settings() {
+        UI.getCurrent().getPage().setLocation(SETTINGS_URL);
     }
 }

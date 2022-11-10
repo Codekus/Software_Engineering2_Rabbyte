@@ -4,13 +4,17 @@ import de.hbrs.se.rabbyte.dtos.ApplicationDTO;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import de.hbrs.se.rabbyte.entities.Student;
 
-import javax.xml.crypto.Data;
 
+import java.time.LocalDate;
+
+/**
+ * A DTO for the {@link de.hbrs.se.rabbyte.entities.Application} entity
+ */
 public class ApplicationDTOImpl implements ApplicationDTO {
 
     private JobAdvertisement jobAdvertisement;
     private Student student;
-    private Data date;
+    private LocalDate date;
     private String applicationText;
 
     public JobAdvertisement getJobAdvertisement() {
@@ -29,11 +33,11 @@ public class ApplicationDTOImpl implements ApplicationDTO {
         this.student = student;
     }
 
-    public Data getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Data date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
