@@ -15,7 +15,7 @@ class GeneralUserDTOImplTest {
     private String city = "Musterdorf";
     private String country = "DE";
     private String street = "Musterstra0e";
-    private int streetNumber = 5;
+    private String streetNumber = "5";
 
     @BeforeEach
     void setUp() {
