@@ -9,6 +9,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
 @AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY )
@@ -25,5 +26,19 @@ class GeneralUserRepositoryTest {
         assertEquals(20000086 , userRepository.findByEmail("max@gmx.de").getId());
     }
 
+    @Test
+    void findByEmailNull() {
+        assertNull(userRepository.findByEmail("tom@gmx.de"));
+    }
+
+    @Test
+    void findById() {
+        assertEquals("max@gmx.de" , userRepository.findGeneralUserById(20000086).getEmail());
+    }
+
+    @Test
+    void findByIdNull() {
+        assertNull(userRepository.findGeneralUserById(2));
+    }
 
 }
