@@ -27,6 +27,7 @@ public class JobAdvertisementSearchViewTest {
         jobAdvertisementSearchView.searchField.setValue("test");
         long resArray = jobAdvertisementSearchView.grid.getColumns().stream().count();
 
+
         Assert.assertEquals(4,resArray);
     }
 
