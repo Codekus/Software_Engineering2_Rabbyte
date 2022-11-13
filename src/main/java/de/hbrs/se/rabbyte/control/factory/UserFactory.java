@@ -7,6 +7,7 @@ import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.util.CryptographyUtil;
 
+import de.hbrs.se.rabbyte.util.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ public class UserFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserFactory.class);
 
     private UserFactory() {
-        throw new IllegalStateException("Factory Class");
+        throw new IllegalStateException(Globals.StateException.MESSAGE_FACTORY);
     }
     public static Student createStudent(StudentDTO studentDTO)  {
         Student student = new Student();
