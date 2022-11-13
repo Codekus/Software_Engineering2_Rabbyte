@@ -35,7 +35,7 @@ public class Application {
     }
 
     @ManyToOne
-    @JoinColumn(name = "jobAdvertisement_id", referencedColumnName = "jobAdvertisement_id", nullable = false)
+    @JoinColumn(name = "job_advertisement_id")
     public JobAdvertisement getJobAdvertisement() {
         return jobAdvertisement;
     }

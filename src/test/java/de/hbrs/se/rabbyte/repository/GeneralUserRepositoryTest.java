@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY )
 @Sql(scripts = {"file:src/test/ressources/rabbyte_schema.sql ", "file:src/test/ressources/rabbyte_data.sql"})
 @AutoConfigureEmbeddedDatabase
-
 class GeneralUserRepositoryTest {
 
     @Autowired
@@ -23,7 +22,7 @@ class GeneralUserRepositoryTest {
 
     @Test
     void findByEmail() {
-        assertEquals(20000086 , userRepository.findByEmail("max@gmx.de").getId());
+        assertEquals(20000050 , userRepository.findByEmail("max@gmx.de").getId());
     }
 
     @Test
@@ -33,7 +32,7 @@ class GeneralUserRepositoryTest {
 
     @Test
     void findById() {
-        assertEquals("max@gmx.de" , userRepository.findGeneralUserById(20000086).getEmail());
+        assertEquals("max@gmx.de" , userRepository.findGeneralUserById(20000050).getEmail());
     }
 
     @Test
