@@ -12,6 +12,7 @@ import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
 import de.hbrs.se.rabbyte.repository.StudentRepository;
+import de.hbrs.se.rabbyte.util.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,7 @@ public class RegistrationControl {
         }} catch (Exception exception) {
             registrationResultDTO.setRegistrationResult(false);
             registrationResultDTO.setReason(RegistrationResultDTO.Result.GENERAL_ERROR);
-            LOGGER.info("INFO:" ,  exception.getMessage());
+            LOGGER.info("INFO: {}" ,  exception.getMessage());
         }
         return registrationResultDTO;
     }
@@ -89,7 +90,7 @@ public class RegistrationControl {
         } catch(Exception exception) {
             registrationResultDTO.setRegistrationResult(false);
             registrationResultDTO.setReason(RegistrationResultDTO.Result.GENERAL_ERROR);
-            LOGGER.info("INFO" , exception.getMessage());
+            LOGGER.info("INFO: {}" ,  exception.getMessage());
         }
         return registrationResultDTO;
     }
@@ -130,9 +131,8 @@ public class RegistrationControl {
 
     private void validateEmailName(String email) {
 
-
         Pattern pattern =
-                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+                Pattern.compile(Globals.Regex.EMAIL, Pattern.CASE_INSENSITIVE);
 
         Matcher matcher = pattern.matcher(email);
         if(!matcher.find()) {
@@ -141,19 +141,19 @@ public class RegistrationControl {
     }
 
     private void validateFirstName(String firstName) {
-        if(!firstName.matches( "[A-Z][a-z]*")){
+        if(!firstName.matches(Globals.Regex.FIRST_NAME)){
             registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_FIRST_NAME);
         }
     }
 
     private void validateLastName(String lastName) {
-        if(!lastName.matches( "[A-Z][a-z]*")){
+        if(!lastName.matches( Globals.Regex.LAST_NAME)){
             registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_LAST_NAME);
         }
     }
 
     private void validateBusinessName(String businessName) {
-        if(!businessName.matches("^(?!\\s)(?!.*\\s)(?=.*[a-zA-Z0-9])[a-zA-Z0-9 '&]{2,10}$")) {
+        if(!businessName.matches(Globals.Regex.BUSINESS_NAME)) {
             registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_BUSINESS_NAME);
         }
     }
@@ -173,5 +173,6 @@ public class RegistrationControl {
     private boolean passwordTooShort(String password) {
         return (password.length() < 5);
     }
+
 
 }

@@ -6,6 +6,8 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -71,6 +73,7 @@ public class RegistrationView extends VerticalLayout {
     //Layouts
     VerticalLayout verticalLayout;
     VerticalLayout tabsLayout;
+
 
     class StudentForm extends Div {
 
@@ -154,6 +157,7 @@ public class RegistrationView extends VerticalLayout {
 
 
     public RegistrationView() {
+
 
         setAlignItems(Alignment.CENTER);
 
