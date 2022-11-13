@@ -29,4 +29,13 @@ public class Globals {
         public static final String REGISTRATION_VIEW = "Registration";
     }
 
+    public static class Regex {
+        private Regex() { throw new IllegalStateException("Utility");}
+        public static final String BUSINESS_NAME = "/^[a-zA-Z0-9-@.{}#&!()]+(\\s[a-zA-Z0-9-@{}.#&!()]+)+(\\s[a-zA-Z-@.#&!()]+)?$/";
+        public static final String EMAIL = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$\"";
+        public static final String LAST_NAME = "^([^\\p{N}\\p{S}\\p{C}\\p{P}]{2,20})$";
+        public static final String FIRST_NAME = "^([^\\p{N}\\p{S}\\p{C}\\p{P}]{2,20})$";
+
+    }
+
 }
