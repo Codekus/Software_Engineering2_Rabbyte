@@ -74,7 +74,7 @@ public class RegistrationView extends VerticalLayout {
     VerticalLayout verticalLayout;
     VerticalLayout tabsLayout;
 
-    Icon icon ;
+
     class StudentForm extends Div {
 
         StudentForm() {
@@ -158,8 +158,7 @@ public class RegistrationView extends VerticalLayout {
 
     public RegistrationView() {
 
-        icon = new Icon(VaadinIcon.INFO);
-        icon.getElement().setAttribute("title" , "This is title");
+
         setAlignItems(Alignment.CENTER);
 
         verticalLayout = new VerticalLayout();
@@ -169,7 +168,7 @@ public class RegistrationView extends VerticalLayout {
         StudentForm studentForm = new StudentForm();
         BusinessForm businessForm = new BusinessForm();
 
-        verticalLayout.add(h1,icon);
+        verticalLayout.add(h1);
 
         registerButtonStudent = new Button("Registrieren");
         registerButtonStudent.addClickListener(e -> {
