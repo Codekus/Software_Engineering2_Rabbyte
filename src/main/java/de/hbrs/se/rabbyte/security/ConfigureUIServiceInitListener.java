@@ -25,22 +25,13 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
     }
 
     private void authenticateNavigation(BeforeEnterEvent event) {
-        /*SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        String username = authentication.getName();
-        Object principal = authentication.getPrincipal();
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();*/
 
-/*
         if (!LoginView.class.equals(event.getNavigationTarget())
                 && !SecurityUtils.isUserLoggedIn()) {
             if(event.getLocation().getSegments().get(0).equals("registration")){
                 return;
             }
             event.rerouteTo(LoginView.class);
-        }*/
-
-
-        System.out.println("yoo");
+        }
     }
 }
