@@ -5,11 +5,14 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
+import com.vaadin.flow.router.RouterLink;
+import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import com.vaadin.flow.component.textfield.TextField;
 import de.hbrs.se.rabbyte.service.CrmService;
@@ -73,14 +76,37 @@ public class JobAdvertisementSearchView extends VerticalLayout {
         return searchField;
     }
 
-    private void configureGrid(){
+    private void configureGrid() {
         grid.addClassName("job-advertisement-grid");
         grid.setSizeFull();
         grid.removeAllColumns();
-        grid.addColumn(jobAdvertisement -> jobAdvertisement.getBusiness().getBusinessName()).setHeader("Unternehmen");
-        grid.addColumn(JobAdvertisement::getTitle).setHeader("Titel");
-        grid.addColumn(JobAdvertisement::getText).setHeader("Beschreibung");
-        grid.getColumns().forEach(col-> col.setAutoWidth(true));
+        Grid.Column<JobAdvertisement> businessColumn = grid.addColumn(jobAdvertisement -> jobAdvertisement.getBusiness().getBusinessName()).setHeader("Unternehmen");
+        Grid.Column<JobAdvertisement> titleColumn = grid.addColumn(JobAdvertisement::getTitle).setHeader("Titel");
+        Grid.Column<JobAdvertisement> descriptionColumn = grid.addColumn(JobAdvertisement::getText).setHeader("Beschreibung");
+        Grid.Column<JobAdvertisement> typeColumn = grid.addColumn(JobAdvertisement::getType).setHeader("Art");
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
+        businessColumn.getElement().getStyle().set("cursor","pointer");
+
+        //added itemListener
+        grid.addItemClickListener(e -> {
+            grid.getStyle().set("cursor","pointer");
+            if (e.getColumn().equals(businessColumn)) {
+                findPath(e.getItem().getBusiness());
+            }else if(e.getColumn().equals(titleColumn)||e.getColumn().equals(descriptionColumn)){
+               // e.getSource().getColumns().forEach(col-> col.getElement().getStyle().set("cursor","pointer"));
+                findPath(e.getItem());
+            }
+        });
+    }
+
+    private <T> void findPath(T idType){
+        if(idType instanceof Business) {
+            getUI().get().navigate("create_JobAdvert" +  ((Business) idType).getId());
+            Notification.show(((Business) idType).getId() + " Business");
+        }else if(idType instanceof JobAdvertisement){
+            getUI().get().navigate("create_JobAdvert" +  ((JobAdvertisement) idType).getId());
+            Notification.show(((JobAdvertisement) idType).getId() + " Job Advert");
+        }
     }
 
 
