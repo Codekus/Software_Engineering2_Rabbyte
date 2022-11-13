@@ -57,7 +57,7 @@ public class RegistrationControl {
         }} catch (Exception exception) {
             registrationResultDTO.setRegistrationResult(false);
             registrationResultDTO.setReason(RegistrationResultDTO.Result.GENERAL_ERROR);
-            LOGGER.info("INFO:" ,  exception.getMessage());
+            LOGGER.info("INFO: {}" ,  exception.getMessage());
         }
         return registrationResultDTO;
     }
@@ -90,7 +90,7 @@ public class RegistrationControl {
         } catch(Exception exception) {
             registrationResultDTO.setRegistrationResult(false);
             registrationResultDTO.setReason(RegistrationResultDTO.Result.GENERAL_ERROR);
-            LOGGER.info("INFO" , exception.getMessage());
+            LOGGER.info("INFO: {}" ,  exception.getMessage());
         }
         return registrationResultDTO;
     }
