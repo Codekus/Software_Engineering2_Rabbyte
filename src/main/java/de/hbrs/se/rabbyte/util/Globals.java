@@ -38,5 +38,5 @@ public class Globals {
         public static final String FIRST_NAME = "^([^\\p{N}\\p{S}\\p{C}\\p{P}]{2,20})$";
 
     }
-
+    
 }

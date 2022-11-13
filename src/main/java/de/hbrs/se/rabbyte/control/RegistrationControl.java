@@ -131,7 +131,6 @@ public class RegistrationControl {
 
     private void validateEmailName(String email) {
 
-
         Pattern pattern =
                 Pattern.compile(Globals.Regex.EMAIL, Pattern.CASE_INSENSITIVE);
 
