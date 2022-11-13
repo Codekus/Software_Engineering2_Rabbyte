@@ -5,7 +5,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 public class Globals {
 
     private Globals(){
-        throw new IllegalStateException(StateException.MESSAGE);
+        throw new IllegalStateException(StateException.MESSAGE_GLOBALS);
     }
 
     public static ComboBox<String> facultyComboBox(ComboBox<String> facultyComboBox) {
@@ -20,17 +20,17 @@ public class Globals {
 
 
     public static class Path {
-        private Path() { throw new IllegalStateException(StateException.MESSAGE);}
+        private Path() { throw new IllegalStateException(StateException.MESSAGE_GLOBALS);}
         public static final String REGISTRATION_VIEW = "registration/";
     }
 
     public static class PageTitle {
-        private PageTitle() { throw new IllegalStateException(StateException.MESSAGE);}
+        private PageTitle() { throw new IllegalStateException(StateException.MESSAGE_GLOBALS);}
         public static final String REGISTRATION_VIEW = "Registration";
     }
 
     public static class Regex {
-        private Regex() { throw new IllegalStateException(StateException.MESSAGE);}
+        private Regex() { throw new IllegalStateException(StateException.MESSAGE_GLOBALS);}
         public static final String BUSINESS_NAME = "^[a-zA-Z0-9& ]*{2,40}$";
         public static final String EMAIL = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@"
                 + "[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
@@ -41,9 +41,11 @@ public class Globals {
 
     public static class StateException {
         private StateException() {
-            throw new IllegalStateException(StateException.MESSAGE);
+            throw new IllegalStateException(StateException.MESSAGE_GLOBALS);
         }
-        public static final String MESSAGE = "IllegalStateException: Globals";
+        public static final String MESSAGE_GLOBALS = "IllegalStateException: Globals";
+        public static final String MESSAGE_UTILS = "IllegalStateException: Utils";
+        public static final String MESSAGE_CRYPTOGRAPHY_UTIL = "IllegalStateException: Utils";
     }
 
 }
