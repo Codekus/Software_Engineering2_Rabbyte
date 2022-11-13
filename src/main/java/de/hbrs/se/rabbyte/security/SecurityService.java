@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
@@ -41,12 +43,37 @@ public class SecurityService  {
 
     public void authenticate(String username, String password) throws AuthException, InvalidKeySpecException, NoSuchAlgorithmException {
 
+        //Erzeuge einen Regulären Ausdruck zum prüfen von wohlgeformtheit
+        Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(username);
 
+        // Prüfe ob Username wohlgeformt ist, ansonsten wird eine Exception geworfen die in der LoginView behandelt wird
+        if(!matcher.find()) {
+            throw new AuthException();
+        }
+
+        /* Erzeuge UserDTO durch suchen mittels Email in der Datenbank
+           Falls die Email nicht in der Datenbank vorhanden ist, wird der UserDTO auf NULL gesetzt, ansonsten wird ein gültiger UserDTO erzeugt
+         */
         GeneralUserDTO user = generalUserRepository.findByEmail(username);
+
+        /* Prüfe ob der User mit der angegebenen Email überhaupt in der Datenbank existiert
+           Falls der User nicht existiert wird eine Exeption geworfen die in der LoginView behandelt wird
+        */
+        if(user == null) {
+            throw new AuthException();
+        }
+
+        // Hole das gehashte Passwort aus der Datenbank die dem UserDTO zugehörig ist
         String dbpassword = user.getPassword();
+
+        // Hole den Salt-Wert aus der Datenbank die dem UserDTO zugehörig ist
         String salt = user.getSalt();
-                //generalUserRepository.findByEmailAndPassword(username, CryptographyUtil.encryptPassword(studentDTO.getPassword() , salt) );
-        if (user == null || !Objects.equals(dbpassword, CryptographyUtil.encryptPassword(password, CryptographyUtil.fromHex(salt)))) {
+
+        /* Prüfe ob das Passwort aus der Datenbank gleich ist zu dem gehashten Wert, der aus der Eingabe und dem Salt von der Datenbank besteht, ist
+           Falls die Passwörter nicht übereinstimmen wird eine Exception geworfen die in der LoginView behandelt wird
+        */
+        if (!Objects.equals(dbpassword, CryptographyUtil.encryptPassword(password, CryptographyUtil.fromHex(salt)))) {
             throw new AuthException();
         }
 
