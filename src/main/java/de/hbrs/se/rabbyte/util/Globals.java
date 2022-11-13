@@ -5,7 +5,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 public class Globals {
 
     private Globals(){
-        throw new IllegalStateException("Utility Class");
+        throw new IllegalStateException(StateException.MESSAGE);
     }
 
     public static ComboBox<String> facultyComboBox(ComboBox<String> facultyComboBox) {
@@ -20,23 +20,30 @@ public class Globals {
 
 
     public static class Path {
-        private Path() { throw new IllegalStateException("Utility");}
+        private Path() { throw new IllegalStateException(StateException.MESSAGE);}
         public static final String REGISTRATION_VIEW = "registration/";
     }
 
     public static class PageTitle {
-        private PageTitle() { throw new IllegalStateException("Utility");}
+        private PageTitle() { throw new IllegalStateException(StateException.MESSAGE);}
         public static final String REGISTRATION_VIEW = "Registration";
     }
 
     public static class Regex {
-        private Regex() { throw new IllegalStateException("Utility");}
+        private Regex() { throw new IllegalStateException(StateException.MESSAGE);}
         public static final String BUSINESS_NAME = "^[a-zA-Z0-9& ]*{2,40}$";
         public static final String EMAIL = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@"
                 + "[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
         public static final String LAST_NAME = "^([^\\p{N}\\p{S}\\p{C}\\p{P}]{2,20})$";
         public static final String FIRST_NAME = "^([^\\p{N}\\p{S}\\p{C}\\p{P}]{2,20})$";
 
+    }
+
+    public static class StateException {
+        private StateException() {
+            throw new IllegalStateException(StateException.MESSAGE);
+        }
+        public static final String MESSAGE = "IllegalStateException: Globals";
     }
 
 }
