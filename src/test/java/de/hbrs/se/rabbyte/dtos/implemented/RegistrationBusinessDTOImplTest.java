@@ -14,6 +14,8 @@ class RegistrationBusinessDTOImplTest {
 
     @Mock
     BusinessDTOImpl  businessDTO;
+    @Mock
+    BusinessDTOImpl  businessDTOTwo;
     private final String businesspw  = "12345";
 
     @BeforeEach
@@ -24,6 +26,13 @@ class RegistrationBusinessDTOImplTest {
 
     @Test
     void getBusinessDTO() {
+        assertTrue(registrationBusinessDTO.getBusinessDTO() instanceof BusinessDTO);
+        assertNotNull(registrationBusinessDTO.getBusinessDTO());
+    }
+    @Test
+    void setBusinessDTO() {
+        businessDTOTwo = new BusinessDTOImpl();
+        registrationBusinessDTO.setBusinessDTO(businessDTOTwo);
         assertTrue(registrationBusinessDTO.getBusinessDTO() instanceof BusinessDTO);
         assertNotNull(registrationBusinessDTO.getBusinessDTO());
     }

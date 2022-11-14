@@ -1,5 +1,6 @@
 package de.hbrs.se.rabbyte.repository;
 
+import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ class StudentRepositoryTest {
     @Test
     void findStudentById() {
         assertEquals("Max" , studentRepository.findStudentById(20000050).getFirstName());
+
+    }
+    @Test
+    void findStudentByIdDTO() {
+        assertTrue( studentRepository.findStudentById(20000050) instanceof StudentDTO);
 
     }
 
