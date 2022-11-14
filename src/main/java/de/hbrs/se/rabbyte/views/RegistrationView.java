@@ -1,13 +1,12 @@
 package de.hbrs.se.rabbyte.views;
 
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -19,12 +18,10 @@ import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import de.hbrs.se.rabbyte.control.RegistrationControl;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
-import de.hbrs.se.rabbyte.dtos.implemented.BusinessDTOImpl;
-import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
-import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
-import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.*;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.util.Globals;
+import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -177,16 +174,18 @@ public class RegistrationView extends VerticalLayout {
             RegistrationResultDTO registrationResult = registrationControl.registerStudent(registrationStudent);
 
             if (registrationResult.getRegistrationResult()) {
-                Utils.triggerDialogMessage("Registrierung erfolgreich", "Weiterleitung per login wenn implementiert");
+                Utils.triggerDialogMessage("Registrierung erfolgreich", "Weiterleitung per login");
+                login(studentDTO);
+                NavigationUtil.toMainView();
             } else {
                 setStudentErrorFields(registrationResult.getReasons());
             }
+
 
         });
 
         registerButtonBusiness = new Button("Registrieren");
         registerButtonBusiness.addClickListener(e -> {
-
 
             BusinessDTOImpl businessDTO = businessForm.createNewBusiness();
             RegistrationBusinessDTOImpl registrationBusinessDTO = new RegistrationBusinessDTOImpl(businessDTO, passwordFieldRepeatBusiness.getValue());
@@ -271,6 +270,12 @@ public class RegistrationView extends VerticalLayout {
                     lastNameStudent.setErrorMessage("Ungültiger Nachname");
                     lastNameStudent.setInvalid(true);
                     break;
+                case PASSWORD_TOO_COMMON:
+                    passwordFieldStudent.setErrorMessage("Password too common");
+                    passwordFieldStudent.setInvalid(true);
+                    passwordFieldRepeatStudent.setInvalid(true);
+                    passwordFieldRepeatStudent.setErrorMessage("Password too common");
+                    break;
                 default:
                     break;
 
@@ -311,10 +316,22 @@ public class RegistrationView extends VerticalLayout {
                     businessNameField.setErrorMessage("Ein Unternehmen mit dem Namen existiert bereits");
                     businessNameField.setInvalid(true);
                     break;
+                case PASSWORD_TOO_COMMON:
+                    passwordFieldBusiness.setErrorMessage("Password too common");
+                    passwordFieldBusiness.setInvalid(true);
+                    passwordFieldRepeatBusiness.setInvalid(true);
+                    passwordFieldRepeatBusiness.setErrorMessage("Password too common");
+                    break;
                 default:
                     break;
 
             }
         }
+    }
+
+    private void login(GeneralUserDTOImpl generalUserDTO) {
+
+        UI.getCurrent().getSession().setAttribute( "Current User", generalUserDTO );
+
     }
 }

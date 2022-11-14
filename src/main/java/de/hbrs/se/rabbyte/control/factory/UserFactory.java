@@ -16,7 +16,7 @@ public class UserFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserFactory.class);
 
     private UserFactory() {
-        throw new IllegalStateException(Globals.StateException.MESSAGE_FACTORY);
+        throw new IllegalStateException(Globals.IllegalState.MESSAGE_FACTORY);
     }
     public static Student createStudent(StudentDTO studentDTO)  {
         Student student = new Student();
@@ -28,10 +28,16 @@ public class UserFactory {
             LOGGER.info(exception.getMessage());
         }
         student.setId(studentDTO.getId());
-        student.setEmail(studentDTO.getEmail());
         student.setFirstName(studentDTO.getFirstName());
         student.setLastName(studentDTO.getLastName());
         student.setFaculty(studentDTO.getFaculty());
+
+        student.setEmail(studentDTO.getEmail());
+        student.setPlz(studentDTO.getPlz());
+        student.setCity(studentDTO.getCity());
+        student.setCountry(studentDTO.getCountry());
+        student.setStreet(studentDTO.getStreet());
+        student.setStreetNumber(studentDTO.getStreetNumber());
         return student;
     }
 

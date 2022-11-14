@@ -1,9 +1,12 @@
 package de.hbrs.se.rabbyte.util;
 
+import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.data.provider.Query;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +16,9 @@ class GlobalsTest {
     String globalsPathErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$Path with modifiers \"private\"";
     String globalsPageTitleErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$PageTitle with modifiers \"private\"";
     String globalsRegexErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$Regex with modifiers \"private\"";
-    String globalsStateExceptionErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$StateException with modifiers \"private\"";
+    String globalsStateExceptionErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$IllegalState with modifiers \"private\"";
+
+
 
     @Test
     void itShouldThrowIllegalAccessExceptionWhenInstancingGlobals() throws NoSuchMethodException {
@@ -27,6 +32,12 @@ class GlobalsTest {
 
     @Test
     void facultyComboBox() {
+        ComboBox<String> comboBox = new ComboBox<>();
+        Globals.facultyComboBox(comboBox);
+        assertFalse(comboBox.isAllowCustomValue());
+        assertEquals("Wähle Fachbereich" , comboBox.getPlaceholder());
+        assertEquals("[Angewandte Naturwissenschaften, Elektrotechnik, Maschinenbau & Technikjournalismus, Informatik, Sozialpolitik und Soziale Sicherung, Wirtschaftswissenschaften]" ,
+                comboBox.getDataProvider().fetch(new Query<>()).collect(Collectors.toList()).toString());
     }
 
     @Test
@@ -59,7 +70,7 @@ class GlobalsTest {
 
     @Test
     void throwIllegalAccessExceptionWhenInstancingGlobalsStateException() throws NoSuchMethodException {
-        Constructor<Globals.StateException> constructor = Globals.StateException.class.getDeclaredConstructor();
+        Constructor<Globals.IllegalState> constructor = Globals.IllegalState.class.getDeclaredConstructor();
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);
         assertEquals(globalsStateExceptionErrorMessage, exceptionThatWasThrown.getMessage());
