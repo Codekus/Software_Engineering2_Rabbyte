@@ -13,6 +13,7 @@ import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import de.hbrs.se.rabbyte.exception.AuthException;
 import de.hbrs.se.rabbyte.security.SecurityService;
 
 import java.security.NoSuchAlgorithmException;
@@ -36,7 +37,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
             try {
                 securityService.authenticate(event.getUsername(), event.getPassword());
                 UI.getCurrent().navigate("main");
-            } catch (SecurityService.AuthException e) {
+            } catch (AuthException e) {
                 login.setError(true);
                 Notification.show("Wrong credentials");
             } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {

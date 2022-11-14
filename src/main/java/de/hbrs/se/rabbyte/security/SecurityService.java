@@ -5,6 +5,7 @@ import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinServletRequest;
 import com.vaadin.flow.server.VaadinSession;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
+import de.hbrs.se.rabbyte.exception.AuthException;
 import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
 import de.hbrs.se.rabbyte.util.CryptographyUtil;
 import de.hbrs.se.rabbyte.views.*;
@@ -35,12 +36,6 @@ public class SecurityService  {
     @Autowired
     GeneralUserRepository generalUserRepository;
 
-    private GeneralUserDTO generalUserDTO;
-
-    public class AuthException extends Exception {
-
-    }
-
     public void authenticate(String username, String password) throws AuthException, InvalidKeySpecException, NoSuchAlgorithmException {
 
         //Erzeuge einen Regulären Ausdruck zum prüfen von wohlgeformtheit
@@ -49,7 +44,7 @@ public class SecurityService  {
 
         // Prüfe ob Username wohlgeformt ist, ansonsten wird eine Exception geworfen die in der LoginView behandelt wird
         if(!matcher.find()) {
-            throw new AuthException();
+            throw new AuthException("Invalid username");
         }
 
         /* Erzeuge UserDTO durch suchen mittels Email in der Datenbank
@@ -61,7 +56,7 @@ public class SecurityService  {
            Falls der User nicht existiert wird eine Exeption geworfen die in der LoginView behandelt wird
         */
         if(user == null) {
-            throw new AuthException();
+            throw new AuthException("User does not exist");
         }
 
         // Hole das gehashte Passwort aus der Datenbank die dem UserDTO zugehörig ist
@@ -84,7 +79,6 @@ public class SecurityService  {
         context.setAuthentication(authentication);
         SecurityContextHolder.setContext(context);
         createRoutes(user);
-        System.out.println("y");
     }
 
 
@@ -131,8 +125,6 @@ public class SecurityService  {
         return routes;
     }
 
-    private static final String LOGOUT_SUCCESS_URL = "/";
-
     public UserDetails getAuthenticatedUser() {
         SecurityContext context = SecurityContextHolder.getContext();
         Object principal = context.getAuthentication().getPrincipal();
@@ -144,14 +136,12 @@ public class SecurityService  {
     }
 
     public void logout() {
-       // UI.getCurrent().getPage().setLocation(LOGOUT_SUCCESS_URL);
-       // SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
-       // logoutHandler.logout(
-       //         VaadinServletRequest.getCurrent().getHttpServletRequest(), null,
-       //         null);
 
-        UI.getCurrent().getPage().setLocation("login");
-        VaadinSession.getCurrent().getSession().invalidate();
-        VaadinSession.getCurrent().close();
+        SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+        logoutHandler.logout(
+                VaadinServletRequest.getCurrent().getHttpServletRequest(), null,
+                null);
+        SecurityContextHolder.getContext().setAuthentication(null);
+
     }
 }

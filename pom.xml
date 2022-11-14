@@ -31,6 +31,22 @@
     <dependencies>
 
         <dependency>
+            <groupId>com.github.mvysny.kaributesting</groupId>
+            <artifactId>mock-servlet-environment</artifactId>
+            <version>1.1.14</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.mvysny.kaributesting/karibu-testing-v10 -->
+        <dependency>
+            <groupId>com.github.mvysny.kaributesting</groupId>
+            <artifactId>karibu-testing-v10</artifactId>
+            <version>1.1.14</version>
+        </dependency>
+
+
+
+        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-firefox-driver</artifactId>
             <version>3.11.0</version>
