@@ -16,7 +16,7 @@ public class UserFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserFactory.class);
 
     private UserFactory() {
-        throw new IllegalStateException(Globals.StateException.MESSAGE_FACTORY);
+        throw new IllegalStateException(Globals.IllegalState.MESSAGE_FACTORY);
     }
     public static Student createStudent(StudentDTO studentDTO)  {
         Student student = new Student();

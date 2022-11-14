@@ -15,7 +15,7 @@ public  class CryptographyUtil {
 
 
     private CryptographyUtil() {
-        throw new IllegalStateException(Globals.StateException.MESSAGE_UTILS);
+        throw new IllegalStateException(Globals.IllegalState.MESSAGE_UTILS);
     }
     private static final int HASH_BYTE_SIZE = 64; // 512 bits
     private static final int PBKDF2_ITERATIONS = 120000;

@@ -13,7 +13,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class Utils {
     private Utils() {
-        throw new IllegalStateException(Globals.StateException.MESSAGE_UTILS);
+        throw new IllegalStateException(Globals.IllegalState.MESSAGE_UTILS);
     }
 
     /**
