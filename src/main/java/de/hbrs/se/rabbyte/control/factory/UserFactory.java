@@ -27,7 +27,7 @@ public class UserFactory {
         } catch (Exception exception) {
             LOGGER.info(exception.getMessage());
         }
-
+        student.setId(studentDTO.getId());
         student.setEmail(studentDTO.getEmail());
         student.setFirstName(studentDTO.getFirstName());
         student.setLastName(studentDTO.getLastName());
@@ -45,6 +45,7 @@ public class UserFactory {
         } catch (Exception  exception) {
             LOGGER.info(exception.getMessage());
         }
+        business.setId(businessDTO.getId());
         business.setEmail(businessDTO.getEmail());
         business.setBusinessName(businessDTO.getBusinessName());
 
