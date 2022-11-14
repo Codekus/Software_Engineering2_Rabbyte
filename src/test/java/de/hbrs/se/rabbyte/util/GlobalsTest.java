@@ -16,9 +16,9 @@ class GlobalsTest {
     String globalsPathErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$Path with modifiers \"private\"";
     String globalsPageTitleErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$PageTitle with modifiers \"private\"";
     String globalsRegexErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$Regex with modifiers \"private\"";
-    String globalsStateExceptionErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$StateException with modifiers \"private\"";
+    String globalsStateExceptionErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$IllegalState with modifiers \"private\"";
 
-    private ComboBox<String> comboBox;
+
 
     @Test
     void itShouldThrowIllegalAccessExceptionWhenInstancingGlobals() throws NoSuchMethodException {
@@ -32,8 +32,8 @@ class GlobalsTest {
 
     @Test
     void facultyComboBox() {
-        comboBox = new ComboBox<>();
-        comboBox = Globals.facultyComboBox(comboBox);
+        ComboBox<String> comboBox = new ComboBox<>();
+        Globals.facultyComboBox(comboBox);
         assertFalse(comboBox.isAllowCustomValue());
         assertEquals("Wähle Fachbereich" , comboBox.getPlaceholder());
         assertEquals("[Angewandte Naturwissenschaften, Elektrotechnik, Maschinenbau & Technikjournalismus, Informatik, Sozialpolitik und Soziale Sicherung, Wirtschaftswissenschaften]" ,
