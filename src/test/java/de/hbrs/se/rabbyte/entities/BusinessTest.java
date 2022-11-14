@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BusinessTest {
 
-    private Business business = new Business();
+    private final Business business = new Business();
 
-    private String businessName = "Mustermann GMBH";
+    private final String businessName = "Mustermann GMBH";
     @BeforeEach
     void setUp() {
         business.setBusinessName(businessName);

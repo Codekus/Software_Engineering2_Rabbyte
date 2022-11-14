@@ -7,17 +7,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
 
-    private User user = new User();
+    private final User user = new User();
 
-    private int id = 100;
-    private String email = "test@gmx.de";
-    private String password = "password!";
-    private int plz = 12345;
-    private String city = "Mustercity";
-    private String country = "DE";
-    private String street = "Mustermannstraße";
-    private String  streetNumber = "1";
-    private String salt = "FFFFFFFFF";
+    private final int id = 100;
+    private final String email = "test@gmx.de";
+    private final String password = "password!";
+    private final int plz = 12345;
+    private final String city = "Mustercity";
+    private final String country = "DE";
+    private final String street = "Mustermannstraße";
+    private final String  streetNumber = "1";
+    private final String salt = "FFFFFFFFF";
 
     @BeforeEach
     void setUp() {

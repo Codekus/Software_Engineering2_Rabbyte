@@ -15,7 +15,7 @@ class CryptographyUtilTest {
 
 
     private static final String password = "Password";
-    private byte[] arraySalt =  new byte[64];
+    private final byte[] arraySalt =  new byte[64];
     @Test
     void generateSalt() {
         assertEquals(64 , CryptographyUtil.generateSalt().length);

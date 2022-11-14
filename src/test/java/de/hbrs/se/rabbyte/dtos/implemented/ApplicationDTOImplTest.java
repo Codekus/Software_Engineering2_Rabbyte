@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ApplicationDTOImplTest {
 
-    private ApplicationDTOImpl applicationDTO = new ApplicationDTOImpl();
+    private final ApplicationDTOImpl applicationDTO = new ApplicationDTOImpl();
     @Mock
     private JobAdvertisement jobAdvertisement;
     @Mock
     private Student student;
     public LocalDate date;
-    private String applicationText = "Application Text";
+    private final String applicationText = "Application Text";
 
     @BeforeEach
     void setUp() {

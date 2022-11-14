@@ -9,12 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class JobAdvertisementDTOImplTest {
 
-    private JobAdvertisementDTOImpl jobAdvertisementDTO= new JobAdvertisementDTOImpl();
+    private final JobAdvertisementDTOImpl jobAdvertisementDTO= new JobAdvertisementDTOImpl();
 
-    private int id = 100;
-    private String text = "Job Ad DTO text";
-    private String title = "Job Ad DTO title";
-    private String type= "Student" ;
+    private final int id = 100;
+    private final String text = "Job Ad DTO text";
+    private final String title = "Job Ad DTO title";
+    private final String type= "Student" ;
     @Mock
     private Business business;
 

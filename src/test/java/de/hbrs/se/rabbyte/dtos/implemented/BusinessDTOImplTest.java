@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BusinessDTOImplTest {
 
     BusinessDTOImpl businessDTO= new BusinessDTOImpl();
-    private String businessName = "Mustermann GmBH";
+    private final String businessName = "Mustermann GmBH";
 
     @BeforeEach
     void setUp() {

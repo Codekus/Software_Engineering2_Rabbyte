@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RegistrationDTOImplTest {
 
-    private RegistrationDTOImpl registrationDTO = new RegistrationDTOImpl();
-    private String registrationRepeatPw = "12345";
+    private final RegistrationDTOImpl registrationDTO = new RegistrationDTOImpl();
+    private final String registrationRepeatPw = "12345";
     @BeforeEach
     void setup() {
         registrationDTO.setRepeatPassword(registrationRepeatPw);
