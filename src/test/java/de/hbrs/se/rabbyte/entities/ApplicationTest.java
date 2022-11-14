@@ -1,7 +1,5 @@
 package de.hbrs.se.rabbyte.entities;
 
-import de.hbrs.se.rabbyte.control.factory.JobAdvertFactory;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -11,9 +9,9 @@ import java.time.LocalDate;
 import static org.junit.Assert.*;
 
 class ApplicationTest {
-    private Application application = new Application();
+    private final Application application = new Application();
 
-    private String applicationText = "Application Text";
+    private final String applicationText = "Application Text";
 
     @Mock
     JobAdvertisement jobAdvertisement;

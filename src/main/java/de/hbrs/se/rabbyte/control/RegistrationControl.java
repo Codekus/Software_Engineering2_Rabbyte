@@ -13,13 +13,11 @@ import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
 import de.hbrs.se.rabbyte.repository.StudentRepository;
 import de.hbrs.se.rabbyte.util.Globals;
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -177,7 +175,7 @@ public class RegistrationControl {
     }
 
     private boolean passwordTooShort(String password) {
-        return (password.length() < 5);
+        return (password.length() < 8);
     }
 
     private void inspectIfPasswordIsTooCommon(String password) {
@@ -190,6 +188,7 @@ public class RegistrationControl {
             registrationResultDTO.setReason(RegistrationResultDTO.Result.GENERAL_ERROR);
         }
     }
+
     private boolean passwordCommonList(String password) throws IOException {
         return Files.lines(Paths.get("src/main/resources/commonPasswordList.txt")).anyMatch(p -> p.contains(password));
     }

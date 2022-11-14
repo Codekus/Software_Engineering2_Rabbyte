@@ -3,13 +3,13 @@ package de.hbrs.se.rabbyte.entities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BusinessTest {
 
-    private Business business = new Business();
+    private final Business business = new Business();
 
-    private String businessName = "Mustermann GMBH";
+    private final String businessName = "Mustermann GMBH";
     @BeforeEach
     void setUp() {
         business.setBusinessName(businessName);

@@ -11,7 +11,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
-import com.vaadin.flow.component.textfield.*;
+import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
@@ -82,8 +84,8 @@ public class RegistrationView extends VerticalLayout {
             passwordFieldRepeatStudent.setRequiredIndicatorVisible(true);
             firstNameStudent.setRequiredIndicatorVisible(true);
             lastNameStudent.setRequiredIndicatorVisible(true);
-            passwordFieldStudent.setMinLength(5);
-            passwordFieldRepeatStudent.setMinLength(5);
+            passwordFieldStudent.setMinLength(8);
+            passwordFieldRepeatStudent.setMinLength(8);
 
             facultyComboBox = Globals.facultyComboBox(facultyComboBox);
 
@@ -127,8 +129,8 @@ public class RegistrationView extends VerticalLayout {
             passwordFieldRepeatBusiness.setRequiredIndicatorVisible(true);
             businessNameField.setRequiredIndicatorVisible(true);
 
-            emailFieldBusiness.setMinLength(5);
-            emailFieldBusiness.setMinLength(5);
+            emailFieldBusiness.setMinLength(8);
+            emailFieldBusiness.setMinLength(8);
 
             FormLayout formLayout = new FormLayout();
             formLayout.add(businessNameField, passwordFieldBusiness, passwordFieldRepeatBusiness, emailFieldBusiness);
