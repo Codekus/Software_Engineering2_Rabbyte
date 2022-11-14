@@ -2,7 +2,6 @@ package de.hbrs.se.rabbyte.entities;
 
 import de.hbrs.se.rabbyte.control.factory.UserFactory;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
-
 import de.hbrs.se.rabbyte.repository.StudentRepository;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.BeforeEach;
