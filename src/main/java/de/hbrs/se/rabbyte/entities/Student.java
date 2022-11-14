@@ -1,6 +1,9 @@
 package de.hbrs.se.rabbyte.entities;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "student", schema = "rabbyte")

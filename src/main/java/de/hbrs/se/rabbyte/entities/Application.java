@@ -1,7 +1,6 @@
 package de.hbrs.se.rabbyte.entities;
 
 import javax.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
