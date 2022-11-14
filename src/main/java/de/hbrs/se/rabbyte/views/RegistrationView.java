@@ -82,8 +82,8 @@ public class RegistrationView extends VerticalLayout {
             passwordFieldRepeatStudent.setRequiredIndicatorVisible(true);
             firstNameStudent.setRequiredIndicatorVisible(true);
             lastNameStudent.setRequiredIndicatorVisible(true);
-            passwordFieldStudent.setMinLength(5);
-            passwordFieldRepeatStudent.setMinLength(5);
+            passwordFieldStudent.setMinLength(8);
+            passwordFieldRepeatStudent.setMinLength(8);
 
             facultyComboBox = Globals.facultyComboBox(facultyComboBox);
 
@@ -127,8 +127,8 @@ public class RegistrationView extends VerticalLayout {
             passwordFieldRepeatBusiness.setRequiredIndicatorVisible(true);
             businessNameField.setRequiredIndicatorVisible(true);
 
-            emailFieldBusiness.setMinLength(5);
-            emailFieldBusiness.setMinLength(5);
+            emailFieldBusiness.setMinLength(8);
+            emailFieldBusiness.setMinLength(8);
 
             FormLayout formLayout = new FormLayout();
             formLayout.add(businessNameField, passwordFieldBusiness, passwordFieldRepeatBusiness, emailFieldBusiness);

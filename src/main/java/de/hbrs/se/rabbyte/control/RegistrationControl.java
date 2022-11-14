@@ -177,7 +177,7 @@ public class RegistrationControl {
     }
 
     private boolean passwordTooShort(String password) {
-        return (password.length() < 5);
+        return (password.length() < 8);
     }
 
     private void inspectIfPasswordIsTooCommon(String password) {
