@@ -2,9 +2,11 @@ package de.hbrs.se.rabbyte.control.factory;
 
 
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
+import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Student;
+import de.hbrs.se.rabbyte.entities.User;
 import de.hbrs.se.rabbyte.util.CryptographyUtil;
 import de.hbrs.se.rabbyte.util.Globals;
 import org.slf4j.Logger;
@@ -17,15 +19,12 @@ public class UserFactory {
     private UserFactory() {
         throw new IllegalStateException(Globals.IllegalState.MESSAGE_FACTORY);
     }
+
     public static Student createStudent(StudentDTO studentDTO)  {
         Student student = new Student();
-        try {
-            byte[] salt = CryptographyUtil.generateSalt();
-            student.setSalt(CryptographyUtil.toHex(salt));
-            student.setPassword(CryptographyUtil.encryptPassword(studentDTO.getPassword() , salt));
-        } catch (Exception exception) {
-            LOGGER.info(exception.getMessage());
-        }
+
+        passwordAndSaltGeneration(studentDTO, student);
+
         student.setId(studentDTO.getId());
         student.setFirstName(studentDTO.getFirstName());
         student.setLastName(studentDTO.getLastName());
@@ -43,17 +42,27 @@ public class UserFactory {
     public static Business createBusiness(BusinessDTO businessDTO) {
         Business business = new Business();
 
+        passwordAndSaltGeneration(businessDTO, business);
+        business.setEmail(businessDTO.getEmail());
+        business.setBusinessName(businessDTO.getBusinessName());
+        business.setPlz(businessDTO.getPlz());
+        business.setCity(businessDTO.getCity());
+        business.setCountry(businessDTO.getCountry());
+        business.setStreet(businessDTO.getStreet());
+        business.setStreetNumber(businessDTO.getStreetNumber());
+
+
+        return business;
+    }
+
+    private static void passwordAndSaltGeneration(GeneralUserDTO businessDTO, User user) {
         try {
             byte[] salt = CryptographyUtil.generateSalt();
-            business.setSalt(CryptographyUtil.toHex(salt));
-            business.setPassword(CryptographyUtil.encryptPassword(businessDTO.getPassword() , salt));
+            user.setSalt(CryptographyUtil.toHex(salt));
+            user.setPassword(CryptographyUtil.encryptPassword(businessDTO.getPassword() , salt));
         } catch (Exception  exception) {
             LOGGER.info(exception.getMessage());
         }
-        business.setId(businessDTO.getId());
-        business.setEmail(businessDTO.getEmail());
-        business.setBusinessName(businessDTO.getBusinessName());
-
-        return business;
+        user.setId(businessDTO.getId());
     }
 }
