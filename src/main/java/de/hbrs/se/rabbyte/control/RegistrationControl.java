@@ -18,11 +18,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 @Component
 public class RegistrationControl {
@@ -190,7 +193,10 @@ public class RegistrationControl {
     }
 
     private boolean passwordCommonList(String password) throws IOException {
-        return Files.lines(Paths.get("src/main/resources/commonPasswordList.txt")).anyMatch(p -> p.contains(password));
+
+        try (Stream<String> stream = Files.lines(Paths.get("src/main/resources/commonPasswordList.txt"))){
+            return stream.anyMatch(p -> p.contains(password));
+        }
     }
 
 }

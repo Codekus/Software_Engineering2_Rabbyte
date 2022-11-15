@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 public interface ApplicationDTO {
 
+    public int getId();
 
     public JobAdvertisement getJobAdvertisement();
 

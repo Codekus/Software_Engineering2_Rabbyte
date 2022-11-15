@@ -11,10 +11,19 @@ import java.time.LocalDate;
  */
 public class ApplicationDTOImpl implements ApplicationDTO {
 
+    private int id;
     private JobAdvertisement jobAdvertisement;
     private Student student;
     private LocalDate date;
     private String applicationText;
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public JobAdvertisement getJobAdvertisement() {
         return jobAdvertisement;
