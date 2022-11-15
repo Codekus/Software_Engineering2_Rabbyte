@@ -9,4 +9,6 @@ import org.springframework.stereotype.Component;
 public interface BusinessRepository extends JpaRepository<Business, Integer> {
 
     public BusinessDTO findBusinessByBusinessName(String name);
+
+    public BusinessDTO findBusinessById(int id);
 }
