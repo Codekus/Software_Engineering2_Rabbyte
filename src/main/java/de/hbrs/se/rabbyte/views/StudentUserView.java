@@ -16,9 +16,9 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
-@Route("settings")
-@PageTitle("Account Einstellungen")
-@Theme(value = Lumo.class)
+
+//@Route("student")
+@PageTitle("User")
 public class StudentUserView extends VerticalLayout //implements View
 {
     //GeneralUser attributes

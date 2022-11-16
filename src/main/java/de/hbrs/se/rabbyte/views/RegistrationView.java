@@ -1,38 +1,31 @@
 package de.hbrs.se.rabbyte.views;
 
 
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.tabs.TabsVariant;
-import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.PasswordField;
-import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import de.hbrs.se.rabbyte.control.RegistrationControl;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
-import de.hbrs.se.rabbyte.dtos.implemented.*;
+import de.hbrs.se.rabbyte.dtos.implemented.BusinessDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
-import de.hbrs.se.rabbyte.util.Globals;
-import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 
-@Route(value = Globals.Path.REGISTRATION_VIEW)
-@PageTitle(Globals.PageTitle.REGISTRATION_VIEW)
-@Theme(value = Lumo.class)
+@Route(value = "registration" )
 public class RegistrationView extends VerticalLayout {
     private static final String DIFFERENT_PASSWORDS = "Unterschiedliches Password";
     private static final String PASSWORD_TOO_SHORT = "Das Password muss mindestens 5 Zeichen sein";
@@ -48,10 +41,7 @@ public class RegistrationView extends VerticalLayout {
     PasswordField passwordFieldStudent = new PasswordField("Password");
     PasswordField passwordFieldRepeatStudent = new PasswordField("Password wiederholen");
     TextField firstNameStudent = new TextField("Vorname");
-    TextField lastNameStudent = new TextField("Nachnahme");
-
-    ComboBox<String> facultyComboBox = new ComboBox<>("Fachbereich");
-
+    TextField lastNameStudent = new TextField("Nachname");
 
 
     //Business Fields
@@ -62,8 +52,8 @@ public class RegistrationView extends VerticalLayout {
 
 
     //Tabs
-    private final Tab studentTab;
-    private final Tab businessTab;
+    private final Tab student;
+    private final Tab business;
 
     //Buttons
     Button registerButtonStudent;
@@ -73,29 +63,21 @@ public class RegistrationView extends VerticalLayout {
     VerticalLayout verticalLayout;
     VerticalLayout tabsLayout;
 
-
     class StudentForm extends Div {
 
         StudentForm() {
-
-
             emailFieldStudent.setRequiredIndicatorVisible(true);
             passwordFieldStudent.setRequiredIndicatorVisible(true);
             passwordFieldRepeatStudent.setRequiredIndicatorVisible(true);
             firstNameStudent.setRequiredIndicatorVisible(true);
             lastNameStudent.setRequiredIndicatorVisible(true);
-            passwordFieldStudent.setMinLength(8);
-            passwordFieldRepeatStudent.setMinLength(8);
+            passwordFieldStudent.setMinLength(5);
+            passwordFieldRepeatStudent.setMinLength(5);
 
-            facultyComboBox = Globals.facultyComboBox(facultyComboBox);
 
             FormLayout formLayout = new FormLayout();
-            formLayout.add(firstNameStudent, lastNameStudent, passwordFieldStudent, passwordFieldRepeatStudent,
-                    facultyComboBox , emailFieldStudent);
+            formLayout.add(emailFieldStudent, passwordFieldStudent, passwordFieldRepeatStudent, firstNameStudent, lastNameStudent);
 
-            formLayout.setColspan(emailFieldStudent , 2);
-            setSizeFull();
-            setAlignItems(Alignment.CENTER);
             this.add(formLayout);
         }
 
@@ -106,16 +88,8 @@ public class RegistrationView extends VerticalLayout {
             newStudent.setFirstName(firstNameStudent.getValue());
             newStudent.setLastName(lastNameStudent.getValue());
 
-            newStudent.setFaculty(facultyComboBox.getValue());
             return newStudent;
         }
-    }
-
-    private void facultyComboBox() {
-        facultyComboBox.setAllowCustomValue(false);
-        facultyComboBox.setPlaceholder("Wähle Fachbereich");
-        facultyComboBox.setItems("Angewandte Naturwissenschaften" , "Elektrotechnik, Maschinenbau & Technikjournalismus" ,
-                "Informatik" , "Sozialpolitik und Soziale Sicherung" , "Wirtschaftswissenschaften" );
     }
 
     class BusinessForm extends Div {
@@ -123,21 +97,17 @@ public class RegistrationView extends VerticalLayout {
 
         BusinessForm() {
 
-            setAlignItems(Alignment.CENTER);
             emailFieldBusiness.setRequiredIndicatorVisible(true);
             passwordFieldBusiness.setRequiredIndicatorVisible(true);
             passwordFieldRepeatBusiness.setRequiredIndicatorVisible(true);
             businessNameField.setRequiredIndicatorVisible(true);
 
-            emailFieldBusiness.setMinLength(8);
-            emailFieldBusiness.setMinLength(8);
+            emailFieldBusiness.setMinLength(5);
+            emailFieldBusiness.setMinLength(5);
 
             FormLayout formLayout = new FormLayout();
-            formLayout.add(businessNameField, passwordFieldBusiness, passwordFieldRepeatBusiness, emailFieldBusiness);
+            formLayout.add(emailFieldBusiness, passwordFieldBusiness, passwordFieldRepeatBusiness, businessNameField);
 
-            formLayout.setColspan(businessNameField , 2);
-            formLayout.setColspan(emailFieldBusiness , 2);
-            setSizeFull();
             this.add(formLayout);
         }
 
@@ -157,9 +127,6 @@ public class RegistrationView extends VerticalLayout {
 
     public RegistrationView() {
 
-
-        setAlignItems(Alignment.CENTER);
-
         verticalLayout = new VerticalLayout();
         tabsLayout = new VerticalLayout();
         H1 h1 = new H1("Registrierung");
@@ -176,18 +143,16 @@ public class RegistrationView extends VerticalLayout {
             RegistrationResultDTO registrationResult = registrationControl.registerStudent(registrationStudent);
 
             if (registrationResult.getRegistrationResult()) {
-                Utils.triggerDialogMessage("Registrierung erfolgreich", "Weiterleitung per login");
-                login(studentDTO);
-                NavigationUtil.toMainView();
+                Utils.triggerDialogMessage("Registrierung erfolgreich", "Weiterleitung per login wenn implementiert");
             } else {
                 setStudentErrorFields(registrationResult.getReasons());
             }
-
 
         });
 
         registerButtonBusiness = new Button("Registrieren");
         registerButtonBusiness.addClickListener(e -> {
+
 
             BusinessDTOImpl businessDTO = businessForm.createNewBusiness();
             RegistrationBusinessDTOImpl registrationBusinessDTO = new RegistrationBusinessDTOImpl(businessDTO, passwordFieldRepeatBusiness.getValue());
@@ -203,23 +168,18 @@ public class RegistrationView extends VerticalLayout {
 
         });
 
-        studentTab = new Tab("Student");
-        businessTab = new Tab("Business");
+        student = new Tab("Student");
+        business = new Tab("Business");
+        Tabs tabs = new Tabs(student, business);
 
-
-        Tabs tabs = new Tabs(studentTab, businessTab);
-        tabs.addThemeVariants(TabsVariant.LUMO_CENTERED);
         tabs.addSelectedChangeListener(event ->
                 setContent(event.getSelectedTab())
         );
 
-
         setContent(tabs.getSelectedTab());
-        verticalLayout.setWidth("50%");
         verticalLayout.add(h1);
-        verticalLayout.add(tabs , tabsLayout);
         add(verticalLayout);
-
+        add(tabs, tabsLayout);
 
     }
 
@@ -227,7 +187,7 @@ public class RegistrationView extends VerticalLayout {
 
         tabsLayout.removeAll();
 
-        if (tab.equals(studentTab)) {
+        if (tab.equals(student)) {
             tabsLayout.add(new StudentForm());
             tabsLayout.add(registerButtonStudent);
 
@@ -272,12 +232,6 @@ public class RegistrationView extends VerticalLayout {
                     lastNameStudent.setErrorMessage("Ungültiger Nachname");
                     lastNameStudent.setInvalid(true);
                     break;
-                case PASSWORD_TOO_COMMON:
-                    passwordFieldStudent.setErrorMessage("Password too common");
-                    passwordFieldStudent.setInvalid(true);
-                    passwordFieldRepeatStudent.setInvalid(true);
-                    passwordFieldRepeatStudent.setErrorMessage("Password too common");
-                    break;
                 default:
                     break;
 
@@ -318,22 +272,10 @@ public class RegistrationView extends VerticalLayout {
                     businessNameField.setErrorMessage("Ein Unternehmen mit dem Namen existiert bereits");
                     businessNameField.setInvalid(true);
                     break;
-                case PASSWORD_TOO_COMMON:
-                    passwordFieldBusiness.setErrorMessage("Password too common");
-                    passwordFieldBusiness.setInvalid(true);
-                    passwordFieldRepeatBusiness.setInvalid(true);
-                    passwordFieldRepeatBusiness.setErrorMessage("Password too common");
-                    break;
                 default:
                     break;
 
             }
         }
-    }
-
-    private void login(GeneralUserDTOImpl generalUserDTO) {
-
-        UI.getCurrent().getSession().setAttribute( "Current User", generalUserDTO );
-
     }
 }
