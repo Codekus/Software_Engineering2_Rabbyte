@@ -3,15 +3,15 @@ package de.hbrs.se.rabbyte.entities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class StudentTest {
 
     Student student = new Student();
 
-    private String firstName = "Max";
-    private String lastName = "Mustermann";
-    private String faculty = "Informatik";
+    private final String firstName = "Max";
+    private final String lastName = "Mustermann";
+    private final String faculty = "Informatik";
 
     @BeforeEach
     void setUp() {

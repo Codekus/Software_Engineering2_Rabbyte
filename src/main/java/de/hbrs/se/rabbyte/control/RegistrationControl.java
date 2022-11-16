@@ -12,11 +12,15 @@ import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
 import de.hbrs.se.rabbyte.repository.StudentRepository;
+import de.hbrs.se.rabbyte.util.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,7 +60,7 @@ public class RegistrationControl {
         }} catch (Exception exception) {
             registrationResultDTO.setRegistrationResult(false);
             registrationResultDTO.setReason(RegistrationResultDTO.Result.GENERAL_ERROR);
-            LOGGER.info("INFO:" ,  exception.getMessage());
+            LOGGER.info("INFO: {}" ,  exception.getMessage());
         }
         return registrationResultDTO;
     }
@@ -65,7 +69,7 @@ public class RegistrationControl {
         inspectIfPasswordIsTooShort(registrationStudentDTO.getStudentDTO().getPassword());
         inspectIfRepeatPasswordIsTooShort(registrationStudentDTO.getRepeatPassword());
         inspectIfSamePassword(registrationStudentDTO.getRepeatPassword() , registrationStudentDTO.getStudentDTO().getPassword());
-
+        inspectIfPasswordIsTooCommon(registrationStudentDTO.getStudentDTO().getPassword());
         validateEmailName(registrationStudentDTO.getStudentDTO().getEmail());
         validateFirstName(registrationStudentDTO.getStudentDTO().getFirstName());
         validateLastName(registrationStudentDTO.getStudentDTO().getLastName());
@@ -89,7 +93,7 @@ public class RegistrationControl {
         } catch(Exception exception) {
             registrationResultDTO.setRegistrationResult(false);
             registrationResultDTO.setReason(RegistrationResultDTO.Result.GENERAL_ERROR);
-            LOGGER.info("INFO" , exception.getMessage());
+            LOGGER.info("INFO: {}" ,  exception.getMessage());
         }
         return registrationResultDTO;
     }
@@ -105,6 +109,7 @@ public class RegistrationControl {
         inspectIfPasswordIsTooShort(registrationBusinessDTO.getBusinessDTO().getPassword());
         inspectIfRepeatPasswordIsTooShort(registrationBusinessDTO.getRepeatPassword());
         inspectIfSamePassword(registrationBusinessDTO.getRepeatPassword() , registrationBusinessDTO.getBusinessDTO().getPassword());
+        inspectIfPasswordIsTooCommon(registrationBusinessDTO.getBusinessDTO().getPassword());
         validateEmailName(registrationBusinessDTO.getBusinessDTO().getEmail());
         validateBusinessName(registrationBusinessDTO.getBusinessDTO().getBusinessName());
 
@@ -130,9 +135,8 @@ public class RegistrationControl {
 
     private void validateEmailName(String email) {
 
-
         Pattern pattern =
-                Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+                Pattern.compile(Globals.Regex.EMAIL, Pattern.CASE_INSENSITIVE);
 
         Matcher matcher = pattern.matcher(email);
         if(!matcher.find()) {
@@ -141,19 +145,19 @@ public class RegistrationControl {
     }
 
     private void validateFirstName(String firstName) {
-        if(!firstName.matches( "[A-Z][a-z]*")){
+        if(!firstName.matches(Globals.Regex.FIRST_NAME)){
             registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_FIRST_NAME);
         }
     }
 
     private void validateLastName(String lastName) {
-        if(!lastName.matches( "[A-Z][a-z]*")){
+        if(!lastName.matches( Globals.Regex.LAST_NAME)){
             registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_LAST_NAME);
         }
     }
 
     private void validateBusinessName(String businessName) {
-        if(!businessName.matches("^(?!\\s)(?!.*\\s)(?=.*[a-zA-Z0-9])[a-zA-Z0-9 '&]{2,10}$")) {
+        if(!businessName.matches(Globals.Regex.BUSINESS_NAME)) {
             registrationResultDTO.setReason(RegistrationResultDTO.Result.INVALID_BUSINESS_NAME);
         }
     }
@@ -171,7 +175,22 @@ public class RegistrationControl {
     }
 
     private boolean passwordTooShort(String password) {
-        return (password.length() < 5);
+        return (password.length() < 8);
+    }
+
+    private void inspectIfPasswordIsTooCommon(String password) {
+        try {
+            if(passwordCommonList(password)) {
+                registrationResultDTO.setReason(RegistrationResultDTO.Result.PASSWORD_TOO_COMMON);
+            }
+        } catch (IOException exception) {
+            LOGGER.info("INFO: {}" ,  exception.getMessage());
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.GENERAL_ERROR);
+        }
+    }
+
+    private boolean passwordCommonList(String password) throws IOException {
+        return Files.lines(Paths.get("src/main/resources/commonPasswordList.txt")).anyMatch(p -> p.contains(password));
     }
 
 }

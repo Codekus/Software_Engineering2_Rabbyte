@@ -22,21 +22,32 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import de.hbrs.se.rabbyte.control.JobAdvertControl;
+import de.hbrs.se.rabbyte.control.factory.UserFactory;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
-import de.hbrs.se.rabbyte.service.CrmService;
+import de.hbrs.se.rabbyte.entities.Business;
+import de.hbrs.se.rabbyte.repository.BusinessRepository;
+import de.hbrs.se.rabbyte.security.SecurityService;
+import de.hbrs.se.rabbyte.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 
 import javax.swing.*;
 import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 
-@Route(value = "create_JobAdvert", layout = AppView.class)
-//@PageTitle("Neue Stellenausschreibung")
+
+@PageTitle("Neue Stellenausschreibung")
 public class CreateJobAdvertisementView extends Div {
+
+    @Autowired
+    SecurityService securityService;
+
+    @Autowired
+    BusinessRepository businessRepository;
 
     //ToDo for first sprint
     private TextField title = new TextField("Stellen Titel");
@@ -55,15 +66,13 @@ public class CreateJobAdvertisementView extends Div {
     //private PhoneNumberField phone = new PhoneNumberField("Telefonnummer");
 
 
-    private CrmService service;
     private Binder<JobAdvertisementDTOImpl> binder = new Binder(JobAdvertisementDTOImpl.class);
 
     public CreateJobAdvertisementView(JobAdvertControl jobAdvertControl){
-        this.service = service;
         addClassName("create-jobAdvert-view");
 
         //add(createButtonLayoutBack());
-        //add(createTitle());
+        add(createTitle());
         add(createFormLayout());
         add(createButtonLayoutSubmit());
 
@@ -81,20 +90,23 @@ public class CreateJobAdvertisementView extends Div {
 
         save.addClickListener(e -> {
             // Speicherung der Daten über das zuhörige Control-Object.
-            BusinessDTO businessDTO = (BusinessDTO) UI.getCurrent().getSession().getAttribute("current_user");
-            jobAdvertControl.createJobAdvert(createNewJobAdvert() ,  businessDTO );
+            jobAdvertControl.createJobAdvert(createNewJobAdvert());
 
             Notification.show("Veröffentlicht");
             clearForm();
         });
     }
 
+
     public JobAdvertisementDTO createNewJobAdvert(){
         JobAdvertisementDTOImpl jobAdvertisementDTO = new JobAdvertisementDTOImpl();
-
         jobAdvertisementDTO.setTitle(title.getValue());
         jobAdvertisementDTO.setType(type.getValue());
         jobAdvertisementDTO.setText(description.getValue());
+
+        BusinessDTO businessDTO = businessRepository.findBusinessByBusinessID(securityService.getAuthenticatedUser().getId());
+        Business business = UserFactory.createBusiness(businessDTO);
+        jobAdvertisementDTO.setBusiness(business);    // <- userID
 
         return jobAdvertisementDTO;
     }

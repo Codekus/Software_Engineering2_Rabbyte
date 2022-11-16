@@ -3,19 +3,19 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GeneralUserDTOImplTest {
 
     GeneralUserDTOImpl generalUserDTO = new GeneralUserDTOImpl();
-    private int id = 100;
-    private String email = "max@mustermann.de";
-    private String password = "password";
-    private int plz = 12345;
-    private String city = "Musterdorf";
-    private String country = "DE";
-    private String street = "Musterstra0e";
-    private int streetNumber = 5;
+    private final int id = 100;
+    private final String email = "max@mustermann.de";
+    private final String password = "password";
+    private final int plz = 12345;
+    private final String city = "Musterdorf";
+    private final String country = "DE";
+    private final String street = "Musterstra0e";
+    private final String streetNumber = "5";
 
     @BeforeEach
     void setUp() {

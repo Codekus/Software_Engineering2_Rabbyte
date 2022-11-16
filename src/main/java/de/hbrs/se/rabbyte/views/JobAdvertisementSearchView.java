@@ -5,28 +5,34 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
+import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import com.vaadin.flow.component.textfield.TextField;
 import de.hbrs.se.rabbyte.service.CrmService;
+
+
 import org.springframework.context.annotation.Scope;
 
 @org.springframework.stereotype.Component
 @Scope("prototype")
 //routing not final
-@Route(value = "student/search-view", layout = AppView.class)
-@RouteAlias(value ="user/student/main")
-//@PageTitle("Search For Job-Advertisements")
+//@Route(value = "search2")
+@PageTitle("Search For Job-Advertisements")
 @CssImport("./styles/views/JobAdvertisementSearchView/job-advertisements-search-view.css")
+//@CssImport(themeFor = "vaadin-grid",value="./styles/views/JobAdvertisementSearchView/job-advertisements-search-view.css")
 public class JobAdvertisementSearchView extends VerticalLayout {
     Grid<JobAdvertisement> grid = new Grid<>(JobAdvertisement.class);
     TextField searchField = new TextField();
-    private CrmService service;
+    H1 infoMessage = new H1();
 
+    private CrmService service;
 
     public JobAdvertisementSearchView(CrmService service){
         this.service = service;
@@ -41,15 +47,25 @@ public class JobAdvertisementSearchView extends VerticalLayout {
 
     }
 
+    //update grid with search field input
     private void updateList() {
-        if(!searchField.isEmpty()) {
-            add(grid);
-            grid.setItems(service.findJobAdvertisements(searchField.getValue()));
-        }else {
+        if (!searchField.isEmpty()) {
+            if (!service.findJobAdvertisements(searchField.getValue()).isEmpty()) {
+                remove(infoMessage);
+                add(grid);
+                grid.setItems(service.findJobAdvertisements(searchField.getValue()));
+            } else {
+                noResults();
+                remove(grid);
+                add(infoMessage);
+            }
+        } else {
+            remove(infoMessage);
             remove(grid);
         }
     }
 
+    //create search field component
     private Component getSearchFieldComp() {
         addClassName("job-advertisement-search-view-searchFieldComp");
         searchField.setPlaceholder("Nach Ausschreibungen suchen...");
@@ -62,18 +78,62 @@ public class JobAdvertisementSearchView extends VerticalLayout {
         return searchField;
     }
 
-    private void configureGrid(){
+    //grid creation
+    private void configureGrid() {
         grid.addClassName("job-advertisement-grid");
         grid.setSizeFull();
         grid.removeAllColumns();
-        grid.addColumn(jobAdvertisement -> jobAdvertisement.getBusiness().getBusinessName()).setHeader("Unternehmen");
-        grid.addColumn(jobAdvertisement -> jobAdvertisement.getTitle()).setHeader("Titel");
-        grid.addColumn(jobAdvertisement -> jobAdvertisement.getText()).setHeader("Beschreibung");
-        grid.getColumns().forEach(col-> col.setAutoWidth(true));
+
+        //creating and styling the grid columns
+        Grid.Column<JobAdvertisement> businessColumn = grid.addColumn(TemplateRenderer
+                .<JobAdvertisement>of("<a class=\"link-columns\">[[item.business]]</a>")
+                .withProperty("business", jobAdvertisement -> jobAdvertisement.getBusiness().getBusinessName())
+        ).setHeader("Unternehmen");
+        Grid.Column<JobAdvertisement> titleColumn = grid.addColumn(TemplateRenderer
+                .<JobAdvertisement>of("<a class=\"link-columns\">[[item.title]]</a>")
+                .withProperty("title", JobAdvertisement::getTitle)
+        ).setHeader("Title");
+        Grid.Column<JobAdvertisement> descriptionColumn = grid.addColumn(TemplateRenderer
+                .<JobAdvertisement>of("<a class=\"link-columns\">[[item.description]]</a>")
+                .withProperty("description", JobAdvertisement::getText)
+        ).setHeader("Beschreibung");
+        Grid.Column<JobAdvertisement> typeColumn = grid.addColumn(TemplateRenderer
+                .<JobAdvertisement>of("[[item.type]]")
+                .withProperty("type", JobAdvertisement::getType)
+        ).setHeader("Art");
+        grid.getColumns().forEach(col -> col.setAutoWidth(true));
+        descriptionColumn.setAutoWidth(false);
+
+        //added itemListener
+        grid.addItemClickListener(e -> {
+            if (e.getColumn().equals(businessColumn)) {
+                findPath(e.getItem().getBusiness());
+
+            } else if (e.getColumn().equals(titleColumn) || e.getColumn().equals(descriptionColumn)) {
+                findPath(e.getItem());
+
+            }
+        });
     }
 
+    //routing to grid items
+    private <T> void findPath(T idType) {
+        if (idType instanceof Business) {
+            //getUI().get().navigate("create_JobAdvert" +  ((Business) idType).getId());
+            Notification.show(((Business) idType).getId() + " Business");
+        } else if (idType instanceof JobAdvertisement) {
+            //getUI().get().navigate("create_JobAdvert" +  ((JobAdvertisement) idType).getId());
+            Notification.show(((JobAdvertisement) idType).getId() + " Job Advert");
+        }
+    }
 
+    //create Rabbyte header
     private Component createTitle() {
         return new H1("Rabbyte");
+    }
+
+    //set infoMessage (no results)
+    private void noResults() {
+        infoMessage.setText("Keine Übereinstimmungen!");
     }
 }

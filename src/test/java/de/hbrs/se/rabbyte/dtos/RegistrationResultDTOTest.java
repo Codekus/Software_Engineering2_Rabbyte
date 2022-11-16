@@ -1,9 +1,9 @@
 package de.hbrs.se.rabbyte.dtos;
 
-import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
+
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RegistrationResultDTOTest {
 

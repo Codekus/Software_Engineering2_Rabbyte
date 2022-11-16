@@ -1,10 +1,12 @@
 package de.hbrs.se.rabbyte.entities;
 
+import de.hbrs.se.rabbyte.dtos.implemented.GeneralUserDTOImpl;
+
 import javax.persistence.*;
 
 
 @Entity
-@Table(name ="jobAdvertisement" , schema = "rabbyte")
+@Table(name ="job_advertisement" , schema = "rabbyte")
 public class JobAdvertisement {
 
     private int id;
@@ -16,14 +18,14 @@ public class JobAdvertisement {
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,
-            generator = "jobAdvertisement_id"
+            generator = "job_advertisement_id"
     )
     @SequenceGenerator(
-            name = "jobAdvertisement_id",
+            name = "job_advertisement_id",
             sequenceName = "rabbyte.seq_stellenausschreibung_id",
             allocationSize=1
     )
-    @Column(name = "jobAdvertisement_id")
+    @Column(name = "job_advertisement_id")
     public int getId() {
         return id;
     }
@@ -34,7 +36,6 @@ public class JobAdvertisement {
     public String getText() {
         return text;
     }
-
     public void setText(String text) {
         this.text = text;
     }
@@ -42,7 +43,6 @@ public class JobAdvertisement {
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -50,7 +50,6 @@ public class JobAdvertisement {
     public void setType(String type) {
         this.type = type;
     }
-
     public String getType(){
         return type;
     }

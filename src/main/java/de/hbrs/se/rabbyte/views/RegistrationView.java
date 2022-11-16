@@ -1,6 +1,7 @@
 package de.hbrs.se.rabbyte.views;
 
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -17,12 +18,10 @@ import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import de.hbrs.se.rabbyte.control.RegistrationControl;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
-import de.hbrs.se.rabbyte.dtos.implemented.BusinessDTOImpl;
-import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
-import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
-import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.*;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.util.Globals;
+import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -47,7 +46,7 @@ public class RegistrationView extends VerticalLayout {
     PasswordField passwordFieldStudent = new PasswordField("Password");
     PasswordField passwordFieldRepeatStudent = new PasswordField("Password wiederholen");
     TextField firstNameStudent = new TextField("Vorname");
-    TextField lastNameStudent = new TextField("Nachnahme");
+    TextField lastNameStudent = new TextField("Nachname");
 
     ComboBox<String> facultyComboBox = new ComboBox<>("Fachbereich");
 
@@ -72,6 +71,7 @@ public class RegistrationView extends VerticalLayout {
     VerticalLayout verticalLayout;
     VerticalLayout tabsLayout;
 
+
     class StudentForm extends Div {
 
         StudentForm() {
@@ -82,13 +82,10 @@ public class RegistrationView extends VerticalLayout {
             passwordFieldRepeatStudent.setRequiredIndicatorVisible(true);
             firstNameStudent.setRequiredIndicatorVisible(true);
             lastNameStudent.setRequiredIndicatorVisible(true);
-            passwordFieldStudent.setMinLength(5);
-            passwordFieldRepeatStudent.setMinLength(5);
+            passwordFieldStudent.setMinLength(8);
+            passwordFieldRepeatStudent.setMinLength(8);
 
-            facultyComboBox.setAllowCustomValue(false);
-            facultyComboBox.setPlaceholder("Wähle Fachbereich");
-            facultyComboBox.setItems("Angewandte Naturwissenschaften" , "Elektrotechnik, Maschinenbau & Technikjournalismus" ,
-                    "Informatik" , "Sozialpolitik und Soziale Sicherung" , "Wirtschaftswissenschaften" );
+            facultyComboBox = Globals.facultyComboBox(facultyComboBox);
 
             FormLayout formLayout = new FormLayout();
             formLayout.add(firstNameStudent, lastNameStudent, passwordFieldStudent, passwordFieldRepeatStudent,
@@ -112,6 +109,13 @@ public class RegistrationView extends VerticalLayout {
         }
     }
 
+    private void facultyComboBox() {
+        facultyComboBox.setAllowCustomValue(false);
+        facultyComboBox.setPlaceholder("Wähle Fachbereich");
+        facultyComboBox.setItems("Angewandte Naturwissenschaften" , "Elektrotechnik, Maschinenbau & Technikjournalismus" ,
+                "Informatik" , "Sozialpolitik und Soziale Sicherung" , "Wirtschaftswissenschaften" );
+    }
+
     class BusinessForm extends Div {
 
 
@@ -123,8 +127,8 @@ public class RegistrationView extends VerticalLayout {
             passwordFieldRepeatBusiness.setRequiredIndicatorVisible(true);
             businessNameField.setRequiredIndicatorVisible(true);
 
-            emailFieldBusiness.setMinLength(5);
-            emailFieldBusiness.setMinLength(5);
+            emailFieldBusiness.setMinLength(8);
+            emailFieldBusiness.setMinLength(8);
 
             FormLayout formLayout = new FormLayout();
             formLayout.add(businessNameField, passwordFieldBusiness, passwordFieldRepeatBusiness, emailFieldBusiness);
@@ -151,6 +155,7 @@ public class RegistrationView extends VerticalLayout {
 
     public RegistrationView() {
 
+
         setAlignItems(Alignment.CENTER);
 
         verticalLayout = new VerticalLayout();
@@ -169,16 +174,18 @@ public class RegistrationView extends VerticalLayout {
             RegistrationResultDTO registrationResult = registrationControl.registerStudent(registrationStudent);
 
             if (registrationResult.getRegistrationResult()) {
-                Utils.triggerDialogMessage("Registrierung erfolgreich", "Weiterleitung per login wenn implementiert");
+                Utils.triggerDialogMessage("Registrierung erfolgreich", "Weiterleitung per login");
+                login(studentDTO);
+                NavigationUtil.toMainView();
             } else {
                 setStudentErrorFields(registrationResult.getReasons());
             }
+
 
         });
 
         registerButtonBusiness = new Button("Registrieren");
         registerButtonBusiness.addClickListener(e -> {
-
 
             BusinessDTOImpl businessDTO = businessForm.createNewBusiness();
             RegistrationBusinessDTOImpl registrationBusinessDTO = new RegistrationBusinessDTOImpl(businessDTO, passwordFieldRepeatBusiness.getValue());
@@ -263,6 +270,12 @@ public class RegistrationView extends VerticalLayout {
                     lastNameStudent.setErrorMessage("Ungültiger Nachname");
                     lastNameStudent.setInvalid(true);
                     break;
+                case PASSWORD_TOO_COMMON:
+                    passwordFieldStudent.setErrorMessage("Password too common");
+                    passwordFieldStudent.setInvalid(true);
+                    passwordFieldRepeatStudent.setInvalid(true);
+                    passwordFieldRepeatStudent.setErrorMessage("Password too common");
+                    break;
                 default:
                     break;
 
@@ -303,10 +316,22 @@ public class RegistrationView extends VerticalLayout {
                     businessNameField.setErrorMessage("Ein Unternehmen mit dem Namen existiert bereits");
                     businessNameField.setInvalid(true);
                     break;
+                case PASSWORD_TOO_COMMON:
+                    passwordFieldBusiness.setErrorMessage("Password too common");
+                    passwordFieldBusiness.setInvalid(true);
+                    passwordFieldRepeatBusiness.setInvalid(true);
+                    passwordFieldRepeatBusiness.setErrorMessage("Password too common");
+                    break;
                 default:
                     break;
 
             }
         }
+    }
+
+    private void login(GeneralUserDTOImpl generalUserDTO) {
+
+        UI.getCurrent().getSession().setAttribute( "Current User", generalUserDTO );
+
     }
 }

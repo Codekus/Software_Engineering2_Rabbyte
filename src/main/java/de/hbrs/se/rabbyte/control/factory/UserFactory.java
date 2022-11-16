@@ -6,7 +6,7 @@ import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.util.CryptographyUtil;
-
+import de.hbrs.se.rabbyte.util.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +15,7 @@ public class UserFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserFactory.class);
 
     private UserFactory() {
-        throw new IllegalStateException("Factory Class");
+        throw new IllegalStateException(Globals.IllegalState.MESSAGE_FACTORY);
     }
     public static Student createStudent(StudentDTO studentDTO)  {
         Student student = new Student();
@@ -26,11 +26,17 @@ public class UserFactory {
         } catch (Exception exception) {
             LOGGER.info(exception.getMessage());
         }
-
-        student.setEmail(studentDTO.getEmail());
+        student.setId(studentDTO.getId());
         student.setFirstName(studentDTO.getFirstName());
         student.setLastName(studentDTO.getLastName());
         student.setFaculty(studentDTO.getFaculty());
+
+        student.setEmail(studentDTO.getEmail());
+        student.setPlz(studentDTO.getPlz());
+        student.setCity(studentDTO.getCity());
+        student.setCountry(studentDTO.getCountry());
+        student.setStreet(studentDTO.getStreet());
+        student.setStreetNumber(studentDTO.getStreetNumber());
         return student;
     }
 
@@ -44,6 +50,7 @@ public class UserFactory {
         } catch (Exception  exception) {
             LOGGER.info(exception.getMessage());
         }
+        business.setId(businessDTO.getId());
         business.setEmail(businessDTO.getEmail());
         business.setBusinessName(businessDTO.getBusinessName());
 

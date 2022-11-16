@@ -9,5 +9,6 @@ public interface GeneralUserDTO {
     public String getCity();
     public String getCountry();
     public String getStreet();
-    public int getStreetNumber();
+    public String getStreetNumber();
+    public String getSalt();
 }

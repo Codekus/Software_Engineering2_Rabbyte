@@ -42,7 +42,7 @@ import java.util.Optional;
  * The main view is a top-level placeholder for other views.
  */
 
-@Route("main")
+
 //@PWA(name = "HelloCar", shortName = "HelloCar", enableInstallPrompt = false) TODO: whats this??
 public class AppView extends AppLayout implements BeforeEnterObserver {
 
@@ -63,10 +63,12 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         setPrimarySection(Section.DRAWER);
 
         // Erstellung der horizontalen Statusleiste (Header)
-
         addToNavbar(true, createHeaderContent());
+
         // Erstellung der vertikalen Navigationsleiste (Drawer)
 
+
+        //menu = createMenu();
         //addToDrawer(createDrawerContent(menu));
     }
 
@@ -83,11 +85,10 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
 
     @Override
     protected void afterNavigation() {
-        System.out.println("after Navi");
         super.afterNavigation();
 
         // Falls der Benutzer nicht eingeloggt ist, dann wird er auf die Startseite gelenkt
-        if ( !checkIfUserIsLoggedIn() ) return;
+        //if ( !checkIfUserIsLoggedIn() ) return;
 
         // Der aktuell-selektierte Tab wird gehighlighted.
 
@@ -146,9 +147,11 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         topRightPanel.add(bar);
 
         MenuItem move = bar.addItem("Mein Profil");
+
         SubMenu moveSubMenu = move.getSubMenu();
-        moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
+        //moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
         moveSubMenu.addItem("Logout",  e -> securityService.logout());
+        moveSubMenu.addItem("print rolle",  e -> System.out.println(securityService.getAuthenticatedUserID()));
 
         layout.add(topRightPanel);
         return layout;
@@ -218,6 +221,8 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         // Value: Die UI-Component, die nach dem Klick auf das Menuitem angezeigt wird.
         //ToDo Sicherstellen dass es sich um ein Unternehmens account handelt
         Tab[] tabs = new Tab[]{ createTab( "Startseite", JobAdvertisementSearchView.class) };
+        tabs = Utils.append( tabs , createTab("Kontodaten ändern", StudentUserView.class));
+        Tab[] tabs = new Tab[]{ createTab( "Startseite", JobAdvertisementSearchView.class) };
         tabs = Utils.append( tabs , createTab("Neue Stellenanzeige", CreateJobAdvertisementView.class));
 
 
@@ -285,10 +290,12 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
      */
 
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-
+/*
         if (!isUserLoggedIn()){
             beforeEnterEvent.rerouteTo("login");
         }
+
+ */
 
 
 

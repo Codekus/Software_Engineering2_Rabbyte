@@ -7,6 +7,7 @@ import java.lang.reflect.Modifier;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CryptographyUtilTest {
@@ -15,7 +16,7 @@ class CryptographyUtilTest {
 
 
     private static final String password = "Password";
-    private byte[] arraySalt =  new byte[64];
+    private final byte[] arraySalt =  new byte[64];
     @Test
     void generateSalt() {
         assertEquals(64 , CryptographyUtil.generateSalt().length);

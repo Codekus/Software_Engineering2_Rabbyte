@@ -4,7 +4,7 @@ CREATE SCHEMA rabbyte;
 
 CREATE TABLE rabbyte.application (
                                      application_id integer NOT NULL,
-                                     "jobAdvertisement_id" integer NOT NULL,
+                                     job_advertisement_id integer NOT NULL,
                                      user_id integer NOT NULL,
                                      datum date,
                                      inhalt text NOT NULL
@@ -171,7 +171,7 @@ ALTER TABLE ONLY rabbyte.application
 --
 
 ALTER TABLE ONLY rabbyte.application
-    ADD CONSTRAINT "Bewerbung_stellenausschreibung_id_fkey" FOREIGN KEY ("jobAdvertisement_id") REFERENCES rabbyte.job_advertisement(job_advertisement_id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT "Bewerbung_stellenausschreibung_id_fkey" FOREIGN KEY ("job_advertisement_id") REFERENCES rabbyte.job_advertisement(job_advertisement_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

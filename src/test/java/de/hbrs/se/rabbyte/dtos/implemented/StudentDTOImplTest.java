@@ -3,15 +3,15 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class StudentDTOImplTest {
 
     StudentDTOImpl studentDTO = new StudentDTOImpl();
 
-    private String firstName = "Max";
-    private String lastName = "Mustermann";
-    private String faculty = "Informatik";
+    private final String firstName = "Max";
+    private final String lastName = "Mustermann";
+    private final String faculty = "Informatik";
 
     @BeforeEach
     void setUp() {

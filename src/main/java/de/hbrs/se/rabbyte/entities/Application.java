@@ -1,7 +1,6 @@
 package de.hbrs.se.rabbyte.entities;
 
 import javax.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
@@ -35,7 +34,7 @@ public class Application {
     }
 
     @ManyToOne
-    @JoinColumn(name = "jobAdvertisement_id", referencedColumnName = "jobAdvertisement_id", nullable = false)
+    @JoinColumn(name = "job_advertisement_id")
     public JobAdvertisement getJobAdvertisement() {
         return jobAdvertisement;
     }

@@ -4,7 +4,6 @@ import de.hbrs.se.rabbyte.dtos.ApplicationDTO;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import de.hbrs.se.rabbyte.entities.Student;
 
-
 import java.time.LocalDate;
 
 /**

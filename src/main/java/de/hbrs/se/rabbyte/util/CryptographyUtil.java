@@ -3,6 +3,7 @@ package de.hbrs.se.rabbyte.util;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.xml.bind.DatatypeConverter;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -14,7 +15,7 @@ public  class CryptographyUtil {
 
 
     private CryptographyUtil() {
-        throw new IllegalStateException("Utility Class");
+        throw new IllegalStateException(Globals.IllegalState.MESSAGE_UTILS);
     }
     private static final int HASH_BYTE_SIZE = 64; // 512 bits
     private static final int PBKDF2_ITERATIONS = 120000;
@@ -44,9 +45,7 @@ public  class CryptographyUtil {
 
     public static String toHex(byte[] array)
     {
-        BigInteger bigInteger = new BigInteger(1, array);
-        return String.format(
-                "%0" + (array.length << 1) + "x", bigInteger);
+        return DatatypeConverter.printHexBinary(array);
     }
 
     public static byte[] fromHex(String hex)

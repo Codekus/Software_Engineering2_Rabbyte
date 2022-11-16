@@ -14,7 +14,7 @@ public class User {
     private String city;
     private String country;
     private String street;
-    private int streetNumber;
+    private String streetNumber;
     private String salt;
     @Id
     @GeneratedValue(
@@ -97,11 +97,11 @@ public class User {
     }
     @Basic
     @Column(name = "hausnummer")
-    public int getStreetNumber() {
+    public String getStreetNumber() {
         return streetNumber;
     }
 
-    public void setStreetNumber(int streetNumber) {
+    public void setStreetNumber(String streetNumber) {
         this.streetNumber = streetNumber;
 
     }

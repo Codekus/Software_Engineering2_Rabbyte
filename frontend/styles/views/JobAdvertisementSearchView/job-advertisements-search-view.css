@@ -1,6 +1,26 @@
-.job-advertisement-search-view-searchFieldComp{
+.job-advertisement-search-view-searchFieldComp {
     display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 10vh;
+}
+
+.job-advertisement-grid {
+    color: black;
+}
+
+.link-columns {
+    color: black;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.link-columns:hover {
+    transition: 0.3s;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: auto;
+    text-decoration-color: #1a73e8;
+    color: #1a73e8;
+    background-color: rgba(155, 203, 233, 0.2);
 }
