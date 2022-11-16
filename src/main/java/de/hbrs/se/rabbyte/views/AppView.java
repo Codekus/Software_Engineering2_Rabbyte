@@ -50,12 +50,13 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
     private H3 viewTitle;
     private H1 helloUser;
 
-    @Autowired
+
     private SecurityService securityService;
 
-    public AppView() {
-
+    public AppView(SecurityService securityService) {
+        this.securityService = securityService;
         setUpUI();
+
     }
 
     public void setUpUI() {
@@ -220,10 +221,6 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         // Key: der sichtbare String des Menu-Items
         // Value: Die UI-Component, die nach dem Klick auf das Menuitem angezeigt wird.
         //ToDo Sicherstellen dass es sich um ein Unternehmens account handelt
-        Tab[] tabs = new Tab[]{ createTab( "Startseite", JobAdvertisementSearchView.class) };
-        tabs = Utils.append( tabs , createTab("Kontodaten ändern", StudentUserView.class));
-        Tab[] tabs = new Tab[]{ createTab( "Startseite", JobAdvertisementSearchView.class) };
-        tabs = Utils.append( tabs , createTab("Neue Stellenanzeige", CreateJobAdvertisementView.class));
 
 
         // Falls er Admin-Rechte hat, sollte der User auch Autos hinzufügen können
@@ -235,7 +232,14 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
             tabs = Utils.append( tabs , createTab("Enter Car", EnterCarView.class)  );
         }
          */
-
+        Tab[] tabs = new Tab[0];
+        if (securityService.getAuthenticatedUserRole().equals("Student")) {
+            tabs = new Tab[]{ createTab( "Startseite", JobAdvertisementSearchView.class) };
+            tabs = Utils.append( tabs , createTab("Kontodaten ändern", StudentUserView.class));
+        } else if ( securityService.getAuthenticatedUserRole().equals("Business") ) {
+            tabs = new Tab[]{ createTab( "Ihr Unternehmen", CreateJobAdvertisementView.class) };
+            tabs = Utils.append( tabs , createTab("Neue Stellenanzeige", CreateJobAdvertisementView.class));
+        }
 
         return tabs;
     }
