@@ -18,6 +18,8 @@ public class GeneralUserDTOImpl implements GeneralUserDTO {
     private String street;
     private String streetNumber;
 
+    private String salt;
+
     public int getId() {
         return id;
     }
@@ -87,5 +89,14 @@ public class GeneralUserDTOImpl implements GeneralUserDTO {
 
     public void setStreetNumber(String streetNumber) {
         this.streetNumber = streetNumber;
+    }
+
+    @Override
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

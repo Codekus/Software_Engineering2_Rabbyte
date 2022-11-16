@@ -42,7 +42,7 @@ import java.util.Optional;
  * The main view is a top-level placeholder for other views.
  */
 
-@Route("main")
+
 //@PWA(name = "HelloCar", shortName = "HelloCar", enableInstallPrompt = false) TODO: whats this??
 public class AppView extends AppLayout implements BeforeEnterObserver {
 
@@ -85,11 +85,10 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
 
     @Override
     protected void afterNavigation() {
-        System.out.println("after Navi");
         super.afterNavigation();
 
         // Falls der Benutzer nicht eingeloggt ist, dann wird er auf die Startseite gelenkt
-        if ( !checkIfUserIsLoggedIn() ) return;
+        //if ( !checkIfUserIsLoggedIn() ) return;
 
         // Der aktuell-selektierte Tab wird gehighlighted.
 
@@ -202,8 +201,8 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         // Key: der sichtbare String des Menu-Items
         // Value: Die UI-Component, die nach dem Klick auf das Menuitem angezeigt wird.
         //ToDo Sicherstellen dass es sich um ein Unternehmens account handelt
-        Tab[] tabs = new Tab[]{ createTab( "Startseite", MainView.class) };
-        tabs = Utils.append( tabs , createTab("Neue Stellenausschreibung", CreateJobAdvertisementView.class));
+        Tab[] tabs = new Tab[]{ createTab( "Startseite", JobAdvertisementSearchView.class) };
+        tabs = Utils.append( tabs , createTab("Kontodaten ändern", StudentUserView.class));
 
         // Falls er Admin-Rechte hat, sollte der User auch Autos hinzufügen können
         // (Alternative: Verwendung der Methode 'isUserisAllowedToAccessThisFeature')
@@ -269,10 +268,12 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
      */
 
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-
+/*
         if (!isUserLoggedIn()){
             beforeEnterEvent.rerouteTo("login");
         }
+
+ */
 
 
 

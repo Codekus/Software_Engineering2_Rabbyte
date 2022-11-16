@@ -48,7 +48,7 @@ public class RegistrationView extends VerticalLayout {
     PasswordField passwordFieldStudent = new PasswordField("Password");
     PasswordField passwordFieldRepeatStudent = new PasswordField("Password wiederholen");
     TextField firstNameStudent = new TextField("Vorname");
-    TextField lastNameStudent = new TextField("Nachnahme");
+    TextField lastNameStudent = new TextField("Nachname");
 
     ComboBox<String> facultyComboBox = new ComboBox<>("Fachbereich");
 
