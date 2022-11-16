@@ -146,7 +146,4 @@ public class SecurityService  {
         SecurityContextHolder.getContext().setAuthentication(null);
 
     }
-    public void settings() {
-        UI.getCurrent().getPage().setLocation(SETTINGS_URL);
-    }
 }

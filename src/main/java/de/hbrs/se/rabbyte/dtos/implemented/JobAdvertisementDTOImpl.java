@@ -2,6 +2,7 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.entities.Business;
+import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
 
 public class JobAdvertisementDTOImpl implements JobAdvertisementDTO {
 
@@ -11,6 +12,7 @@ public class JobAdvertisementDTOImpl implements JobAdvertisementDTO {
     private String title;
     private String type;
     private Business business;
+    //private int userID;
 
     @Override
     public int getId() {
@@ -54,4 +56,12 @@ public class JobAdvertisementDTOImpl implements JobAdvertisementDTO {
     public void setBusiness(Business business) {
         this.business = business;
     }
+
+    /*@Override
+    public int getUserID() {
+        return userID;
+    }
+    public void setUserID(GeneralUserDTOImpl userID) {
+        this.userID = userID.getId();
+    }*/
 }
