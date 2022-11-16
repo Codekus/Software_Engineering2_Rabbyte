@@ -22,8 +22,9 @@ public class AuthenticationTest {
     @Autowired
     GeneralUserRepository generalUserRepository;
 
-    final static String TEST_USERNAME = "student1@studentmail.com";
-    final static String TEST_PASSWORD = "test123";
+    final static String TEST_STUDENT_USERNAME = "UnitStudentTest@Test.de";
+    final static String TEST_BUSINESS_USERNAME = "UnitBusinessTest@Test.de";
+    final static String TEST_PASSWORD = "test123321";
 
     Routes routes;
 
@@ -45,9 +46,28 @@ public class AuthenticationTest {
     }
 
     @Test
-    void Logout_correctUserData_successfulLogout() throws InvalidKeySpecException, NoSuchAlgorithmException, AuthException {
+    void LogoutStudent_correctUserData_successfulLogout() throws InvalidKeySpecException, NoSuchAlgorithmException, AuthException {
 
-        securityService.authenticate(TEST_USERNAME, TEST_PASSWORD);
+        securityService.authenticate(TEST_STUDENT_USERNAME, TEST_PASSWORD);
+        Assertions.assertTrue(SecurityUtils.isUserLoggedIn());
+        securityService.logout();
+        Assertions.assertFalse(SecurityUtils.isUserLoggedIn());
+
+    }
+
+
+    @Test
+    void authenticateStudent_correctUserData_successfulLogin() throws InvalidKeySpecException, NoSuchAlgorithmException, AuthException {
+
+        Assertions.assertFalse(SecurityUtils.isUserLoggedIn());
+        securityService.authenticate(TEST_STUDENT_USERNAME, TEST_PASSWORD);
+        Assertions.assertTrue(SecurityUtils.isUserLoggedIn());
+    }
+
+    @Test
+    void LogoutBusiness_correctUserData_successfulLogout() throws InvalidKeySpecException, NoSuchAlgorithmException, AuthException {
+
+        securityService.authenticate(TEST_BUSINESS_USERNAME, TEST_PASSWORD);
         Assertions.assertTrue(SecurityUtils.isUserLoggedIn());
         securityService.logout();
         Assertions.assertFalse(SecurityUtils.isUserLoggedIn());
@@ -55,10 +75,10 @@ public class AuthenticationTest {
 
 
     @Test
-    void authenticate_correctUserData_successfulLogin() throws InvalidKeySpecException, NoSuchAlgorithmException, AuthException {
+    void authenticateBusiness_correctUserData_successfulLogin() throws InvalidKeySpecException, NoSuchAlgorithmException, AuthException {
 
         Assertions.assertFalse(SecurityUtils.isUserLoggedIn());
-        securityService.authenticate(TEST_USERNAME, TEST_PASSWORD);
+        securityService.authenticate(TEST_BUSINESS_USERNAME, TEST_PASSWORD);
         Assertions.assertTrue(SecurityUtils.isUserLoggedIn());
     }
 
@@ -94,7 +114,7 @@ public class AuthenticationTest {
         Assertions.assertFalse(SecurityUtils.isUserLoggedIn());
 
         Assertions.assertThrows(AuthException.class, () -> {
-            securityService.authenticate(TEST_USERNAME, "SomePW");
+            securityService.authenticate(TEST_STUDENT_USERNAME, "SomePW");
         });
 
         Assertions.assertFalse(SecurityUtils.isUserLoggedIn());
