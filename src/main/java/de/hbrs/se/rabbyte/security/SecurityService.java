@@ -35,6 +35,7 @@ public class SecurityService  {
 
     private static final String LOGOUT_SUCCESS_URL = "/";
     private static final String SETTINGS_URL = "settings";
+
     @Autowired
     GeneralUserRepository generalUserRepository;
 
@@ -71,7 +72,7 @@ public class SecurityService  {
            Falls die Passwörter nicht übereinstimmen wird eine Exception geworfen die in der LoginView behandelt wird
         */
         if (!Objects.equals(dbpassword, CryptographyUtil.encryptPassword(password, CryptographyUtil.fromHex(salt)))) {
-            throw new AuthException();
+            throw new AuthException("wrong password");
         }
 
         SecurityContext context = SecurityContextHolder.createEmptyContext();
@@ -128,14 +129,31 @@ public class SecurityService  {
     }
 
     public UserDetails getAuthenticatedUser() {
+
         SecurityContext context = SecurityContextHolder.getContext();
         Object principal = context.getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             return (UserDetails) context.getAuthentication().getPrincipal();
         }
+
         // Anonymous or no authentication.
         return null;
+
     }
+
+    public String getAuthenticatedUserRole() {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        GeneralUserDTO user = generalUserRepository.findByEmail(userName);
+        return getRole(user);
+    }
+
+    public int getAuthenticatedUserID() {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        GeneralUserDTO user = generalUserRepository.findGeneralUserIdByName(userName);
+        return user.getId();
+    }
+
+
 
     public void logout() {
 

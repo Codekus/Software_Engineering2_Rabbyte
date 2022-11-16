@@ -16,7 +16,6 @@ public interface GeneralUserRepository extends JpaRepository<User, Integer> {
     @Query("select g from User g where g.email = ?1 AND g.password = ?2")
     GeneralUserDTO findByEmailAndPassword(String email, String password);
 
-
     GeneralUserDTO findGeneralUserById(int nutzerid);
 
     @Query("select s from Student s where s.id = ?1 ")
@@ -24,5 +23,8 @@ public interface GeneralUserRepository extends JpaRepository<User, Integer> {
 
     @Query("select b from Business b where b.id = ?1 ")
     BusinessDTO getBusiness(int nutzerid);
+
+    @Query("select g from User g where g.email = ?1 ")
+    GeneralUserDTO findGeneralUserIdByName(String userName);
 
 }
