@@ -15,5 +15,8 @@ public interface BusinessRepository extends JpaRepository<Business, Integer> {
     @Query("select b from Business b where b.email = ?1")
     public BusinessDTO findBusinessByBusinessEmail(String email);
 
+    @Query("select b from Business b where b.id = ?1")
+    public BusinessDTO findBusinessByBusinessID(int id);
+
 
 }

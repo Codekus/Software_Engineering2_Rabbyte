@@ -104,7 +104,7 @@ public class CreateJobAdvertisementView extends Div {
         jobAdvertisementDTO.setType(type.getValue());
         jobAdvertisementDTO.setText(description.getValue());
 
-        BusinessDTO businessDTO = businessRepository.findBusinessByBusinessEmail(securityService.getAuthenticatedUser().getEmail());
+        BusinessDTO businessDTO = businessRepository.findBusinessByBusinessID(securityService.getAuthenticatedUser().getId());
         Business business = UserFactory.createBusiness(businessDTO);
         jobAdvertisementDTO.setBusiness(business);    // <- userID
 
