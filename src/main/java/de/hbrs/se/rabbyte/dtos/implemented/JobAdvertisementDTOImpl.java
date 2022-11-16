@@ -12,7 +12,6 @@ public class JobAdvertisementDTOImpl implements JobAdvertisementDTO {
     private String title;
     private String type;
     private Business business;
-    //private int userID;
 
     @Override
     public int getId() {
@@ -57,11 +56,4 @@ public class JobAdvertisementDTOImpl implements JobAdvertisementDTO {
         this.business = business;
     }
 
-    /*@Override
-    public int getUserID() {
-        return userID;
-    }
-    public void setUserID(GeneralUserDTOImpl userID) {
-        this.userID = userID.getId();
-    }*/
 }

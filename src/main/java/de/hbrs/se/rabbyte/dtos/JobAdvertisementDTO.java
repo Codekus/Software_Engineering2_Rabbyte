@@ -13,6 +13,5 @@ public interface JobAdvertisementDTO {
     public String getTitle();
     public String getType();
     public Business getBusiness();
-    //public int getUserID();
 
 }

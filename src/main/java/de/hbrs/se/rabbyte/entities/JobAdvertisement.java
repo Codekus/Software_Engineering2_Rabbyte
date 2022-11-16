@@ -15,8 +15,6 @@ public class JobAdvertisement {
     private String type;
     private Business business;
 
-    //private int userID;
-
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,
@@ -38,7 +36,6 @@ public class JobAdvertisement {
     public String getText() {
         return text;
     }
-
     public void setText(String text) {
         this.text = text;
     }
@@ -46,7 +43,6 @@ public class JobAdvertisement {
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -54,7 +50,6 @@ public class JobAdvertisement {
     public void setType(String type) {
         this.type = type;
     }
-
     public String getType(){
         return type;
     }
@@ -69,11 +64,4 @@ public class JobAdvertisement {
         this.business = business;
     }
 
-    /*public int getUserID(){
-        return userID;
-    }
-
-    public void setUserID(GeneralUserDTOImpl userID) {
-        this.userID = userID.getId();
-    }*/
 }

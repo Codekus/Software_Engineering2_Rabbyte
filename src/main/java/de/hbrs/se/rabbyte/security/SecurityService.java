@@ -128,17 +128,11 @@ public class SecurityService  {
         return routes;
     }
 
-    public UserDetails getAuthenticatedUser() {
+    public GeneralUserDTO getAuthenticatedUser() {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        GeneralUserDTO user = generalUserRepository.findByEmail(userName);
 
-        SecurityContext context = SecurityContextHolder.getContext();
-        Object principal = context.getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            return (UserDetails) context.getAuthentication().getPrincipal();
-        }
-
-        // Anonymous or no authentication.
-        return null;
-
+        return user;
     }
 
     public String getAuthenticatedUserRole() {
