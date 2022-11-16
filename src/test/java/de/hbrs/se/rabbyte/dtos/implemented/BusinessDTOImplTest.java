@@ -9,15 +9,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BusinessDTOImplTest {
 
     BusinessDTOImpl businessDTO= new BusinessDTOImpl();
-    private final String businessName = "Mustermann GmBH";
+    private static final String BUSINESS_NAME = "Mustermann GmBH";
 
     @BeforeEach
     void setUp() {
-        businessDTO.setBusinessName(businessName);
+        businessDTO.setBusinessName(BUSINESS_NAME);
     }
 
     @Test
     void getBusinessName() {
-        assertEquals(businessName , businessDTO.getBusinessName());
+        assertEquals(BUSINESS_NAME, businessDTO.getBusinessName());
     }
 }

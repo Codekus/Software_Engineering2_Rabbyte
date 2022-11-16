@@ -9,31 +9,31 @@ class StudentTest {
 
     Student student = new Student();
 
-    private final String firstName = "Max";
-    private final String lastName = "Mustermann";
-    private final String faculty = "Informatik";
+    private static final String FIRST_NAME = "Max";
+    private static final String LAST_NAME = "Mustermann";
+    private static final String FACULTY = "Informatik";
 
     @BeforeEach
     void setUp() {
-        student.setFirstName(firstName);
-        student.setLastName(lastName);
-        student.setFaculty(faculty);
+        student.setFirstName(FIRST_NAME);
+        student.setLastName(LAST_NAME);
+        student.setFaculty(FACULTY);
     }
 
     @Test
     void getFaculty() {
-        assertEquals(faculty , student.getFaculty());
+        assertEquals(FACULTY, student.getFaculty());
     }
 
     @Test
     void getFirstName() {
-        assertEquals(firstName , student.getFirstName());
+        assertEquals(FIRST_NAME, student.getFirstName());
 
     }
 
     @Test
     void getLastName() {
-        assertEquals(lastName , student.getLastName());
+        assertEquals(LAST_NAME, student.getLastName());
 
     }
 }

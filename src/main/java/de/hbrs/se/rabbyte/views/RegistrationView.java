@@ -73,6 +73,8 @@ public class RegistrationView extends VerticalLayout {
     VerticalLayout verticalLayout;
     VerticalLayout tabsLayout;
 
+    //ErrorFields
+    private String password_too_common = "Password too common";
 
     class StudentForm extends Div {
 
@@ -273,10 +275,10 @@ public class RegistrationView extends VerticalLayout {
                     lastNameStudent.setInvalid(true);
                     break;
                 case PASSWORD_TOO_COMMON:
-                    passwordFieldStudent.setErrorMessage("Password too common");
+                    passwordFieldStudent.setErrorMessage(password_too_common);
                     passwordFieldStudent.setInvalid(true);
                     passwordFieldRepeatStudent.setInvalid(true);
-                    passwordFieldRepeatStudent.setErrorMessage("Password too common");
+                    passwordFieldRepeatStudent.setErrorMessage(password_too_common);
                     break;
                 default:
                     break;
@@ -319,10 +321,11 @@ public class RegistrationView extends VerticalLayout {
                     businessNameField.setInvalid(true);
                     break;
                 case PASSWORD_TOO_COMMON:
-                    passwordFieldBusiness.setErrorMessage("Password too common");
+
+                    passwordFieldBusiness.setErrorMessage(password_too_common);
                     passwordFieldBusiness.setInvalid(true);
                     passwordFieldRepeatBusiness.setInvalid(true);
-                    passwordFieldRepeatBusiness.setErrorMessage("Password too common");
+                    passwordFieldRepeatBusiness.setErrorMessage(password_too_common);
                     break;
                 default:
                     break;

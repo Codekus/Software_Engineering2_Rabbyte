@@ -8,70 +8,70 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class GeneralUserDTOImplTest {
 
     GeneralUserDTOImpl generalUserDTO = new GeneralUserDTOImpl();
-    private final int id = 100;
-    private final String email = "max@mustermann.de";
-    private final String password = "password";
-    private final int plz = 12345;
-    private final String city = "Musterdorf";
-    private final String country = "DE";
-    private final String street = "Musterstra0e";
-    private final String streetNumber = "5";
+    private static final int ID = 100;
+    private static final String EMAIL = "max@mustermann.de";
+    private static final String PASSWORD = "password";
+    private static final int PLZ = 12345;
+    private static final String CITY = "Musterdorf";
+    private static final String COUNTRY = "DE";
+    private static final String STREET = "Musterstra0e";
+    private static final String STREET_NUMBER = "5";
 
     @BeforeEach
     void setUp() {
         generalUserDTO.setId(100);
-        generalUserDTO.setEmail(email);
-        generalUserDTO.setPassword(password);
-        generalUserDTO.setPlz(plz);
-        generalUserDTO.setCity(city);
-        generalUserDTO.setCountry(country);
-        generalUserDTO.setStreet(street);
-        generalUserDTO.setStreetNumber(streetNumber);
+        generalUserDTO.setEmail(EMAIL);
+        generalUserDTO.setPassword(PASSWORD);
+        generalUserDTO.setPlz(PLZ);
+        generalUserDTO.setCity(CITY);
+        generalUserDTO.setCountry(COUNTRY);
+        generalUserDTO.setStreet(STREET);
+        generalUserDTO.setStreetNumber(STREET_NUMBER);
     }
 
     @Test
     void getId() {
-        assertEquals(id , generalUserDTO.getId());
+        assertEquals(ID, generalUserDTO.getId());
     }
 
     @Test
     void getEmail() {
-        assertEquals(email , generalUserDTO.getEmail());
+        assertEquals(EMAIL, generalUserDTO.getEmail());
 
     }
 
     @Test
     void getPassword() {
-        assertEquals(password , generalUserDTO.getPassword());
+        assertEquals(PASSWORD, generalUserDTO.getPassword());
     }
 
     @Test
     void getPlz() {
-        assertEquals(plz , generalUserDTO.getPlz());
+        assertEquals(PLZ, generalUserDTO.getPlz());
 
     }
 
     @Test
     void getCity() {
-        assertEquals(city , generalUserDTO.getCity());
+        assertEquals(CITY, generalUserDTO.getCity());
 
     }
 
     @Test
     void getCountry() {
-        assertEquals(country , generalUserDTO.getCountry());
+        assertEquals(COUNTRY, generalUserDTO.getCountry());
 
     }
 
     @Test
     void getStreet() {
-        assertEquals(street , generalUserDTO.getStreet());
+        assertEquals(STREET, generalUserDTO.getStreet());
 
     }
 
     @Test
     void getStreetNumber() {
-        assertEquals(streetNumber , generalUserDTO.getStreetNumber());
+        assertEquals(STREET_NUMBER, generalUserDTO.getStreetNumber());
 
     }
 }

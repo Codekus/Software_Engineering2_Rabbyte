@@ -9,15 +9,15 @@ class BusinessTest {
 
     private final Business business = new Business();
 
-    private final String businessName = "Mustermann GMBH";
+    private static final String BUSINESS_NAME = "Mustermann GMBH";
     @BeforeEach
     void setUp() {
-        business.setBusinessName(businessName);
+        business.setBusinessName(BUSINESS_NAME);
     }
 
     @Test
     void getBusinessName() {
-        assertEquals(businessName , business.getBusinessName());
+        assertEquals(BUSINESS_NAME, business.getBusinessName());
     }
 
     @Test

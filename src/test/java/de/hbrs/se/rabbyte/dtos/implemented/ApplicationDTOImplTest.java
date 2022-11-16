@@ -18,18 +18,17 @@ class ApplicationDTOImplTest {
     private JobAdvertisement jobAdvertisement;
     @Mock
     private Student student;
-    public LocalDate date;
-    private final String applicationText = "Application Text";
+    private static final String APPLICATION_TEXT = "Application Text";
 
     @BeforeEach
     void setUp() {
-        date = LocalDate.of(1990 , 1,20);
-        applicationDTO.setDate(date);
+
+        applicationDTO.setDate(LocalDate.of(1990 , 1,20));
         jobAdvertisement = new JobAdvertisement();
         applicationDTO.setJobAdvertisement(jobAdvertisement);
         student = new Student();
         applicationDTO.setStudent(student);
-        applicationDTO.setApplicationText(applicationText);
+        applicationDTO.setApplicationText(APPLICATION_TEXT);
     }
 
     @Test
@@ -49,6 +48,6 @@ class ApplicationDTOImplTest {
 
     @Test
     void getApplicationText() {
-        assertEquals(applicationText , applicationDTO.getApplicationText());
+        assertEquals(APPLICATION_TEXT, applicationDTO.getApplicationText());
     }
 }

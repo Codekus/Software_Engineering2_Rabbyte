@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UtilsTest {
 
-    private static final String exceptionMessage = "class de.hbrs.se.rabbyte.util.UtilsTest cannot access a member of class de.hbrs.se.rabbyte.util.Utils with modifiers \"private\"";
+    private static final String EXCEPTION_MESSAGE = "class de.hbrs.se.rabbyte.util.UtilsTest cannot access a member of class de.hbrs.se.rabbyte.util.Utils with modifiers \"private\"";
 
     @Test
     void appendLength() {
@@ -50,7 +50,7 @@ class UtilsTest {
         Constructor<Utils> constructor = Utils.class.getDeclaredConstructor();
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);
-        assertEquals(exceptionMessage, exceptionThatWasThrown.getMessage());
+        assertEquals(EXCEPTION_MESSAGE, exceptionThatWasThrown.getMessage());
         constructor.setAccessible(true);
         assertThrows(ReflectiveOperationException.class,constructor::newInstance);
 

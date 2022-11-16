@@ -27,29 +27,29 @@ class UserFactoryTest {
     @Mock
     private User user;
 
-    private static final String password = "password";
-    private static final String emailStudent = "max@mustermann.de";
-    private static final String studentFirstName = "Max";
-    private static final String studentLastName = "Mustermann";
+    private static final String PASSWORD = "password";
+    private static final String EMAIL_STUDENT = "max@mustermann.de";
+    private static final String STUDENT_FIRST_NAME = "Max";
+    private static final String STUDENT_LAST_NAME = "Mustermann";
 
-    private static final String businessMail = "musterman@gmbh.de";
-    private static final String businessName = "Mustermann Gmbh";
+    private static final String BUSINESS_MAIL = "musterman@gmbh.de";
+    private static final String BUSINESS_NAME = "Mustermann Gmbh";
     @Test
     void createStudent()  {
         Student student;
-        when(studentDTO.getPassword()).thenReturn(password);
-        when(studentDTO.getEmail()).thenReturn(emailStudent);
-        when(studentDTO.getFirstName()).thenReturn(studentFirstName);
-        when(studentDTO.getLastName()).thenReturn(studentLastName);
+        when(studentDTO.getPassword()).thenReturn(PASSWORD);
+        when(studentDTO.getEmail()).thenReturn(EMAIL_STUDENT);
+        when(studentDTO.getFirstName()).thenReturn(STUDENT_FIRST_NAME);
+        when(studentDTO.getLastName()).thenReturn(STUDENT_LAST_NAME);
 
 
         student = UserFactory.createStudent(studentDTO);
 
         assertTrue(student instanceof Student);
         assertEquals(128 , student.getPassword().length());
-        assertEquals(emailStudent , student.getEmail());
-        assertEquals(studentFirstName , student.getFirstName());
-        assertEquals(studentLastName , student.getLastName());
+        assertEquals(EMAIL_STUDENT, student.getEmail());
+        assertEquals(STUDENT_FIRST_NAME, student.getFirstName());
+        assertEquals(STUDENT_LAST_NAME, student.getLastName());
         assertEquals(128 , student.getSalt().length());
 
     }
@@ -58,14 +58,14 @@ class UserFactoryTest {
     void createBusiness() {
         Business business;
 
-        when(businessDTO.getPassword()).thenReturn(password);
-        when(businessDTO.getEmail()).thenReturn(businessMail);
-        when(businessDTO.getBusinessName()).thenReturn(businessName);
+        when(businessDTO.getPassword()).thenReturn(PASSWORD);
+        when(businessDTO.getEmail()).thenReturn(BUSINESS_MAIL);
+        when(businessDTO.getBusinessName()).thenReturn(BUSINESS_NAME);
 
         business = UserFactory.createBusiness(businessDTO);
         assertEquals(128 , business.getPassword().length());
-        assertEquals(businessMail , business.getEmail());
-        assertEquals(businessName , business.getBusinessName());
+        assertEquals(BUSINESS_MAIL, business.getEmail());
+        assertEquals(BUSINESS_NAME, business.getBusinessName());
         assertEquals(128 , business.getSalt().length());
 
     }

@@ -15,7 +15,7 @@ class CryptographyUtilTest {
     private static final String error = "class de.hbrs.se.rabbyte.util.CryptographyUtilTest cannot access a member of class de.hbrs.se.rabbyte.util.CryptographyUtil with modifiers \"private\"";
 
 
-    private static final String password = "Password";
+    private static final String PW = "Password";
     private final byte[] arraySalt =  new byte[64];
     @Test
     void generateSalt() {
@@ -25,7 +25,7 @@ class CryptographyUtilTest {
     @Test
     void hashPassword() throws  InvalidKeySpecException, NoSuchAlgorithmException {
 
-        byte[] hashedPassword = CryptographyUtil.hashPassword(password.toCharArray() , arraySalt);
+        byte[] hashedPassword = CryptographyUtil.hashPassword(PW.toCharArray() , arraySalt);
         assertEquals(
                 "EXzc11qKyYLTWF/ujw0m/3lxnScZUZ1xrWxvPxxlT9AESueP3DwmqTevv5Nl2Py+X5FpCgnEFusiZsM3BdMh6Q=="
                 , Base64.getEncoder().encodeToString(hashedPassword));
@@ -33,7 +33,7 @@ class CryptographyUtilTest {
 
     @Test
     void encryptPassword() throws InvalidKeySpecException, NoSuchAlgorithmException {
-        assertEquals(128  , CryptographyUtil.encryptPassword(password, arraySalt).length());
+        assertEquals(128  , CryptographyUtil.encryptPassword(PW, arraySalt).length());
     }
 
     @Test

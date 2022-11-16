@@ -9,29 +9,29 @@ class StudentDTOImplTest {
 
     StudentDTOImpl studentDTO = new StudentDTOImpl();
 
-    private final String firstName = "Max";
-    private final String lastName = "Mustermann";
-    private final String faculty = "Informatik";
+    private static final String FIRST_NAME = "Max";
+    private static final String LAST_NAME = "Mustermann";
+    private static final String FACULTY = "Informatik";
 
     @BeforeEach
     void setUp() {
-        studentDTO.setFirstName(firstName);
-        studentDTO.setLastName(lastName);
-        studentDTO.setFaculty(faculty);
+        studentDTO.setFirstName(FIRST_NAME);
+        studentDTO.setLastName(LAST_NAME);
+        studentDTO.setFaculty(FACULTY);
     }
 
     @Test
     void getFaculty() {
-        assertEquals(faculty,studentDTO.getFaculty());
+        assertEquals(FACULTY,studentDTO.getFaculty());
     }
 
     @Test
     void getFirstName() {
-        assertEquals(firstName , studentDTO.getFirstName());
+        assertEquals(FIRST_NAME, studentDTO.getFirstName());
     }
 
     @Test
     void getLastName() {
-        assertEquals(lastName , studentDTO.getLastName());
+        assertEquals(LAST_NAME, studentDTO.getLastName());
     }
 }

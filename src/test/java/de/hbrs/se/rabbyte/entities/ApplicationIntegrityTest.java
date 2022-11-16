@@ -26,7 +26,7 @@ public class ApplicationIntegrityTest {
     ApplicationRepository applicationRepository;
 
     private ApplicationDTO applicationDTO;
-    private Application application;
+
 
     private int id;
     private int jobAdvertisementId;
@@ -39,7 +39,7 @@ public class ApplicationIntegrityTest {
         jobAdvertisementId = 30000087;
         studentId = 20000050;
         applicationText = "Application Text";
-        applicationDTO = applicationRepository.findApplicationById(10000001);
+        applicationDTO = applicationRepository.findApplicationById(id);
 
     }
 

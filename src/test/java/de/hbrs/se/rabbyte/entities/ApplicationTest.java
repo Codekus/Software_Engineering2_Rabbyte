@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 class ApplicationTest {
     private final Application application = new Application();
 
-    private final String applicationText = "Application Text";
+    private static final String APPLICATION_TEXT = "Application Text";
 
     @Mock
     JobAdvertisement jobAdvertisement;
@@ -60,7 +60,7 @@ class ApplicationTest {
 
     @Test
     void getApplicationText() {
-        assertEquals(applicationText , application.getApplicationText());
+        assertEquals(APPLICATION_TEXT, application.getApplicationText());
     }
 
 

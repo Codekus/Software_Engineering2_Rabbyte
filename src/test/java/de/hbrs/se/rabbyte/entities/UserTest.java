@@ -9,71 +9,71 @@ class UserTest {
 
     private final User user = new User();
 
-    private final int id = 100;
-    private final String email = "test@gmx.de";
-    private final String password = "password!";
-    private final int plz = 12345;
-    private final String city = "Mustercity";
-    private final String country = "DE";
-    private final String street = "Mustermannstraße";
-    private final String  streetNumber = "1";
-    private final String salt = "FFFFFFFFF";
+    private static final int ID = 100;
+    private static final String EMAIL = "test@gmx.de";
+    private static final String PW = "password!";
+    private static final int PLZ = 12345;
+    private static final String CITY = "Mustercity";
+    private static final String COUNTRY = "DE";
+    private static final String STREET = "Mustermannstraße";
+    private static final String STREET_NUMBER = "1";
+    private static final String SALT = "FFFFFFFFF";
 
     @BeforeEach
     void setUp() {
         user.setId(100);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setPlz(plz);
-        user.setCity(city);
-        user.setCountry(country);
-        user.setStreet(street);
-        user.setStreetNumber(streetNumber);
-        user.setSalt(salt);
+        user.setEmail(EMAIL);
+        user.setPassword(PW);
+        user.setPlz(PLZ);
+        user.setCity(CITY);
+        user.setCountry(COUNTRY);
+        user.setStreet(STREET);
+        user.setStreetNumber(STREET_NUMBER);
+        user.setSalt(SALT);
     }
 
     @Test
     void getId() {
-        assertEquals(id , user.getId());
+        assertEquals(ID, user.getId());
     }
 
     @Test
     void getEmail() {
-        assertEquals(email , user.getEmail());
+        assertEquals(EMAIL, user.getEmail());
     }
 
     @Test
     void getPassword() {
-        assertEquals(password , user.getPassword());
+        assertEquals(PW, user.getPassword());
     }
 
     @Test
     void getPlz() {
-        assertEquals(plz , user.getPlz());
+        assertEquals(PLZ, user.getPlz());
     }
 
     @Test
     void getCity() {
-        assertEquals(city , user.getCity());
+        assertEquals(CITY, user.getCity());
     }
 
     @Test
     void getCountry() {
-        assertEquals(country , user.getCountry());
+        assertEquals(COUNTRY, user.getCountry());
     }
 
     @Test
     void getStreet() {
-        assertEquals( street , user.getStreet());
+        assertEquals(STREET, user.getStreet());
     }
 
     @Test
     void getStreetNumber() {
-        assertEquals(streetNumber , user.getStreetNumber());
+        assertEquals(STREET_NUMBER, user.getStreetNumber());
     }
 
     @Test
     void setSalt() {
-        assertEquals(salt , user.getSalt());
+        assertEquals(SALT, user.getSalt());
     }
 }
