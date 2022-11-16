@@ -1,5 +1,7 @@
 package de.hbrs.se.rabbyte.entities;
 
+import de.hbrs.se.rabbyte.dtos.implemented.GeneralUserDTOImpl;
+
 import javax.persistence.*;
 
 
@@ -12,6 +14,8 @@ public class JobAdvertisement {
     private String title;
     private String type;
     private Business business;
+
+    //private int userID;
 
     @Id
     @GeneratedValue(
@@ -65,4 +69,11 @@ public class JobAdvertisement {
         this.business = business;
     }
 
+    /*public int getUserID(){
+        return userID;
+    }
+
+    public void setUserID(GeneralUserDTOImpl userID) {
+        this.userID = userID.getId();
+    }*/
 }

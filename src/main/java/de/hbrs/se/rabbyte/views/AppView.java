@@ -136,7 +136,7 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
 
         MenuItem move = bar.addItem("Mein Profil");
         SubMenu moveSubMenu = move.getSubMenu();
-        moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
+        //moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
         moveSubMenu.addItem("Logout",  e -> securityService.logout());
 
         layout.add( topRightPanel );
