@@ -28,13 +28,13 @@ import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 
 import javax.swing.*;
 import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 
-//@Route(layout = AppView.class)
-@Route(value = "create_JobAdvert", layout = AppView.class)
+
 @PageTitle("Neue Stellenausschreibung")
 public class CreateJobAdvertisementView extends Div {
 

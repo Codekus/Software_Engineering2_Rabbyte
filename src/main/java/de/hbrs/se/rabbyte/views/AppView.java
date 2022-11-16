@@ -68,8 +68,8 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         // Erstellung der vertikalen Navigationsleiste (Drawer)
 
 
-        menu = createMenu();
-        addToDrawer(createDrawerContent(menu));
+        //menu = createMenu();
+        //addToDrawer(createDrawerContent(menu));
     }
 
 
@@ -135,9 +135,11 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         topRightPanel.add(bar);
 
         MenuItem move = bar.addItem("Mein Profil");
+
         SubMenu moveSubMenu = move.getSubMenu();
         //moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
         moveSubMenu.addItem("Logout",  e -> securityService.logout());
+        moveSubMenu.addItem("print rolle",  e -> System.out.println(securityService.getAuthenticatedUserID()));
 
         layout.add( topRightPanel );
         return layout;
