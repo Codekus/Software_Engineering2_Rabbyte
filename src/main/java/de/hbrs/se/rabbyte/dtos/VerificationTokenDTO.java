@@ -8,5 +8,5 @@ public interface VerificationTokenDTO {
     public int getVerificationId();
     public User getUser();
     public Date getDate();
-    public String token();
+    public String getToken();
 }

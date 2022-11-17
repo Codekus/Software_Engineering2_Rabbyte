@@ -31,7 +31,7 @@ public class VerificationToken {
             generator = "verification_id"
     )
     @SequenceGenerator(
-            name = "seq_verification_id",
+            name = "verification_id",
             sequenceName = "rabbyte.seq_verification_id",
             allocationSize=1
     )

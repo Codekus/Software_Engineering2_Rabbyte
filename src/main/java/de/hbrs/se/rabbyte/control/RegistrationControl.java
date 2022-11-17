@@ -1,13 +1,16 @@
 package de.hbrs.se.rabbyte.control;
 
 import de.hbrs.se.rabbyte.control.factory.UserFactory;
+import de.hbrs.se.rabbyte.control.factory.VerificationFactory;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.VerificationTokerDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
+import de.hbrs.se.rabbyte.entities.User;
 import de.hbrs.se.rabbyte.entities.VerificationToken;
 import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
@@ -23,7 +26,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,8 +66,8 @@ public class RegistrationControl {
 
 
                 try {
-                    VerificationToken verificationToken;
-                    verificationToken = new VerificationToken(newStudent);
+                    VerificationTokerDTOImpl verificationTokenDto = createVerificationDto(newStudent);
+                    VerificationToken verificationToken = VerificationFactory.createVerificationToken(verificationTokenDto);
                     verificationCodeRepository.save(verificationToken);
                 } catch (Exception exception) {
                     LOGGER.info("INFO Verification: {}"  ,  exception.getMessage());
@@ -79,6 +84,16 @@ public class RegistrationControl {
             LOGGER.info("INFO: {}" ,  exception.getMessage());
         }
         return registrationResultDTO;
+    }
+
+    private VerificationTokerDTOImpl createVerificationDto(User user) {
+        VerificationTokerDTOImpl verificationTokerDTO = new VerificationTokerDTOImpl();
+        verificationTokerDTO.setUser(user);
+        verificationTokerDTO.setDate(new Date());
+        verificationTokerDTO.setToken(UUID.randomUUID().toString());
+
+        return verificationTokerDTO;
+
     }
 
     private void validateStudent(RegistrationStudentDTOImpl registrationStudentDTO) {
