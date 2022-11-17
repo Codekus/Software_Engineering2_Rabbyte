@@ -50,6 +50,11 @@ public class Globals {
     }
 
     public static class Email {
+        public static final String HOST = "smtp.gmail.com";
+        public static final int PORT = 587;
+        public static final String GMAIL = "rplattform@gmail.com" ;
+        public static final String APP_AUTHENTICATION = "duslwhnrymgvmdjd" ;
+
         private Email() {
             throw new IllegalStateException(IllegalState.MESSAGE_UTILS);
         }

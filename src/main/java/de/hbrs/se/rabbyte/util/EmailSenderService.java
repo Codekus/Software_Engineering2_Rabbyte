@@ -1,34 +1,43 @@
 package de.hbrs.se.rabbyte.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
+import de.hbrs.se.rabbyte.dtos.VerificationTokenDTO;
 
-@Service("emailSenderService")
+import org.springframework.mail.SimpleMailMessage;
+
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import java.util.Properties;
+
+
 public class EmailSenderService {
 
-    public EmailSenderService(String email, String token) {
+
+    private JavaMailSenderImpl  mailSender;
+
+    private SimpleMailMessage mailMessage;
+
+    public EmailSenderService(VerificationTokenDTO verificationTokenDTO) {
+        mailSender = new JavaMailSenderImpl();
         mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(email);
+        mailMessage.setTo(verificationTokenDTO.getUser().getEmail());
         mailMessage.setSubject(Globals.Email.SUBJECT_REGISTRATION);
         mailMessage.setFrom(Globals.Email.EMAIL_SENDER);
-        mailMessage.setFrom(Globals.Email.TEXT_REGISTRATION + token);
+        mailMessage.setText(Globals.Email.TEXT_REGISTRATION + verificationTokenDTO.getToken());
+
+        mailSender.setHost(Globals.Email.HOST);
+        mailSender.setPort(Globals.Email.PORT);
+        mailSender.setUsername(Globals.Email.GMAIL);
+        mailSender.setPassword(Globals.Email.APP_AUTHENTICATION);
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "true");
     }
 
-    private JavaMailSender javaMailSender;
-    private SimpleMailMessage mailMessage;
-    @Autowired
-    public EmailSenderService(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    }
-
-
-
-    @Async
     public  void sendEmail() {
-        javaMailSender.send(mailMessage);
+        mailSender.send(mailMessage);
     }
 
 

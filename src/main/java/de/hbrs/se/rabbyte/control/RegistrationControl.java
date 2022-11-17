@@ -51,6 +51,8 @@ public class RegistrationControl {
     @Autowired
     VerificationCodeRepository verificationCodeRepository;
 
+    EmailSenderService emailSenderService;
+
     public RegistrationResultDTO registerStudent(RegistrationStudentDTOImpl registrationStudentDTO) {
 
         try {
@@ -69,6 +71,10 @@ public class RegistrationControl {
                     VerificationTokerDTOImpl verificationTokenDto = createVerificationDto(newStudent);
                     VerificationToken verificationToken = VerificationFactory.createVerificationToken(verificationTokenDto);
                     verificationCodeRepository.save(verificationToken);
+
+                    emailSenderService = new EmailSenderService(verificationTokenDto);
+                    emailSenderService.sendEmail();
+
                 } catch (Exception exception) {
                     LOGGER.info("INFO Verification: {}"  ,  exception.getMessage());
                 }
