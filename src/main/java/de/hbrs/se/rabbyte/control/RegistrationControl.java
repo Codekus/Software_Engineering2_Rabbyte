@@ -8,10 +8,13 @@ import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
+import de.hbrs.se.rabbyte.entities.VerificationToken;
 import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
+import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
 import de.hbrs.se.rabbyte.repository.StudentRepository;
+import de.hbrs.se.rabbyte.util.EmailSenderService;
 import de.hbrs.se.rabbyte.util.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +43,8 @@ public class RegistrationControl {
     @Autowired
     BusinessRepository businessRepository;
 
+    @Autowired
+    private VerificationCodeRepository verificationCodeRepository;
 
     public RegistrationResultDTO registerStudent(RegistrationStudentDTOImpl registrationStudentDTO) {
 
@@ -51,10 +56,21 @@ public class RegistrationControl {
         }
             validateStudent(registrationStudentDTO);
             if(registrationResultDTO.getReasons().isEmpty()) {
+                Student newStudent = UserFactory.createStudent(registrationStudentDTO.getStudentDTO());
+                this.studentRepository.save(newStudent);
 
-            Student newStudent = UserFactory.createStudent(registrationStudentDTO.getStudentDTO());
-            this.studentRepository.save(newStudent);
-            registrationResultDTO.setRegistrationResult(true);
+
+                try {
+                    VerificationToken verificationToken;
+                    verificationToken = new VerificationToken(newStudent);
+                    verificationCodeRepository.save(verificationToken);
+                } catch (Exception exception) {
+                    LOGGER.info("INFO Verification: {}"  ,  exception.getMessage());
+                }
+
+                registrationResultDTO.setRegistrationResult(true);
+
+
         } else {
             registrationResultDTO.setRegistrationResult(false);
         }} catch (Exception exception) {

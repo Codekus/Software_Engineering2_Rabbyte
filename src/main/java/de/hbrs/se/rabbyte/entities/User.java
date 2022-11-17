@@ -16,6 +16,9 @@ public class User {
     private String street;
     private String streetNumber;
     private String salt;
+    private String verificationCode;
+    private boolean enabled;
+
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,
@@ -114,5 +117,25 @@ public class User {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    @Basic
+    @Column(name = "verification_code")
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String salt) {
+        this.salt = salt;
+    }
+
+    @Basic
+    @Column(name = "enabled")
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

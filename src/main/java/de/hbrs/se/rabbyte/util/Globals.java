@@ -49,4 +49,15 @@ public class Globals {
         public static final String MESSAGE_FACTORY = "IllegalStateException: Factory Class";
     }
 
+    public static class Email {
+        private Email() {
+            throw new IllegalStateException(IllegalState.MESSAGE_UTILS);
+        }
+        public static final String TEXT_REGISTRATION = "To confirm your account, please click here : \"\n" +
+                "            +\"http://localhost:8080/confirm-account?token=";
+        public static final String SUBJECT_REGISTRATION = "Registration";
+        public static final String EMAIL_SENDER = "rplattform@gmail.com";
+
+    }
+
 }
