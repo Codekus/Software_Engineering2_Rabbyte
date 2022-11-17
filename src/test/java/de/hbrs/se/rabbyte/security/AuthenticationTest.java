@@ -2,6 +2,7 @@ package de.hbrs.se.rabbyte.security;
 
 import com.github.mvysny.kaributesting.v10.MockVaadin;
 import com.github.mvysny.kaributesting.v10.Routes;
+import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.exception.AuthException;
 import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
 import org.junit.jupiter.api.*;
@@ -59,8 +60,11 @@ public class AuthenticationTest {
     @Test
     void authenticateStudent_correctUserData_successfulLogin() throws InvalidKeySpecException, NoSuchAlgorithmException, AuthException {
 
+        GeneralUserDTO student = generalUserRepository.findByEmail(TEST_STUDENT_USERNAME);
         Assertions.assertFalse(SecurityUtils.isUserLoggedIn());
         securityService.authenticate(TEST_STUDENT_USERNAME, TEST_PASSWORD);
+        Assertions.assertEquals(student.getEmail(), securityService.getAuthenticatedUser().getEmail());
+        Assertions.assertEquals(student.getId(), securityService.getAuthenticatedUserID());
         Assertions.assertTrue(SecurityUtils.isUserLoggedIn());
     }
 
@@ -77,8 +81,11 @@ public class AuthenticationTest {
     @Test
     void authenticateBusiness_correctUserData_successfulLogin() throws InvalidKeySpecException, NoSuchAlgorithmException, AuthException {
 
+        GeneralUserDTO business = generalUserRepository.findByEmail(TEST_BUSINESS_USERNAME);
         Assertions.assertFalse(SecurityUtils.isUserLoggedIn());
         securityService.authenticate(TEST_BUSINESS_USERNAME, TEST_PASSWORD);
+        Assertions.assertEquals(business.getEmail(), securityService.getAuthenticatedUser().getEmail());
+        Assertions.assertEquals(business.getId(), securityService.getAuthenticatedUserID());
         Assertions.assertTrue(SecurityUtils.isUserLoggedIn());
     }
 
