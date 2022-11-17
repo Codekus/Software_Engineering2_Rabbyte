@@ -120,16 +120,6 @@ public class User {
     }
 
     @Basic
-    @Column(name = "verification_code")
-    public String getVerificationCode() {
-        return verificationCode;
-    }
-
-    public void setVerificationCode(String salt) {
-        this.salt = salt;
-    }
-
-    @Basic
     @Column(name = "enabled")
     public boolean getEnabled() {
         return enabled;

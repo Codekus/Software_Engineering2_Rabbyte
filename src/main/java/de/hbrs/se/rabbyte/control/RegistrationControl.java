@@ -44,7 +44,7 @@ public class RegistrationControl {
     BusinessRepository businessRepository;
 
     @Autowired
-    private VerificationCodeRepository verificationCodeRepository;
+    VerificationCodeRepository verificationCodeRepository;
 
     public RegistrationResultDTO registerStudent(RegistrationStudentDTOImpl registrationStudentDTO) {
 
