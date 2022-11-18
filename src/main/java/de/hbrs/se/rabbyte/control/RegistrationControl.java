@@ -8,7 +8,7 @@ import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
-import de.hbrs.se.rabbyte.dtos.implemented.VerificationCodeDTOImpl;
+
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.entities.Student;
@@ -25,9 +25,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
+
 import java.util.Scanner;
-import java.util.UUID;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,6 +51,7 @@ public class RegistrationControl {
     VerificationCodeRepository verificationCodeRepository;
 
     EmailSenderService emailSenderService;
+
 
     private VerificationControl verificationControl;
 

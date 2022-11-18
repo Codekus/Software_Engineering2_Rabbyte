@@ -95,8 +95,8 @@ public class GeneralUserDTOImpl implements GeneralUserDTO {
         return salt;
     }
 
-    public void setSalt() {
-        this.salt = salt;
+    public void setSalt(String salt) {
+        this.salt = this.salt;
     }
 
     public boolean getEnabled() {

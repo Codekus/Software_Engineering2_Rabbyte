@@ -4,6 +4,7 @@ package de.hbrs.se.rabbyte.control.factory;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
+import de.hbrs.se.rabbyte.dtos.implemented.GeneralUserDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.entities.User;
@@ -86,9 +87,25 @@ public class UserFactory {
         user.setStreet(generalUserDTO.getStreet());
         user.setStreetNumber(generalUserDTO.getStreetNumber());
         user.setSalt(generalUserDTO.getSalt());
-        user.setEnabled(true);
+        user.setEnabled(generalUserDTO.getEnabled());
 
         return user;
     }
 
+    public static GeneralUserDTO createUserDTO(User user) {
+        GeneralUserDTOImpl generalUserDTO = new GeneralUserDTOImpl();
+
+        generalUserDTO.setId(user.getId());
+        generalUserDTO.setEmail(user.getEmail());
+        generalUserDTO.setPassword(user.getPassword());
+        generalUserDTO.setPlz(user.getPlz());
+        generalUserDTO.setCity(user.getCity());
+        generalUserDTO.setCountry(user.getCountry());
+        generalUserDTO.setStreet(user.getStreet());
+        generalUserDTO.setStreetNumber(user.getStreetNumber());
+        generalUserDTO.setSalt(user.getSalt());
+        generalUserDTO.setEnabled(user.getEnabled());
+
+        return generalUserDTO;
+    }
 }
