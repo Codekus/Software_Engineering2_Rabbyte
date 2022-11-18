@@ -10,4 +10,6 @@ public interface GeneralUserDTO {
     public String getCountry();
     public String getStreet();
     public String getStreetNumber();
+    public boolean getEnabled();
+    public String getSalt();
 }

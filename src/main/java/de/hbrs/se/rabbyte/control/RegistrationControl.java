@@ -8,10 +8,9 @@ import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
-import de.hbrs.se.rabbyte.dtos.implemented.VerificationTokerDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.VerificationCodeDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
-import de.hbrs.se.rabbyte.entities.User;
-import de.hbrs.se.rabbyte.entities.VerificationToken;
+import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
@@ -53,26 +52,29 @@ public class RegistrationControl {
 
     EmailSenderService emailSenderService;
 
-    public RegistrationResultDTO registerStudent(RegistrationStudentDTOImpl registrationStudentDTO) {
+    private VerificationControl verificationControl;
 
+    public RegistrationResultDTO registerStudent(RegistrationStudentDTOImpl registrationStudentDTO) {
         try {
         registrationResultDTO = new RegistrationResultDTOImpl();
 
-        if(inspectIfEmailIsAlreadyInUse(registrationStudentDTO.getStudentDTO().getEmail())) {
-            registrationResultDTO.setReason(RegistrationResultDTO.Result.EMAIL_IN_USE);
-        }
+            if(inspectIfEmailIsAlreadyInUse(registrationStudentDTO.getStudentDTO().getEmail())) {
+                registrationResultDTO.setReason(RegistrationResultDTO.Result.EMAIL_IN_USE);
+            }
+
             validateStudent(registrationStudentDTO);
+
             if(registrationResultDTO.getReasons().isEmpty()) {
                 Student newStudent = UserFactory.createStudent(registrationStudentDTO.getStudentDTO());
                 this.studentRepository.save(newStudent);
 
 
                 try {
-                    VerificationTokerDTOImpl verificationTokenDto = createVerificationDto(newStudent);
-                    VerificationToken verificationToken = VerificationFactory.createVerificationToken(verificationTokenDto);
-                    verificationCodeRepository.save(verificationToken);
 
-                    emailSenderService = new EmailSenderService(verificationTokenDto);
+                    VerificationCode verificationCode = VerificationFactory.createVerificationToken(newStudent );
+                    verificationCodeRepository.save(verificationCode);
+
+                    emailSenderService = new EmailSenderService(verificationCode);
                     emailSenderService.sendEmail();
 
                 } catch (Exception exception) {
@@ -92,17 +94,9 @@ public class RegistrationControl {
         return registrationResultDTO;
     }
 
-    private VerificationTokerDTOImpl createVerificationDto(User user) {
-        VerificationTokerDTOImpl verificationTokerDTO = new VerificationTokerDTOImpl();
-        verificationTokerDTO.setUser(user);
-        verificationTokerDTO.setDate(new Date());
-        verificationTokerDTO.setToken(UUID.randomUUID().toString());
-
-        return verificationTokerDTO;
-
-    }
 
     private void validateStudent(RegistrationStudentDTOImpl registrationStudentDTO) {
+        inspectIfEmailIsAlreadyInUse(registrationStudentDTO.getStudentDTO().getEmail());
         inspectIfPasswordIsTooShort(registrationStudentDTO.getStudentDTO().getPassword());
         inspectIfRepeatPasswordIsTooShort(registrationStudentDTO.getRepeatPassword());
         inspectIfSamePassword(registrationStudentDTO.getRepeatPassword() , registrationStudentDTO.getStudentDTO().getPassword());
@@ -136,13 +130,13 @@ public class RegistrationControl {
     }
 
     private void validateBusiness(RegistrationBusinessDTOImpl registrationBusinessDTO) {
-        if (inspectIfEmailIsAlreadyInUse(registrationBusinessDTO.getBusinessDTO().getEmail())) {
-            registrationResultDTO.setReason(RegistrationResultDTO.Result.EMAIL_IN_USE);
-        }
+
+
 
         if(businessNameInUse(registrationBusinessDTO.getBusinessDTO().getBusinessName())) {
             registrationResultDTO.setReason(RegistrationResultDTO.Result.BUSINESS_NAME_IN_USE);
         }
+        emailInUse(registrationBusinessDTO.getBusinessDTO().getEmail());
         inspectIfPasswordIsTooShort(registrationBusinessDTO.getBusinessDTO().getPassword());
         inspectIfRepeatPasswordIsTooShort(registrationBusinessDTO.getRepeatPassword());
         inspectIfSamePassword(registrationBusinessDTO.getRepeatPassword() , registrationBusinessDTO.getBusinessDTO().getPassword());
@@ -155,6 +149,11 @@ public class RegistrationControl {
     private boolean businessNameInUse(String businessName) {
         BusinessDTO businessDTO = businessRepository.findBusinessByBusinessName(businessName);
         return ( businessDTO != null && businessDTO.getId() > 0);
+    }
+    private void emailInUse(String email) {
+        if(inspectIfEmailIsAlreadyInUse(email)) {
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.EMAIL_IN_USE);
+        }
     }
 
     private boolean inspectIfEmailIsAlreadyInUse(String email) {

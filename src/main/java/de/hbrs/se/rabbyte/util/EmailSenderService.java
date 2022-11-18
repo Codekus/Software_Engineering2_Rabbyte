@@ -1,7 +1,8 @@
 package de.hbrs.se.rabbyte.util;
 
-import de.hbrs.se.rabbyte.dtos.VerificationTokenDTO;
+import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 
+import de.hbrs.se.rabbyte.entities.VerificationCode;
 import org.springframework.mail.SimpleMailMessage;
 
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -16,13 +17,13 @@ public class EmailSenderService {
 
     private SimpleMailMessage mailMessage;
 
-    public EmailSenderService(VerificationTokenDTO verificationTokenDTO) {
+    public EmailSenderService(VerificationCode verificationCodeD) {
         mailSender = new JavaMailSenderImpl();
         mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(verificationTokenDTO.getUser().getEmail());
+        mailMessage.setTo(verificationCodeD.getUser().getEmail());
         mailMessage.setSubject(Globals.Email.SUBJECT_REGISTRATION);
         mailMessage.setFrom(Globals.Email.EMAIL_SENDER);
-        mailMessage.setText(Globals.Email.TEXT_REGISTRATION + verificationTokenDTO.getToken());
+        mailMessage.setText(Globals.Email.TEXT_REGISTRATION + verificationCodeD.getToken());
 
         mailSender.setHost(Globals.Email.HOST);
         mailSender.setPort(Globals.Email.PORT);

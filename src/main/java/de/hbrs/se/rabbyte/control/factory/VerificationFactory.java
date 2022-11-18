@@ -1,7 +1,9 @@
 package de.hbrs.se.rabbyte.control.factory;
 
-import de.hbrs.se.rabbyte.dtos.VerificationTokenDTO;
-import de.hbrs.se.rabbyte.entities.VerificationToken;
+import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
+import de.hbrs.se.rabbyte.entities.Student;
+import de.hbrs.se.rabbyte.entities.User;
+import de.hbrs.se.rabbyte.entities.VerificationCode;
 
 import java.util.Date;
 import java.util.UUID;
@@ -9,12 +11,14 @@ import java.util.UUID;
 
 public class VerificationFactory {
 
-    public static VerificationToken createVerificationToken(VerificationTokenDTO verificationTokenDTO) {
-        VerificationToken verificationToken = new VerificationToken();
-        verificationToken.setToken(UUID.randomUUID().toString());
-        verificationToken.setUser(verificationTokenDTO.getUser());
-        verificationToken.setDate(new Date());
+    public static VerificationCode createVerificationToken(Student student) {
 
-        return verificationToken;
+        VerificationCode verificationCode = new VerificationCode();
+        verificationCode.setId(verificationCode.getId());
+        verificationCode.setToken(UUID.randomUUID().toString());
+        verificationCode.setUser(student);
+        verificationCode.setDate(new Date());
+
+        return verificationCode;
     }
 }

@@ -30,12 +30,14 @@ public class UserFactory {
         student.setLastName(studentDTO.getLastName());
         student.setFaculty(studentDTO.getFaculty());
 
+
         student.setEmail(studentDTO.getEmail());
         student.setPlz(studentDTO.getPlz());
         student.setCity(studentDTO.getCity());
         student.setCountry(studentDTO.getCountry());
         student.setStreet(studentDTO.getStreet());
         student.setStreetNumber(studentDTO.getStreetNumber());
+        student.setEnabled(studentDTO.getEnabled());
         return student;
     }
 
@@ -65,4 +67,28 @@ public class UserFactory {
         }
         user.setId(businessDTO.getId());
     }
+
+    public static User enableUser(GeneralUserDTO generalUserDTO) {
+        User user = UserFactory.createUser(generalUserDTO);
+        user.setEnabled(true);
+        return user;
+
+    }
+
+    public static User createUser(GeneralUserDTO generalUserDTO) {
+        User user = new User();
+        user.setId(generalUserDTO.getId());
+        user.setEmail(generalUserDTO.getEmail());
+        user.setPassword(generalUserDTO.getPassword());
+        user.setPlz(generalUserDTO.getPlz());
+        user.setCity(generalUserDTO.getCity());
+        user.setCountry(generalUserDTO.getCountry());
+        user.setStreet(generalUserDTO.getStreet());
+        user.setStreetNumber(generalUserDTO.getStreetNumber());
+        user.setSalt(generalUserDTO.getSalt());
+        user.setEnabled(true);
+
+        return user;
+    }
+
 }

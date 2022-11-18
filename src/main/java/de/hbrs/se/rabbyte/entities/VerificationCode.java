@@ -4,26 +4,15 @@ package de.hbrs.se.rabbyte.entities;
 import javax.persistence.*;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @Table(name = "verification_code", schema = "rabbyte")
-public class VerificationToken {
+public class VerificationCode {
 
     private int id;
     private User user;
     private Date date;
     private String token;
-
-    public VerificationToken(User user) {
-        setUser(user);
-        setDate(new Date());
-        setToken(UUID.randomUUID().toString());
-    }
-
-    public VerificationToken() {
-
-    }
 
     @Id
     @GeneratedValue(
@@ -43,7 +32,9 @@ public class VerificationToken {
         this.id = id;
     }
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+
+
+    @OneToOne(targetEntity = User.class,cascade = {CascadeType.MERGE} )
     @JoinColumn(name = "user_id")
     public User getUser() {
 
@@ -52,6 +43,7 @@ public class VerificationToken {
     public void setUser(User user) {
         this.user = user;
     }
+
 
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -62,6 +54,7 @@ public class VerificationToken {
     public void setDate(Date date) {
         this.date = date;
     }
+
 
     @Column(name = "token")
     public String getToken() {

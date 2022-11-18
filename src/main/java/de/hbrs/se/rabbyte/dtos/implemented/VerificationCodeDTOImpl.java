@@ -1,14 +1,14 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
-import de.hbrs.se.rabbyte.dtos.VerificationTokenDTO;
-import de.hbrs.se.rabbyte.entities.User;
+import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
+import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 
 import java.util.Date;
 
-public class VerificationTokerDTOImpl implements VerificationTokenDTO {
+public class VerificationCodeDTOImpl implements VerificationCodeDTO {
 
     private int id;
-    private User user;
+    private GeneralUserDTO user;
     private Date date;
     private String token;
 
@@ -21,11 +21,11 @@ public class VerificationTokerDTOImpl implements VerificationTokenDTO {
     }
 
     @Override
-    public User getUser() {
+    public GeneralUserDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(GeneralUserDTO user) {
         this.user = user;
     }
 

@@ -17,6 +17,8 @@ public class GeneralUserDTOImpl implements GeneralUserDTO {
     private String country;
     private String street;
     private String streetNumber;
+    private String salt;
+    private boolean enabled;
 
     public int getId() {
         return id;
@@ -87,5 +89,21 @@ public class GeneralUserDTOImpl implements GeneralUserDTO {
 
     public void setStreetNumber(String streetNumber) {
         this.streetNumber = streetNumber;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt() {
+        this.salt = salt;
+    }
+
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

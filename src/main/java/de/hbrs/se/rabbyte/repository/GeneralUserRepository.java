@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface GeneralUserRepository extends JpaRepository<User, Integer> {
+
+
+
     @Query("select g from User g where g.email = ?1")
     GeneralUserDTO findByEmail(String email);
-
-
 
 
     GeneralUserDTO findGeneralUserById(int nutzerid);

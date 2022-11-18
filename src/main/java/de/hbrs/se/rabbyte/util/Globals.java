@@ -59,7 +59,7 @@ public class Globals {
             throw new IllegalStateException(IllegalState.MESSAGE_UTILS);
         }
         public static final String TEXT_REGISTRATION = "To confirm your account, please click here : \"\n" +
-                "            +\"http://localhost:8080/confirm-account?token=";
+                "            +\"http://localhost:8080/activate?token=";
         public static final String SUBJECT_REGISTRATION = "Registration";
         public static final String EMAIL_SENDER = "rplattform@gmail.com";
 
