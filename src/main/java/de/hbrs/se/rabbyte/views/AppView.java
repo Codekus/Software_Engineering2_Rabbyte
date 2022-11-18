@@ -47,7 +47,7 @@ import java.util.Optional;
 public class AppView extends AppLayout implements BeforeEnterObserver {
 
     private Tabs menu;
-    private H3 viewTitle;
+    //private H3 viewTitle;
     private H1 helloUser;
 
 
@@ -94,7 +94,7 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         // Der aktuell-selektierte Tab wird gehighlighted.
 
         // Setzen des aktuellen Names des Tabs
-        viewTitle.setText(getCurrentPageTitle());
+        //viewTitle.setText(getCurrentPageTitle());
 
         // Setzen des Vornamens von dem aktuell eingeloggten Benutzer
     }
@@ -120,22 +120,25 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         setDrawerOpened(false);
         //layout.add(drawerToggle);
 
-        HorizontalLayout logoLayout = new HorizontalLayout();
 
         // Hinzufügen des Logos
-        logoLayout.setId("logo");
-        logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("images/logo.png", "Logo"));
-        logoLayout.add(new H1("Rabbyte"));
+        HorizontalLayout hLogoLayout = new HorizontalLayout();
+        hLogoLayout.setId("logo");
+        hLogoLayout.add(new Image("images/logo.png", "Logo"));
+        hLogoLayout.add(new H1("Rabbyte"));
+        hLogoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+        VerticalLayout vLogoLayout = new VerticalLayout(hLogoLayout);
 
-        layout.add(logoLayout);
+        layout.add(vLogoLayout);
 
+        /*
         viewTitle = new H3();
         viewTitle.setWidthFull();
         layout.add( viewTitle );
-
+         */
         menu = createMenu();
-        layout.add(menu);
+        VerticalLayout vMenu = new VerticalLayout(menu);
+        layout.add(vMenu);
 
         // Interner Layout
         HorizontalLayout topRightPanel = new HorizontalLayout();
@@ -152,9 +155,10 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         SubMenu moveSubMenu = move.getSubMenu();
         //moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
         moveSubMenu.addItem("Logout",  e -> securityService.logout());
-        moveSubMenu.addItem("print rolle",  e -> System.out.println(securityService.getAuthenticatedUserID()));
+        //moveSubMenu.addItem("print rolle",  e -> System.out.println(securityService.getAuthenticatedUserID()));
 
         layout.add(topRightPanel);
+        layout.setMaxHeight("80px");
         return layout;
     }
 
