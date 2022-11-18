@@ -1,5 +1,7 @@
 package de.hbrs.se.rabbyte.entities;
 
+import de.hbrs.se.rabbyte.dtos.implemented.GeneralUserDTOImpl;
+
 import javax.persistence.*;
 
 
@@ -34,7 +36,6 @@ public class JobAdvertisement {
     public String getText() {
         return text;
     }
-
     public void setText(String text) {
         this.text = text;
     }
@@ -42,7 +43,6 @@ public class JobAdvertisement {
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -50,7 +50,6 @@ public class JobAdvertisement {
     public void setType(String type) {
         this.type = type;
     }
-
     public String getType(){
         return type;
     }

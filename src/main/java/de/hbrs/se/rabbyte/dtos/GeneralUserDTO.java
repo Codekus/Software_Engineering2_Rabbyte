@@ -10,4 +10,5 @@ public interface GeneralUserDTO {
     public String getCountry();
     public String getStreet();
     public String getStreetNumber();
+    public String getSalt();
 }

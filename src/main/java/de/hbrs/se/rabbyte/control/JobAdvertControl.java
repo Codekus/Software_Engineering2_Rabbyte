@@ -14,9 +14,9 @@ public class JobAdvertControl {
         @Autowired
         private JobAdvertisementRepository repository;
 
-        public void createJobAdvert(JobAdvertisementDTO jobAdvertisementDTO, BusinessDTO businessDTO){
+        public void createJobAdvert(JobAdvertisementDTO jobAdvertisementDTO){
 
-                JobAdvertisement jobAdvertisement = JobAdvertFactory.publishJobAdvert(jobAdvertisementDTO, businessDTO);
+                JobAdvertisement jobAdvertisement = JobAdvertFactory.publishJobAdvert(jobAdvertisementDTO);
 
                 this.repository.save(jobAdvertisement);
         }

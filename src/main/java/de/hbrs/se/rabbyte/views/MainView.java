@@ -11,8 +11,7 @@ import com.vaadin.flow.server.PWA;
 
 
 
-@Route(value = "", layout = AppView.class)
-@RouteAlias(value = "frontPage" )
+//@Route(value = "main", layout = AppView.class)
 @PWA(name = "Rabbyte", shortName = "Rabbyte")
 public class MainView extends VerticalLayout {
 
@@ -20,7 +19,7 @@ public class MainView extends VerticalLayout {
         Button button = new Button("Click me",
                 event -> {
                     Notification.show("Clicked!");
-                    UI.getCurrent().navigate("main");
+                    UI.getCurrent().navigate("student/search-view");
                 });
 
         add(button);

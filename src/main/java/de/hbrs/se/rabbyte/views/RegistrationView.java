@@ -11,9 +11,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
-import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.PasswordField;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
@@ -48,7 +46,7 @@ public class RegistrationView extends VerticalLayout {
     PasswordField passwordFieldStudent = new PasswordField("Password");
     PasswordField passwordFieldRepeatStudent = new PasswordField("Password wiederholen");
     TextField firstNameStudent = new TextField("Vorname");
-    TextField lastNameStudent = new TextField("Nachnahme");
+    TextField lastNameStudent = new TextField("Nachname");
 
     ComboBox<String> facultyComboBox = new ComboBox<>("Fachbereich");
 

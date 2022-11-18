@@ -1,7 +1,9 @@
 package de.hbrs.se.rabbyte.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,6 +19,9 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String LOGIN_PROCESSING_URL = "/login";
+
+    @Autowired
+    private UserDetailsService userDetailsService;
     private static final String LOGIN_FAILURE_URL = "/login?error";
     private static final String LOGIN_URL = "/login";
     private static final String LOGOUT_SUCCESS_URL = "/login";
@@ -37,9 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // Allow all Vaadin internal requests.
                 .requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
-
+                .antMatchers("/registration").permitAll()
                 // Allow all requests by logged-in users.
-                .anyRequest().authenticated()
+                //.anyRequest().authenticated()
 
                 // Configure the login page.
                 .and().formLogin()
@@ -49,9 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // Configure logout
                 .and().logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL);
+
     }
 
-    @Bean
+    /*@Bean
     @Override
     public UserDetailsService userDetailsService() {
         UserDetails user = User.withUsername("user")
@@ -60,6 +66,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .build();
 
         return new InMemoryUserDetailsManager(user);
+    }*/
+
+    @Autowired
+    public void globalSecurityConfiguration(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService);
     }
 
     /**

@@ -6,10 +6,8 @@ import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 
 public class JobAdvertFactory {
 
-        public static JobAdvertisement publishJobAdvert(JobAdvertisementDTO jobAdvertisementDTO, BusinessDTO businessDTO) {
-
+        public static JobAdvertisement publishJobAdvert(JobAdvertisementDTO jobAdvertisementDTO) {
                 JobAdvertisement jobAdvertisement = new JobAdvertisement();
-
                 jobAdvertisement.setId( jobAdvertisementDTO.getId() );
                 jobAdvertisement.setText( jobAdvertisementDTO.getText() );
                 jobAdvertisement.setType( jobAdvertisementDTO.getType() );

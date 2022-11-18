@@ -42,7 +42,7 @@ import java.util.Optional;
  * The main view is a top-level placeholder for other views.
  */
 
-@Route("main")
+
 //@PWA(name = "HelloCar", shortName = "HelloCar", enableInstallPrompt = false) TODO: whats this??
 public class AppView extends AppLayout implements BeforeEnterObserver {
 
@@ -50,12 +50,13 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
     private H3 viewTitle;
     private H1 helloUser;
 
-    @Autowired
+
     private SecurityService securityService;
 
-    public AppView() {
-
+    public AppView(SecurityService securityService) {
+        this.securityService = securityService;
         setUpUI();
+
     }
 
     public void setUpUI() {
@@ -68,8 +69,8 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         // Erstellung der vertikalen Navigationsleiste (Drawer)
 
 
-        menu = createMenu();
-        addToDrawer(createDrawerContent(menu));
+        //menu = createMenu();
+        //addToDrawer(createDrawerContent(menu));
     }
 
 
@@ -85,11 +86,10 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
 
     @Override
     protected void afterNavigation() {
-        System.out.println("after Navi");
         super.afterNavigation();
 
         // Falls der Benutzer nicht eingeloggt ist, dann wird er auf die Startseite gelenkt
-        if ( !checkIfUserIsLoggedIn() ) return;
+        //if ( !checkIfUserIsLoggedIn() ) return;
 
         // Der aktuell-selektierte Tab wird gehighlighted.
 
@@ -118,12 +118,24 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         // Hinzufügen des Toogle ('Big Mac') zum Ein- und Ausschalten des Drawers
         DrawerToggle drawerToggle = new DrawerToggle();
         setDrawerOpened(false);
+        //layout.add(drawerToggle);
 
-        layout.add(drawerToggle);
+        HorizontalLayout logoLayout = new HorizontalLayout();
+
+        // Hinzufügen des Logos
+        logoLayout.setId("logo");
+        logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+        logoLayout.add(new Image("images/logo.png", "Logo"));
+        logoLayout.add(new H1("Rabbyte"));
+
+        layout.add(logoLayout);
 
         viewTitle = new H3();
         viewTitle.setWidthFull();
         layout.add( viewTitle );
+
+        menu = createMenu();
+        layout.add(menu);
 
         // Interner Layout
         HorizontalLayout topRightPanel = new HorizontalLayout();
@@ -136,11 +148,13 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         topRightPanel.add(bar);
 
         MenuItem move = bar.addItem("Mein Profil");
-        SubMenu moveSubMenu = move.getSubMenu();
-        moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
-        moveSubMenu.addItem("Logout",  e -> securityService.logout());
 
-        layout.add( topRightPanel );
+        SubMenu moveSubMenu = move.getSubMenu();
+        //moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
+        moveSubMenu.addItem("Logout",  e -> securityService.logout());
+        moveSubMenu.addItem("print rolle",  e -> System.out.println(securityService.getAuthenticatedUserID()));
+
+        layout.add(topRightPanel);
         return layout;
     }
 
@@ -182,12 +196,17 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
 
         // Anlegen der Grundstruktur
         final Tabs tabs = new Tabs();
-        tabs.setOrientation(Tabs.Orientation.VERTICAL);
-        tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
+        tabs.setOrientation(Tabs.Orientation.HORIZONTAL);
+        tabs.addThemeVariants(TabsVariant.LUMO_HIDE_SCROLL_BUTTONS);
+        tabs.addThemeVariants(TabsVariant.LUMO_CENTERED);
+        tabs.addThemeVariants(TabsVariant.LUMO_EQUAL_WIDTH_TABS);
         tabs.setId("tabs");
+        tabs.setMaxWidth("100%");
+        tabs.setWidth("800px");
 
         // Anlegen der einzelnen Menuitems
         tabs.add(createMenuItems());
+
         return tabs;
     }
 
@@ -202,8 +221,7 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         // Key: der sichtbare String des Menu-Items
         // Value: Die UI-Component, die nach dem Klick auf das Menuitem angezeigt wird.
         //ToDo Sicherstellen dass es sich um ein Unternehmens account handelt
-        Tab[] tabs = new Tab[]{ createTab( "Startseite", MainView.class) };
-        tabs = Utils.append( tabs , createTab("Neue Stellenausschreibung", CreateJobAdvertisementView.class));
+
 
         // Falls er Admin-Rechte hat, sollte der User auch Autos hinzufügen können
         // (Alternative: Verwendung der Methode 'isUserisAllowedToAccessThisFeature')
@@ -214,7 +232,14 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
             tabs = Utils.append( tabs , createTab("Enter Car", EnterCarView.class)  );
         }
          */
-
+        Tab[] tabs = new Tab[0];
+        if (securityService.getAuthenticatedUserRole().equals("Student")) {
+            tabs = new Tab[]{ createTab( "Startseite", JobAdvertisementSearchView.class) };
+            tabs = Utils.append( tabs , createTab("Kontodaten ändern", StudentUserView.class));
+        } else if ( securityService.getAuthenticatedUserRole().equals("Business") ) {
+            tabs = new Tab[]{ createTab( "Ihr Unternehmen", CreateJobAdvertisementView.class) };
+            tabs = Utils.append( tabs , createTab("Neue Stellenanzeige", CreateJobAdvertisementView.class));
+        }
 
         return tabs;
     }
@@ -269,10 +294,12 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
      */
 
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-
+/*
         if (!isUserLoggedIn()){
             beforeEnterEvent.rerouteTo("login");
         }
+
+ */
 
 
 
