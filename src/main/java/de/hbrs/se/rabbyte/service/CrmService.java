@@ -7,6 +7,7 @@ import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.*;
 import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.repository.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,9 +33,15 @@ public class CrmService {
     }
 
     //JobAdvertisementRepository
-    public List<JobAdvertisement> findJobAdvertisements(String searchText){
+    public List<JobAdvertisement> findJobAdvertisementsByText(String searchText){
         List<JobAdvertisement> jobAdvertisementsRes = jobAdvertisementRepository.search(searchText);
         return jobAdvertisementRepository.search(searchText);
+
+    }
+
+    public List<JobAdvertisement> findJobAdvertisementsByID(int ID){
+        List<JobAdvertisement> jobAdvertisementsRes = jobAdvertisementRepository.searchByID(ID);
+        return jobAdvertisementsRes;
 
     }
 

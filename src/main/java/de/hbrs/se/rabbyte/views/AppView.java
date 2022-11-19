@@ -229,7 +229,7 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
             tabs = new Tab[]{ createTab( "Startseite", JobAdvertisementSearchView.class) };
             tabs = Utils.append( tabs , createTab("Kontodaten ändern", StudentUserView.class));
         } else if ( securityService.getAuthenticatedUserRole().equals("Business") ) {
-            tabs = new Tab[]{ createTab( "Ihr Unternehmen", CreateJobAdvertisementView.class) };
+            tabs = new Tab[]{ createTab( "Ihr Unternehmen", BusinessView.class) };
             tabs = Utils.append( tabs , createTab("Neue Stellenanzeige", CreateJobAdvertisementView.class));
         }
 
