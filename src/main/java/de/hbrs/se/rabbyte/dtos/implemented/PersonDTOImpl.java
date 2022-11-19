@@ -1,11 +1,13 @@
-package de.hbrs.se.rabbyte.entities;
+package de.hbrs.se.rabbyte.dtos.implemented;
 
-import javax.persistence.*;
+import de.hbrs.se.rabbyte.dtos.PersonDTO;
+import de.hbrs.se.rabbyte.entities.Person;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "user", schema = "rabbyte")
-public class User {
+
+/**
+ * A DTO for the {@link Person} entity
+ */
+public class PersonDTOImpl implements PersonDTO {
 
     private int id;
     private String email;
@@ -15,18 +17,9 @@ public class User {
     private String country;
     private String street;
     private String streetNumber;
+
     private String salt;
-    @Id
-    @GeneratedValue(
-            strategy= GenerationType.AUTO,
-            generator = "user_id"
-    )
-    @SequenceGenerator(
-            name = "user_id",
-            sequenceName = "rabbyte.seq_nutzer_id",
-            allocationSize=1
-    )
-    @Column(name = "user_id")
+
     public int getId() {
         return id;
     }
@@ -34,40 +27,35 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
-    @Basic
-    @Column(name = "email")
+
+    @Override
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-
     }
-    @Basic
-    @Column(name = "passwort")
+
+    @Override
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-
     }
 
-    @Basic
-    @Column(name = "plz")
+    @Override
     public int getPlz() {
         return plz;
     }
 
     public void setPlz(int plz) {
         this.plz = plz;
-
     }
 
-    @Basic
-    @Column(name = "stadt")
+    @Override
     public String getCity() {
         return city;
     }
@@ -75,39 +63,35 @@ public class User {
     public void setCity(String city) {
         this.city = city;
     }
-    @Basic
-    @Column(name = "land")
+
+    @Override
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String state) {
-        this.country = state;
-
+    public void setCountry(String country) {
+        this.country = country;
     }
-    @Basic
-    @Column(name = "strasse")
+
+    @Override
     public String getStreet() {
         return street;
     }
 
     public void setStreet(String street) {
         this.street = street;
-
     }
-    @Basic
-    @Column(name = "hausnummer")
+
+    @Override
     public String getStreetNumber() {
         return streetNumber;
     }
 
     public void setStreetNumber(String streetNumber) {
         this.streetNumber = streetNumber;
-
     }
 
-    @Basic
-    @Column(name = "salt")
+    @Override
     public String getSalt() {
         return salt;
     }

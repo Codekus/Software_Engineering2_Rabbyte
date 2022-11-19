@@ -3,8 +3,8 @@ package de.hbrs.se.rabbyte.control.factory;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.Business;
+import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.entities.Student;
-import de.hbrs.se.rabbyte.entities.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -25,7 +25,7 @@ class UserFactoryTest {
     @Mock
     private BusinessDTO businessDTO;
     @Mock
-    private User user;
+    private Person person;
 
     private static final String PASSWORD = "password";
     private static final String EMAIL_STUDENT = "max@mustermann.de";
@@ -43,7 +43,7 @@ class UserFactoryTest {
         when(studentDTO.getLastName()).thenReturn(STUDENT_LAST_NAME);
 
 
-        student = UserFactory.createStudent(studentDTO);
+        student = PersonFactory.createStudent(studentDTO);
 
         assertTrue(student instanceof Student);
         assertEquals(128 , student.getPassword().length());
@@ -62,7 +62,7 @@ class UserFactoryTest {
         when(businessDTO.getEmail()).thenReturn(BUSINESS_MAIL);
         when(businessDTO.getBusinessName()).thenReturn(BUSINESS_NAME);
 
-        business = UserFactory.createBusiness(businessDTO);
+        business = PersonFactory.createBusiness(businessDTO);
         assertEquals(128 , business.getPassword().length());
         assertEquals(BUSINESS_MAIL, business.getEmail());
         assertEquals(BUSINESS_NAME, business.getBusinessName());
@@ -72,7 +72,7 @@ class UserFactoryTest {
 
     @Test
     void throwIllegalAccesExceptionWhenInstancingUserFactory() throws NoSuchMethodException {
-        Constructor<UserFactory> constructor = UserFactory.class.getDeclaredConstructor();
+        Constructor<PersonFactory> constructor = PersonFactory.class.getDeclaredConstructor();
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);
         assertEquals(exceptionMessage, exceptionThatWasThrown.getMessage());

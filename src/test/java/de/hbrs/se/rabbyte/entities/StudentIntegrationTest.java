@@ -1,6 +1,6 @@
 package de.hbrs.se.rabbyte.entities;
 
-import de.hbrs.se.rabbyte.control.factory.UserFactory;
+import de.hbrs.se.rabbyte.control.factory.PersonFactory;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.repository.StudentRepository;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
@@ -50,7 +50,7 @@ class StudentIntegrationTest {
         street = "Musterstadt";
         streetNumber = "1";
         studentDTO = studentRepository.findStudentById(20000050);
-        student = UserFactory.createStudent(studentDTO);
+        student = PersonFactory.createStudent(studentDTO);
     }
 
     @Test

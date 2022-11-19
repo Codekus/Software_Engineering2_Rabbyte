@@ -2,7 +2,6 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.entities.Business;
-import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
 
 public class JobAdvertisementDTOImpl implements JobAdvertisementDTO {
 
