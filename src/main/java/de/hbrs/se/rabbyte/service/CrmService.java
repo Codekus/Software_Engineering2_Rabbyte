@@ -1,21 +1,20 @@
 package de.hbrs.se.rabbyte.service;
 
-import de.hbrs.se.rabbyte.dtos.ApplicationDTO;
-import de.hbrs.se.rabbyte.dtos.BusinessDTO;
-import de.hbrs.se.rabbyte.dtos.PersonDTO;
-import de.hbrs.se.rabbyte.dtos.StudentDTO;
+import de.hbrs.se.rabbyte.dtos.*;
 import de.hbrs.se.rabbyte.entities.*;
-import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.repository.*;
 import org.springframework.stereotype.Service;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.List;
 
 @Service
 public class CrmService {
+    private static final Logger LOGGER = Logger.getLogger(CrmService.class.getSimpleName());
 
     private final ApplicationRepository applicationRepository;
     private final BusinessRepository businessRepository;
+
     private final PersonRepository personRepository;
     private final JobAdvertisementRepository jobAdvertisementRepository;
     private final StudentRepository studentRepository;
@@ -33,36 +32,38 @@ public class CrmService {
 
     //JobAdvertisementRepository
     public List<JobAdvertisement> findJobAdvertisements(String searchText){
-        List<JobAdvertisement> jobAdvertisementsRes = jobAdvertisementRepository.search(searchText);
         return jobAdvertisementRepository.search(searchText);
 
+    }
+    public JobAdvertisementDTO findJobAdvertisementById(int id){
+        return jobAdvertisementRepository.findJobAdvertisementById(id);
     }
 
     public long countJobAdvertisements(){
         return jobAdvertisementRepository.count();
     }
-    public void deleteJobAdvertisement(JobAdvertisement jobAdvertisement){
-        jobAdvertisementRepository.delete(jobAdvertisement);
+    public void deleteJobAdvertisementById(int id){
+        jobAdvertisementRepository.deleteById(id);
     }
     public void saveJobAdvertisement(JobAdvertisement jobAdvertisement){
         if(jobAdvertisement == null){
-            System.err.println("JobAdvertisement is null.");
+            LOGGER.log(Level.INFO,"JobAdvertisement is null.");
             return;
         }
         jobAdvertisementRepository.save(jobAdvertisement);
     }
 
-    //GeneralUserRepository
+    //PersonRepository
 
-    public long countUser(){
+    public long countPerson(){
         return personRepository.count();
     }
-    public void deleteUser(Person person){
+    public void deletePerson(Person person){
         personRepository.delete(person);
     }
-    public void saveUser(Person person){
+    public void savePerson(Person person){
         if(person == null){
-            System.err.println("User is null.");
+            System.err.println("Person is null.");
             return;
         }
         personRepository.save(person);
@@ -71,20 +72,20 @@ public class CrmService {
         return personRepository.findByEmail(email);
     }
 
-    public PersonDTO findGeneralUserById(int nutzerid){
-       return personRepository.findGeneralUserById(nutzerid);
+    public PersonDTO findPersonById(int personId){
+       return personRepository.findPersonById(personId);
     }
 
     //StudentRepository
-    public long countStudents(){
+    public long countStudent(){
         return studentRepository.count();
     }
-    public void deleteStudent(Student student){
-        studentRepository.delete(student);
+    public void deleteStudentById(int personId){
+        studentRepository.deleteById(personId);
     }
     public void saveStudent(Student student){
         if(student == null){
-            System.err.println("Student is null.");
+            LOGGER.log(Level.INFO,"Student is null.");
             return;
         }
         studentRepository.save(student);
@@ -94,8 +95,8 @@ public class CrmService {
         return studentRepository.findByFirstNameAndLastName(firstName,lastName);
     }
 
-    public StudentDTO findStudentById(int id){
-        return studentRepository.findStudentById(id);
+    public StudentDTO findStudentById(int personId){
+        return studentRepository.findStudentById(personId);
     }
 
     //BusinessRepository
@@ -103,12 +104,12 @@ public class CrmService {
     public long countBusiness(){
         return businessRepository.count();
     }
-    public void deleteBusiness(Business business){
-        businessRepository.delete(business);
+    public void deleteBusinessById(int personId){
+        businessRepository.deleteById(personId);
     }
     public void saveBusiness(Business business){
         if(business == null){
-            System.err.println("Business is null.");
+            LOGGER.log(Level.INFO,"Business is null.");
             return;
         }
         businessRepository.save(business);
@@ -117,18 +118,21 @@ public class CrmService {
     public BusinessDTO findBusinessByBusinessName(String name){
         return businessRepository.findBusinessByBusinessName(name);
     }
+    public BusinessDTO findBusinessById(int personId){
+        return businessRepository.findBusinessById(personId);
+    }
 
     //ApplicationRepository
 
     public long countApplication(){
         return applicationRepository.count();
     }
-    public void deleteApplication(Application application){
-        applicationRepository.delete(application);
+    public void deleteApplicationById(int id){
+        applicationRepository.deleteById(id);
     }
     public void saveApplication(Application application){
         if(application == null){
-            System.err.println("Application is null.");
+            LOGGER.log(Level.INFO,"Application is null.");
             return;
         }
         applicationRepository.save(application);
