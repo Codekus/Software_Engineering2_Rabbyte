@@ -27,12 +27,12 @@ class VerificationCodeRepositoryTest {
     @Test
     void findVerificationCodeByToken() {
         VerificationCodeDTO verificationCodeDTO = verificationCodeRepository.findByToken("606728a3-f4dd-4a12-a75d-1411773e25b7");
-        assertEquals(100 , verificationCodeDTO.getId());
+        assertEquals(60000017 , verificationCodeDTO.getId());
     }
     @Test
     void findVerificationCodeById() {
         VerificationCode verificationCodeDTO = verificationCodeRepository.findVerificationCodeById(60000017);
-        assertEquals(100 , verificationCodeDTO.getId());
+        assertEquals(60000017 , verificationCodeDTO.getId());
     }
 
 
