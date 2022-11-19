@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY )
 @Sql(scripts = {"file:src/test/ressources/rabbyte_schema.sql ", "file:src/test/ressources/rabbyte_data.sql"})
 @AutoConfigureEmbeddedDatabase
-class GeneralUserRepositoryTest {
+class GeneralPersonRepositoryTest {
 
     @Autowired
     GeneralUserRepository userRepository;

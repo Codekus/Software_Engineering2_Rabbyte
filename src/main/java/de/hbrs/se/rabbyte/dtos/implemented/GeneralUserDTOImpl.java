@@ -1,11 +1,11 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
-import de.hbrs.se.rabbyte.entities.User;
+import de.hbrs.se.rabbyte.entities.Person;
 
 
 /**
- * A DTO for the {@link User} entity
+ * A DTO for the {@link Person} entity
  */
 public class GeneralUserDTOImpl implements GeneralUserDTO {
 

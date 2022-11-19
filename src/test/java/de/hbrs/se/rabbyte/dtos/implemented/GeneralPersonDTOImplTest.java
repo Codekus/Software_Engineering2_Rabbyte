@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class GeneralUserDTOImplTest {
+class GeneralPersonDTOImplTest {
 
     GeneralUserDTOImpl generalUserDTO = new GeneralUserDTOImpl();
     private static final int ID = 100;

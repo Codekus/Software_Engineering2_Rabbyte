@@ -19,7 +19,7 @@ CREATE SEQUENCE rabbyte."Bewerbung_bewerbung_id_seq"
     NO MAXVALUE
     CACHE 1;
 
-CREATE TABLE rabbyte.user (
+CREATE TABLE rabbyte.person (
                                 user_id integer NOT NULL,
                                 email character varying(50) NOT NULL,
                                 passwort character varying(128) NOT NULL,
@@ -28,7 +28,8 @@ CREATE TABLE rabbyte.user (
                                 land character varying(25),
                                 strasse character varying(256),
                                 hausnummer character varying(5),
-                                salt character varying(128) NOT NULL
+                                salt character varying(128) NOT NULL,
+                                enabled boolean DEFAULT false
 );
 
 CREATE SEQUENCE rabbyte."Nutzer_nutzer_id_seq"
@@ -141,10 +142,10 @@ ALTER TABLE ONLY rabbyte.application
 
 
 --
--- Name: user Nutzer_pkey; Type: CONSTRAINT; Schema: rabbyte; Owner: ihbib2s
+-- Name: person Nutzer_pkey; Type: CONSTRAINT; Schema: rabbyte; Owner: ihbib2s
 --
 
-ALTER TABLE ONLY rabbyte."user"
+ALTER TABLE ONLY rabbyte."person"
     ADD CONSTRAINT "Nutzer_pkey" PRIMARY KEY (user_id);
 
 
@@ -201,7 +202,7 @@ ALTER TABLE ONLY rabbyte.job_advertisement
 --
 
 ALTER TABLE ONLY rabbyte.student
-    ADD CONSTRAINT "Student_nutzer_id_fkey" FOREIGN KEY (user_id) REFERENCES rabbyte."user"(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT "Student_nutzer_id_fkey" FOREIGN KEY (user_id) REFERENCES rabbyte."person"(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -209,7 +210,7 @@ ALTER TABLE ONLY rabbyte.student
 --
 
 ALTER TABLE ONLY rabbyte.business
-    ADD CONSTRAINT "Unternehmen_nutzer_id_fkey" FOREIGN KEY (user_id) REFERENCES rabbyte."user"(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT "Unternehmen_nutzer_id_fkey" FOREIGN KEY (user_id) REFERENCES rabbyte."person"(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 ALTER TABLE ONLY rabbyte.verification_code
     ADD CONSTRAINT verification_code_pkey PRIMARY KEY (verification_id);
@@ -220,7 +221,7 @@ ALTER TABLE ONLY rabbyte.verification_code
 --
 
 ALTER TABLE ONLY rabbyte.verification_code
-    ADD CONSTRAINT verification_code_user_id_fkey FOREIGN KEY (user_id) REFERENCES rabbyte."user"(user_id);
+    ADD CONSTRAINT verification_code_user_id_fkey FOREIGN KEY (user_id) REFERENCES rabbyte."person"(user_id);
 
 --
 -- PostgreSQL database dump complete

@@ -14,14 +14,14 @@ class VerificationCodeTest {
 
 
     @Mock
-    User user;
+    Person person;
     @BeforeEach
     void setUp() {
         verificationCode = new VerificationCode();
-        user = new User();
+        person = new Person();
         verificationCode.setToken("606728a3-f4dd-4a12-a75d-1411773e25b7");
         verificationCode.setId(60000017);
-        verificationCode.setUser(user);
+        verificationCode.setUser(person);
         verificationCode.setDate(new Date());
     }
     @Test
@@ -32,7 +32,7 @@ class VerificationCodeTest {
     @Test
     void getUser() {
         assertNotNull(verificationCode.getUser());
-        assertTrue(verificationCode.getUser() instanceof User);
+        assertTrue(verificationCode.getUser() instanceof Person);
     }
 
     @Test

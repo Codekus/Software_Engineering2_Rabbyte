@@ -4,11 +4,8 @@ import de.hbrs.se.rabbyte.dtos.ApplicationDTO;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
-import de.hbrs.se.rabbyte.entities.Application;
-import de.hbrs.se.rabbyte.entities.Business;
-import de.hbrs.se.rabbyte.entities.JobAdvertisement;
-import de.hbrs.se.rabbyte.entities.Student;
-import de.hbrs.se.rabbyte.entities.User;
+import de.hbrs.se.rabbyte.entities.*;
+import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.repository.*;
 import org.springframework.stereotype.Service;
 
@@ -60,15 +57,15 @@ public class CrmService {
     public long countUser(){
         return generalUserRepository.count();
     }
-    public void deleteUser(User user){
-        generalUserRepository.delete(user);
+    public void deleteUser(Person person){
+        generalUserRepository.delete(person);
     }
-    public void saveUser(User user){
-        if(user == null){
+    public void saveUser(Person person){
+        if(person == null){
             System.err.println("User is null.");
             return;
         }
-        generalUserRepository.save(user);
+        generalUserRepository.save(person);
     }
     public GeneralUserDTO findByEmail(String email){
         return generalUserRepository.findByEmail(email);

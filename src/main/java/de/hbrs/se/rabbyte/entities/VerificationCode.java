@@ -1,8 +1,6 @@
 package de.hbrs.se.rabbyte.entities;
 
 
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
 import javax.persistence.*;
 
 import java.util.Date;
@@ -12,7 +10,7 @@ import java.util.Date;
 public class VerificationCode {
 
     private int id;
-    private User user;
+    private Person person;
     private Date date;
     private String token;
 
@@ -36,14 +34,14 @@ public class VerificationCode {
 
 
 
-    @OneToOne(targetEntity = User.class,cascade = {CascadeType.MERGE} )
+    @OneToOne(targetEntity = Person.class,cascade = {CascadeType.MERGE} )
     @JoinColumn(name = "user_id")
-    public User getUser() {
+    public Person getUser() {
 
-        return user;
+        return person;
     }
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Person person) {
+        this.person = person;
     }
 
 

@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "person", schema = "rabbyte")
-public class User {
+public class Person {
 
     private int id;
     private String email;

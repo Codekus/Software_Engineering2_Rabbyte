@@ -6,8 +6,8 @@ import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.GeneralUserDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
+import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.entities.Student;
-import de.hbrs.se.rabbyte.entities.User;
 import de.hbrs.se.rabbyte.util.CryptographyUtil;
 import de.hbrs.se.rabbyte.util.Globals;
 import org.slf4j.Logger;
@@ -58,53 +58,53 @@ public class UserFactory {
         return business;
     }
 
-    private static void passwordAndSaltGeneration(GeneralUserDTO businessDTO, User user) {
+    private static void passwordAndSaltGeneration(GeneralUserDTO businessDTO, Person person) {
         try {
             byte[] salt = CryptographyUtil.generateSalt();
-            user.setSalt(CryptographyUtil.toHex(salt));
-            user.setPassword(CryptographyUtil.encryptPassword(businessDTO.getPassword() , salt));
+            person.setSalt(CryptographyUtil.toHex(salt));
+            person.setPassword(CryptographyUtil.encryptPassword(businessDTO.getPassword() , salt));
         } catch (Exception  exception) {
             LOGGER.info(exception.getMessage());
         }
-        user.setId(businessDTO.getId());
+        person.setId(businessDTO.getId());
     }
 
-    public static User enableUser(GeneralUserDTO generalUserDTO) {
-        User user = UserFactory.createUser(generalUserDTO);
-        user.setEnabled(true);
-        return user;
+    public static Person enableUser(GeneralUserDTO generalUserDTO) {
+        Person person = UserFactory.createUser(generalUserDTO);
+        person.setEnabled(true);
+        return person;
 
     }
 
-    public static User createUser(GeneralUserDTO generalUserDTO) {
-        User user = new User();
-        user.setId(generalUserDTO.getId());
-        user.setEmail(generalUserDTO.getEmail());
-        user.setPassword(generalUserDTO.getPassword());
-        user.setPlz(generalUserDTO.getPlz());
-        user.setCity(generalUserDTO.getCity());
-        user.setCountry(generalUserDTO.getCountry());
-        user.setStreet(generalUserDTO.getStreet());
-        user.setStreetNumber(generalUserDTO.getStreetNumber());
-        user.setSalt(generalUserDTO.getSalt());
-        user.setEnabled(generalUserDTO.getEnabled());
+    public static Person createUser(GeneralUserDTO generalUserDTO) {
+        Person person = new Person();
+        person.setId(generalUserDTO.getId());
+        person.setEmail(generalUserDTO.getEmail());
+        person.setPassword(generalUserDTO.getPassword());
+        person.setPlz(generalUserDTO.getPlz());
+        person.setCity(generalUserDTO.getCity());
+        person.setCountry(generalUserDTO.getCountry());
+        person.setStreet(generalUserDTO.getStreet());
+        person.setStreetNumber(generalUserDTO.getStreetNumber());
+        person.setSalt(generalUserDTO.getSalt());
+        person.setEnabled(generalUserDTO.getEnabled());
 
-        return user;
+        return person;
     }
 
-    public static GeneralUserDTO createUserDTO(User user) {
+    public static GeneralUserDTO createUserDTO(Person person) {
         GeneralUserDTOImpl generalUserDTO = new GeneralUserDTOImpl();
 
-        generalUserDTO.setId(user.getId());
-        generalUserDTO.setEmail(user.getEmail());
-        generalUserDTO.setPassword(user.getPassword());
-        generalUserDTO.setPlz(user.getPlz());
-        generalUserDTO.setCity(user.getCity());
-        generalUserDTO.setCountry(user.getCountry());
-        generalUserDTO.setStreet(user.getStreet());
-        generalUserDTO.setStreetNumber(user.getStreetNumber());
-        generalUserDTO.setSalt(user.getSalt());
-        generalUserDTO.setEnabled(user.getEnabled());
+        generalUserDTO.setId(person.getId());
+        generalUserDTO.setEmail(person.getEmail());
+        generalUserDTO.setPassword(person.getPassword());
+        generalUserDTO.setPlz(person.getPlz());
+        generalUserDTO.setCity(person.getCity());
+        generalUserDTO.setCountry(person.getCountry());
+        generalUserDTO.setStreet(person.getStreet());
+        generalUserDTO.setStreetNumber(person.getStreetNumber());
+        generalUserDTO.setSalt(person.getSalt());
+        generalUserDTO.setEnabled(person.getEnabled());
 
         return generalUserDTO;
     }

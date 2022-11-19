@@ -3,8 +3,8 @@ package de.hbrs.se.rabbyte.control.factory;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.Business;
+import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.entities.Student;
-import de.hbrs.se.rabbyte.entities.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -16,7 +16,7 @@ import java.lang.reflect.Modifier;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
-class UserFactoryTest {
+class PersonFactoryTest {
 
     private static final String exceptionMessage =
             "class de.hbrs.se.rabbyte.control.factory.UserFactoryTest cannot access a member of class de.hbrs.se.rabbyte.control.factory.UserFactory with modifiers \"private\"";
@@ -25,7 +25,7 @@ class UserFactoryTest {
     @Mock
     private BusinessDTO businessDTO;
     @Mock
-    private User user;
+    private Person person;
 
     private static final String PASSWORD = "password";
     private static final String EMAIL_STUDENT = "max@mustermann.de";

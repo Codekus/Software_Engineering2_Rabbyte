@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class UserTest {
+class PersonTest {
 
-    private final User user = new User();
+    private final Person person = new Person();
 
     private static final int ID = 100;
     private static final String EMAIL = "test@gmx.de";
@@ -21,59 +21,59 @@ class UserTest {
 
     @BeforeEach
     void setUp() {
-        user.setId(100);
-        user.setEmail(EMAIL);
-        user.setPassword(PW);
-        user.setPlz(PLZ);
-        user.setCity(CITY);
-        user.setCountry(COUNTRY);
-        user.setStreet(STREET);
-        user.setStreetNumber(STREET_NUMBER);
-        user.setSalt(SALT);
+        person.setId(100);
+        person.setEmail(EMAIL);
+        person.setPassword(PW);
+        person.setPlz(PLZ);
+        person.setCity(CITY);
+        person.setCountry(COUNTRY);
+        person.setStreet(STREET);
+        person.setStreetNumber(STREET_NUMBER);
+        person.setSalt(SALT);
     }
 
     @Test
     void getId() {
-        assertEquals(ID, user.getId());
+        assertEquals(ID, person.getId());
     }
 
     @Test
     void getEmail() {
-        assertEquals(EMAIL, user.getEmail());
+        assertEquals(EMAIL, person.getEmail());
     }
 
     @Test
     void getPassword() {
-        assertEquals(PW, user.getPassword());
+        assertEquals(PW, person.getPassword());
     }
 
     @Test
     void getPlz() {
-        assertEquals(PLZ, user.getPlz());
+        assertEquals(PLZ, person.getPlz());
     }
 
     @Test
     void getCity() {
-        assertEquals(CITY, user.getCity());
+        assertEquals(CITY, person.getCity());
     }
 
     @Test
     void getCountry() {
-        assertEquals(COUNTRY, user.getCountry());
+        assertEquals(COUNTRY, person.getCountry());
     }
 
     @Test
     void getStreet() {
-        assertEquals(STREET, user.getStreet());
+        assertEquals(STREET, person.getStreet());
     }
 
     @Test
     void getStreetNumber() {
-        assertEquals(STREET_NUMBER, user.getStreetNumber());
+        assertEquals(STREET_NUMBER, person.getStreetNumber());
     }
 
     @Test
     void setSalt() {
-        assertEquals(SALT, user.getSalt());
+        assertEquals(SALT, person.getSalt());
     }
 }
