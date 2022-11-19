@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "user", schema = "rabbyte")
+@Table(name = "person", schema = "rabbyte")
 public class User {
 
     private int id;

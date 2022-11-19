@@ -1,6 +1,8 @@
 package de.hbrs.se.rabbyte.entities;
 
 
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 import javax.persistence.*;
 
 import java.util.Date;
@@ -47,7 +49,7 @@ public class VerificationCode {
 
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date getDate() {
+    public Date getDate() {
         return date;
     }
 

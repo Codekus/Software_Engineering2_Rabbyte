@@ -54,7 +54,7 @@ public class ActivationView extends VerticalLayout implements BeforeEnterObserve
             String token = params.get("token").get(0);
 
             Utils.triggerDialogMessage(token ,  "ww");
-            VerificationCode verificationCodeDTO;
+            VerificationCodeDTO verificationCodeDTO;
             verificationCodeDTO = verificationCodeRepository.findByToken(token);
             Utils.triggerDialogMessage("Not yet", "2w");
             if(verificationCodeDTO.getId() >0 & verificationCodeDTO != null) {

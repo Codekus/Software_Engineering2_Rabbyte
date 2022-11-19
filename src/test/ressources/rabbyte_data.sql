@@ -8,3 +8,4 @@ INSERT INTO rabbyte.student (user_id, vorname, nachname, fachbereich) VALUES (20
 INSERT INTO rabbyte.business(user_id, unternehmensname) VALUES (20000090 , 'MoneyInc');
 INSERT INTO rabbyte.job_advertisement(job_advertisement_id, user_id, title, datum, text, type) VALUES (30000087 , 20000090 , 'Advertisement Title' , NULL , 'Advertisement Text' , 'Arbeitsstelle' );
 INSERT INTO rabbyte.application(application_id, "job_advertisement_id", user_id, datum, inhalt) VALUES (10000001 ,  30000087 , 20000050 , NULL , 'Application Text');
+INSERT INTO rabbyte.verification_code(verification_id, user_id, date, token) VALUES (60000017, 20000050, '2022-11-18', '606728a3-f4dd-4a12-a75d-1411773e25b7');
