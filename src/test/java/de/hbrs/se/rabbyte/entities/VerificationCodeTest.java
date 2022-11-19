@@ -21,7 +21,7 @@ class VerificationCodeTest {
         person = new Person();
         verificationCode.setToken("606728a3-f4dd-4a12-a75d-1411773e25b7");
         verificationCode.setId(60000017);
-        verificationCode.setUser(person);
+        verificationCode.setPerson(person);
         verificationCode.setDate(new Date());
     }
     @Test
@@ -31,8 +31,8 @@ class VerificationCodeTest {
 
     @Test
     void getUser() {
-        assertNotNull(verificationCode.getUser());
-        assertTrue(verificationCode.getUser() instanceof Person);
+        assertNotNull(verificationCode.getPerson());
+        assertTrue(verificationCode.getPerson() instanceof Person);
     }
 
     @Test

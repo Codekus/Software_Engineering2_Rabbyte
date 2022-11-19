@@ -7,7 +7,7 @@ import java.util.Date;
 public interface VerificationCodeDTO {
 
     public int getId();
-    public Person getUser();
+    public Person getPerson();
     public Date getDate();
     public String getToken();
 }

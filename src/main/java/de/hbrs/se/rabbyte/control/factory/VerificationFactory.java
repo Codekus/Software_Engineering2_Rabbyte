@@ -14,7 +14,7 @@ public class VerificationFactory {
         VerificationCode verificationCode = new VerificationCode();
         verificationCode.setId(verificationCode.getId());
         verificationCode.setToken(UUID.randomUUID().toString());
-        verificationCode.setUser(student);
+        verificationCode.setPerson(student);
         verificationCode.setDate(new Date());
 
         return verificationCode;

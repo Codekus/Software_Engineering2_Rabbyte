@@ -36,11 +36,11 @@ public class VerificationCode {
 
     @OneToOne(targetEntity = Person.class,cascade = {CascadeType.MERGE} )
     @JoinColumn(name = "user_id")
-    public Person getUser() {
-
+    public Person getPerson() {
         return person;
     }
-    public void setUser(Person person) {
+
+    public void setPerson(Person person) {
         this.person = person;
     }
 

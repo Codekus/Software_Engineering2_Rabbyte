@@ -29,8 +29,8 @@ public class AuthService {
         VerificationCode verificationCodeDTO = verificationCodeRepository.findVerificationCodeByToken(activationCode);
 
 
-        if (verificationCodeDTO.getUser() != null) {
-            PersonDTO personDTO = PersonFactory.createUserDTO(verificationCodeDTO.getUser());
+        if (verificationCodeDTO.getPerson() != null) {
+            PersonDTO personDTO = PersonFactory.createUserDTO(verificationCodeDTO.getPerson());
             Person person = PersonFactory.enableUser(personDTO);
             personRepository.save(person);
         } else {

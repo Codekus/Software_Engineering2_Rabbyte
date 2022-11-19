@@ -22,11 +22,11 @@ public class VerificationCodeDTOImpl implements VerificationCodeDTO {
     }
 
     @Override
-    public Person getUser() {
+    public Person getPerson() {
         return person;
     }
 
-    public void setUser(Person person) {
+    public void setPerson(Person person) {
         this.person = person;
     }
 
