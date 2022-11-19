@@ -96,7 +96,7 @@ public class PersonDTOImpl implements PersonDTO {
     }
 
     public void setSalt(String salt) {
-        this.salt = this.salt;
+        this.salt = salt;
     }
 
     public boolean getEnabled() {
