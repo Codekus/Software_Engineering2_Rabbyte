@@ -16,10 +16,10 @@ import java.lang.reflect.Modifier;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
-class UserFactoryTest {
+class PersonFactoryTest {
 
     private static final String exceptionMessage =
-            "class de.hbrs.se.rabbyte.control.factory.UserFactoryTest cannot access a member of class de.hbrs.se.rabbyte.control.factory.UserFactory with modifiers \"private\"";
+            "class de.hbrs.se.rabbyte.control.factory.PersonFactoryTest cannot access a member of class de.hbrs.se.rabbyte.control.factory.PersonFactory with modifiers \"private\"";
     @Mock
     private StudentDTO studentDTO;
     @Mock
