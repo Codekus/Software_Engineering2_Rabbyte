@@ -13,6 +13,4 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     @Query("select s from Student s where s.firstName = ?1 and s.lastName = ?2")
     StudentDTO findByFirstNameAndLastName(String firstName, String lastName);
-
-
 }

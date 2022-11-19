@@ -42,6 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // Allow all Vaadin internal requests.
                 .requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
+
+                .antMatchers("/registration").permitAll()
+                .antMatchers("/activate").permitAll()
                 .antMatchers("/registration").permitAll()
                 // Allow all requests by logged-in users.
                 //.anyRequest().authenticated()

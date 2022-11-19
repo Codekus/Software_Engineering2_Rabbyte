@@ -92,7 +92,7 @@ public class RegistrationView extends VerticalLayout {
             FormLayout formLayout = new FormLayout();
             formLayout.add(firstNameStudent, lastNameStudent, passwordFieldStudent, passwordFieldRepeatStudent,
                     facultyComboBox , emailFieldStudent);
-
+            formLayout.setColspan(facultyComboBox , 2);
             formLayout.setColspan(emailFieldStudent , 2);
             setSizeFull();
             setAlignItems(Alignment.CENTER);
