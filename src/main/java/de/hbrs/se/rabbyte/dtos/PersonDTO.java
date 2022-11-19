@@ -1,6 +1,6 @@
 package de.hbrs.se.rabbyte.dtos;
 
-public interface GeneralUserDTO {
+public interface PersonDTO {
 
     public int getId();
     public String getEmail();

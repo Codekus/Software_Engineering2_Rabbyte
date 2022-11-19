@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class GeneralUserRepositoryTest {
 
     @Autowired
-    GeneralUserRepository userRepository;
+    PersonRepository userRepository;
 
     @Test
     void findByEmail() {

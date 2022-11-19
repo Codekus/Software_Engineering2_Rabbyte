@@ -1,6 +1,9 @@
 package de.hbrs.se.rabbyte.service;
 
-import de.hbrs.se.rabbyte.dtos.*;
+import de.hbrs.se.rabbyte.dtos.ApplicationDTO;
+import de.hbrs.se.rabbyte.dtos.BusinessDTO;
+import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
+import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.Application;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
@@ -61,12 +64,12 @@ public class CrmService {
     public long countUser(){
         return generalUserRepository.count();
     }
-    public void deleteUserById(int userId){
-        generalUserRepository.deleteById(userId);
+    public void deleteUser(User user){
+        generalUserRepository.delete(user);
     }
     public void saveUser(User user){
         if(user == null){
-            LOGGER.log(Level.INFO,"User is null.");
+            System.err.println("User is null.");
             return;
         }
         generalUserRepository.save(user);
@@ -75,8 +78,8 @@ public class CrmService {
         return generalUserRepository.findByEmail(email);
     }
 
-    public GeneralUserDTO findGeneralUserById(int userId){
-       return generalUserRepository.findGeneralUserById(userId);
+    public GeneralUserDTO findGeneralUserById(int nutzerid){
+       return generalUserRepository.findGeneralUserById(nutzerid);
     }
 
     //StudentRepository

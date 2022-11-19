@@ -332,7 +332,7 @@ public class RegistrationView extends VerticalLayout {
         }
     }
 
-    private void login(GeneralUserDTOImpl generalUserDTO) {
+    private void login(PersonDTOImpl generalUserDTO) {
 
         UI.getCurrent().getSession().setAttribute( "Current User", generalUserDTO );
 

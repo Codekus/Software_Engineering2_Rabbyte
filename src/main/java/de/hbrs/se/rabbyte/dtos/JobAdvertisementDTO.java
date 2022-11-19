@@ -1,8 +1,6 @@
 package de.hbrs.se.rabbyte.dtos;
 
-import de.hbrs.se.rabbyte.dtos.implemented.GeneralUserDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
-import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
 
 public interface JobAdvertisementDTO {
 

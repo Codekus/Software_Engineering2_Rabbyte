@@ -1,43 +1,29 @@
 package de.hbrs.se.rabbyte.views;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.combobox.GeneratedVaadinComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 import de.hbrs.se.rabbyte.control.JobAdvertControl;
-import de.hbrs.se.rabbyte.control.factory.UserFactory;
+import de.hbrs.se.rabbyte.control.factory.PersonFactory;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
-import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
 import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
-import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
-import de.hbrs.se.rabbyte.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-
-import javax.swing.*;
-import javax.swing.text.StyledEditorKit;
-import java.util.ArrayList;
 
 
 @PageTitle("Neue Stellenausschreibung")
@@ -105,7 +91,7 @@ public class CreateJobAdvertisementView extends Div {
         jobAdvertisementDTO.setText(description.getValue());
 
         BusinessDTO businessDTO = businessRepository.findBusinessByBusinessID(securityService.getAuthenticatedUser().getId());
-        Business business = UserFactory.createBusiness(businessDTO);
+        Business business = PersonFactory.createBusiness(businessDTO);
         jobAdvertisementDTO.setBusiness(business);    // <- userID
 
         return jobAdvertisementDTO;

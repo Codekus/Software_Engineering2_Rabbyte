@@ -2,21 +2,21 @@ package de.hbrs.se.rabbyte.control.factory;
 
 
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
-import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
+import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Student;
-import de.hbrs.se.rabbyte.entities.User;
+import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.util.CryptographyUtil;
 import de.hbrs.se.rabbyte.util.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class UserFactory {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserFactory.class);
+public class PersonFactory {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonFactory.class);
 
-    private UserFactory() {
+    private PersonFactory() {
         throw new IllegalStateException(Globals.IllegalState.MESSAGE_FACTORY);
     }
 
@@ -55,14 +55,14 @@ public class UserFactory {
         return business;
     }
 
-    private static void passwordAndSaltGeneration(GeneralUserDTO businessDTO, User user) {
+    private static void passwordAndSaltGeneration(PersonDTO businessDTO, Person person) {
         try {
             byte[] salt = CryptographyUtil.generateSalt();
-            user.setSalt(CryptographyUtil.toHex(salt));
-            user.setPassword(CryptographyUtil.encryptPassword(businessDTO.getPassword() , salt));
+            person.setSalt(CryptographyUtil.toHex(salt));
+            person.setPassword(CryptographyUtil.encryptPassword(businessDTO.getPassword() , salt));
         } catch (Exception  exception) {
             LOGGER.info(exception.getMessage());
         }
-        user.setId(businessDTO.getId());
+        person.setId(businessDTO.getId());
     }
 }

@@ -1,26 +1,20 @@
 package de.hbrs.se.rabbyte.security;
 
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinServletRequest;
-import com.vaadin.flow.server.VaadinSession;
-import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
+import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.exception.AuthException;
-import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
+import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.util.CryptographyUtil;
 import de.hbrs.se.rabbyte.views.*;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.security.NoSuchAlgorithmException;
@@ -37,7 +31,7 @@ public class SecurityService  {
     private static final String SETTINGS_URL = "settings";
 
     @Autowired
-    GeneralUserRepository generalUserRepository;
+    PersonRepository personRepository;
 
     public void authenticate(String username, String password) throws AuthException, InvalidKeySpecException, NoSuchAlgorithmException {
 
@@ -53,7 +47,7 @@ public class SecurityService  {
         /* Erzeuge UserDTO durch suchen mittels Email in der Datenbank
            Falls die Email nicht in der Datenbank vorhanden ist, wird der UserDTO auf NULL gesetzt, ansonsten wird ein gültiger UserDTO erzeugt
          */
-        GeneralUserDTO user = generalUserRepository.findByEmail(username);
+        PersonDTO user = personRepository.findByEmail(username);
 
         /* Prüfe ob der User mit der angegebenen Email überhaupt in der Datenbank existiert
            Falls der User nicht existiert wird eine Exeption geworfen die in der LoginView behandelt wird
@@ -85,7 +79,7 @@ public class SecurityService  {
     }
 
 
-    private void createRoutes(GeneralUserDTO user){
+    private void createRoutes(PersonDTO user){
         getAuthorizedRoutes(user).stream().forEach(route ->{
             //To set a Route we need both the path and the view to be unused, so we check for both and remove both before adding them.
             if(RouteConfiguration.forSessionScope().isRouteRegistered(route.view)){
@@ -104,18 +98,18 @@ public class SecurityService  {
     }
 
 
-    public String getRole(GeneralUserDTO user){
-        if (generalUserRepository.getStudent(user.getId()) != null){
+    public String getRole(PersonDTO user){
+        if (personRepository.getStudent(user.getId()) != null){
             return "Student";
         }
-        else if (generalUserRepository.getBusiness(user.getId()) != null){
+        else if (personRepository.getBusiness(user.getId()) != null){
             return "Business";
         }
         else{
             return "None";
         }
     }
-    public List<AuthorizedRoute> getAuthorizedRoutes(GeneralUserDTO user){
+    public List<AuthorizedRoute> getAuthorizedRoutes(PersonDTO user){
         var routes = new ArrayList<AuthorizedRoute>();
         routes.add(new AuthorizedRoute("appview", "AppView", AppView.class));
         if (Objects.equals(getRole(user), "Student")){
@@ -128,22 +122,22 @@ public class SecurityService  {
         return routes;
     }
 
-    public GeneralUserDTO getAuthenticatedUser() {
+    public PersonDTO getAuthenticatedUser() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        GeneralUserDTO user = generalUserRepository.findByEmail(userName);
+        PersonDTO user = personRepository.findByEmail(userName);
 
         return user;
     }
 
     public String getAuthenticatedUserRole() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        GeneralUserDTO user = generalUserRepository.findByEmail(userName);
+        PersonDTO user = personRepository.findByEmail(userName);
         return getRole(user);
     }
 
     public int getAuthenticatedUserID() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        GeneralUserDTO user = generalUserRepository.findGeneralUserIdByName(userName);
+        PersonDTO user = personRepository.findGeneralUserIdByName(userName);
         return user.getId();
     }
 
