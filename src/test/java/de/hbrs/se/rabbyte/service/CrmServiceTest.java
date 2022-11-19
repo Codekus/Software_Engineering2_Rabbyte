@@ -49,7 +49,7 @@ public class CrmServiceTest {
 
     @After
     void tearDown() {
-        crmService.deleteJobAdvertisement(jobAdvertisementRepository.findById(tmpId).get());
+       // crmService.deleteJobAdvertisementById(jobAdvertisementRepository.findById(tmpId).get());
     }
 
 
