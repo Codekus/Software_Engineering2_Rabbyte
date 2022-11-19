@@ -1,14 +1,7 @@
 package de.hbrs.se.rabbyte.service;
 
-import de.hbrs.se.rabbyte.dtos.ApplicationDTO;
-import de.hbrs.se.rabbyte.dtos.BusinessDTO;
-import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
-import de.hbrs.se.rabbyte.dtos.StudentDTO;
-import de.hbrs.se.rabbyte.entities.Application;
-import de.hbrs.se.rabbyte.entities.Business;
-import de.hbrs.se.rabbyte.entities.JobAdvertisement;
-import de.hbrs.se.rabbyte.entities.Student;
-import de.hbrs.se.rabbyte.entities.User;
+import de.hbrs.se.rabbyte.dtos.*;
+import de.hbrs.se.rabbyte.entities.*;
 import de.hbrs.se.rabbyte.repository.*;
 import org.springframework.stereotype.Service;
 import java.util.logging.Level;
@@ -21,17 +14,18 @@ public class CrmService {
 
     private final ApplicationRepository applicationRepository;
     private final BusinessRepository businessRepository;
-    private final GeneralUserRepository generalUserRepository;
+
+    private final PersonRepository personRepository;
     private final JobAdvertisementRepository jobAdvertisementRepository;
     private final StudentRepository studentRepository;
 
     public CrmService(ApplicationRepository applicationRepository, BusinessRepository businessRepository,
-                      GeneralUserRepository generalUserRepository, JobAdvertisementRepository jobAdvertisementRepository,
+                      PersonRepository personRepository, JobAdvertisementRepository jobAdvertisementRepository,
                       StudentRepository studentRepository){
 
         this.applicationRepository = applicationRepository;
         this.businessRepository = businessRepository;
-        this.generalUserRepository = generalUserRepository;
+        this.personRepository = personRepository;
         this.jobAdvertisementRepository = jobAdvertisementRepository;
         this.studentRepository = studentRepository;
     }
@@ -59,35 +53,35 @@ public class CrmService {
         jobAdvertisementRepository.save(jobAdvertisement);
     }
 
-    //GeneralUserRepository
+    //PersonRepository
 
-    public long countUser(){
-        return generalUserRepository.count();
+    public long countPerson(){
+        return personRepository.count();
     }
-    public void deleteUser(User user){
-        generalUserRepository.delete(user);
+    public void deletePerson(Person person){
+        personRepository.delete(person);
     }
-    public void saveUser(User user){
-        if(user == null){
-            System.err.println("User is null.");
+    public void savePerson(Person person){
+        if(person == null){
+            System.err.println("Person is null.");
             return;
         }
-        generalUserRepository.save(user);
+        personRepository.save(person);
     }
-    public GeneralUserDTO findByEmail(String email){
-        return generalUserRepository.findByEmail(email);
+    public PersonDTO findByEmail(String email){
+        return personRepository.findByEmail(email);
     }
 
-    public GeneralUserDTO findGeneralUserById(int nutzerid){
-       return generalUserRepository.findGeneralUserById(nutzerid);
+    public PersonDTO findPersonById(int personId){
+       return personRepository.findPersonById(personId);
     }
 
     //StudentRepository
     public long countStudent(){
         return studentRepository.count();
     }
-    public void deleteStudentById(int userId){
-        studentRepository.deleteById(userId);
+    public void deleteStudentById(int personId){
+        studentRepository.deleteById(personId);
     }
     public void saveStudent(Student student){
         if(student == null){
@@ -101,8 +95,8 @@ public class CrmService {
         return studentRepository.findByFirstNameAndLastName(firstName,lastName);
     }
 
-    public StudentDTO findStudentById(int userId){
-        return studentRepository.findStudentById(userId);
+    public StudentDTO findStudentById(int personId){
+        return studentRepository.findStudentById(personId);
     }
 
     //BusinessRepository
@@ -110,8 +104,8 @@ public class CrmService {
     public long countBusiness(){
         return businessRepository.count();
     }
-    public void deleteBusinessById(int userId){
-        businessRepository.deleteById(userId);
+    public void deleteBusinessById(int personId){
+        businessRepository.deleteById(personId);
     }
     public void saveBusiness(Business business){
         if(business == null){
@@ -124,8 +118,8 @@ public class CrmService {
     public BusinessDTO findBusinessByBusinessName(String name){
         return businessRepository.findBusinessByBusinessName(name);
     }
-    public BusinessDTO findBusinessById(int userId){
-        return businessRepository.findBusinessById(userId);
+    public BusinessDTO findBusinessById(int personId){
+        return businessRepository.findBusinessById(personId);
     }
 
     //ApplicationRepository
