@@ -30,12 +30,12 @@ class GeneralUserRepositoryTest {
 
     @Test
     void findById() {
-        assertEquals("max@gmx.de" , userRepository.findGeneralUserById(20000050).getEmail());
+        assertEquals("max@gmx.de" , userRepository.findPersonById(20000050).getEmail());
     }
 
     @Test
     void findByIdNull() {
-        assertNull(userRepository.findGeneralUserById(2));
+        assertNull(userRepository.findPersonById(2));
     }
 
 }

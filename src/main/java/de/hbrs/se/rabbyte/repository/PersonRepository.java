@@ -16,7 +16,7 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
     @Query("select g from Person g where g.email = ?1 AND g.password = ?2")
     PersonDTO findByEmailAndPassword(String email, String password);
 
-    PersonDTO findGeneralUserById(int nutzerid);
+    PersonDTO findPersonById(int nutzerid);
 
     @Query("select s from Student s where s.id = ?1 ")
     StudentDTO getStudent(int nutzerid);

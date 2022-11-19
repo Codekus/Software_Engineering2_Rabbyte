@@ -112,6 +112,7 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
 
         // Hinzufügen des Logos
         Image logo = new Image("images/rabbit_logo.png" , "logoImage");
+        logo.setWidth("50px");
         logoLayout.setId("logo");
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         logoLayout.add(logo);
