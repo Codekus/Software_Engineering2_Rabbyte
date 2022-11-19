@@ -1,7 +1,9 @@
 package de.hbrs.se.rabbyte.control;
 
 import de.hbrs.se.rabbyte.dtos.ActivationResultDTO;
+import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.ActivationResultDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.VerificationCodeDTOImpl;
 import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.repository.PersonRepository;
@@ -26,27 +28,30 @@ public class ActivationControl {
 
     private Person person;
 
-    public void activate(String token) {
+    public ActivationResultDTOImpl activate(String token) {
 
-        try {
+        ActivationResultDTOImpl activationResult = new ActivationResultDTOImpl();
 
-            VerificationCode verificationCodeDTO = getVerificationCode(token);
 
-            if (verificationCodeDTO.getId() > 0 & verificationCodeDTO != null) {
-                activationResultDTO.setActivationResult(true);
-            } else {
-                activationResultDTO.setActivationResult(false);
-            }
-        } catch (Exception exception) {
-            LOGGER.info("LOG : {}", exception.getMessage());
-            activationResultDTO.setActivationResult(false);
-        }
+            VerificationCode verificationCode = getVerificationCode(token);
+
+            person = verificationCode.getPerson();
+            person.setEnabled(true);
+
+            personRepository.save(person);
+            activationResult.setActivationResult(true);
+
+            return activationResult;
 
     }
 
     public VerificationCode getVerificationCode(String token) {
         VerificationCode verificationCodeDTO = verificationCodeRepository.findVerificationCodeByToken(token);
         return verificationCodeDTO;
+    }
+
+    public boolean length(String token) {
+        return (token.length() == 128);
     }
 
 }

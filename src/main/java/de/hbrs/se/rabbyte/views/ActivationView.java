@@ -58,13 +58,13 @@ public class ActivationView extends VerticalLayout implements BeforeEnterObserve
         button.addClickListener( e -> {
             String token = params.get("token").get(0);
 
-            Utils.triggerDialogMessage(token , "");
-            activationControl.activate(token);
+
+            activationResultDTO = activationControl.activate(token);
 
             if(activationResultDTO.getActivationResult()) {
+                Utils.triggerDialogMessage("Success" , ":)");
             } else {
-                Utils.triggerDialogMessage("Failure" , String.valueOf(activationResultDTO.getActivationResult()));
-
+                Utils.triggerDialogMessage("Failure!" , ":(");
             }
 
 
