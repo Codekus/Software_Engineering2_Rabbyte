@@ -1,6 +1,6 @@
 package de.hbrs.se.rabbyte.entities;
 
-import de.hbrs.se.rabbyte.control.factory.UserFactory;
+import de.hbrs.se.rabbyte.control.factory.PersonFactory;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
@@ -46,7 +46,7 @@ class BusinessIntegrationTest {
 
         businessDTOName = businessRepository.findBusinessByBusinessName("MoneyInc");
         businessDTOId = businessRepository.findBusinessById(20000090);
-        businessEntity = UserFactory.createBusiness(businessDTOName);
+        businessEntity = PersonFactory.createBusiness(businessDTOName);
     }
 
     @Test

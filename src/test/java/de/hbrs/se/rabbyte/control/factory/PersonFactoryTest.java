@@ -43,7 +43,7 @@ class PersonFactoryTest {
         when(studentDTO.getLastName()).thenReturn(STUDENT_LAST_NAME);
 
 
-        student = UserFactory.createStudent(studentDTO);
+        student = PersonFactory.createStudent(studentDTO);
 
         assertTrue(student instanceof Student);
         assertEquals(128 , student.getPassword().length());
@@ -62,7 +62,7 @@ class PersonFactoryTest {
         when(businessDTO.getEmail()).thenReturn(BUSINESS_MAIL);
         when(businessDTO.getBusinessName()).thenReturn(BUSINESS_NAME);
 
-        business = UserFactory.createBusiness(businessDTO);
+        business = PersonFactory.createBusiness(businessDTO);
         assertEquals(128 , business.getPassword().length());
         assertEquals(BUSINESS_MAIL, business.getEmail());
         assertEquals(BUSINESS_NAME, business.getBusinessName());
@@ -72,7 +72,7 @@ class PersonFactoryTest {
 
     @Test
     void throwIllegalAccesExceptionWhenInstancingUserFactory() throws NoSuchMethodException {
-        Constructor<UserFactory> constructor = UserFactory.class.getDeclaredConstructor();
+        Constructor<PersonFactory> constructor = PersonFactory.class.getDeclaredConstructor();
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);
         assertEquals(exceptionMessage, exceptionThatWasThrown.getMessage());

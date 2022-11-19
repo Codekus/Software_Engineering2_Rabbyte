@@ -1,11 +1,11 @@
 package de.hbrs.se.rabbyte.service;
 
 
-import de.hbrs.se.rabbyte.control.factory.UserFactory;
-import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
+import de.hbrs.se.rabbyte.control.factory.PersonFactory;
+import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.entities.Person;
-import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
+import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,7 +19,7 @@ public class AuthService {
     VerificationCodeRepository verificationCodeRepository;
 
     @Autowired
-    GeneralUserRepository generalUserRepository;
+    PersonRepository personRepository;
 
     public class AuthException extends Exception {
 
@@ -30,15 +30,15 @@ public class AuthService {
 
 
         if (verificationCodeDTO.getUser() != null) {
-            GeneralUserDTO generalUserDTO = UserFactory.createUserDTO(verificationCodeDTO.getUser());
-            Person person = UserFactory.enableUser(generalUserDTO);
-            generalUserRepository.save(person);
+            PersonDTO personDTO = PersonFactory.createUserDTO(verificationCodeDTO.getUser());
+            Person person = PersonFactory.enableUser(personDTO);
+            personRepository.save(person);
         } else {
             throw new AuthException();
         }
     }
 
-    public GeneralUserDTO generateUserDTO(Person person)  {
-        return UserFactory.createUserDTO(person);
+    public PersonDTO generateUserDTO(Person person)  {
+        return PersonFactory.createUserDTO(person);
     }
 }

@@ -1,9 +1,9 @@
 package de.hbrs.se.rabbyte.control;
 
-import de.hbrs.se.rabbyte.control.factory.UserFactory;
+import de.hbrs.se.rabbyte.control.factory.PersonFactory;
 import de.hbrs.se.rabbyte.control.factory.VerificationFactory;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
-import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
+import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
@@ -14,7 +14,7 @@ import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
-import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
+import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.repository.StudentRepository;
 import de.hbrs.se.rabbyte.util.EmailSenderService;
 import de.hbrs.se.rabbyte.util.Globals;
@@ -39,7 +39,7 @@ public class RegistrationControl {
     private RegistrationResultDTO registrationResultDTO;
 
     @Autowired
-    GeneralUserRepository generalUserRepository;
+    PersonRepository personRepository;
 
     @Autowired
     StudentRepository studentRepository;
@@ -66,7 +66,7 @@ public class RegistrationControl {
             validateStudent(registrationStudentDTO);
 
             if(registrationResultDTO.getReasons().isEmpty()) {
-                Student newStudent = UserFactory.createStudent(registrationStudentDTO.getStudentDTO());
+                Student newStudent = PersonFactory.createStudent(registrationStudentDTO.getStudentDTO());
                 this.studentRepository.save(newStudent);
 
 
@@ -116,7 +116,7 @@ public class RegistrationControl {
             validateBusiness(registrationBusinessDTO);
 
             if (registrationResultDTO.getReasons().isEmpty()) {
-                Business newBusiness = UserFactory.createBusiness(registrationBusinessDTO.getBusinessDTO());
+                Business newBusiness = PersonFactory.createBusiness(registrationBusinessDTO.getBusinessDTO());
                 this.businessRepository.save(newBusiness);
                 registrationResultDTO.setRegistrationResult(true);
             } else {
@@ -158,7 +158,7 @@ public class RegistrationControl {
     }
 
     private boolean inspectIfEmailIsAlreadyInUse(String email) {
-        GeneralUserDTO generalUser = generalUserRepository.findByEmail(email);
+        PersonDTO generalUser = personRepository.findByEmail(email);
 
         return (generalUser != null && generalUser.getId() > 0);
     }

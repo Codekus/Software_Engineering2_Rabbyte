@@ -6,9 +6,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
+import de.hbrs.se.rabbyte.control.factory.PersonFactory;
 import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
-import de.hbrs.se.rabbyte.entities.VerificationCode;
-import de.hbrs.se.rabbyte.repository.GeneralUserRepository;
+import de.hbrs.se.rabbyte.entities.Person;
+import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import de.hbrs.se.rabbyte.service.AuthService;
 import de.hbrs.se.rabbyte.util.Utils;
@@ -31,7 +32,7 @@ public class ActivationView extends VerticalLayout implements BeforeEnterObserve
     VerificationCodeRepository verificationCodeRepository;
 
     @Autowired
-    GeneralUserRepository generalUserRepository;
+    PersonRepository personRepository;
 
     public ActivationView( AuthService authService) {
         this.authService = authService;
@@ -53,12 +54,17 @@ public class ActivationView extends VerticalLayout implements BeforeEnterObserve
         button.addClickListener( e -> {
             String token = params.get("token").get(0);
 
-            Utils.triggerDialogMessage(token ,  "ww");
             VerificationCodeDTO verificationCodeDTO;
             verificationCodeDTO = verificationCodeRepository.findByToken(token);
-            Utils.triggerDialogMessage("Not yet", "2w");
+
             if(verificationCodeDTO.getId() >0 & verificationCodeDTO != null) {
-                Utils.triggerDialogMessage(String.valueOf(verificationCodeDTO.getId()), "2w");
+                Utils.triggerDialogMessage(String.valueOf(verificationCodeDTO.getUser().getId()), "2w");
+                Person person = (verificationCodeDTO.getUser());
+                person.setEnabled(true);
+                Utils.triggerDialogMessage((String.valueOf(person.getEnabled())), "enabled");
+                Utils.triggerDialogMessage((String.valueOf(person.getId())), "id");
+                Utils.triggerDialogMessage((person.getPassword()), "password");
+                personRepository.save(person);
             }   else {
                 Utils.triggerDialogMessage(("ERROR"), "2w");
             }

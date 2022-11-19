@@ -5,13 +5,9 @@ import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.contextmenu.SubMenu;
-import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.menubar.MenuBar;
@@ -22,7 +18,6 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.*;
-import com.vaadin.flow.server.PWA;
 import de.hbrs.se.rabbyte.dtos.*;
 
 import de.hbrs.se.rabbyte.security.SecurityService;
@@ -33,10 +28,6 @@ import java.util.Optional;
 import static de.hbrs.se.rabbyte.security.SecurityUtils.*;
 
 import de.hbrs.se.rabbyte.util.Utils;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -249,9 +240,9 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
      */
 
 
-    private GeneralUserDTO getCurrentUser() {
+    private PersonDTO getCurrentUser() {
         // TODO: Beim login muss der user als Attribute gesetzt werden
-        return (GeneralUserDTO) UI.getCurrent().getSession().getAttribute("user"); // TODO globals erstellen
+        return (PersonDTO) UI.getCurrent().getSession().getAttribute("user"); // TODO globals erstellen
     }
 
 

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GeneralPersonDTOImplTest {
 
-    GeneralUserDTOImpl generalUserDTO = new GeneralUserDTOImpl();
+    PersonDTOImpl generalUserDTO = new PersonDTOImpl();
     private static final int ID = 100;
     private static final String EMAIL = "max@mustermann.de";
     private static final String PASSWORD = "password";

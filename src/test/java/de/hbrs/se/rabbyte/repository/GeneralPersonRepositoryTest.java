@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 class GeneralPersonRepositoryTest {
 
     @Autowired
-    GeneralUserRepository userRepository;
+    PersonRepository userRepository;
 
     @Test
     void findByEmail() {
@@ -30,12 +30,12 @@ class GeneralPersonRepositoryTest {
 
     @Test
     void findById() {
-        assertEquals("max@gmx.de" , userRepository.findGeneralUserById(20000050).getEmail());
+        assertEquals("max@gmx.de" , userRepository.findPersonById(20000050).getEmail());
     }
 
     @Test
     void findByIdNull() {
-        assertNull(userRepository.findGeneralUserById(2));
+        assertNull(userRepository.findPersonById(2));
     }
 
 }

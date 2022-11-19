@@ -2,7 +2,7 @@ package de.hbrs.se.rabbyte.service;
 
 import de.hbrs.se.rabbyte.dtos.ApplicationDTO;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
-import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
+import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.*;
 import de.hbrs.se.rabbyte.entities.Person;
@@ -16,17 +16,17 @@ public class CrmService {
 
     private final ApplicationRepository applicationRepository;
     private final BusinessRepository businessRepository;
-    private final GeneralUserRepository generalUserRepository;
+    private final PersonRepository personRepository;
     private final JobAdvertisementRepository jobAdvertisementRepository;
     private final StudentRepository studentRepository;
 
     public CrmService(ApplicationRepository applicationRepository, BusinessRepository businessRepository,
-                      GeneralUserRepository generalUserRepository, JobAdvertisementRepository jobAdvertisementRepository,
+                      PersonRepository personRepository, JobAdvertisementRepository jobAdvertisementRepository,
                       StudentRepository studentRepository){
 
         this.applicationRepository = applicationRepository;
         this.businessRepository = businessRepository;
-        this.generalUserRepository = generalUserRepository;
+        this.personRepository = personRepository;
         this.jobAdvertisementRepository = jobAdvertisementRepository;
         this.studentRepository = studentRepository;
     }
@@ -55,24 +55,24 @@ public class CrmService {
     //GeneralUserRepository
 
     public long countUser(){
-        return generalUserRepository.count();
+        return personRepository.count();
     }
     public void deleteUser(Person person){
-        generalUserRepository.delete(person);
+        personRepository.delete(person);
     }
     public void saveUser(Person person){
         if(person == null){
             System.err.println("User is null.");
             return;
         }
-        generalUserRepository.save(person);
+        personRepository.save(person);
     }
-    public GeneralUserDTO findByEmail(String email){
-        return generalUserRepository.findByEmail(email);
+    public PersonDTO findByEmail(String email){
+        return personRepository.findByEmail(email);
     }
 
-    public GeneralUserDTO findGeneralUserById(int nutzerid){
-       return generalUserRepository.findGeneralUserById(nutzerid);
+    public PersonDTO findGeneralUserById(int nutzerid){
+       return personRepository.findPersonById(nutzerid);
     }
 
     //StudentRepository

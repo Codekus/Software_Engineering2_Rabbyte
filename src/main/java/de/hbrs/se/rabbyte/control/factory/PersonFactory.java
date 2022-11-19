@@ -2,9 +2,9 @@ package de.hbrs.se.rabbyte.control.factory;
 
 
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
-import de.hbrs.se.rabbyte.dtos.GeneralUserDTO;
+import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
-import de.hbrs.se.rabbyte.dtos.implemented.GeneralUserDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.PersonDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.entities.Student;
@@ -14,10 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class UserFactory {
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserFactory.class);
+public class PersonFactory {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonFactory.class);
 
-    private UserFactory() {
+    private PersonFactory() {
         throw new IllegalStateException(Globals.IllegalState.MESSAGE_FACTORY);
     }
 
@@ -58,7 +58,7 @@ public class UserFactory {
         return business;
     }
 
-    private static void passwordAndSaltGeneration(GeneralUserDTO businessDTO, Person person) {
+    private static void passwordAndSaltGeneration(PersonDTO businessDTO, Person person) {
         try {
             byte[] salt = CryptographyUtil.generateSalt();
             person.setSalt(CryptographyUtil.toHex(salt));
@@ -69,31 +69,31 @@ public class UserFactory {
         person.setId(businessDTO.getId());
     }
 
-    public static Person enableUser(GeneralUserDTO generalUserDTO) {
-        Person person = UserFactory.createUser(generalUserDTO);
+    public static Person enableUser(PersonDTO personDTO) {
+        Person person = PersonFactory.createUser(personDTO);
         person.setEnabled(true);
         return person;
 
     }
 
-    public static Person createUser(GeneralUserDTO generalUserDTO) {
+    public static Person createUser(PersonDTO personDTO) {
         Person person = new Person();
-        person.setId(generalUserDTO.getId());
-        person.setEmail(generalUserDTO.getEmail());
-        person.setPassword(generalUserDTO.getPassword());
-        person.setPlz(generalUserDTO.getPlz());
-        person.setCity(generalUserDTO.getCity());
-        person.setCountry(generalUserDTO.getCountry());
-        person.setStreet(generalUserDTO.getStreet());
-        person.setStreetNumber(generalUserDTO.getStreetNumber());
-        person.setSalt(generalUserDTO.getSalt());
-        person.setEnabled(generalUserDTO.getEnabled());
+        person.setId(personDTO.getId());
+        person.setEmail(personDTO.getEmail());
+        person.setPassword(personDTO.getPassword());
+        person.setPlz(personDTO.getPlz());
+        person.setCity(personDTO.getCity());
+        person.setCountry(personDTO.getCountry());
+        person.setStreet(personDTO.getStreet());
+        person.setStreetNumber(personDTO.getStreetNumber());
+        person.setSalt(personDTO.getSalt());
+        person.setEnabled(personDTO.getEnabled());
 
         return person;
     }
 
-    public static GeneralUserDTO createUserDTO(Person person) {
-        GeneralUserDTOImpl generalUserDTO = new GeneralUserDTOImpl();
+    public static PersonDTO createUserDTO(Person person) {
+        PersonDTOImpl generalUserDTO = new PersonDTOImpl();
 
         generalUserDTO.setId(person.getId());
         generalUserDTO.setEmail(person.getEmail());
