@@ -2,15 +2,15 @@ package de.hbrs.se.rabbyte.views;
 
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
-import de.hbrs.se.rabbyte.control.factory.PersonFactory;
-import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
-import de.hbrs.se.rabbyte.entities.Person;
-import de.hbrs.se.rabbyte.repository.PersonRepository;
-import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
+import de.hbrs.se.rabbyte.control.ActivationControl;
+import de.hbrs.se.rabbyte.dtos.ActivationResultDTO;
 import de.hbrs.se.rabbyte.service.AuthService;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +28,10 @@ public class ActivationView extends VerticalLayout implements BeforeEnterObserve
 
     Map<String , List<String>> params;
 
-    @Autowired
-    VerificationCodeRepository verificationCodeRepository;
+    private ActivationResultDTO activationResultDTO;
 
     @Autowired
-    PersonRepository personRepository;
+    private ActivationControl activationControl;
 
     public ActivationView( AuthService authService) {
         this.authService = authService;
@@ -49,29 +48,39 @@ public class ActivationView extends VerticalLayout implements BeforeEnterObserve
 
         layout = new VerticalLayout();
 
-        Button button = new Button();
+        H1 h1 = new H1();
+        h1.setText("Aktiviere deinen Account");
 
+        Label infoText = new Label("Um Ihr Konto zu aktivieren, klicken Sie bitte auf die unten stehende Taste");
+
+        Button button = new Button();
+        button.setText("Aktiviere Account");
         button.addClickListener( e -> {
             String token = params.get("token").get(0);
 
-            VerificationCodeDTO verificationCodeDTO;
-            verificationCodeDTO = verificationCodeRepository.findByToken(token);
+            Utils.triggerDialogMessage(token , "");
+            activationControl.activate(token);
 
-            if(verificationCodeDTO.getId() >0 & verificationCodeDTO != null) {
-                Utils.triggerDialogMessage(String.valueOf(verificationCodeDTO.getUser().getId()), "2w");
-                Person person = (verificationCodeDTO.getUser());
-                person.setEnabled(true);
-                Utils.triggerDialogMessage((String.valueOf(person.getEnabled())), "enabled");
-                Utils.triggerDialogMessage((String.valueOf(person.getId())), "id");
-                Utils.triggerDialogMessage((person.getPassword()), "password");
-                personRepository.save(person);
-            }   else {
-                Utils.triggerDialogMessage(("ERROR"), "2w");
-            }
+            /*
+            if(activationResultDTO.getActivationResult()) {
+
+                Utils.triggerDialogMessage("Success" , String.valueOf(activationResultDTO.getActivationResult()));
+            } else {
+                Utils.triggerDialogMessage("Failure" , String.valueOf(activationResultDTO.getActivationResult()));
+
+            } */
+
+
         });
 
-        layout.add(button);
+
+        layout.add(h1 , infoText , button);
+        layout.setPadding(true);
+        layout.setAlignItems(FlexComponent.Alignment.CENTER);
+        layout.setAlignSelf(FlexComponent.Alignment.CENTER);
+
         add(layout);
+
         }
     }
 

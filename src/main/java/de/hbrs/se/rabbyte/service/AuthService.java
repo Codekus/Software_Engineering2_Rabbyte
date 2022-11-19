@@ -3,8 +3,8 @@ package de.hbrs.se.rabbyte.service;
 
 import de.hbrs.se.rabbyte.control.factory.PersonFactory;
 import de.hbrs.se.rabbyte.dtos.PersonDTO;
-import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.entities.Person;
+import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class AuthService {
     }
 
     public void activate(String activationCode) throws AuthException {
-        VerificationCodeDTO verificationCodeDTO = verificationCodeRepository.findByToken(activationCode);
+        VerificationCode verificationCodeDTO = verificationCodeRepository.findVerificationCodeByToken(activationCode);
 
 
         if (verificationCodeDTO.getUser() != null) {
