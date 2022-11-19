@@ -16,7 +16,6 @@ public class Person {
     private String street;
     private String streetNumber;
     private String salt;
-    private String verificationCode;
     private boolean enabled;
 
     @Id
