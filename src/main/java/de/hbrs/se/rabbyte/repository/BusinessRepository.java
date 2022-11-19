@@ -19,4 +19,6 @@ public interface BusinessRepository extends JpaRepository<Business, Integer> {
     public BusinessDTO findBusinessByBusinessID(int id);
 
 
+    public BusinessDTO findBusinessById(int id);
+
 }

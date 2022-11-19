@@ -4,8 +4,8 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "user", schema = "rabbyte")
-public class User {
+@Table(name = "person", schema = "rabbyte")
+public class Person {
 
     private int id;
     private String email;
