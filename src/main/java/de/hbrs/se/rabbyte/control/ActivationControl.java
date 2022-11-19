@@ -1,6 +1,8 @@
 package de.hbrs.se.rabbyte.control;
 
+import de.hbrs.se.rabbyte.dtos.ActivationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.ActivationResultDTOImpl;
+import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
@@ -14,8 +16,6 @@ public class ActivationControl {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ActivationControl.class);
 
-
-
     @Autowired
     VerificationCodeRepository verificationCodeRepository;
 
@@ -24,10 +24,12 @@ public class ActivationControl {
 
     private ActivationResultDTOImpl activationResultDTO;
 
+    private Person person;
+
     public void activate(String token) {
 
         try {
-            activationResultDTO = new ActivationResultDTOImpl();
+
             VerificationCode verificationCodeDTO = getVerificationCode(token);
 
             if (verificationCodeDTO.getId() > 0 & verificationCodeDTO != null) {
@@ -40,7 +42,6 @@ public class ActivationControl {
             activationResultDTO.setActivationResult(false);
         }
 
-        //return activationResultDTO;
     }
 
     public VerificationCode getVerificationCode(String token) {
