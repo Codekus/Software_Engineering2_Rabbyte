@@ -52,9 +52,6 @@ public class RegistrationControl {
 
     EmailSenderService emailSenderService;
 
-
-    private VerificationControl verificationControl;
-
     public RegistrationResultDTO registerStudent(RegistrationStudentDTOImpl registrationStudentDTO) {
         try {
         registrationResultDTO = new RegistrationResultDTOImpl();
@@ -69,9 +66,7 @@ public class RegistrationControl {
                 Student newStudent = PersonFactory.createStudent(registrationStudentDTO.getStudentDTO());
                 this.studentRepository.save(newStudent);
 
-
                 try {
-
                     VerificationCode verificationCode = VerificationFactory.createVerificationToken(newStudent );
                     verificationCodeRepository.save(verificationCode);
 
@@ -131,13 +126,8 @@ public class RegistrationControl {
     }
 
     private void validateBusiness(RegistrationBusinessDTOImpl registrationBusinessDTO) {
-
-
-
-        if(businessNameInUse(registrationBusinessDTO.getBusinessDTO().getBusinessName())) {
-            registrationResultDTO.setReason(RegistrationResultDTO.Result.BUSINESS_NAME_IN_USE);
-        }
-        emailInUse(registrationBusinessDTO.getBusinessDTO().getEmail());
+        inspectIfBusinessNameIsInUse(registrationBusinessDTO.getBusinessDTO().getBusinessName());
+        inspectIfEmailIsInUse(registrationBusinessDTO.getBusinessDTO().getEmail());
         inspectIfPasswordIsTooShort(registrationBusinessDTO.getBusinessDTO().getPassword());
         inspectIfRepeatPasswordIsTooShort(registrationBusinessDTO.getRepeatPassword());
         inspectIfSamePassword(registrationBusinessDTO.getRepeatPassword() , registrationBusinessDTO.getBusinessDTO().getPassword());
@@ -147,11 +137,17 @@ public class RegistrationControl {
 
     }
 
+    private void inspectIfBusinessNameIsInUse(String businessName) {
+        if(businessNameInUse(businessName)) {
+            registrationResultDTO.setReason(RegistrationResultDTO.Result.BUSINESS_NAME_IN_USE);
+        }
+    }
+
     private boolean businessNameInUse(String businessName) {
         BusinessDTO businessDTO = businessRepository.findBusinessByBusinessName(businessName);
         return ( businessDTO != null && businessDTO.getId() > 0);
     }
-    private void emailInUse(String email) {
+    private void inspectIfEmailIsInUse(String email) {
         if(inspectIfEmailIsAlreadyInUse(email)) {
             registrationResultDTO.setReason(RegistrationResultDTO.Result.EMAIL_IN_USE);
         }

@@ -75,12 +75,12 @@ public class RegistrationView extends VerticalLayout {
 
         StudentForm() {
 
-
             emailFieldStudent.setRequiredIndicatorVisible(true);
             passwordFieldStudent.setRequiredIndicatorVisible(true);
             passwordFieldRepeatStudent.setRequiredIndicatorVisible(true);
             firstNameStudent.setRequiredIndicatorVisible(true);
             lastNameStudent.setRequiredIndicatorVisible(true);
+
             passwordFieldStudent.setMinLength(8);
             passwordFieldRepeatStudent.setMinLength(8);
 
