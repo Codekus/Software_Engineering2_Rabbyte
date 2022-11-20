@@ -13,6 +13,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import de.hbrs.se.rabbyte.control.VerificationControl;
+import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.dtos.VerificationResultDTO;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import de.hbrs.se.rabbyte.service.AuthService;
@@ -31,31 +32,26 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
 
     private VerticalLayout layout;
 
-    private AuthService authService;
-
     Map<String , List<String>> params;
 
     private VerificationResultDTO verificationResultDTO;
 
-    @Autowired
-    private VerificationControl verificationControl;
-
     private String token;
 
     @Autowired
-    private VerificationCodeRepository verificationCodeRepository;
+    private VerificationControl verificationControl;
 
-    public VerificationView(AuthService authService) {
-        this.authService = authService;
-    }
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
             params = event.getLocation().getQueryParameters().getParameters();
             token = params.get("token").get(0);
+
             if(!verificationControl.length(token)) {
                 event.rerouteTo(LoginView.class);
             }
-            if(verificationControl.getVerificationCode(token).getPerson() == null) {
+
+            VerificationCodeDTO verificationCodeDTO = verificationControl.getVerificationCode(token);
+            if(verificationCodeDTO == null | verificationCodeDTO.getId() < 1  ) {
                 event.rerouteTo(LoginView.class);
             }
 

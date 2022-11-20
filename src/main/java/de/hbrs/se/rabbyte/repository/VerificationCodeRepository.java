@@ -5,6 +5,7 @@ package de.hbrs.se.rabbyte.repository;
 import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.entities.VerificationCode;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -13,5 +14,5 @@ public interface VerificationCodeRepository extends JpaRepository<VerificationCo
 
     VerificationCodeDTO findVerificationCodeByToken(String token);
 
-    VerificationCodeDTO findVerificationCodeById(Integer id);
+    VerificationCodeDTO findVerificationCodeById(int id);
 }

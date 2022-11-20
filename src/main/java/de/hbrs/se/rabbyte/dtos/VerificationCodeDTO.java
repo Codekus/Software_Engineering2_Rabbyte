@@ -1,6 +1,7 @@
 package de.hbrs.se.rabbyte.dtos;
 
 import de.hbrs.se.rabbyte.entities.Person;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 

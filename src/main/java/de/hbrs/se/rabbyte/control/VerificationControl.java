@@ -16,18 +16,12 @@ public class VerificationControl {
     private static final Logger LOGGER = LoggerFactory.getLogger(VerificationControl.class);
 
     @Autowired
-    VerificationCodeRepository verificationCodeRepository;
+    private VerificationCodeRepository verificationCodeRepository;
 
     @Autowired
-    PersonRepository personRepository;
+    private  PersonRepository personRepository;
 
     private Person person;
-
-
-
-    public class AuthException extends Exception {
-
-    }
 
     public VerificationResultDTOImpl activate(String token) {
 
@@ -45,11 +39,14 @@ public class VerificationControl {
 
     }
 
+
     public VerificationCodeDTO getVerificationCode(String token) {
-        VerificationCodeDTO verificationCode = verificationCodeRepository.findVerificationCodeByToken(token);
-        return verificationCode;
+        return verificationCodeRepository.findVerificationCodeByToken(token);
     }
 
+    public VerificationCodeDTO getVerificationCodeDTOById(int id) {
+        return verificationCodeRepository.findVerificationCodeById(id);
+    }
     public boolean length(String token) {
         return (token.length() == 36);
     }
