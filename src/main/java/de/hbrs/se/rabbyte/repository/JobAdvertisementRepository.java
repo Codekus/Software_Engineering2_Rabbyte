@@ -22,4 +22,9 @@ public interface JobAdvertisementRepository extends JpaRepository<JobAdvertiseme
             "or lower(j.text) like lower(concat('%', :searchTerm, '%'))" +
             "or lower(j.type) like lower(concat('%', :searchTerm, '%'))")
     List<JobAdvertisement> search(@Param("searchTerm") String searchTerm);
+
+
+    @Query("select j from JobAdvertisement j where j.business.id = :ID")
+    List<JobAdvertisement> searchByID(@Param("ID") int ID);
+
 }
