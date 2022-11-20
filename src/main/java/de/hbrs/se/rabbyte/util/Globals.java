@@ -20,6 +20,8 @@ public class Globals {
 
 
     public static class Path {
+
+
         private Path() { throw new IllegalStateException(IllegalState.MESSAGE_UTILS);}
         public static final String REGISTRATION_VIEW = "registration/";
         public static final String COMMON_PASSWORD_LIST = "src/main/resources/commonPasswordList.txt";
@@ -28,6 +30,7 @@ public class Globals {
     public static class PageTitle {
         private PageTitle() { throw new IllegalStateException(IllegalState.MESSAGE_UTILS);}
         public static final String REGISTRATION_VIEW = "Registration";
+        public static final String ACTIVATE = "Activation" ;
     }
 
     public static class Regex {
