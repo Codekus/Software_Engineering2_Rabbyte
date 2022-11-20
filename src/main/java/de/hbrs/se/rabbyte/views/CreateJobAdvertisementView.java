@@ -25,6 +25,9 @@ import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @PageTitle("Neue Stellenausschreibung")
 public class CreateJobAdvertisementView extends Div {
@@ -75,11 +78,15 @@ public class CreateJobAdvertisementView extends Div {
         back.addClickListener(event -> clearForm());
 
         save.addClickListener(e -> {
-            // Speicherung der Daten über das zuhörige Control-Object.
-            jobAdvertControl.createJobAdvert(createNewJobAdvert());
+            if(!validate().isEmpty()){
+                Notification.show(validate().toString());
+            }else{
+                // Speicherung der Daten über das zuhörige Control-Object.
+                jobAdvertControl.createJobAdvert(createNewJobAdvert());
 
-            Notification.show("Veröffentlicht");
-            clearForm();
+                Notification.show("Veröffentlicht");
+                clearForm();
+            }
         });
     }
 
@@ -97,8 +104,23 @@ public class CreateJobAdvertisementView extends Div {
         return jobAdvertisementDTO;
     }
 
+    public List<String> validate(){
+        List<String> validation = new ArrayList<>();
+        JobAdvertControl jobAdvertControl = new JobAdvertControl();
+        if(jobAdvertControl.validateTitle(title.getValue()) == false){
+            validation.add("Invalid Title!");
+        }
+        if(jobAdvertControl.validateType(type.getValue()) == false){
+            validation.add("Invalid Type!");        }
+        if(jobAdvertControl.validateDescription(description.getValue()) == false){
+            validation.add("Invalid Description!");        }
+        return validation;
+    }
+
     private void clearForm() {
-        binder.setBean(new JobAdvertisementDTOImpl());
+        title.setValue("");
+        type.setValue("");
+        description.setValue("");
     }
 
     private Component createTitle() {

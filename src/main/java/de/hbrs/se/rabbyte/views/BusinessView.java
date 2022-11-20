@@ -42,25 +42,19 @@ public class BusinessView extends VerticalLayout {
 
         button.addClickListener(e -> {
             upload();
+            /* Just for test reasons
             Notification.show("clicked!");
+
+             */
         });
-
-        /*
-        if(securityService.getAuthenticatedUser() != null){
-            configureGrid();
-            add(grid);
-            grid.setItems(service.findJobAdvertisementsByID(securityService.getAuthenticatedUserID()));
-        }
-
-         */
-
     }
 
     private void upload(){
+        remove(grid);
         configureGrid();
         add(grid);
         int i = securityService.getAuthenticatedUserID();
-        grid.setItems(service.findJobAdvertisementsByID(i)); // <-- Parameter value [20000142] (user_id) did not match expected type [de.hbrs.se.rabbyte.entities.Business (n/a)]
+        grid.setItems(service.findJobAdvertisementsByID(i));
     }
 
     private void configureGrid() {

@@ -2,7 +2,10 @@ package de.hbrs.se.rabbyte.dtos;
 
 import de.hbrs.se.rabbyte.entities.Business;
 
+import java.util.List;
+
 public interface JobAdvertisementDTO {
+
 
     public int getId();
 
