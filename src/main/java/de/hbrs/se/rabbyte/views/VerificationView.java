@@ -50,8 +50,8 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
                 event.rerouteTo(LoginView.class);
             }
 
-            VerificationCodeDTO verificationCodeDTO = verificationControl.getVerificationCode(token);
-            if(verificationCodeDTO == null | verificationCodeDTO.getId() < 1  ) {
+
+            if(verificationControl.getVerificationCode(token) == null  ) {
                 event.rerouteTo(LoginView.class);
             }
 
