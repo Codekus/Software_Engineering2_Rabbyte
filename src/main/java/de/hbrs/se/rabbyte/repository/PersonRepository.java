@@ -25,6 +25,7 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
     BusinessDTO getBusiness(int nutzerid);
 
     @Query("select g from Person g where g.email = ?1 ")
-    PersonDTO findGeneralUserIdByName(String userName);
+    PersonDTO findPersonByName(String userName);
+
 
 }

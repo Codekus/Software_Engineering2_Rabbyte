@@ -18,19 +18,19 @@ public class JobAdvertisementSearchViewTest {
     private JobAdvertisementSearchView jobAdvertisementSearchView;
 
 
-
     @Test
     @DisplayName("Job-Advertisement-Search-Test")
-    public void jobAdvertisementSearchViewTest(){
+    public void jobAdvertisementSearchViewTest() {
         jobAdvertisementSearchView.searchField.setValue("test123");
-        Assert.assertEquals("Keine Übereinstimmungen!",jobAdvertisementSearchView.infoMessage.getText());
+
+        Assert.assertEquals("Keine Übereinstimmungen!", jobAdvertisementSearchView.infoMessage.getText());
+
         jobAdvertisementSearchView.searchField.setValue("test");
+
         long resArray = jobAdvertisementSearchView.grid.getColumns().stream().count();
 
-
-        Assert.assertEquals(4,resArray);
+        Assert.assertEquals(4, resArray);
     }
-
 
 
 }

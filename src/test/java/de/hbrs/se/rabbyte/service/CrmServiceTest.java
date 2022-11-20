@@ -1,55 +1,127 @@
 package de.hbrs.se.rabbyte.service;
 
-import de.hbrs.se.rabbyte.entities.Business;
-import de.hbrs.se.rabbyte.entities.JobAdvertisement;
-import de.hbrs.se.rabbyte.repository.JobAdvertisementRepository;
+import de.hbrs.se.rabbyte.control.factory.JobAdvertFactory;
+import de.hbrs.se.rabbyte.control.factory.PersonFactory;
+import de.hbrs.se.rabbyte.dtos.*;
+import de.hbrs.se.rabbyte.entities.*;
+import de.hbrs.se.rabbyte.repository.*;
+import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.*;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@Ignore
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.jdbc.Sql;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+@DataJpaTest
+@AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY)
+@Sql(scripts = {"file:src/test/ressources/rabbyte_schema.sql ", "file:src/test/ressources/rabbyte_data.sql"})
+@AutoConfigureEmbeddedDatabase
 public class CrmServiceTest {
 
+
+    @Autowired
+    private ApplicationRepository applicationRepository;
+    @Autowired
+    private BusinessRepository businessRepository;
+    @Autowired
+    private PersonRepository personRepository;
     @Autowired
     private JobAdvertisementRepository jobAdvertisementRepository;
-
     @Autowired
-    private CrmService crmService;
+    private StudentRepository studentRepository;
 
-    private int tmpId ;
-    @Before
+    private CrmService crmService = null;
+
+    @BeforeEach
     void setUp() {
-        Business business = new Business();
-        business.setBusinessName("testBus1");
-
-        //job advertisement
-        JobAdvertisement jAdv = new JobAdvertisement();
-        jAdv.setText("testText1");
-        jAdv.setTitle("testTitle1");
-        jAdv.setBusiness(business);
-        jAdv.setType("Vollzeit");
-        tmpId = jAdv.getId();
-
-        crmService.saveJobAdvertisement(jAdv);
+        crmService = new CrmService(applicationRepository, businessRepository, personRepository, jobAdvertisementRepository, studentRepository);
     }
 
 
     @Test
-    @DisplayName("Job-Advertisement-Search-Test")
-    public void jobAdvertisementSearchTest(){
-
-        Assert.assertEquals("testTitle1",jobAdvertisementRepository.search("test").get(0).getTitle());
-        Assert.assertEquals("",jobAdvertisementRepository.search("test123").get(0).getTitle());
+    @DisplayName("Counting Entities Test")
+    public void countEntitiesTest() {
+        assertAll("Should count the amount of entities present in the database",
+                () -> assertEquals(1, crmService.countJobAdvertisements(), "JobAdvertisement counting failed"),
+                () -> assertEquals(2, crmService.countPerson(), "User counting failed"),
+                () -> assertEquals(1, crmService.countBusiness(), "Business counting failed"),
+                () -> assertEquals(1, crmService.countStudent(), "Student counting failed"),
+                () -> assertEquals(1, crmService.countApplication(), "Application counting failed")
+        );
     }
 
-    @After
-    void tearDown() {
-       // crmService.deleteJobAdvertisementById(jobAdvertisementRepository.findById(tmpId).get());
+    @Test
+    @DisplayName("Delete Test")
+    public void deleteTest() {
+        //ApplicationDTO application =  crmService.findApplicationById(10000001);
+        Business business = PersonFactory.createBusiness(crmService.findBusinessById(20000090));
+        Student student = PersonFactory.createStudent(crmService.findStudentById(20000050));
+        JobAdvertisement jobAdvertisement = JobAdvertFactory.publishJobAdvert(crmService.findJobAdvertisementById(30000087));
+
+        crmService.deleteJobAdvertisementById(jobAdvertisement.getId());
+        crmService.deleteBusinessById(business.getId());
+        crmService.deleteStudentById(student.getId());
+
+
+        assertAll("database should be empty",
+                () -> assertEquals(0, crmService.countJobAdvertisements(), "JobAdvertisement deletion failed"),
+                () -> assertEquals(0, crmService.countPerson(), "User deletion failed"),
+                () -> assertEquals(0, crmService.countBusiness(), "Business deletion failed"),
+                () -> assertEquals(0, crmService.countApplication(), "Application deletion failed"),
+                () -> assertEquals(0, crmService.countStudent(), "Student deletion failed")
+        );
+
+
+
+    }
+    @Test
+    @DisplayName("Find-By Tests")
+    public void findByTests() {
+
+
+        assertAll("FindBy Methods Test",
+                () -> assertEquals("MoneyInc", crmService.findBusinessById(20000090).getBusinessName(), "findBusinessById failed"),
+                () -> assertEquals(20000090, crmService.findBusinessByBusinessName("MoneyInc").getId(), "findBusinessByBusinessName deletion failed"),
+                () -> assertEquals(0, crmService.countBusiness(), "Business deletion failed"),
+                () -> assertEquals(0, crmService.countApplication(), "Application deletion failed"),
+                () -> assertEquals(0, crmService.countStudent(), "Student deletion failed")
+        );
+
+
+
+    }
+
+
+    @Ignore
+    @Test
+    @DisplayName("Save Test")
+    public void saveTest() {
+
+        Business business = PersonFactory.createBusiness(crmService.findBusinessById(20000090));
+        Student student = PersonFactory.createStudent(crmService.findStudentById(20000050));
+        JobAdvertisement jobAdvertisement = JobAdvertFactory.publishJobAdvert(crmService.findJobAdvertisementById(30000087));
+
+        business.setId(2);
+        jobAdvertisement.getBusiness().setId(2);
+        student.setId(3);
+
+
+        crmService.saveBusiness(business);
+        crmService.saveStudent(student);
+        crmService.saveJobAdvertisement(jobAdvertisement);
+
+
+        assertAll("database should be at starting point",
+                () -> assertEquals(1, crmService.countJobAdvertisements(), "JobAdvertisement creation failed"),
+                () -> assertEquals(2, crmService.countPerson(), "User creation failed"),
+                () -> assertEquals(1, crmService.countBusiness(), "Business creation failed"),
+                () -> assertEquals(1, crmService.countStudent(), "Student creation failed")
+        );
     }
 
 

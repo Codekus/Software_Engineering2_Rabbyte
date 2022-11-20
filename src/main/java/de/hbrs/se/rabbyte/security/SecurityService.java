@@ -137,7 +137,7 @@ public class SecurityService  {
 
     public int getAuthenticatedUserID() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        PersonDTO user = personRepository.findGeneralUserIdByName(userName);
+        PersonDTO user = personRepository.findPersonByName(userName);
         return user.getId();
     }
 
