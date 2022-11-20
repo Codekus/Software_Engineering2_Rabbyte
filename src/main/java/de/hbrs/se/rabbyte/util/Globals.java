@@ -50,19 +50,36 @@ public class Globals {
     }
 
     public static class Email {
+        private Email() {
+            throw new IllegalStateException(IllegalState.MESSAGE_UTILS);
+        }
+
         public static final String HOST = "smtp.gmail.com";
         public static final int PORT = 587;
         public static final String GMAIL = "rplattform@gmail.com" ;
         public static final String APP_AUTHENTICATION = "duslwhnrymgvmdjd" ;
 
-        private Email() {
-            throw new IllegalStateException(IllegalState.MESSAGE_UTILS);
-        }
         public static final String TEXT_REGISTRATION = "To confirm your account, please click here:" + "\n" +
                 "http://localhost:8080/activate?token=";
         public static final String SUBJECT_REGISTRATION = "Registration";
         public static final String EMAIL_SENDER = "rplattform@gmail.com";
 
+    }
+
+    public static class FieldErrorMessages {
+        private FieldErrorMessages() {
+            throw  new IllegalStateException(IllegalState.MESSAGE_UTILS);
+        }
+
+        public static final String PASSWORD_TOO_COMMON = "Ihr Passwort ist eines der häufigsten Passwörter. Bitte wählen sie ein anderes";
+        public static final String DIFFERENT_PASSWORDS = "Unterschiedliche Passwörter";
+        public static final String PASSWORD_TOO_SHORT = "Das Password muss mindestens 8 Zeichen sein";
+        public static final String EMAIL_IN_USE = "Diese E-Mail wird bereits verwendet" ;
+        public static final String INVALID_EMAIL = "Das Format der Email ist nicht gültig ";
+        public static final String INVALID_LAST_NAME = "Ungültiger Vorname" ;
+        public static final String INVALID_FIRST_NAME = "Ungültiger Nachname" ;
+        public static final String BUSINESS_NAME = "Ungültiger Geschäftsname" ;
+        public static final String BUSINESS_NAME_IN_USE = "Geschäftsname wird schon verwendet" ;
     }
 
 }
