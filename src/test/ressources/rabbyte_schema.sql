@@ -28,7 +28,8 @@ CREATE TABLE rabbyte.person (
                                 land character varying(25),
                                 strasse character varying(256),
                                 hausnummer character varying(5),
-                                salt character varying(128) NOT NULL
+                                salt character varying(128) NOT NULL,
+                                enabled boolean DEFAULT false
 );
 
 CREATE SEQUENCE rabbyte."Nutzer_nutzer_id_seq"
@@ -47,6 +48,20 @@ CREATE TABLE rabbyte.job_advertisement (
                                            datum date,
                                            text text NOT NULL,
                                            type character varying
+);
+
+CREATE SEQUENCE rabbyte.seq_verification_id
+    START WITH 60000000
+    INCREMENT BY 1
+    MINVALUE 60000000
+    MAXVALUE 69999999
+    CACHE 1;
+
+CREATE TABLE rabbyte.verification_code (
+                                           verification_id integer DEFAULT nextval('rabbyte.seq_verification_id'::regclass) NOT NULL,
+                                           user_id integer NOT NULL,
+                                           date date,
+                                           token character varying(255) NOT NULL
 );
 
 
@@ -197,6 +212,16 @@ ALTER TABLE ONLY rabbyte.student
 ALTER TABLE ONLY rabbyte.business
     ADD CONSTRAINT "Unternehmen_nutzer_id_fkey" FOREIGN KEY (user_id) REFERENCES rabbyte."person"(user_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE ONLY rabbyte.verification_code
+    ADD CONSTRAINT verification_code_pkey PRIMARY KEY (verification_id);
+
+
+--
+-- Name: verification_code verification_code_user_id_fkey; Type: FK CONSTRAINT; Schema: rabbyte; Owner: ihbib2s
+--
+
+ALTER TABLE ONLY rabbyte.verification_code
+    ADD CONSTRAINT verification_code_user_id_fkey FOREIGN KEY (user_id) REFERENCES rabbyte."person"(user_id);
 
 --
 -- PostgreSQL database dump complete

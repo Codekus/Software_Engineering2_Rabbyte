@@ -17,8 +17,8 @@ public class PersonDTOImpl implements PersonDTO {
     private String country;
     private String street;
     private String streetNumber;
-
     private String salt;
+    private boolean enabled;
 
     public int getId() {
         return id;
@@ -91,12 +91,19 @@ public class PersonDTOImpl implements PersonDTO {
         this.streetNumber = streetNumber;
     }
 
-    @Override
     public String getSalt() {
         return salt;
     }
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

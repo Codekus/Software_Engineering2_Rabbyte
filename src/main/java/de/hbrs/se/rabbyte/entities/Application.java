@@ -13,8 +13,6 @@ public class Application {
     private LocalDate date;
     private String applicationText;
 
-
-
     @Id
     @GeneratedValue(
             strategy=GenerationType.AUTO,

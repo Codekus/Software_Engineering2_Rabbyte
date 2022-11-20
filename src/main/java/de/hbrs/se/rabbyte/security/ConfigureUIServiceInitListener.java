@@ -31,10 +31,13 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
             if(event.getLocation().getSegments().get(0).equals("registration")){
                 return;
             }
+            if(event.getLocation().getSegments().get(0).equals("activate")){
+                return;
+            }
             event.rerouteTo(LoginView.class);
         }
-        if(event.getLocation().getSegments().get(0).equals("login")
-                || event.getLocation().getSegments().get(0).equals("registration")){
+        else if((event.getLocation().getSegments().get(0).equals("login")
+                || event.getLocation().getSegments().get(0).equals("registration")) && SecurityUtils.isUserLoggedIn()){
             event.rerouteTo("main");
         }
 

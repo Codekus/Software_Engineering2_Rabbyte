@@ -16,6 +16,8 @@ public class Person {
     private String street;
     private String streetNumber;
     private String salt;
+    private boolean enabled;
+
     @Id
     @GeneratedValue(
             strategy= GenerationType.AUTO,
@@ -114,5 +116,15 @@ public class Person {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    @Basic
+    @Column(name = "enabled")
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

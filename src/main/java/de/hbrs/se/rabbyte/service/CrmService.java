@@ -39,6 +39,12 @@ public class CrmService {
         return jobAdvertisementRepository.findJobAdvertisementById(id);
     }
 
+    public List<JobAdvertisement> findJobAdvertisementByBusId(int id){
+        return jobAdvertisementRepository.searchByID(id);
+    }
+
+
+
     public long countJobAdvertisements(){
         return jobAdvertisementRepository.count();
     }
