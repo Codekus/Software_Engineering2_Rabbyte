@@ -113,6 +113,18 @@ public class RegistrationControl {
             if (registrationResultDTO.getReasons().isEmpty()) {
                 Business newBusiness = PersonFactory.createBusiness(registrationBusinessDTO.getBusinessDTO());
                 this.businessRepository.save(newBusiness);
+
+                try {
+                    VerificationCode verificationCode = VerificationFactory.createVerificationToken(newBusiness );
+                    verificationCodeRepository.save(verificationCode);
+
+                    emailSenderService = new EmailSenderService(verificationCode);
+                    emailSenderService.sendEmail();
+
+                } catch (Exception exception) {
+                    LOGGER.info("INFO Verification: {}"  ,  exception.getMessage());
+                }
+                
                 registrationResultDTO.setRegistrationResult(true);
             } else {
                 registrationResultDTO.setRegistrationResult(false);
