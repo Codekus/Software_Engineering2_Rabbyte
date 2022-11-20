@@ -54,7 +54,7 @@ public class BusinessView extends VerticalLayout {
         configureGrid();
         add(grid);
         int i = securityService.getAuthenticatedUserID();
-        grid.setItems(service.findJobAdvertisementsByID(i));
+        grid.setItems(service.findJobAdvertisementByBusId(i));
     }
 
     private void configureGrid() {
