@@ -32,8 +32,8 @@ import java.util.List;
 @PageTitle(Globals.PageTitle.REGISTRATION_VIEW)
 @Theme(value = Lumo.class)
 public class RegistrationView extends VerticalLayout {
-    private static final String DIFFERENT_PASSWORDS = "Unterschiedliches Password";
-    private static final String PASSWORD_TOO_SHORT = "Das Password muss mindestens 5 Zeichen sein";
+
+
 
     @Autowired
     private RegistrationControl registrationControl;
@@ -47,17 +47,13 @@ public class RegistrationView extends VerticalLayout {
     PasswordField passwordFieldRepeatStudent = new PasswordField("Password wiederholen");
     TextField firstNameStudent = new TextField("Vorname");
     TextField lastNameStudent = new TextField("Nachname");
-
     ComboBox<String> facultyComboBox = new ComboBox<>("Fachbereich");
-
-
 
     //Business Fields
     EmailField emailFieldBusiness = new EmailField("E-Mail");
     PasswordField passwordFieldBusiness = new PasswordField("Password");
     PasswordField passwordFieldRepeatBusiness = new PasswordField("Password wiederholen");
     TextField businessNameField = new TextField("Business");
-
 
     //Tabs
     private final Tab studentTab;
@@ -71,8 +67,10 @@ public class RegistrationView extends VerticalLayout {
     VerticalLayout verticalLayout;
     VerticalLayout tabsLayout;
 
-    //ErrorFields
-    private String password_too_common = "Password too common";
+    //Tabs
+    private String studentTabName = "Student";
+    private String businessTabName = "Business";
+
 
     class StudentForm extends Div {
 
@@ -109,13 +107,6 @@ public class RegistrationView extends VerticalLayout {
             newStudent.setFaculty(facultyComboBox.getValue());
             return newStudent;
         }
-    }
-
-    private void facultyComboBox() {
-        facultyComboBox.setAllowCustomValue(false);
-        facultyComboBox.setPlaceholder("Wähle Fachbereich");
-        facultyComboBox.setItems("Angewandte Naturwissenschaften" , "Elektrotechnik, Maschinenbau & Technikjournalismus" ,
-                "Informatik" , "Sozialpolitik und Soziale Sicherung" , "Wirtschaftswissenschaften" );
     }
 
     class BusinessForm extends Div {
@@ -203,11 +194,12 @@ public class RegistrationView extends VerticalLayout {
 
         });
 
-        studentTab = new Tab("Student");
-        businessTab = new Tab("Business");
+        this.studentTab = new Tab(studentTabName);
+
+        businessTab = new Tab(businessTabName);
 
 
-        Tabs tabs = new Tabs(studentTab, businessTab);
+        Tabs tabs = new Tabs(this.studentTab, businessTab);
         tabs.addThemeVariants(TabsVariant.LUMO_CENTERED);
         tabs.addSelectedChangeListener(event ->
                 setContent(event.getSelectedTab())
@@ -243,40 +235,40 @@ public class RegistrationView extends VerticalLayout {
         for (RegistrationResultDTO.Result result : reasons) {
             switch (result) {
                 case EMAIL_IN_USE:
-                    emailFieldStudent.setErrorMessage("Diese E-Mail wird bereits verwendet");
+                    emailFieldStudent.setErrorMessage(Globals.FieldErrorMessages.EMAIL_IN_USE);
                     emailFieldStudent.setInvalid(true);
                     break;
                 case INVALID_EMAIL:
-                    emailFieldStudent.setErrorMessage("Das Format der Email ist nicht gültig ");
+                    emailFieldStudent.setErrorMessage(Globals.FieldErrorMessages.INVALID_EMAIL);
                     emailFieldStudent.setInvalid(true);
                     break;
                 case PASSWORD_TO_SHORT:
-                    passwordFieldStudent.setErrorMessage(PASSWORD_TOO_SHORT);
+                    passwordFieldStudent.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_SHORT);
                     passwordFieldStudent.setInvalid(true);
                     break;
                 case PASSWORD_REPEAT_TO_SHORT:
-                    passwordFieldRepeatStudent.setErrorMessage(PASSWORD_TOO_SHORT);
+                    passwordFieldRepeatStudent.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_SHORT);
                     passwordFieldRepeatStudent.setInvalid(true);
                     break;
                 case PASSWORD_DIFFERENT:
-                    passwordFieldStudent.setErrorMessage(DIFFERENT_PASSWORDS);
+                    passwordFieldStudent.setErrorMessage(Globals.FieldErrorMessages.DIFFERENT_PASSWORDS);
                     passwordFieldStudent.setInvalid(true);
-                    passwordFieldRepeatStudent.setErrorMessage(DIFFERENT_PASSWORDS);
+                    passwordFieldRepeatStudent.setErrorMessage(Globals.FieldErrorMessages.DIFFERENT_PASSWORDS);
                     passwordFieldRepeatStudent.setInvalid(true);
                     break;
                 case INVALID_FIRST_NAME:
-                    firstNameStudent.setErrorMessage("Ungültiger Vorname");
+                    firstNameStudent.setErrorMessage(Globals.FieldErrorMessages.INVALID_FIRST_NAME);
                     firstNameStudent.setInvalid(true);
                     break;
                 case INVALID_LAST_NAME:
-                    lastNameStudent.setErrorMessage("Ungültiger Nachname");
+                    lastNameStudent.setErrorMessage(Globals.FieldErrorMessages.INVALID_LAST_NAME);
                     lastNameStudent.setInvalid(true);
                     break;
                 case PASSWORD_TOO_COMMON:
-                    passwordFieldStudent.setErrorMessage(password_too_common);
+                    passwordFieldStudent.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_COMMON);
                     passwordFieldStudent.setInvalid(true);
                     passwordFieldRepeatStudent.setInvalid(true);
-                    passwordFieldRepeatStudent.setErrorMessage(password_too_common);
+                    passwordFieldRepeatStudent.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_COMMON);
                     break;
                 default:
                     break;
@@ -289,41 +281,41 @@ public class RegistrationView extends VerticalLayout {
         for (RegistrationResultDTO.Result result : reasons) {
             switch (result) {
                 case EMAIL_IN_USE:
-                    emailFieldBusiness.setErrorMessage("Diese E-Mail wird bereits verwendet");
+                    emailFieldBusiness.setErrorMessage(Globals.FieldErrorMessages.EMAIL_IN_USE);
                     emailFieldBusiness.setInvalid(true);
                     break;
                 case INVALID_EMAIL:
-                    emailFieldBusiness.setErrorMessage("Das Format der Email ist nicht gültig ");
+                    emailFieldBusiness.setErrorMessage(Globals.FieldErrorMessages.INVALID_EMAIL);
                     emailFieldBusiness.setInvalid(true);
                     break;
                 case PASSWORD_TO_SHORT:
-                    passwordFieldBusiness.setErrorMessage(PASSWORD_TOO_SHORT);
+                    passwordFieldBusiness.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_SHORT);
                     passwordFieldBusiness.setInvalid(true);
                     break;
                 case PASSWORD_REPEAT_TO_SHORT:
-                    passwordFieldRepeatBusiness.setErrorMessage(PASSWORD_TOO_SHORT);
+                    passwordFieldRepeatBusiness.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_SHORT);
                     passwordFieldRepeatBusiness.setInvalid(true);
                     break;
                 case PASSWORD_DIFFERENT:
-                    passwordFieldBusiness.setErrorMessage(DIFFERENT_PASSWORDS);
+                    passwordFieldBusiness.setErrorMessage(Globals.FieldErrorMessages.DIFFERENT_PASSWORDS);
                     passwordFieldBusiness.setInvalid(true);
-                    passwordFieldRepeatBusiness.setErrorMessage(DIFFERENT_PASSWORDS);
+                    passwordFieldRepeatBusiness.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_COMMON);
                     passwordFieldRepeatBusiness.setInvalid(true);
                     break;
                 case INVALID_BUSINESS_NAME:
-                    businessNameField.setErrorMessage("Ungültiger Business Name");
+                    businessNameField.setErrorMessage(Globals.FieldErrorMessages.BUSINESS_NAME);
                     businessNameField.setInvalid(true);
                     break;
                 case BUSINESS_NAME_IN_USE:
-                    businessNameField.setErrorMessage("Ein Unternehmen mit dem Namen existiert bereits");
+                    businessNameField.setErrorMessage(Globals.FieldErrorMessages.BUSINESS_NAME_IN_USE);
                     businessNameField.setInvalid(true);
                     break;
                 case PASSWORD_TOO_COMMON:
 
-                    passwordFieldBusiness.setErrorMessage(password_too_common);
+                    passwordFieldBusiness.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_COMMON);
                     passwordFieldBusiness.setInvalid(true);
                     passwordFieldRepeatBusiness.setInvalid(true);
-                    passwordFieldRepeatBusiness.setErrorMessage(password_too_common);
+                    passwordFieldRepeatBusiness.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_COMMON);
                     break;
                 default:
                     break;
