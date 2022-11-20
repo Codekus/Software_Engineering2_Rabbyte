@@ -3,6 +3,8 @@ package de.hbrs.se.rabbyte.control;
 import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,8 +17,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureEmbeddedDatabase
 class ActivationControlTest {
 
+    ActivationControl activationControl ;
+
     @Autowired
     private VerificationCodeRepository verificationCodeRepository;
+
+    @BeforeEach
+    void setUp() {
+        activationControl = new ActivationControl();
+    }
 
     @Test
     void activate() {
@@ -28,5 +37,18 @@ class ActivationControlTest {
         assertNotNull(verificationCodeRepository.findVerificationCodeById(60000017));
         assertNotNull(verificationCodeRepository.findVerificationCodeByToken("606728a3-f4dd-4a12-a75d-1411773e25b7"));
 
+    }
+
+    @Test
+    void testActivate() {
+    }
+
+    @Test
+    void getVerificationCode() {
+    }
+
+    @Test
+    void length() {
+        assertTrue(activationControl.length("606728a3-f4dd-4a12-a75d-1411773e25b7"));
     }
 }

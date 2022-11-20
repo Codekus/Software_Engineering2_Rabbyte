@@ -16,6 +16,7 @@ import de.hbrs.se.rabbyte.control.ActivationControl;
 import de.hbrs.se.rabbyte.dtos.ActivationResultDTO;
 import de.hbrs.se.rabbyte.service.AuthService;
 import de.hbrs.se.rabbyte.util.Globals;
+import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,14 +40,18 @@ public class ActivationView extends VerticalLayout implements BeforeEnterObserve
     @Autowired
     private ActivationControl activationControl;
 
+    private String token;
+
     public ActivationView( AuthService authService) {
         this.authService = authService;
     }
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
             params = event.getLocation().getQueryParameters().getParameters();
-
-
+            token = params.get("token").get(0);
+            if(!activationControl.length(token)) {
+                event.rerouteTo(LoginView.class);
+            }
 
     }
 
@@ -62,9 +67,7 @@ public class ActivationView extends VerticalLayout implements BeforeEnterObserve
         Button button = new Button();
         button.setText("Aktiviere Account");
         button.addClickListener( e -> {
-            String token = params.get("token").get(0);
-
-
+            token = params.get("token").get(0);
             activationResultDTO = activationControl.activate(token);
 
             if(activationResultDTO.getActivationResult()) {
@@ -84,7 +87,11 @@ public class ActivationView extends VerticalLayout implements BeforeEnterObserve
 
         add(layout);
 
+
+
         }
+
+
     }
 
 

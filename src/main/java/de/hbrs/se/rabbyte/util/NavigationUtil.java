@@ -8,4 +8,8 @@ public class NavigationUtil {
     public static void toMainView() {
         UI.getCurrent().navigate("");
     }
+
+    public static void toLoginView() {
+        UI.getCurrent().navigate("login");
+    }
 }

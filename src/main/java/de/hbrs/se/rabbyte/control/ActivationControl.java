@@ -26,6 +26,8 @@ public class ActivationControl {
 
     private Person person;
 
+
+
     public class AuthException extends Exception {
 
     }
@@ -52,7 +54,7 @@ public class ActivationControl {
     }
 
     public boolean length(String token) {
-        return (token.length() == 128);
+        return (token.length() == 36);
     }
 
 }
