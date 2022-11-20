@@ -33,8 +33,6 @@ import java.util.List;
 @Theme(value = Lumo.class)
 public class RegistrationView extends VerticalLayout {
 
-
-
     @Autowired
     private RegistrationControl registrationControl;
 
@@ -70,6 +68,7 @@ public class RegistrationView extends VerticalLayout {
     //Tabs
     private String studentTabName = "Student";
     private String businessTabName = "Business";
+    private String buttonRegistration = "Registrieren";
 
 
     class StudentForm extends Div {
@@ -103,7 +102,6 @@ public class RegistrationView extends VerticalLayout {
             newStudent.setPassword(passwordFieldStudent.getValue());
             newStudent.setFirstName(firstNameStudent.getValue());
             newStudent.setLastName(lastNameStudent.getValue());
-
             newStudent.setFaculty(facultyComboBox.getValue());
             return newStudent;
         }
@@ -153,14 +151,14 @@ public class RegistrationView extends VerticalLayout {
 
         verticalLayout = new VerticalLayout();
         tabsLayout = new VerticalLayout();
+
         H1 h1 = new H1("Registrierung");
+        verticalLayout.add(h1);
 
         StudentForm studentForm = new StudentForm();
         BusinessForm businessForm = new BusinessForm();
 
-        verticalLayout.add(h1);
-
-        registerButtonStudent = new Button("Registrieren");
+        registerButtonStudent = new Button(buttonRegistration);
         registerButtonStudent.addClickListener(e -> {
             StudentDTOImpl studentDTO = studentForm.createNewStudentDTO();
             RegistrationStudentDTOImpl registrationStudent = new RegistrationStudentDTOImpl(studentDTO, passwordFieldRepeatStudent.getValue());
@@ -177,7 +175,7 @@ public class RegistrationView extends VerticalLayout {
 
         });
 
-        registerButtonBusiness = new Button("Registrieren");
+        registerButtonBusiness = new Button(buttonRegistration);
         registerButtonBusiness.addClickListener(e -> {
 
             BusinessDTOImpl businessDTO = businessForm.createNewBusiness();
@@ -195,9 +193,7 @@ public class RegistrationView extends VerticalLayout {
         });
 
         this.studentTab = new Tab(studentTabName);
-
-        businessTab = new Tab(businessTabName);
-
+        this.businessTab = new Tab(businessTabName);
 
         Tabs tabs = new Tabs(this.studentTab, businessTab);
         tabs.addThemeVariants(TabsVariant.LUMO_CENTERED);
@@ -205,13 +201,11 @@ public class RegistrationView extends VerticalLayout {
                 setContent(event.getSelectedTab())
         );
 
-
         setContent(tabs.getSelectedTab());
         verticalLayout.setWidth("50%");
         verticalLayout.add(h1);
         verticalLayout.add(tabs , tabsLayout);
         add(verticalLayout);
-
 
     }
 
