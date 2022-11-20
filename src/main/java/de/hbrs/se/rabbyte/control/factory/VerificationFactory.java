@@ -1,7 +1,6 @@
 package de.hbrs.se.rabbyte.control.factory;
 
 import de.hbrs.se.rabbyte.entities.Person;
-import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.entities.VerificationCode;
 
 import java.util.Date;

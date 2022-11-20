@@ -2,9 +2,10 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.entities.Person;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
-
+@Service
 public class VerificationCodeDTOImpl implements VerificationCodeDTO {
 
     private int id;

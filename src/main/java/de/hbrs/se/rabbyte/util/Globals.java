@@ -63,7 +63,7 @@ public class Globals {
         public static final String APP_AUTHENTICATION = "duslwhnrymgvmdjd" ;
 
         public static final String TEXT_REGISTRATION = "To confirm your account, please click here:" + "\n" +
-                "http://localhost:8080/activate?token=";
+                "http://localhost:8080/verification?token=";
         public static final String SUBJECT_REGISTRATION = "Registration";
         public static final String EMAIL_SENDER = "rplattform@gmail.com";
 

@@ -1,8 +1,8 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
-import de.hbrs.se.rabbyte.dtos.ActivationResultDTO;
+import de.hbrs.se.rabbyte.dtos.VerificationResultDTO;
 
-public class ActivationResultDTOImpl implements ActivationResultDTO {
+public class VerificationResultDTOImpl implements VerificationResultDTO {
 
     private boolean activationResult;
 
