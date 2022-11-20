@@ -24,14 +24,15 @@ public class ActivationControl {
     @Autowired
     PersonRepository personRepository;
 
-    private ActivationResultDTOImpl activationResultDTO;
-
     private Person person;
+
+    public class AuthException extends Exception {
+
+    }
 
     public ActivationResultDTOImpl activate(String token) {
 
         ActivationResultDTOImpl activationResult = new ActivationResultDTOImpl();
-
 
             VerificationCode verificationCode = getVerificationCode(token);
 

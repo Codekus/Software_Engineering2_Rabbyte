@@ -8,10 +8,14 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 import de.hbrs.se.rabbyte.control.ActivationControl;
 import de.hbrs.se.rabbyte.dtos.ActivationResultDTO;
 import de.hbrs.se.rabbyte.service.AuthService;
+import de.hbrs.se.rabbyte.util.Globals;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 @Route("activate")
+@PageTitle(Globals.PageTitle.ACTIVATE)
+@Theme(value = Lumo.class)
 public class ActivationView extends VerticalLayout implements BeforeEnterObserver {
 
     private VerticalLayout layout;
