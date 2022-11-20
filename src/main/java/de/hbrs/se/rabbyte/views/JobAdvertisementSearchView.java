@@ -50,10 +50,10 @@ public class JobAdvertisementSearchView extends VerticalLayout {
     //update grid with search field input
     private void updateList() {
         if (!searchField.isEmpty()) {
-            if (!service.findJobAdvertisements(searchField.getValue()).isEmpty()) {
+            if (!service.findJobAdvertisementsByText(searchField.getValue()).isEmpty()) {
                 remove(infoMessage);
                 add(grid);
-                grid.setItems(service.findJobAdvertisements(searchField.getValue()));
+                grid.setItems(service.findJobAdvertisementsByText(searchField.getValue()));
             } else {
                 noResults();
                 remove(grid);
