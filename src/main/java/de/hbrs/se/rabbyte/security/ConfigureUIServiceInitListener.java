@@ -1,5 +1,6 @@
 package de.hbrs.se.rabbyte.security;
 
+import com.vaadin.flow.router.RouteConfiguration;
 import de.hbrs.se.rabbyte.views.LoginView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.BeforeEnterEvent;
@@ -37,8 +38,10 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
             event.rerouteTo(LoginView.class);
         }
         else if((event.getLocation().getSegments().get(0).equals("login")
-                || event.getLocation().getSegments().get(0).equals("registration")) && SecurityUtils.isUserLoggedIn()){
-            event.rerouteTo("main");
+                || event.getLocation().getSegments().get(0).equals("registration") ||
+                !RouteConfiguration.forSessionScope().isPathRegistered(event.getLocation().getSegments().get(0))) &&
+                SecurityUtils.isUserLoggedIn()){
+            event.rerouteTo("");
         }
 
 

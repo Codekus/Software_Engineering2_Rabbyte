@@ -6,6 +6,6 @@ public class NavigationUtil {
 
 
     public static void toMainView() {
-        UI.getCurrent().navigate("main");
+        UI.getCurrent().navigate("");
     }
 }

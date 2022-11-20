@@ -20,9 +20,11 @@ import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.service.CrmService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @org.springframework.stereotype.Component
+@Scope("prototype")
 @PageTitle("Ihr Unternehmen")
 @CssImport("./styles/views/JobAdvertisementSearchView/job-advertisements-search-view.css")
 public class BusinessView extends VerticalLayout {
