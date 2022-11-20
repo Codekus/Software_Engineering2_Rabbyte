@@ -1,9 +1,7 @@
 package de.hbrs.se.rabbyte.control;
 
-import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +13,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY )
 @Sql(scripts = {"file:src/test/ressources/rabbyte_schema.sql ", "file:src/test/ressources/rabbyte_data.sql"})
 @AutoConfigureEmbeddedDatabase
-class ActivationControlTest {
+class VerificationControlTest {
 
-    ActivationControl activationControl ;
+    VerificationControl verificationControl;
 
     @Autowired
     private VerificationCodeRepository verificationCodeRepository;
 
     @BeforeEach
     void setUp() {
-        activationControl = new ActivationControl();
+        verificationControl = new VerificationControl();
     }
 
     @Test
@@ -49,6 +47,6 @@ class ActivationControlTest {
 
     @Test
     void length() {
-        assertTrue(activationControl.length("606728a3-f4dd-4a12-a75d-1411773e25b7"));
+        assertTrue(verificationControl.length("606728a3-f4dd-4a12-a75d-1411773e25b7"));
     }
 }

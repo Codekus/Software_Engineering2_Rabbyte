@@ -3,6 +3,7 @@ package de.hbrs.se.rabbyte.service;
 
 import de.hbrs.se.rabbyte.control.factory.PersonFactory;
 import de.hbrs.se.rabbyte.dtos.PersonDTO;
+import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.repository.PersonRepository;
@@ -26,11 +27,11 @@ public class AuthService {
     }
 
     public void activate(String activationCode) throws AuthException {
-        VerificationCode verificationCodeDTO = verificationCodeRepository.findVerificationCodeByToken(activationCode);
+        VerificationCodeDTO verificationCode = verificationCodeRepository.findVerificationCodeByToken(activationCode);
 
 
-        if (verificationCodeDTO.getPerson() != null) {
-            PersonDTO personDTO = PersonFactory.createUserDTO(verificationCodeDTO.getPerson());
+        if (verificationCode.getPerson() != null) {
+            PersonDTO personDTO = PersonFactory.createUserDTO(verificationCode.getPerson());
             Person person = PersonFactory.enableUser(personDTO);
             personRepository.save(person);
         } else {

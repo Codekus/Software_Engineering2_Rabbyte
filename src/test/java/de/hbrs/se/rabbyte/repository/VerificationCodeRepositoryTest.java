@@ -1,5 +1,6 @@
 package de.hbrs.se.rabbyte.repository;
 
+import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.entities.VerificationCode;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.Test;
@@ -23,13 +24,13 @@ class VerificationCodeRepositoryTest {
 
     @Test
     void findVerificationCodeByToken() {
-        VerificationCode verificationCodeDTO = verificationCodeRepository.findVerificationCodeByToken("606728a3-f4dd-4a12-a75d-1411773e25b7");
-        assertEquals(60000017 , verificationCodeDTO.getId());
+        VerificationCodeDTO verificationCode = verificationCodeRepository.findVerificationCodeByToken("606728a3-f4dd-4a12-a75d-1411773e25b7");
+        assertEquals(60000017 , verificationCode.getId());
     }
     @Test
     void findVerificationCodeById() {
-        VerificationCode verificationCodeDTO = verificationCodeRepository.findVerificationCodeById(60000017);
-        assertEquals(60000017 , verificationCodeDTO.getId());
+        VerificationCodeDTO verificationCode = verificationCodeRepository.findVerificationCodeById(60000017);
+        assertEquals(60000017 , verificationCode.getId());
     }
 
 

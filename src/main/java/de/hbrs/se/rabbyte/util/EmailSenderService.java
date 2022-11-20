@@ -15,13 +15,13 @@ public class EmailSenderService {
 
     private SimpleMailMessage mailMessage;
 
-    public EmailSenderService(VerificationCode verificationCodeD) {
+    public EmailSenderService(VerificationCode verificationCodeDTOD) {
         mailSender = new JavaMailSenderImpl();
         mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(verificationCodeD.getPerson().getEmail());
+        mailMessage.setTo(verificationCodeDTOD.getPerson().getEmail());
         mailMessage.setSubject(Globals.Email.SUBJECT_REGISTRATION);
         mailMessage.setFrom(Globals.Email.EMAIL_SENDER);
-        mailMessage.setText(Globals.Email.TEXT_REGISTRATION + verificationCodeD.getToken());
+        mailMessage.setText(Globals.Email.TEXT_REGISTRATION + verificationCodeDTOD.getToken());
 
         mailSender.setHost(Globals.Email.HOST);
         mailSender.setPort(Globals.Email.PORT);

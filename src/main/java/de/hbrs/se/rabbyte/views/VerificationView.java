@@ -12,11 +12,11 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
-import de.hbrs.se.rabbyte.control.ActivationControl;
-import de.hbrs.se.rabbyte.dtos.ActivationResultDTO;
+import de.hbrs.se.rabbyte.control.VerificationControl;
+import de.hbrs.se.rabbyte.dtos.VerificationResultDTO;
+import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import de.hbrs.se.rabbyte.service.AuthService;
 import de.hbrs.se.rabbyte.util.Globals;
-import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,10 +24,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Map;
 
-@Route("activate")
+@Route("verification")
 @PageTitle(Globals.PageTitle.ACTIVATE)
 @Theme(value = Lumo.class)
-public class ActivationView extends VerticalLayout implements BeforeEnterObserver {
+public class VerificationView extends VerticalLayout implements BeforeEnterObserver {
 
     private VerticalLayout layout;
 
@@ -35,27 +35,33 @@ public class ActivationView extends VerticalLayout implements BeforeEnterObserve
 
     Map<String , List<String>> params;
 
-    private ActivationResultDTO activationResultDTO;
+    private VerificationResultDTO verificationResultDTO;
 
     @Autowired
-    private ActivationControl activationControl;
+    private VerificationControl verificationControl;
 
     private String token;
 
-    public ActivationView( AuthService authService) {
+    @Autowired
+    private VerificationCodeRepository verificationCodeRepository;
+
+    public VerificationView(AuthService authService) {
         this.authService = authService;
     }
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
             params = event.getLocation().getQueryParameters().getParameters();
             token = params.get("token").get(0);
-            if(!activationControl.length(token)) {
+            if(!verificationControl.length(token)) {
+                event.rerouteTo(LoginView.class);
+            }
+            if(verificationControl.getVerificationCode(token).getPerson() == null) {
                 event.rerouteTo(LoginView.class);
             }
 
     }
 
-    public ActivationView() {
+    public VerificationView() {
 
         layout = new VerticalLayout();
 
@@ -68,9 +74,9 @@ public class ActivationView extends VerticalLayout implements BeforeEnterObserve
         button.setText("Aktiviere Account");
         button.addClickListener( e -> {
             token = params.get("token").get(0);
-            activationResultDTO = activationControl.activate(token);
+            verificationResultDTO = verificationControl.activate(token);
 
-            if(activationResultDTO.getActivationResult()) {
+            if(verificationResultDTO.getActivationResult()) {
                 Utils.triggerDialogMessage("Success" , ":)");
             } else {
                 Utils.triggerDialogMessage("Failure!" , ":(");
