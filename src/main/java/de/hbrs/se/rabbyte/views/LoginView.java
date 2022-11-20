@@ -36,7 +36,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         login.addLoginListener(event -> {
             try {
                 securityService.authenticate(event.getUsername(), event.getPassword());
-                UI.getCurrent().navigate("main");
+                UI.getCurrent().navigate("");
             } catch (AuthException e) {
                 login.setError(true);
                 Notification.show("Wrong credentials");
