@@ -35,7 +35,7 @@ import de.hbrs.se.rabbyte.util.Utils;
 public class AppView extends AppLayout implements BeforeEnterObserver {
 
     private Tabs menu;
-    private H3 viewTitle;
+    //private H3 viewTitle;
     private H1 helloUser;
 
 
@@ -82,7 +82,7 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         // Der aktuell-selektierte Tab wird gehighlighted.
 
         // Setzen des aktuellen Names des Tabs
-        viewTitle.setText(getCurrentPageTitle());
+        //viewTitle.setText(getCurrentPageTitle());
 
         // Setzen des Vornamens von dem aktuell eingeloggten Benutzer
     }
@@ -108,24 +108,26 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         setDrawerOpened(false);
         //layout.add(drawerToggle);
 
-        HorizontalLayout logoLayout = new HorizontalLayout();
+        HorizontalLayout hlogoLayout = new HorizontalLayout();
 
         // Hinzufügen des Logos
         Image logo = new Image("images/rabbit_logo.png" , "logoImage");
         logo.setWidth("50px");
-        logoLayout.setId("logo");
-        logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(logo);
-        logoLayout.add(new H1("Rabbyte"));
+        hlogoLayout.setId("logo");
+        hlogoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+        hlogoLayout.add(logo);
+        hlogoLayout.add(new H1("Rabbyte"));
+        VerticalLayout vLogoLayout = new VerticalLayout(hlogoLayout);
+        layout.add(vLogoLayout);
 
-        layout.add(logoLayout);
-
+        /*
         viewTitle = new H3();
         viewTitle.setWidthFull();
         layout.add( viewTitle );
-
+         */
         menu = createMenu();
-        layout.add(menu);
+        VerticalLayout vMenu = new VerticalLayout(menu);
+        layout.add(vMenu);
 
         // Interner Layout
         HorizontalLayout topRightPanel = new HorizontalLayout();
@@ -142,9 +144,10 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         SubMenu moveSubMenu = move.getSubMenu();
         //moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
         moveSubMenu.addItem("Logout",  e -> securityService.logout());
-        moveSubMenu.addItem("print rolle",  e -> System.out.println(securityService.getAuthenticatedUserID()));
+        //moveSubMenu.addItem("print rolle",  e -> System.out.println(securityService.getAuthenticatedUserID()));
 
         layout.add(topRightPanel);
+        layout.setMaxHeight("80px");
         return layout;
     }
 
@@ -227,7 +230,7 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
             tabs = new Tab[]{ createTab( "Startseite", JobAdvertisementSearchView.class) };
             tabs = Utils.append( tabs , createTab("Kontodaten ändern", StudentUserView.class));
         } else if ( securityService.getAuthenticatedUserRole().equals("Business") ) {
-            tabs = new Tab[]{ createTab( "Ihr Unternehmen", CreateJobAdvertisementView.class) };
+            tabs = new Tab[]{ createTab( "Ihr Unternehmen", BusinessView.class) };
             tabs = Utils.append( tabs , createTab("Neue Stellenanzeige", CreateJobAdvertisementView.class));
         }
 
