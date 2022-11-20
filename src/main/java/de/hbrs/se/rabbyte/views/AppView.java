@@ -142,7 +142,6 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         SubMenu moveSubMenu = move.getSubMenu();
         //moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
         moveSubMenu.addItem("Logout",  e -> securityService.logout());
-        moveSubMenu.addItem("print rolle",  e -> System.out.println(securityService.getAuthenticatedUserID()));
 
         layout.add(topRightPanel);
         return layout;
@@ -255,20 +254,6 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         PageTitle title = getContent().getClass().getAnnotation(PageTitle.class);
         return title == null ? "" : title.value();
     }
-
-    /*
-    private String getCurrentNameOfUser() {
-        return getCurrentUser().getFirstName();
-    }
-
-     */
-
-
-    private PersonDTO getCurrentUser() {
-        // TODO: Beim login muss der user als Attribute gesetzt werden
-        return (PersonDTO) UI.getCurrent().getSession().getAttribute("user"); // TODO globals erstellen
-    }
-
 
 
 
