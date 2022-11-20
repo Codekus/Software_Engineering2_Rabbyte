@@ -38,12 +38,12 @@ public class CrmService {
     public JobAdvertisementDTO findJobAdvertisementById(int id){
         return jobAdvertisementRepository.findJobAdvertisementById(id);
     }
-    /*
+
     public List<JobAdvertisement> findJobAdvertisementByBusId(int id){
-        return jobAdvertisementRepository.findJobAdvertisementById(id);
+        return jobAdvertisementRepository.searchByID(id);
     }
 
-     */
+
 
     public long countJobAdvertisements(){
         return jobAdvertisementRepository.count();
