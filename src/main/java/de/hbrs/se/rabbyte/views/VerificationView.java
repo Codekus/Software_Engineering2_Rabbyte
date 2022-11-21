@@ -16,11 +16,12 @@ import de.hbrs.se.rabbyte.control.VerificationControl;
 import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.dtos.VerificationResultDTO;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
-import de.hbrs.se.rabbyte.service.AuthService;
 import de.hbrs.se.rabbyte.util.Globals;
+import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,8 @@ import java.util.Map;
 @PageTitle(Globals.PageTitle.ACTIVATE)
 @Theme(value = Lumo.class)
 public class VerificationView extends VerticalLayout implements BeforeEnterObserver {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(VerificationView.class.getName());
 
     private VerticalLayout layout;
 
@@ -39,25 +42,57 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
     private String token;
 
     @Autowired
-    private VerificationControl verificationControl;
+    private VerificationCodeRepository verificationCodeRepository;
+
+    @Autowired
+    VerificationControl verificationControl;
+
+    private VerificationCodeDTO verificationCodeDTO;
 
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
             params = event.getLocation().getQueryParameters().getParameters();
             token = params.get("token").get(0);
 
-            if(!verificationControl.length(token)) {
-                event.rerouteTo(LoginView.class);
-            }
+        verificationToken(event);
+
+        verificationActivation();
+        try
+        {
+            verificationCodeDTO = verificationControl.getVerificationCode(token);
+
+            if(verificationCodeDTO != null) {
+               Utils.triggerDialogMessage(token , token);
+           } else {
+
+           }
+
+        } catch(Exception exception) {
+            LOGGER.info("INFO: {}" ,  exception.getMessage());
+        }
 
 
-            if(verificationControl.getVerificationCode(token) == null  ) {
-                event.rerouteTo(LoginView.class);
-            }
+
 
     }
 
-    public VerificationView() {
+    private void verificationToken(BeforeEnterEvent event) {
+        if(!verificationControl.length(token)) {
+            event.rerouteTo(LoginView.class);
+        }
+        if(verificationControl.getVerificationCode(token) == null  ) {
+            event.rerouteTo(LoginView.class);
+        }
+    }
+
+    public VerificationCodeDTO createVerificationDTO(String token) {
+
+    VerificationCodeDTO verRep = verificationCodeRepository.findVerificationCodeByToken(token);
+
+    return verRep;
+    }
+
+    public VerticalLayout verificationActivation() {
 
         layout = new VerticalLayout();
 
@@ -73,7 +108,9 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
             verificationResultDTO = verificationControl.activate(token);
 
             if(verificationResultDTO.getActivationResult()) {
-                Utils.triggerDialogMessage("Success" , ":)");
+                Utils.triggerDialogMessage("Ihr Account ist jetzt aktiv!" , "Sie können sich jetzt einloggen");
+                NavigationUtil.toLoginView();
+
             } else {
                 Utils.triggerDialogMessage("Failure!" , ":(");
             }
@@ -81,20 +118,26 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
 
         });
 
-
         layout.add(h1 , infoText , button);
         layout.setPadding(true);
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
         layout.setAlignSelf(FlexComponent.Alignment.CENTER);
 
-        add(layout);
+        this.add(layout);
 
-
-
-        }
-
+        return layout;
 
     }
+
+
+
+    public VerificationView() {
+
+    }
+
+}
+
+
 
 
 

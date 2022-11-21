@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +24,7 @@ class VerificationCodeTest {
         verificationCode.setToken("606728a3-f4dd-4a12-a75d-1411773e25b7");
         verificationCode.setId(60000017);
         verificationCode.setPerson(person);
-        verificationCode.setDate(new Date());
+        verificationCode.setDate(LocalDateTime.now());
     }
     @Test
     void getId() {
@@ -37,8 +39,7 @@ class VerificationCodeTest {
 
     @Test
     void getDate() {
-        assertEquals(new Date().toString() , verificationCode.getDate().toString());
-        assertTrue(verificationCode.getDate() instanceof  Date);
+        assertNotNull(verificationCode.getDate());
     }
 
     @Test

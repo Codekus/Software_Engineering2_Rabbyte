@@ -8,14 +8,13 @@ import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
-
 import de.hbrs.se.rabbyte.entities.Business;
-import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.entities.Student;
+import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
-import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.repository.StudentRepository;
+import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import de.hbrs.se.rabbyte.util.EmailSenderService;
 import de.hbrs.se.rabbyte.util.Globals;
 import org.slf4j.Logger;
@@ -25,9 +24,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.Scanner;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

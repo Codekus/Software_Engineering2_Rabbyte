@@ -3,6 +3,7 @@ package de.hbrs.se.rabbyte.control.factory;
 import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.entities.VerificationCode;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ public class VerificationFactory {
         verificationCode.setId(verificationCode.getId());
         verificationCode.setToken(UUID.randomUUID().toString());
         verificationCode.setPerson(person);
-        verificationCode.setDate(new Date());
+        verificationCode.setDate(LocalDateTime.now());
 
         return verificationCode;
     }

@@ -2,8 +2,7 @@ package de.hbrs.se.rabbyte.entities;
 
 
 import javax.persistence.*;
-
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "verification_code", schema = "rabbyte")
@@ -11,7 +10,7 @@ public class VerificationCode {
 
     private int id;
     private Person person;
-    private Date date;
+    private LocalDateTime date;
     private String token;
 
     @Id
@@ -46,12 +45,11 @@ public class VerificationCode {
 
 
     @Column(name = "date")
-    @Temporal(TemporalType.TIMESTAMP)
-    public Date getDate() {
+    public LocalDateTime  getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime  date) {
         this.date = date;
     }
 
