@@ -41,6 +41,8 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
 
     private String token;
 
+    private String wholeToken;
+
     @Autowired
     private VerificationCodeRepository verificationCodeRepository;
 
@@ -51,45 +53,75 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
 
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
-            params = event.getLocation().getQueryParameters().getParameters();
-            token = params.get("token").get(0);
+        params = event.getLocation().getQueryParameters().getParameters();
+        wholeToken = params.toString();
 
-        verificationToken(event);
+        validateURL(event);
+
+        //test = params.get("t").get(0);
+
+        //Utils.triggerDialogMessage(test ,test);
+
+        try {
+            if(params != null){
+                validVerificationToken(event);
+            } else {
+                NavigationUtil.toLoginView();
+            }
+        } catch (NullPointerException exception) {
+            NavigationUtil.toLoginView();
+        }
 
         verificationActivation();
+
         try
         {
             verificationCodeDTO = verificationControl.getVerificationCode(token);
 
-            if(verificationCodeDTO != null) {
-               Utils.triggerDialogMessage(token , token);
-           } else {
+            findVerificationCodeInDb(event);
 
-           }
 
         } catch(Exception exception) {
             LOGGER.info("INFO: {}" ,  exception.getMessage());
         }
+    }
 
-
-
+    private void validateURL(BeforeEnterEvent event) {
+        try {
+            if(wholeToken.length() != 46) {
+                event.rerouteTo(LoginView.class);
+            }
+        } catch (Exception exception) {
+            LOGGER.info("INFO: {}" ,  exception.getMessage());
+        }
 
     }
 
-    private void verificationToken(BeforeEnterEvent event) {
-        if(!verificationControl.length(token)) {
+
+    private void findVerificationCodeInDb(BeforeEnterEvent event) {
+        if(verificationCodeDTO == null) {
+            event.rerouteTo(LoginView.class);
+       }
+    }
+
+    private void validVerificationToken(BeforeEnterEvent event) {
+        try {
+            token = params.get("token").get(0);
+        } catch (Exception exception) {
             event.rerouteTo(LoginView.class);
         }
+
+        if(!verificationControl.length(token)) {
+            NavigationUtil.toLoginView();
+        }
         if(verificationControl.getVerificationCode(token) == null  ) {
-            event.rerouteTo(LoginView.class);
+            NavigationUtil.toLoginView();
         }
     }
 
     public VerificationCodeDTO createVerificationDTO(String token) {
 
-    VerificationCodeDTO verRep = verificationCodeRepository.findVerificationCodeByToken(token);
-
-    return verRep;
+    return verificationCodeRepository.findVerificationCodeByToken(token);
     }
 
     public VerticalLayout verificationActivation() {
