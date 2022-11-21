@@ -13,9 +13,12 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import de.hbrs.se.rabbyte.control.VerificationControl;
+import de.hbrs.se.rabbyte.control.factory.VerificationFactory;
 import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.dtos.VerificationResultDTO;
+import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
+import de.hbrs.se.rabbyte.util.EmailSenderService;
 import de.hbrs.se.rabbyte.util.Globals;
 import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
@@ -23,6 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -33,15 +38,17 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VerificationView.class.getName());
 
-    private VerticalLayout layout;
-
-    Map<String , List<String>> params;
-
     private VerificationResultDTO verificationResultDTO;
-
+    Map<String , List<String>> params;
     private String token;
-
     private String wholeToken;
+
+    private VerticalLayout layout;
+    H1 h1;
+    Label infoText;
+    Button button = new Button();
+
+    EmailSenderService emailSenderService;
 
     @Autowired
     private VerificationCodeRepository verificationCodeRepository;
@@ -56,14 +63,12 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
         params = event.getLocation().getQueryParameters().getParameters();
         wholeToken = params.toString();
 
+        //Check whole URL
         validateURL(event);
-
-        //test = params.get("t").get(0);
-
-        //Utils.triggerDialogMessage(test ,test);
 
         try {
             if(params != null){
+                //Checking token
                 validVerificationToken(event);
             } else {
                 NavigationUtil.toLoginView();
@@ -72,18 +77,28 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
             NavigationUtil.toLoginView();
         }
 
-        verificationActivation();
-
         try
         {
-            verificationCodeDTO = verificationControl.getVerificationCode(token);
+                //get DTO
+                verificationCodeDTO = verificationControl.getVerificationCode(token);
+                findVerificationCodeInDb(event);
 
-            findVerificationCodeInDb(event);
-
+                //Depending on date load either activate or resend
+                if(verificationDateExpired(verificationCodeDTO)) {
+                    this.add(verificationResend(verificationCodeDTO));
+                } else {
+                    this.add(verificationActivation());
+                }
 
         } catch(Exception exception) {
             LOGGER.info("INFO: {}" ,  exception.getMessage());
         }
+
+    }
+
+    private boolean verificationDateExpired(VerificationCodeDTO verificationCodeDTO) {
+        long time = Duration.between(verificationCodeDTO.getDate() , LocalDateTime.now()).toHours();
+        return (time > 48);
     }
 
     private void validateURL(BeforeEnterEvent event) {
@@ -119,19 +134,14 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
         }
     }
 
-    public VerificationCodeDTO createVerificationDTO(String token) {
-
-    return verificationCodeRepository.findVerificationCodeByToken(token);
-    }
-
     public VerticalLayout verificationActivation() {
 
         layout = new VerticalLayout();
 
-        H1 h1 = new H1();
+        h1 = new H1();
         h1.setText("Aktiviere deinen Account");
 
-        Label infoText = new Label("Um Ihr Konto zu aktivieren, klicken Sie bitte auf die unten stehende Taste");
+        infoText = new Label("Um Ihr Konto zu aktivieren, klicken Sie bitte auf die unten stehende Taste");
 
         Button button = new Button();
         button.setText("Aktiviere Account");
@@ -155,10 +165,38 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
         layout.setAlignSelf(FlexComponent.Alignment.CENTER);
 
-        this.add(layout);
+
 
         return layout;
 
+    }
+
+    public VerticalLayout verificationResend(VerificationCodeDTO verificationCodeDTO) {
+
+        layout = new VerticalLayout();
+        h1 = new H1();
+        h1.setText("Neu sendens des Aktivierungscode");
+
+        infoText = new Label("Ihr Aktivierungscode ist älter als 48 Stunden. Neu senden");
+
+        button = new Button();
+        button.addClickListener( e -> {
+            VerificationCode verificationCode = VerificationFactory.updateVerificationCode(verificationCodeDTO );
+            verificationCodeRepository.save(verificationCode);
+
+            emailSenderService = new EmailSenderService(verificationCode);
+            emailSenderService.sendEmail();
+
+        });
+
+
+
+        layout.add(h1 , infoText , button);
+        layout.setPadding(true);
+        layout.setAlignItems(FlexComponent.Alignment.CENTER);
+        layout.setAlignSelf(FlexComponent.Alignment.CENTER);
+
+        return layout;
     }
 
 
