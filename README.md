@@ -1,7 +1,11 @@
 # Accountdaten
-Username: person
+Student: UnitStudentTest@Test.de
+Business: UnitBusinessTest@Test.de
+Passwort: test123321
 
-Passwort: userpass
+Business mit bereits erstellten Anzeigen:
+Username: job@ad.com
+Passwort: Jobadtest
 
 # Links zu Übungen
 Übung 1:  https://docs.google.com/document/d/1kOuNIS8aeCo43_MvqeC-ufkOzDcM1pXgg9NSoUHy3Jg/edit?usp=sharing
