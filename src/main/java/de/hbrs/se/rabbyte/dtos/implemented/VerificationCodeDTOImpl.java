@@ -4,13 +4,13 @@ import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.entities.Person;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 @Service
 public class VerificationCodeDTOImpl implements VerificationCodeDTO {
 
     private int id;
     private Person person;
-    private Date date;
+    private LocalDateTime date;
     private String token;
 
     @Override
@@ -32,11 +32,11 @@ public class VerificationCodeDTOImpl implements VerificationCodeDTO {
     }
 
     @Override
-    public Date getDate() {
+    public LocalDateTime  getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime  date) {
         this.date = date;
     }
 

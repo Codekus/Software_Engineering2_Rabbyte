@@ -8,15 +8,18 @@ import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class VerificationControl {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(VerificationControl.class);
+    private final VerificationCodeRepository verificationCodeRepository;
 
-    @Autowired
-    private VerificationCodeRepository verificationCodeRepository;
+    public VerificationControl(VerificationCodeRepository verificationCodeRepository) {
+        this.verificationCodeRepository = verificationCodeRepository;
+    }
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(VerificationControl.class);
 
     @Autowired
     private  PersonRepository personRepository;
@@ -38,7 +41,6 @@ public class VerificationControl {
             return activationResult;
 
     }
-
 
     public VerificationCodeDTO getVerificationCode(String token) {
         return verificationCodeRepository.findVerificationCodeByToken(token);
