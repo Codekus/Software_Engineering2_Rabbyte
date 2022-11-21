@@ -15,6 +15,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import de.hbrs.se.rabbyte.exception.AuthException;
 import de.hbrs.se.rabbyte.security.SecurityService;
+import de.hbrs.se.rabbyte.util.Utils;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -39,7 +40,12 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
                 UI.getCurrent().navigate("");
             } catch (AuthException e) {
                 login.setError(true);
-                Notification.show("Wrong credentials");
+                if(e.getMessage().equals("Der Account ist noch nicht aktiviert")){
+                    Utils.triggerDialogMessage("Dieser Account wurde noch nicht aktiviert" , "Bitte aktivieren sie ihren Account, indem sie den Anweisungen in ihrer Registrierung-Email folgen");
+                } else {
+                    login.setError(true);
+                    Notification.show("Wrong credentials");
+                }
             } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
                 throw new RuntimeException(e);
             }

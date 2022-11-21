@@ -56,6 +56,7 @@ public class SecurityService  {
             throw new AuthException("User does not exist");
         }
 
+
         // Hole das gehashte Passwort aus der Datenbank die dem UserDTO zugehörig ist
         String dbpassword = user.getPassword();
 
@@ -68,7 +69,10 @@ public class SecurityService  {
         if (!Objects.equals(dbpassword, CryptographyUtil.encryptPassword(password, CryptographyUtil.fromHex(salt)))) {
             throw new AuthException("wrong password");
         }
+        if(!user.getEnabled()) {
+            throw new AuthException("Der Account ist noch nicht aktiviert");
 
+        }
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(username, "[REDACTED]", Collections.emptyList());
