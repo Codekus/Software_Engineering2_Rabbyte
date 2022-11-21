@@ -30,6 +30,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Route("verification")
 @PageTitle(Globals.PageTitle.ACTIVATE)
@@ -143,8 +144,9 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
 
         infoText = new Label("Um Ihr Konto zu aktivieren, klicken Sie bitte auf die unten stehende Taste");
 
-        Button button = new Button();
+        Button button = new Button("Aktiviere Account");
         button.setText("Aktiviere Account");
+
         button.addClickListener( e -> {
             token = params.get("token").get(0);
             verificationResultDTO = verificationControl.activate(token);
@@ -159,12 +161,8 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
 
 
         });
-
         layout.add(h1 , infoText , button);
-        layout.setPadding(true);
-        layout.setAlignItems(FlexComponent.Alignment.CENTER);
-        layout.setAlignSelf(FlexComponent.Alignment.CENTER);
-
+        stlying(layout);
 
 
         return layout;
@@ -173,6 +171,7 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
 
     public VerticalLayout verificationResend(VerificationCodeDTO verificationCodeDTO) {
 
+        AtomicBoolean alreadyClicked = new AtomicBoolean(false);
         layout = new VerticalLayout();
         h1 = new H1();
         h1.setText("Neu sendens des Aktivierungscode");
@@ -180,25 +179,33 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
         infoText = new Label("Ihr Aktivierungscode ist älter als 48 Stunden. Neu senden");
 
         button = new Button();
-        button.addClickListener( e -> {
-            VerificationCode verificationCode = VerificationFactory.updateVerificationCode(verificationCodeDTO );
-            verificationCodeRepository.save(verificationCode);
+        button.setText("Neusenden des Code");
 
-            emailSenderService = new EmailSenderService(verificationCode);
-            emailSenderService.sendEmail();
+        button.addClickListener( e -> {
+            if(!alreadyClicked.get()) {
+                VerificationCode verificationCode = VerificationFactory.updateVerificationCode(verificationCodeDTO );
+                verificationCodeRepository.save(verificationCode);
+
+                emailSenderService = new EmailSenderService(verificationCode);
+                emailSenderService.sendEmail();
+
+            }
+
+            Utils.triggerDialogMessage("Ein neuer Code wurde an sie gesendet" , "Überprüfen sie ihre Emails");
+            alreadyClicked.set(true);
 
         });
-
-
-
         layout.add(h1 , infoText , button);
-        layout.setPadding(true);
-        layout.setAlignItems(FlexComponent.Alignment.CENTER);
-        layout.setAlignSelf(FlexComponent.Alignment.CENTER);
+        stlying(layout);
 
         return layout;
     }
 
+    private void stlying(VerticalLayout layout) {
+        layout.setPadding(true);
+        layout.setAlignItems(FlexComponent.Alignment.CENTER);
+        layout.setAlignSelf(FlexComponent.Alignment.CENTER);
+    }
 
 
     public VerificationView() {
