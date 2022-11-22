@@ -1,6 +1,7 @@
 package de.hbrs.se.rabbyte.control.factory;
 
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
+import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Person;
@@ -26,6 +27,8 @@ class PersonFactoryTest {
     private BusinessDTO businessDTO;
     @Mock
     private Person person;
+    @Mock
+    private PersonDTO personDTO;
 
     private static final String PASSWORD = "password";
     private static final String EMAIL_STUDENT = "max@mustermann.de";
@@ -80,4 +83,15 @@ class PersonFactoryTest {
         assertThrows(ReflectiveOperationException.class,constructor::newInstance);
 
     }
+
+    @Test
+    void enableUser() {
+
+    }
+
+    @Test
+    void createPersonDTO() {
+
+    }
+
 }

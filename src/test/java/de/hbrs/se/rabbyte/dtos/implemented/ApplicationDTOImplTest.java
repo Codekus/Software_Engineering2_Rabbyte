@@ -23,6 +23,7 @@ class ApplicationDTOImplTest {
     @BeforeEach
     void setUp() {
 
+        applicationDTO.setId(100);
         applicationDTO.setDate(LocalDate.of(1990 , 1,20));
         jobAdvertisement = new JobAdvertisement();
         applicationDTO.setJobAdvertisement(jobAdvertisement);
@@ -49,5 +50,10 @@ class ApplicationDTOImplTest {
     @Test
     void getApplicationText() {
         assertEquals(APPLICATION_TEXT, applicationDTO.getApplicationText());
+    }
+
+    @Test
+    void getId() {
+        assertEquals(100 , applicationDTO.getId());
     }
 }
