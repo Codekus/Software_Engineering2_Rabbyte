@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Route("verification")
 @PageTitle(Globals.PageTitle.ACTIVATE)
-@Theme(value = Lumo.class)
+@Theme(value = Lumo.class, variant = Lumo.DARK)
 public class VerificationView extends VerticalLayout implements BeforeEnterObserver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VerificationView.class.getName());
@@ -144,7 +144,7 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
 
         infoText = new Label("Um Ihr Konto zu aktivieren, klicken Sie bitte auf die unten stehende Taste");
 
-        Button button = new Button("Aktiviere Account");
+        button = new Button("Aktiviere Account");
         button.setText("Aktiviere Account");
 
         button.addClickListener( e -> {
@@ -162,7 +162,7 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
 
         });
         layout.add(h1 , infoText , button);
-        stlying(layout);
+        styling(layout);
 
 
         return layout;
@@ -196,20 +196,24 @@ public class VerificationView extends VerticalLayout implements BeforeEnterObser
 
         });
         layout.add(h1 , infoText , button);
-        stlying(layout);
+        styling(layout);
 
         return layout;
     }
 
-    private void stlying(VerticalLayout layout) {
+    private void styling(VerticalLayout layout) {
+
         layout.setPadding(true);
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
         layout.setAlignSelf(FlexComponent.Alignment.CENTER);
+
     }
 
 
     public VerificationView() {
 
+
+        //Required for Vaadin
     }
 
 }

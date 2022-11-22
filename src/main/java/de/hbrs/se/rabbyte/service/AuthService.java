@@ -5,7 +5,6 @@ import de.hbrs.se.rabbyte.control.factory.PersonFactory;
 import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.entities.Person;
-import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

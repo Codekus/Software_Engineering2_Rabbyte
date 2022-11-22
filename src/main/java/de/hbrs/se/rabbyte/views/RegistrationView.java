@@ -261,10 +261,10 @@ public class RegistrationView extends VerticalLayout {
                     lastNameStudent.setInvalid(true);
                     break;
                 case PASSWORD_TOO_COMMON:
-                    passwordFieldStudent.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_COMMON);
+                    passwordFieldStudent.setErrorMessage(Globals.FieldErrorMessages.MEMORIZED_SECRET_TOO_COMMON);
                     passwordFieldStudent.setInvalid(true);
                     passwordFieldRepeatStudent.setInvalid(true);
-                    passwordFieldRepeatStudent.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_COMMON);
+                    passwordFieldRepeatStudent.setErrorMessage(Globals.FieldErrorMessages.MEMORIZED_SECRET_TOO_COMMON);
                     break;
                 default:
                     break;
@@ -295,7 +295,7 @@ public class RegistrationView extends VerticalLayout {
                 case PASSWORD_DIFFERENT:
                     passwordFieldBusiness.setErrorMessage(Globals.FieldErrorMessages.DIFFERENT_PASSWORDS);
                     passwordFieldBusiness.setInvalid(true);
-                    passwordFieldRepeatBusiness.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_COMMON);
+                    passwordFieldRepeatBusiness.setErrorMessage(Globals.FieldErrorMessages.MEMORIZED_SECRET_TOO_COMMON);
                     passwordFieldRepeatBusiness.setInvalid(true);
                     break;
                 case INVALID_BUSINESS_NAME:
@@ -308,10 +308,10 @@ public class RegistrationView extends VerticalLayout {
                     break;
                 case PASSWORD_TOO_COMMON:
 
-                    passwordFieldBusiness.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_COMMON);
+                    passwordFieldBusiness.setErrorMessage(Globals.FieldErrorMessages.MEMORIZED_SECRET_TOO_COMMON);
                     passwordFieldBusiness.setInvalid(true);
                     passwordFieldRepeatBusiness.setInvalid(true);
-                    passwordFieldRepeatBusiness.setErrorMessage(Globals.FieldErrorMessages.PASSWORD_TOO_COMMON);
+                    passwordFieldRepeatBusiness.setErrorMessage(Globals.FieldErrorMessages.MEMORIZED_SECRET_TOO_COMMON);
                     break;
                 default:
                     break;

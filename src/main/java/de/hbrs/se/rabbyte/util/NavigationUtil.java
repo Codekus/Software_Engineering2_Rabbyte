@@ -4,6 +4,9 @@ import com.vaadin.flow.component.UI;
 
 public class NavigationUtil {
 
+    private NavigationUtil() {
+        throw new IllegalStateException(Globals.IllegalState.MESSAGE_UTILS);
+    }
 
     public static void toMainView() {
         UI.getCurrent().navigate("");

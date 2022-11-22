@@ -27,8 +27,8 @@ public class VerificationControl {
     private Person person;
 
     public VerificationResultDTOImpl activate(String token) {
-
         VerificationResultDTOImpl activationResult = new VerificationResultDTOImpl();
+        try {
 
             VerificationCodeDTO verificationCode = getVerificationCode(token);
 
@@ -39,7 +39,10 @@ public class VerificationControl {
             activationResult.setActivationResult(true);
 
             return activationResult;
-
+        } catch (Exception exception) {
+            activationResult.setActivationResult(false);
+        }
+        return activationResult;
     }
 
     public VerificationCodeDTO getVerificationCode(String token) {

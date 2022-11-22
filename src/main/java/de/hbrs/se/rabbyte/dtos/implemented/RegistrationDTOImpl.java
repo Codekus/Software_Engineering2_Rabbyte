@@ -16,4 +16,13 @@ public class RegistrationDTOImpl implements RegistrationDTO  {
     public void setRepeatPassword(String repeatPassword) {
         this.repeatPassword = repeatPassword;
     }
+
+    @Override
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+
+    }
 }

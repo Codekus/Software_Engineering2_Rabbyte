@@ -1,7 +1,5 @@
 package de.hbrs.se.rabbyte.repository;
 
-
-import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.dtos.VerificationCodeDTO;
 import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.entities.VerificationCode;

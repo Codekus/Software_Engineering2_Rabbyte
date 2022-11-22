@@ -74,7 +74,7 @@ public class Globals {
             throw  new IllegalStateException(IllegalState.MESSAGE_UTILS);
         }
 
-        public static final String PASSWORD_TOO_COMMON = "Ihr Passwort ist eines der häufigsten Passwörter. Bitte wählen sie ein anderes";
+        public static final String MEMORIZED_SECRET_TOO_COMMON = "Ihr Passwort ist eines der häufigsten Passwörter. Bitte wählen sie ein anderes";
         public static final String DIFFERENT_PASSWORDS = "Unterschiedliche Passwörter";
         public static final String PASSWORD_TOO_SHORT = "Das Password muss mindestens 8 Zeichen sein";
         public static final String EMAIL_IN_USE = "Diese E-Mail wird bereits verwendet" ;
