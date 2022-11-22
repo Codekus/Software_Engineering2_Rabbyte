@@ -1,8 +1,5 @@
 package de.hbrs.se.rabbyte.util;
 
-import java.util.Arrays;
-
-
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H3;
@@ -10,6 +7,8 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
+import java.util.Arrays;
 
 public class Utils {
     private Utils() {

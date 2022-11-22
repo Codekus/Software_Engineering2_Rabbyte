@@ -2,7 +2,6 @@ package de.hbrs.se.rabbyte.util;
 
 import de.hbrs.se.rabbyte.entities.VerificationCode;
 import org.springframework.mail.SimpleMailMessage;
-
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
