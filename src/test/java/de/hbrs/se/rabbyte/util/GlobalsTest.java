@@ -17,7 +17,8 @@ class GlobalsTest {
     String globalsPageTitleErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$PageTitle with modifiers \"private\"";
     String globalsRegexErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$Regex with modifiers \"private\"";
     String globalsStateExceptionErrorMessage = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$IllegalState with modifiers \"private\"";
-
+    String globalsFieldErrorMessages =  "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$FieldErrorMessages with modifiers \"private\"";
+    String globalsEmail = "class de.hbrs.se.rabbyte.util.GlobalsTest cannot access a member of class de.hbrs.se.rabbyte.util.Globals$Email with modifiers \"private\"";
 
 
     @Test
@@ -74,6 +75,26 @@ class GlobalsTest {
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);
         assertEquals(globalsStateExceptionErrorMessage, exceptionThatWasThrown.getMessage());
+        constructor.setAccessible(true);
+        assertThrows(ReflectiveOperationException.class,constructor::newInstance);
+    }
+
+    @Test
+    void throwIllegalAccessExceptionWhenInstancingGlobalsEmail() throws NoSuchMethodException {
+        Constructor<Globals.Email> constructor = Globals.Email.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);
+        assertEquals(globalsEmail, exceptionThatWasThrown.getMessage());
+        constructor.setAccessible(true);
+        assertThrows(ReflectiveOperationException.class,constructor::newInstance);
+    }
+
+    @Test
+    void throwIllegalAccessExceptionWhenInstancingGlobalsFieldErrorMessage() throws NoSuchMethodException {
+        Constructor<Globals.FieldErrorMessages> constructor = Globals.FieldErrorMessages.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);
+        assertEquals(globalsFieldErrorMessages, exceptionThatWasThrown.getMessage());
         constructor.setAccessible(true);
         assertThrows(ReflectiveOperationException.class,constructor::newInstance);
     }

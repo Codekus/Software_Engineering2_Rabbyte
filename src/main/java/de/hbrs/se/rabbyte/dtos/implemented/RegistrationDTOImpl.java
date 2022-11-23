@@ -23,6 +23,6 @@ public class RegistrationDTOImpl implements RegistrationDTO  {
     }
 
     public void setPerson(Person person) {
-
+        this.person = person;
     }
 }

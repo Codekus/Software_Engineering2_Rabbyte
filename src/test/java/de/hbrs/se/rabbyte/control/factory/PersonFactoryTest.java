@@ -30,6 +30,14 @@ class PersonFactoryTest {
     @Mock
     private PersonDTO personDTO;
 
+    private static final int ID = 100;
+    private static final int PLZ = 12345;
+    private static final String CITY = "Mustermann";
+    private static final String COUNTRY = "DE";
+    private static final String STREET = "Musterstraße";
+    private static final String STREETNUMBER = "1a";
+    private static final String SALT = "71CB6FC62F2CA7F2B88B0E3E9ADDB047E9E45D8C180C78FE74E95D1AA54FE9FF77B990F605C4070A393501661E825AEABCC298F64C76045F0391B90C005B0CFA";
+
     private static final String PASSWORD = "password";
     private static final String EMAIL_STUDENT = "max@mustermann.de";
     private static final String STUDENT_FIRST_NAME = "Max";
@@ -84,14 +92,46 @@ class PersonFactoryTest {
 
     }
 
-    @Test
-    void enableUser() {
-
-    }
 
     @Test
     void createPersonDTO() {
+        mockingPerson();
 
+        personDTO = PersonFactory.createUserDTO(person);
+
+        assertNotNull(personDTO);
+        assertTrue(personDTO instanceof PersonDTO);
+
+        assertEquals(ID , personDTO.getId());
+        assertEquals(EMAIL_STUDENT , personDTO.getEmail());
+        assertEquals(PASSWORD , personDTO.getPassword());
+        assertEquals(PLZ , personDTO.getPlz());
+        assertEquals(CITY , personDTO.getCity());
+        assertEquals(COUNTRY , personDTO.getCountry());
+        assertEquals(STREET , personDTO.getStreet());
+        assertEquals(STREETNUMBER , personDTO.getStreetNumber());
+        assertEquals(SALT , personDTO.getSalt());
+        assertEquals(false , personDTO.getEnabled());
+    }
+
+    @Test
+    void enableStudent() {
+        mockingPerson();
+
+
+    }
+
+    private void mockingPerson() {
+        when(person.getId()).thenReturn(ID);
+        when(person.getEmail()).thenReturn(EMAIL_STUDENT);
+        when(person.getPassword()).thenReturn(PASSWORD);
+        when(person.getPlz()).thenReturn(PLZ);
+        when(person.getCity()).thenReturn(CITY);
+        when(person.getCountry()).thenReturn(COUNTRY);
+        when(person.getStreet()).thenReturn(STREET);
+        when(person.getStreetNumber()).thenReturn(STREETNUMBER);
+        when(person.getSalt()).thenReturn(SALT);
+        when(person.getEnabled()).thenReturn(false);
     }
 
 }

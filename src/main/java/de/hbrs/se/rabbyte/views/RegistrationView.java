@@ -1,7 +1,6 @@
 package de.hbrs.se.rabbyte.views;
 
 
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -167,9 +166,7 @@ public class RegistrationView extends VerticalLayout {
             RegistrationResultDTO registrationResult = registrationControl.registerStudent(registrationStudent);
 
             if (registrationResult.getRegistrationResult()) {
-                Utils.triggerDialogMessage("Registrierung erfolgreich", "Weiterleitung per login");
-                login(studentDTO);
-                NavigationUtil.toMainView();
+                successfulRegistration();
             } else {
                 setStudentErrorFields(registrationResult.getReasons());
             }
@@ -186,7 +183,7 @@ public class RegistrationView extends VerticalLayout {
             registrationControl.registerBusiness(registrationBusinessDTO);
 
             if (registrationResultDTO.getRegistrationResult()) {
-                Utils.triggerDialogMessage("Registrierung erfolgreich", "Weiterleitung per login wenn implementiert");
+                successfulRegistration();
             } else {
                 setBusinessErrorFields(registrationResultDTO.getReasons());
 
@@ -209,6 +206,11 @@ public class RegistrationView extends VerticalLayout {
         verticalLayout.add(tabs , tabsLayout);
         add(verticalLayout);
 
+    }
+
+    private static void successfulRegistration() {
+        Utils.triggerDialogMessage("Registrierung erfolgreich", "Um ihren Account zu aktivieren, bitte klicken sie auf den Link in der E-Mail");
+        NavigationUtil.toLoginView();
     }
 
     private void setContent(Tab tab) {
@@ -247,9 +249,9 @@ public class RegistrationView extends VerticalLayout {
                     passwordFieldRepeatStudent.setInvalid(true);
                     break;
                 case PASSWORD_DIFFERENT:
-                    passwordFieldStudent.setErrorMessage(Globals.FieldErrorMessages.DIFFERENT_PASSWORDS);
+                    passwordFieldStudent.setErrorMessage(Globals.FieldErrorMessages.MEMORIZED_SECRET_DIFFERENT);
                     passwordFieldStudent.setInvalid(true);
-                    passwordFieldRepeatStudent.setErrorMessage(Globals.FieldErrorMessages.DIFFERENT_PASSWORDS);
+                    passwordFieldRepeatStudent.setErrorMessage(Globals.FieldErrorMessages.MEMORIZED_SECRET_DIFFERENT);
                     passwordFieldRepeatStudent.setInvalid(true);
                     break;
                 case INVALID_FIRST_NAME:
@@ -293,7 +295,7 @@ public class RegistrationView extends VerticalLayout {
                     passwordFieldRepeatBusiness.setInvalid(true);
                     break;
                 case PASSWORD_DIFFERENT:
-                    passwordFieldBusiness.setErrorMessage(Globals.FieldErrorMessages.DIFFERENT_PASSWORDS);
+                    passwordFieldBusiness.setErrorMessage(Globals.FieldErrorMessages.MEMORIZED_SECRET_DIFFERENT);
                     passwordFieldBusiness.setInvalid(true);
                     passwordFieldRepeatBusiness.setErrorMessage(Globals.FieldErrorMessages.MEMORIZED_SECRET_TOO_COMMON);
                     passwordFieldRepeatBusiness.setInvalid(true);
@@ -320,9 +322,4 @@ public class RegistrationView extends VerticalLayout {
         }
     }
 
-    private void login(PersonDTOImpl generalUserDTO) {
-
-        UI.getCurrent().getSession().setAttribute( "Current User", generalUserDTO );
-
-    }
 }

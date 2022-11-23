@@ -15,4 +15,5 @@ public class NavigationUtil {
     public static void toLoginView() {
         UI.getCurrent().navigate("login");
     }
+
 }
