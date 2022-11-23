@@ -14,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -195,12 +194,12 @@ public class SecurityServiceTest {
                 new AuthorizedRoute("jobAd", "Create Job Advertisement", CreateJobAdvertisementView.class),
                 new AuthorizedRoute("", "Business", BusinessView.class)
         );
-        PersonDTO busines = personRepository.findByEmail(TEST_BUSINESS_USERNAME);
-        List<AuthorizedRoute> businesRoutes = securityService.getAuthorizedRoutes(busines);
+        PersonDTO business = personRepository.findByEmail(TEST_BUSINESS_USERNAME);
+        List<AuthorizedRoute> businessRoutes = securityService.getAuthorizedRoutes(business);
 
         Assertions.assertTrue(expectedRoutes
                 .stream()
-                .allMatch(exp -> businesRoutes.stream()
+                .allMatch(exp -> businessRoutes.stream()
                         .anyMatch(bus ->
                                 exp.route.equals(bus.route) &&
                                         exp.name.equals(bus.name) &&
