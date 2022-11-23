@@ -5,6 +5,7 @@ import com.github.mvysny.kaributesting.v10.Routes;
 import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.exception.AuthException;
 import de.hbrs.se.rabbyte.repository.PersonRepository;
+import de.hbrs.se.rabbyte.views.*;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @SpringBootTest
-public class AuthenticationTest {
+public class SecurityServiceTest {
 
     @Autowired
     SecurityService securityService;
@@ -24,6 +28,7 @@ public class AuthenticationTest {
     PersonRepository personRepository;
 
     final static String TEST_STUDENT_USERNAME = "UnitStudentTest@Test.de";
+    final static String TEST_STUDENT2_USERNAME_NOT_ENABLED = "UnitStudentTest2@Test.de";
     final static String TEST_BUSINESS_USERNAME = "UnitBusinessTest@Test.de";
     final static String TEST_PASSWORD = "test123321";
 
@@ -126,4 +131,81 @@ public class AuthenticationTest {
 
         Assertions.assertFalse(SecurityUtils.isUserLoggedIn());
     }
+
+    @Test
+    void authenticate_accountNotEnabled_ThrowsAuthException(){
+        Assertions.assertFalse(SecurityUtils.isUserLoggedIn());
+
+        AuthException e = Assertions.assertThrows(AuthException.class, () -> {
+            securityService.authenticate(TEST_STUDENT2_USERNAME_NOT_ENABLED, TEST_PASSWORD);
+        });
+        Assertions.assertEquals("Der Account ist noch nicht aktiviert", e.getMessage());
+
+        Assertions.assertFalse(SecurityUtils.isUserLoggedIn());
+    }
+    @Test
+    void getRole_studentUser_returnsStudent(){
+        PersonDTO student = personRepository.getStudent(20000145);
+        Assertions.assertEquals("Student", securityService.getRole(student));
+    }
+
+    @Test
+    void getRole_businessUser_returnsBusiness(){
+        PersonDTO student = personRepository.getBusiness(20000146);
+        Assertions.assertEquals("Business", securityService.getRole(student));
+    }
+
+    @Test
+    void getAuthenticatedUserRole_studentUser_returnsStudent() throws AuthException, InvalidKeySpecException, NoSuchAlgorithmException {
+        securityService.authenticate(TEST_STUDENT_USERNAME, TEST_PASSWORD);
+        Assertions.assertTrue(SecurityUtils.isUserLoggedIn());
+        Assertions.assertEquals("Student", securityService.getAuthenticatedUserRole());
+    }
+
+    @Test
+    void getAuthenticatedUserRole_businessUser_returnsBusiness() throws AuthException, InvalidKeySpecException, NoSuchAlgorithmException {
+        securityService.authenticate(TEST_BUSINESS_USERNAME, TEST_PASSWORD);
+        Assertions.assertTrue(SecurityUtils.isUserLoggedIn());
+        Assertions.assertEquals("Business", securityService.getAuthenticatedUserRole());
+    }
+
+    @Test
+    void getAuthorizedRoutes_studentUser_returnsStudentRoutes() {
+        List<AuthorizedRoute> expectedRoutes = Arrays.asList(
+                new AuthorizedRoute("appview", "AppView", AppView.class),
+                new AuthorizedRoute("student", "Student", StudentUserView.class),
+                new AuthorizedRoute("", "Search Job Advertisement", JobAdvertisementSearchView.class)
+        );
+        PersonDTO student = personRepository.findByEmail(TEST_STUDENT_USERNAME);
+        List<AuthorizedRoute> studentRoutes = securityService.getAuthorizedRoutes(student);
+
+        Assertions.assertTrue(expectedRoutes
+                .stream()
+                .allMatch(exp -> studentRoutes.stream()
+                        .anyMatch(stu ->
+                                exp.route.equals(stu.route) &&
+                                exp.name.equals(stu.name) &&
+                                exp.view.equals(stu.view))));
+    }
+
+    @Test
+    void getAuthorizedRoutes_businessUser_returnsBusinessRoutes() {
+        List<AuthorizedRoute> expectedRoutes = Arrays.asList(
+                new AuthorizedRoute("appview", "AppView", AppView.class),
+                new AuthorizedRoute("jobAd", "Create Job Advertisement", CreateJobAdvertisementView.class),
+                new AuthorizedRoute("", "Business", BusinessView.class)
+        );
+        PersonDTO busines = personRepository.findByEmail(TEST_BUSINESS_USERNAME);
+        List<AuthorizedRoute> businesRoutes = securityService.getAuthorizedRoutes(busines);
+
+        Assertions.assertTrue(expectedRoutes
+                .stream()
+                .allMatch(exp -> businesRoutes.stream()
+                        .anyMatch(bus ->
+                                exp.route.equals(bus.route) &&
+                                        exp.name.equals(bus.name) &&
+                                        exp.view.equals(bus.view))));
+    }
+
+
 }
