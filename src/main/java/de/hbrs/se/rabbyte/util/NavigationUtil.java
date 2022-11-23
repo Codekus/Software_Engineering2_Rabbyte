@@ -16,4 +16,8 @@ public class NavigationUtil {
         UI.getCurrent().navigate("login");
     }
 
+    public static void toRegisterView() {
+        UI.getCurrent().navigate("registration");
+    }
+
 }

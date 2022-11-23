@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.login.LoginForm;
@@ -15,6 +16,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import de.hbrs.se.rabbyte.exception.AuthException;
 import de.hbrs.se.rabbyte.security.SecurityService;
+import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
 
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +31,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
     private final LoginForm login = new LoginForm();
 
     public LoginView(SecurityService securityService){
+
         addClassName("login-view");
         setSizeFull();
         setAlignItems(Alignment.CENTER);
@@ -50,8 +53,11 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
                 throw new RuntimeException(e);
             }
         });
+        Button button = new Button("Registrieren");
+        button.addClickListener(clickEvent -> NavigationUtil.toRegisterView());
+        button.setHeight("10px");
 
-        add(new H1("Herzlich Willkommen"), login);
+        add(new H1("Herzlich Willkommen"), login, button);
     }
 
     @Override
