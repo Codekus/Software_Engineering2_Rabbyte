@@ -1,12 +1,9 @@
 package de.hbrs.se.rabbyte.views;
 
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -53,11 +50,12 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
                 throw new RuntimeException(e);
             }
         });
-        Button button = new Button("Registrieren");
+        Button button = new Button("Konto Erstellen!");
+        Paragraph info = new Paragraph("Sie haben noch kein Rabbyte-Konto?");
         button.addClickListener(clickEvent -> NavigationUtil.toRegisterView());
         button.setHeight("10px");
+        add(new H1("Herzlich Willkommen"), login, info, button);
 
-        add(new H1("Herzlich Willkommen"), login, button);
     }
 
     @Override
