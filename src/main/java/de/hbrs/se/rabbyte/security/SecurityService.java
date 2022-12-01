@@ -120,6 +120,8 @@ public class SecurityService  {
             routes.add(new AuthorizedRoute("student", "Student", StudentUserView.class));
             //routes.add(new AuthorizedRoute("main", "Search Job Advertisement", JobAdvertisementSearchView.class));
             routes.add(new AuthorizedRoute("", "Search Job Advertisement", JobAdvertisementSearchView.class));
+            routes.add(new AuthorizedRoute("message", "Create Message", MessageView.class));
+
         } else if (Objects.equals(getRole(user), "Business")) {
             routes.add(new AuthorizedRoute("jobAd", "Create Job Advertisement", CreateJobAdvertisementView.class));
             //routes.add(new AuthorizedRoute("main", "Business", BusinessView.class));

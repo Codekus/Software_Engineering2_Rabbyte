@@ -1,8 +1,10 @@
 package de.hbrs.se.rabbyte.util;
 
 import com.vaadin.flow.component.combobox.ComboBox;
+import de.hbrs.se.rabbyte.dtos.PersonDTO;
 
 public class Globals {
+
 
     private Globals(){
         throw new IllegalStateException(IllegalState.MESSAGE_UTILS);
@@ -17,7 +19,7 @@ public class Globals {
         return facultyComboBox;
     }
 
-
+    public static final String CURRENT_USER = "current_User";
 
     public static class Path {
 
