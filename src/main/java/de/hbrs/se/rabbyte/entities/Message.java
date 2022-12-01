@@ -34,19 +34,19 @@ public class Message {
     }
 
     @Column(name = "sender_id")
-    public int getSenderId() {
+    public int getSender() {
         return senderId;
     }
-    public void setSenderId(int senderId ) {
+    public void setSender(int senderId ) {
         this.senderId = senderId;
     }
 
     @Column(name = "receiver_id")
-    public int getReceiverId() {
+    public int getReceiver() {
         return receiverId;
     }
 
-    public void setReceiverId(int recieverId) {
+    public void setReceiver(int recieverId) {
         this.receiverId = recieverId;
     }
 
