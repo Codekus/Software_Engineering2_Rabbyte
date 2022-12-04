@@ -51,4 +51,15 @@ public class JobAdvertControl {
                 return repository.findJobAdvertisementBy...?;
         }
         */
+
+        public void editJobAdvert(JobAdvertisementDTO jobAdvertisementDTO){
+
+                this.repository.editJobAdvert(
+                        jobAdvertisementDTO.getId(),
+                        jobAdvertisementDTO.getBusiness(),
+                        jobAdvertisementDTO.getTitle(),
+                        jobAdvertisementDTO.getText(),
+                        jobAdvertisementDTO.getType()
+                );
+        }
 }
