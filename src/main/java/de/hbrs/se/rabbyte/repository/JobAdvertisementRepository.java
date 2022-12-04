@@ -1,5 +1,6 @@
 package de.hbrs.se.rabbyte.repository;
 import de.hbrs.se.rabbyte.entities.Business;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
@@ -31,6 +32,7 @@ public interface JobAdvertisementRepository extends JpaRepository<JobAdvertiseme
     @Query("select j from JobAdvertisement j where j.business.id = :ID")
     List<JobAdvertisement> searchByID(@Param("ID") int ID);
 
+    @Modifying
     @Query("update JobAdvertisement j set j.business = :user_id,j.title = :title, j.text = :text, j.type = :type where j.id = :ID")
     void editJobAdvert(@Param("ID") int ID, @Param("user_id") Business user_id, @Param("title") String title, @Param("text") String text, @Param("type") String type);
 

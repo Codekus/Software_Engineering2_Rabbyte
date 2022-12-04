@@ -28,15 +28,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @PageTitle("Job Ausschreibung bearbeiten")
-
 public class JobAdvertEditView extends VerticalLayout {
 
     private TextField title = new TextField("Stellen Titel");
     private TextArea description = new TextArea("Stellenbeschreibung");
     private ComboBox<String> type = new ComboBox<>("Beschäftigungsart");
-    private Button save = new Button("Ändern");
+    private Button save = new Button("Änderungen speichern");
 
-    private Binder<JobAdvertisementDTOImpl> binder = new Binder(JobAdvertisementDTOImpl.class);
+    private Binder<JobAdvertisementDTOImpl> binder = new Binder<>(JobAdvertisementDTOImpl.class);
 
     @Autowired
     SecurityService securityService;
@@ -45,7 +44,6 @@ public class JobAdvertEditView extends VerticalLayout {
     BusinessRepository businessRepository;
 
     JobAdvertControl jobAdvertControl;
-
 
     JobAdvertisementRepository jobAdvertisementRepository;
 
@@ -97,7 +95,7 @@ public class JobAdvertEditView extends VerticalLayout {
     public List<String> validate(){
 
         List<String> validation = new ArrayList<>();
-        //JobAdvertControl jobAdvertControl = new JobAdvertControl();
+
         if(!jobAdvertControl.validateTitle(title.getValue())){
             validation.add("Invalid Title!");
         }
@@ -124,8 +122,9 @@ public class JobAdvertEditView extends VerticalLayout {
     }
 
     private Component createTitle() {
+        JobAdvertisementDTO oldJobAdvertDTO = jobAdvertisementRepository.findJobAdvertisementById(30000275);
         VerticalLayout layoutVer = new VerticalLayout();
-        layoutVer.add(new H3("Stellenausschreibung ändern"));
+        layoutVer.add(new H3("Stellenausschreibung: \n'" + oldJobAdvertDTO.getTitle() + "'\n ändern"));
         layoutVer.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.valueOf("CENTER"));
         return layoutVer;
     }
@@ -156,8 +155,7 @@ public class JobAdvertEditView extends VerticalLayout {
 
         title.setValue(oldJobAdvertDTO.getTitle());
         description.setValue(oldJobAdvertDTO.getText());
-        String value = oldJobAdvertDTO.getType();
-        type.setValue(value);
+        type.setValue(oldJobAdvertDTO.getType());
 
     }
 
