@@ -12,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 @SpringBootTest
 public class SecurityServiceTest {
@@ -26,12 +29,23 @@ public class SecurityServiceTest {
     @Autowired
     PersonRepository personRepository;
 
-    final static String TEST_STUDENT_USERNAME = "UnitStudentTest@Test.de";
-    final static String TEST_STUDENT2_USERNAME_NOT_ENABLED = "UnitStudentTest2@Test.de";
-    final static String TEST_BUSINESS_USERNAME = "UnitBusinessTest@Test.de";
-    final static String TEST_PASSWORD = "test123321";
+    static String TEST_STUDENT_USERNAME;
+    static String TEST_STUDENT2_USERNAME_NOT_ENABLED;
+    static String TEST_BUSINESS_USERNAME;
+    static String TEST_PASSWORD;
 
     Routes routes;
+
+    @BeforeAll
+    static void setUserCredentials() throws IOException {
+        Properties prop = new Properties();
+        prop.load(new FileInputStream("src/test/ressources/test_credentials.properties"));
+
+        TEST_STUDENT_USERNAME = prop.getProperty("TEST_STUDENT_USERNAME");
+        TEST_STUDENT2_USERNAME_NOT_ENABLED = prop.getProperty("TEST_STUDENT2_USERNAME_NOT_ENABLED");
+        TEST_BUSINESS_USERNAME = prop.getProperty("TEST_BUSINESS_USERNAME");
+        TEST_PASSWORD = prop.getProperty("TEST_PASSWORD");
+    }
 
     @BeforeEach
     void setup(){
