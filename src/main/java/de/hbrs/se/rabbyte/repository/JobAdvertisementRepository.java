@@ -8,6 +8,8 @@ import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Component
@@ -32,6 +34,7 @@ public interface JobAdvertisementRepository extends JpaRepository<JobAdvertiseme
     @Query("select j from JobAdvertisement j where j.business.id = :ID")
     List<JobAdvertisement> searchByID(@Param("ID") int ID);
 
+    @Transactional
     @Modifying
     @Query("update JobAdvertisement j set j.business = :user_id,j.title = :title, j.text = :text, j.type = :type where j.id = :ID")
     void editJobAdvert(@Param("ID") int ID, @Param("user_id") Business user_id, @Param("title") String title, @Param("text") String text, @Param("type") String type);
