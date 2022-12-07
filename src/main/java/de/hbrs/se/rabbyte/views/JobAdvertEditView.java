@@ -71,7 +71,7 @@ public class JobAdvertEditView extends VerticalLayout {
                 Notification.show(validate().toString());
             }else{
                 // Speicherung der Daten über das zuhörige Control-Object.
-                jobAdvertControl.createJobAdvert(createUpdatedJobAdvertDTO());
+                jobAdvertControl.editJobAdvert(createUpdatedJobAdvertDTO());
 
                 Notification.show("Stellausschreibung geändert");
             }
