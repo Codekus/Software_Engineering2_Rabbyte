@@ -38,5 +38,8 @@ public interface JobAdvertisementRepository extends JpaRepository<JobAdvertiseme
     @Modifying
     @Query("update JobAdvertisement j set j.business = :user_id,j.title = :title, j.text = :text, j.type = :type where j.id = :ID")
     void editJobAdvert(@Param("ID") int ID, @Param("user_id") Business user_id, @Param("title") String title, @Param("text") String text, @Param("type") String type);
-
+    @Transactional
+    @Modifying
+    @Query("delete from JobAdvertisement j where j.id = :ID ")
+    void deleteJob(@Param("ID") int ID);
 }

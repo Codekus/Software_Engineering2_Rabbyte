@@ -18,12 +18,17 @@ import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
+import de.hbrs.se.rabbyte.repository.JobAdvertisementRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.service.CrmService;
 import de.hbrs.se.rabbyte.util.NavigationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.icon.Icon;
+
 
 @org.springframework.stereotype.Component
 @Scope("prototype")
@@ -31,14 +36,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @CssImport("./styles/views/JobAdvertisementSearchView/job-advertisements-search-view.css")
 public class BusinessView extends VerticalLayout {
 
+
     @Autowired
     SecurityService securityService;
     Grid<JobAdvertisement> grid = new Grid<>(JobAdvertisement.class);
     private CrmService service;
     Button button;
 
+    JobAdvertisementRepository jobAdvertisementRepository;
 
-    public BusinessView(CrmService service){
+
+
+
+    public BusinessView(CrmService service, JobAdvertisementRepository jobAdvertisementRepository){
+        this.jobAdvertisementRepository = jobAdvertisementRepository;
         this.service = service;
         addClassName("job-advertisement-search-view");
         setSizeFull();
@@ -79,18 +90,30 @@ public class BusinessView extends VerticalLayout {
                 .<JobAdvertisement>of("[[item.type]]")
                 .withProperty("type", JobAdvertisement::getType)
         ).setHeader("Art");
+
         grid.addComponentColumn(jobAdvertisement -> {
-                    Button btn = new Button("Edit", click -> {
+                    Button btn = new Button("Bearbeiten", click -> {
                         Notification.show(jobAdvertisement.getId()+ "");
                         UI.getCurrent().getSession().setAttribute("EditJobad", jobAdvertisement.getId());
                         NavigationUtil.toJobAdvertEditView();
+
                     });
                     return btn;
                 })
-                .setKey("statusBtn");
+                .setKey("EditBtn");
+        grid.addComponentColumn(jobAdvertisement -> {
+                    Button btn = new Button("Löschen", click -> {
+                        Notification.show(jobAdvertisement.getId()+ "Stellenausschreibung wurde gelöscht");
+                        jobAdvertisementRepository.deleteJob(jobAdvertisement.getId());
+                        upload();
+                    });
+                    return btn;
+                })
+                .setKey("DeleteBtn");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         descriptionColumn.setAutoWidth(false);
     }
+
 
     private Component showJobAd(){
         FormLayout layout = new FormLayout();
@@ -99,4 +122,6 @@ public class BusinessView extends VerticalLayout {
         layout.add(button);
         return layout;
     }
+
+
 }
