@@ -124,7 +124,7 @@ public class SecurityService  {
             routes.add(new AuthorizedRoute("jobAd", "Create Job Advertisement", CreateJobAdvertisementView.class));
             //routes.add(new AuthorizedRoute("main", "Business", BusinessView.class));
             routes.add(new AuthorizedRoute("", "Business", BusinessView.class));
-            routes.add(new AuthorizedRoute("edit-jodadvert", "Edit Job Advertisement", JobAdvertEditView.class));
+            routes.add(new AuthorizedRoute("edit-jobadvert", "Edit Job Advertisement", JobAdvertEditView.class));
 
         }
         return routes;

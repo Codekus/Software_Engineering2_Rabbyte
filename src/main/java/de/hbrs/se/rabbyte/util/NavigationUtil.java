@@ -20,4 +20,6 @@ public class NavigationUtil {
         UI.getCurrent().navigate("registration");
     }
 
+    public static void toJobAdvertEditView(){UI.getCurrent().navigate("edit-jobadvert");}
+
 }

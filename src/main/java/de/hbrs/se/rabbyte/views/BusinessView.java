@@ -1,6 +1,7 @@
 package de.hbrs.se.rabbyte.views;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -19,6 +20,7 @@ import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.service.CrmService;
+import de.hbrs.se.rabbyte.util.NavigationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -77,6 +79,15 @@ public class BusinessView extends VerticalLayout {
                 .<JobAdvertisement>of("[[item.type]]")
                 .withProperty("type", JobAdvertisement::getType)
         ).setHeader("Art");
+        grid.addComponentColumn(jobAdvertisement -> {
+                    Button btn = new Button("Edit", click -> {
+                        Notification.show(jobAdvertisement.getId()+ "");
+                        UI.getCurrent().getSession().setAttribute("EditJobad", jobAdvertisement.getId());
+                        NavigationUtil.toJobAdvertEditView();
+                    });
+                    return btn;
+                })
+                .setKey("statusBtn");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         descriptionColumn.setAutoWidth(false);
     }
