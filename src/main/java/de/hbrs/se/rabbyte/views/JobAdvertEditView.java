@@ -1,6 +1,7 @@
 package de.hbrs.se.rabbyte.views;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -23,10 +24,12 @@ import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.repository.JobAdvertisementRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@org.springframework.stereotype.Component
+@Scope("prototype")
 @PageTitle("Job Ausschreibung bearbeiten")
 public class JobAdvertEditView extends VerticalLayout {
 
@@ -34,6 +37,8 @@ public class JobAdvertEditView extends VerticalLayout {
     private TextArea description = new TextArea("Stellenbeschreibung");
     private ComboBox<String> type = new ComboBox<>("Beschäftigungsart");
     private Button save = new Button("Änderungen speichern");
+
+    private int currentJobId;
 
     private Binder<JobAdvertisementDTOImpl> binder = new Binder<>(JobAdvertisementDTOImpl.class);
 
@@ -53,6 +58,7 @@ public class JobAdvertEditView extends VerticalLayout {
         addClassName("create-jobAdvert-view");
         type.setItems("Vollzeit", "Teilzeit", "Praktikum", "Projektarbeit", "Bachelor/ Master");
         //add(createButtonLayoutBack());
+        currentJobId = (Integer) UI.getCurrent().getSession().getAttribute("EditJobad");
         add(createTitle());
         add(createFormLayout());
         add(createButtonLayoutSubmit());
@@ -84,7 +90,7 @@ public class JobAdvertEditView extends VerticalLayout {
         BusinessDTO businessDTO = businessRepository.findBusinessByBusinessID(securityService.getAuthenticatedUser().getId());
         Business business = PersonFactory.createBusiness(businessDTO);
         jobAdvertisementDTO.setBusiness(business);
-        jobAdvertisementDTO.setId(30000275);
+        jobAdvertisementDTO.setId(currentJobId);
         jobAdvertisementDTO.setTitle(title.getValue());
         jobAdvertisementDTO.setType(type.getValue());
         jobAdvertisementDTO.setText(description.getValue());
@@ -122,7 +128,7 @@ public class JobAdvertEditView extends VerticalLayout {
     }
 
     private Component createTitle() {
-        JobAdvertisementDTO oldJobAdvertDTO = jobAdvertisementRepository.findJobAdvertisementById(30000275);
+        JobAdvertisementDTO oldJobAdvertDTO = jobAdvertisementRepository.findJobAdvertisementById(currentJobId);
         VerticalLayout layoutVer = new VerticalLayout();
         layoutVer.add(new H3("Stellenausschreibung: \n'" + oldJobAdvertDTO.getTitle() + "'\n ändern"));
         layoutVer.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.valueOf("CENTER"));
@@ -151,7 +157,7 @@ public class JobAdvertEditView extends VerticalLayout {
     }
 
     private void initTextFields(){
-        JobAdvertisementDTO oldJobAdvertDTO = jobAdvertisementRepository.findJobAdvertisementById(30000275);
+        JobAdvertisementDTO oldJobAdvertDTO = jobAdvertisementRepository.findJobAdvertisementById(currentJobId);
 
         title.setValue(oldJobAdvertDTO.getTitle());
         description.setValue(oldJobAdvertDTO.getText());
