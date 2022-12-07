@@ -23,6 +23,7 @@ import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.repository.JobAdvertisementRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
+import de.hbrs.se.rabbyte.util.NavigationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
@@ -78,8 +79,8 @@ public class JobAdvertEditView extends VerticalLayout {
             }else{
                 // Speicherung der Daten über das zuhörige Control-Object.
                 jobAdvertControl.editJobAdvert(createUpdatedJobAdvertDTO());
-
                 Notification.show("Stellausschreibung geändert");
+                NavigationUtil.toMainView();
             }
         });
 

@@ -91,25 +91,18 @@ public class BusinessView extends VerticalLayout {
                 .withProperty("type", JobAdvertisement::getType)
         ).setHeader("Art");
 
-        grid.addComponentColumn(jobAdvertisement -> {
-                    Button btn = new Button("Bearbeiten", click -> {
-                        Notification.show(jobAdvertisement.getId()+ "");
-                        UI.getCurrent().getSession().setAttribute("EditJobad", jobAdvertisement.getId());
-                        NavigationUtil.toJobAdvertEditView();
+        grid.addComponentColumn(jobAdvertisement -> new Button("Bearbeiten", click -> {
+            UI.getCurrent().getSession().setAttribute("EditJobad", jobAdvertisement.getId());
+            NavigationUtil.toJobAdvertEditView();
 
-                    });
-                    return btn;
-                })
-                .setKey("EditBtn");
-        grid.addComponentColumn(jobAdvertisement -> {
-                    Button btn = new Button("Löschen", click -> {
-                        Notification.show(jobAdvertisement.getId()+ "Stellenausschreibung wurde gelöscht");
+        })).setKey("EditBtn");
+
+        grid.addComponentColumn(jobAdvertisement -> new Button("Löschen", click -> {
+                        Notification.show("Stellenausschreibung wurde gelöscht");
                         jobAdvertisementRepository.deleteJob(jobAdvertisement.getId());
                         upload();
-                    });
-                    return btn;
-                })
-                .setKey("DeleteBtn");
+        })).setKey("DeleteBtn");
+
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
         descriptionColumn.setAutoWidth(false);
     }
