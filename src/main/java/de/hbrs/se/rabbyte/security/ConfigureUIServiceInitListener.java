@@ -1,5 +1,6 @@
 package de.hbrs.se.rabbyte.security;
 
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.RouteConfiguration;
 import de.hbrs.se.rabbyte.views.LoginView;
 import com.vaadin.flow.component.UI;
@@ -21,19 +22,19 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
     public void serviceInit(ServiceInitEvent event) {
         event.getSource().addUIInitListener(uiEvent -> {
             final UI ui = uiEvent.getUI();
-            //ui.addBeforeEnterListener(this::authenticateNavigation);
+            ui.addBeforeEnterListener(this::authenticateNavigation);
         });
     }
 
     private void authenticateNavigation(BeforeEnterEvent event) {
-
+        Notification.show(event.getLocation().getSegments().get(0));
+/*
         if (!LoginView.class.equals(event.getNavigationTarget())
                 && !SecurityUtils.isUserLoggedIn()) {
             if(event.getLocation().getSegments().get(0).equals("registration")){
                 return;
             }
             if(event.getLocation().getSegments().get(0).equals("verification")){
-                System.out.println("lol");
                 return;
             }
             event.rerouteTo(LoginView.class);
@@ -44,6 +45,8 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
                 SecurityUtils.isUserLoggedIn()){
             event.rerouteTo("");
         }
+
+ */
 
 
 
