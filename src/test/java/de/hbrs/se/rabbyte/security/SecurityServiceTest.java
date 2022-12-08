@@ -39,7 +39,14 @@ public class SecurityServiceTest {
     @BeforeAll
     static void setUserCredentials() throws IOException {
         Properties prop = new Properties();
-        prop.load(new FileInputStream("src/test/ressources/test_credentials.properties"));
+        FileInputStream f = null;
+        try{
+            f = new FileInputStream("src/test/ressources/test_credentials.properties");
+            prop.load(f);
+        } finally {
+            f.close();
+        }
+
 
         TEST_STUDENT_USERNAME = prop.getProperty("TEST_STUDENT_USERNAME");
         TEST_STUDENT2_USERNAME_NOT_ENABLED = prop.getProperty("TEST_STUDENT2_USERNAME_NOT_ENABLED");
