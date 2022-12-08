@@ -6,6 +6,19 @@ import de.hbrs.se.rabbyte.dtos.PersonDTO;
 public class Globals {
 
 
+    public static class  LogMessage {
+
+        private LogMessage() {
+            throw new IllegalStateException(IllegalState.MESSAGE_UTILS);
+        }
+
+        public static final String LOG          = "LOG: {}";
+        public static final String CONNECTED = "Während der Verbindung zur Datenbank mit JPA ist \" +\n" +
+                "                        \"ein Fehler aufgetreten.";
+        public static final String ERROR              = "Es ist ein unerwarteter Fehler aufgetreten.";
+
+    }
+
     private Globals(){
         throw new IllegalStateException(IllegalState.MESSAGE_UTILS);
     }
