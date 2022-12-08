@@ -40,15 +40,14 @@ public class BusinessView extends VerticalLayout {
     @Autowired
     SecurityService securityService;
     Grid<JobAdvertisement> grid = new Grid<>(JobAdvertisement.class);
+    @Autowired
     private CrmService service;
     Button button;
-
+    @Autowired
     JobAdvertisementRepository jobAdvertisementRepository;
 
 
-    public BusinessView(CrmService service, JobAdvertisementRepository jobAdvertisementRepository){
-        this.jobAdvertisementRepository = jobAdvertisementRepository;
-        this.service = service;
+    public BusinessView(){
         addClassName("job-advertisement-search-view");
         setSizeFull();
         add(showJobAd());
