@@ -25,12 +25,18 @@ import de.hbrs.se.rabbyte.security.SecurityService;
 import java.util.Optional;
 
 import de.hbrs.se.rabbyte.util.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.Scope;
+
+import javax.annotation.PostConstruct;
 
 /**
  * The main view is a top-level placeholder for other views.
  */
-
-
+@Scope("prototype")
+@org.springframework.stereotype.Service
 //@PWA(name = "HelloCar", shortName = "HelloCar", enableInstallPrompt = false) TODO: whats this??
 public class AppView extends AppLayout implements BeforeEnterObserver {
 
@@ -38,15 +44,18 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
     //private H3 viewTitle;
     private H1 helloUser;
 
+    @Autowired
+    SecurityService securityService;
 
-    private SecurityService securityService;
 
-    public AppView(SecurityService securityService) {
-        this.securityService = securityService;
-        setUpUI();
+
+    public AppView() {
+        //this.securityService = securityService;
+
 
     }
 
+    @PostConstruct
     public void setUpUI() {
         // Anzeige des Toggles über den Drawer
         setPrimarySection(Section.DRAWER);
@@ -61,31 +70,6 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         //addToDrawer(createDrawerContent(menu));
     }
 
-
-    private boolean checkIfUserIsLoggedIn() {
-        // Falls der Benutzer nicht eingeloggt ist, dann wird er auf die Startseite gelenkt
-
-        if(securityService.getAuthenticatedUser() == null){
-            UI.getCurrent().navigate("login");
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    protected void afterNavigation() {
-        super.afterNavigation();
-
-        // Falls der Benutzer nicht eingeloggt ist, dann wird er auf die Startseite gelenkt
-        //if ( !checkIfUserIsLoggedIn() ) return;
-
-        // Der aktuell-selektierte Tab wird gehighlighted.
-
-        // Setzen des aktuellen Names des Tabs
-        //viewTitle.setText(getCurrentPageTitle());
-
-        // Setzen des Vornamens von dem aktuell eingeloggten Benutzer
-    }
 
 
 
@@ -142,7 +126,7 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         MenuItem move = bar.addItem("Mein Profil");
 
         SubMenu moveSubMenu = move.getSubMenu();
-        //moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
+
         moveSubMenu.addItem("Logout",  e -> securityService.logout());
 
         layout.add(topRightPanel);
