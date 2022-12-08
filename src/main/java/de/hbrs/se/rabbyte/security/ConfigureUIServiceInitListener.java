@@ -21,7 +21,7 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
     public void serviceInit(ServiceInitEvent event) {
         event.getSource().addUIInitListener(uiEvent -> {
             final UI ui = uiEvent.getUI();
-            ui.addBeforeEnterListener(this::authenticateNavigation);
+            //ui.addBeforeEnterListener(this::authenticateNavigation);
         });
     }
 
@@ -33,6 +33,7 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
                 return;
             }
             if(event.getLocation().getSegments().get(0).equals("verification")){
+                System.out.println("lol");
                 return;
             }
             event.rerouteTo(LoginView.class);
