@@ -31,7 +31,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
     SecurityService securityService;
 
     public LoginView(){
-
+        Notification.show("login view");
         addClassName("login-view");
         setSizeFull();
         setAlignItems(Alignment.CENTER);
