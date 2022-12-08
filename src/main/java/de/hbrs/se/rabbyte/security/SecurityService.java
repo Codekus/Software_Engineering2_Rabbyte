@@ -2,6 +2,7 @@ package de.hbrs.se.rabbyte.security;
 
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinServletRequest;
+import de.hbrs.se.rabbyte.views.ChatView;
 import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.exception.AuthException;
 import de.hbrs.se.rabbyte.repository.PersonRepository;
@@ -116,6 +117,7 @@ public class SecurityService  {
     public List<AuthorizedRoute> getAuthorizedRoutes(PersonDTO user){
         var routes = new ArrayList<AuthorizedRoute>();
         routes.add(new AuthorizedRoute("appview", "AppView", AppView.class));
+        routes.add(new AuthorizedRoute("chatview", "ChatView", ChatView.class));
         if (Objects.equals(getRole(user), "Student")){
             routes.add(new AuthorizedRoute("student", "Student", StudentUserView.class));
             //routes.add(new AuthorizedRoute("main", "Search Job Advertisement", JobAdvertisementSearchView.class));
