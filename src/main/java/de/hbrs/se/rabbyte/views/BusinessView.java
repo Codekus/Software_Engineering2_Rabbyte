@@ -46,8 +46,6 @@ public class BusinessView extends VerticalLayout {
     JobAdvertisementRepository jobAdvertisementRepository;
 
 
-
-
     public BusinessView(CrmService service, JobAdvertisementRepository jobAdvertisementRepository){
         this.jobAdvertisementRepository = jobAdvertisementRepository;
         this.service = service;
@@ -92,7 +90,7 @@ public class BusinessView extends VerticalLayout {
         ).setHeader("Art");
 
         grid.addComponentColumn(jobAdvertisement -> new Button("Bearbeiten", click -> {
-            UI.getCurrent().getSession().setAttribute("EditJobad", jobAdvertisement.getId());
+            UI.getCurrent().getSession().setAttribute("EditJobad", jobAdvertisement);
             NavigationUtil.toJobAdvertEditView();
 
         })).setKey("EditBtn");

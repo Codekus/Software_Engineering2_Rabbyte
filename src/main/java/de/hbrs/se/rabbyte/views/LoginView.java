@@ -15,6 +15,7 @@ import de.hbrs.se.rabbyte.exception.AuthException;
 import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -24,10 +25,12 @@ import java.security.spec.InvalidKeySpecException;
 @PageTitle("Login | Vaadin CRM")
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
-
     private final LoginForm login = new LoginForm();
 
-    public LoginView(SecurityService securityService){
+    @Autowired
+    SecurityService securityService;
+
+    public LoginView(){
 
         addClassName("login-view");
         setSizeFull();
