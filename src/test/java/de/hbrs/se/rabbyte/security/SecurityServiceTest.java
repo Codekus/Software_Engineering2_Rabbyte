@@ -44,6 +44,7 @@ public class SecurityServiceTest {
             f = new FileInputStream("src/test/ressources/test_credentials.properties");
             prop.load(f);
         } finally {
+            assert f != null;
             f.close();
         }
 
