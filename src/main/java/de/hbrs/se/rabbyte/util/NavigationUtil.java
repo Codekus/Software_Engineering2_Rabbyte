@@ -16,4 +16,10 @@ public class NavigationUtil {
         UI.getCurrent().navigate("login");
     }
 
+    public static void toRegisterView() {
+        UI.getCurrent().navigate("registration");
+    }
+
+    public static void toJobAdvertEditView(){UI.getCurrent().navigate("edit-jobadvert");}
+
 }
