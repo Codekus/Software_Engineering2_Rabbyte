@@ -23,7 +23,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
 
-@Route("login")
+@Route("xx")
 @PageTitle("Login | Vaadin CRM")
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
@@ -71,6 +71,9 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
     PersonRepository personRepository;
     @PostConstruct
     public void setText(){
+        Notification.show("pls");
+        Notification.show(personRepository.getBusiness(20000146).getBusinessName());
+
         info2.setText(personRepository.getBusiness(20000146).getBusinessName());
     }
 
