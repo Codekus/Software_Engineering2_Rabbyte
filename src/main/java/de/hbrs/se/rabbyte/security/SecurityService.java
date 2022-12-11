@@ -1,5 +1,6 @@
 package de.hbrs.se.rabbyte.security;
 
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinServletRequest;
 import de.hbrs.se.rabbyte.dtos.implemented.PersonDTOImpl;
@@ -37,6 +38,7 @@ public class SecurityService  {
 
     public void authenticate(String username, String password) throws AuthException, InvalidKeySpecException, NoSuchAlgorithmException {
 
+        Notification.show("debug print");
         //Erzeuge einen Regulären Ausdruck zum prüfen von wohlgeformtheit
         Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(username);
@@ -49,26 +51,26 @@ public class SecurityService  {
         /* Erzeuge UserDTO durch suchen mittels Email in der Datenbank
            Falls die Email nicht in der Datenbank vorhanden ist, wird der UserDTO auf NULL gesetzt, ansonsten wird ein gültiger UserDTO erzeugt
          */
-        //PersonDTO user = personRepository.findByEmail(username);
+        PersonDTO user = personRepository.findByEmail(username);
 
         /* Prüfe ob der User mit der angegebenen Email überhaupt in der Datenbank existiert
            Falls der User nicht existiert wird eine Exeption geworfen die in der LoginView behandelt wird
         */
-        //if(user == null) {
-        //    throw new AuthException("User does not exist");
-        //}
+        if(user == null) {
+            throw new AuthException("User does not exist");
+        }
 
 
         // Hole das gehashte Passwort aus der Datenbank die dem UserDTO zugehörig ist
-        //String dbpassword = user.getPassword();
+        String dbpassword = user.getPassword();
 
         // Hole den Salt-Wert aus der Datenbank die dem UserDTO zugehörig ist
-        //String salt = user.getSalt();
+        String salt = user.getSalt();
 
         /* Prüfe ob das Passwort aus der Datenbank gleich ist zu dem gehashten Wert, der aus der Eingabe und dem Salt von der Datenbank besteht, ist
            Falls die Passwörter nicht übereinstimmen wird eine Exception geworfen die in der LoginView behandelt wird
         */
-        /*
+
         if (!Objects.equals(dbpassword, CryptographyUtil.encryptPassword(password, CryptographyUtil.fromHex(salt)))) {
             throw new AuthException("wrong password");
         }
@@ -78,9 +80,6 @@ public class SecurityService  {
             throw new AuthException("Der Account ist noch nicht aktiviert");
 
         }
-         */
-
-        PersonDTOImpl user = new PersonDTOImpl();
 
 
 
@@ -114,7 +113,6 @@ public class SecurityService  {
 
 
     public String getRole(PersonDTO user){
-        /*
         if (personRepository.getStudent(user.getId()) != null){
             return "Student";
         }
@@ -124,10 +122,6 @@ public class SecurityService  {
         else{
             return "None";
         }
-
-         */
-
-        return "Business";
     }
     public List<AuthorizedRoute> getAuthorizedRoutes(PersonDTO user){
         var routes = new ArrayList<AuthorizedRoute>();
@@ -157,16 +151,14 @@ public class SecurityService  {
 
     public String getAuthenticatedUserRole() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        //PersonDTO user = personRepository.findByEmail(userName);
-        PersonDTO user = new PersonDTOImpl();
+        PersonDTO user = personRepository.findByEmail(userName);
         return getRole(user);
     }
 
     public int getAuthenticatedUserID() {
-       // String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        //PersonDTO user = personRepository.findPersonByName(userName);
-        return 20000146;
-        //return user.getId();
+        String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        PersonDTO user = personRepository.findPersonByName(userName);
+        return user.getId();
     }
 
 
