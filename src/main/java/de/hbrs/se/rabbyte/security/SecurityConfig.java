@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String LOGIN_PROCESSING_URL = "/login";
 
-    @Autowired
+    //@Autowired
     private UserDetailsService userDetailsService;
     private static final String LOGIN_FAILURE_URL = "/login?error";
     private static final String LOGIN_URL = "/login";
@@ -78,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(user);
     }*/
 
-    @Autowired
+    //@Autowired
     public void globalSecurityConfiguration(AuthenticationManagerBuilder auth) throws Exception {
         //auth.userDetailsService(userDetailsService);
     }
@@ -86,8 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * Allows access to static resources, bypassing Spring Security.
      */
-    @Override
-    public void configure(WebSecurity web) {
+    //@Override
+    public void configurex(WebSecurity web) {
 
        /* web.ignoring().antMatchers(
                 // Client-side JS
