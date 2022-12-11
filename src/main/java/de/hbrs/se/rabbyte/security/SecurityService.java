@@ -82,13 +82,15 @@ public class SecurityService  {
         }
 
 
-
+/*
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(username, "[REDACTED]", Collections.emptyList());
 
         context.setAuthentication(authentication);
         SecurityContextHolder.setContext(context);
+
+ */
         createRoutes(user);
     }
 
@@ -120,7 +122,7 @@ public class SecurityService  {
             return "Business";
         }
         else{
-            return "None";
+            return "Business";
         }
     }
     public List<AuthorizedRoute> getAuthorizedRoutes(PersonDTO user){
@@ -150,15 +152,17 @@ public class SecurityService  {
     }
 
     public String getAuthenticatedUserRole() {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        PersonDTO user = personRepository.findByEmail(userName);
-        return getRole(user);
+        //String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        //PersonDTO user = personRepository.findByEmail(userName);
+        //return getRole(user);
+        return "Business";
     }
 
     public int getAuthenticatedUserID() {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        PersonDTO user = personRepository.findPersonByName(userName);
-        return user.getId();
+        //String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        //PersonDTO user = personRepository.findPersonByName(userName);
+        //return user.getId();
+        return 20000146;
     }
 
 

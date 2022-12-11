@@ -22,7 +22,7 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
     public void serviceInit(ServiceInitEvent event) {
         event.getSource().addUIInitListener(uiEvent -> {
             final UI ui = uiEvent.getUI();
-            ui.addBeforeEnterListener(this::authenticateNavigation);
+            //ui.addBeforeEnterListener(this::authenticateNavigation);
         });
     }
 
