@@ -26,6 +26,7 @@ import java.security.spec.InvalidKeySpecException;
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
     private final LoginForm login = new LoginForm();
+    private Button btn = new Button("test");
 
     @Autowired
     SecurityService securityService;
@@ -39,10 +40,9 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
         login.addLoginListener(event -> {
             try {
-                //securityService.authenticate(event.getUsername(), event.getPassword());
-                Notification.show(securityService.getSth());
-                //UI.getCurrent().navigate("");
-            } catch (Exception e) {
+                securityService.authenticate(event.getUsername(), event.getPassword());
+                UI.getCurrent().navigate("");
+            } catch (AuthException e) {
                 login.setError(true);
                 if(e.getMessage().equals("Der Account ist noch nicht aktiviert")){
                     Utils.triggerDialogMessage("Dieser Account wurde noch nicht aktiviert" , "Bitte aktivieren sie ihren Account, indem sie den Anweisungen in ihrer Registrierung-Email folgen");
@@ -50,13 +50,17 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
                     login.setError(true);
                     Notification.show("Wrong credentials");
                 }
+            } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
             }
         });
         Button button = new Button("Konto Erstellen!");
         Paragraph info = new Paragraph("Sie haben noch kein Rabbyte-Konto?");
         button.addClickListener(clickEvent -> NavigationUtil.toRegisterView());
         button.setHeight("10px");
-        add(new H1("Herzlich Willkommen"), login, info, button);
+
+        btn.addClickListener(buttonClickEvent -> Notification.show(securityService.getSth()));
+        add(new H1("Herzlich Willkommen"), login, info, button, btn);
 
     }
 
