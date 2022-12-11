@@ -2,6 +2,7 @@ package de.hbrs.se.rabbyte.security;
 
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinServletRequest;
+import de.hbrs.se.rabbyte.dtos.implemented.PersonDTOImpl;
 import de.hbrs.se.rabbyte.views.ChatView;
 import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.exception.AuthException;
@@ -48,21 +49,21 @@ public class SecurityService  {
         /* Erzeuge UserDTO durch suchen mittels Email in der Datenbank
            Falls die Email nicht in der Datenbank vorhanden ist, wird der UserDTO auf NULL gesetzt, ansonsten wird ein gültiger UserDTO erzeugt
          */
-        PersonDTO user = personRepository.findByEmail(username);
+        //PersonDTO user = personRepository.findByEmail(username);
 
         /* Prüfe ob der User mit der angegebenen Email überhaupt in der Datenbank existiert
            Falls der User nicht existiert wird eine Exeption geworfen die in der LoginView behandelt wird
         */
-        if(user == null) {
-            throw new AuthException("User does not exist");
-        }
+        //if(user == null) {
+        //    throw new AuthException("User does not exist");
+        //}
 
 
         // Hole das gehashte Passwort aus der Datenbank die dem UserDTO zugehörig ist
-        String dbpassword = user.getPassword();
+        //String dbpassword = user.getPassword();
 
         // Hole den Salt-Wert aus der Datenbank die dem UserDTO zugehörig ist
-        String salt = user.getSalt();
+        //String salt = user.getSalt();
 
         /* Prüfe ob das Passwort aus der Datenbank gleich ist zu dem gehashten Wert, der aus der Eingabe und dem Salt von der Datenbank besteht, ist
            Falls die Passwörter nicht übereinstimmen wird eine Exception geworfen die in der LoginView behandelt wird
@@ -78,6 +79,11 @@ public class SecurityService  {
 
         }
          */
+
+        PersonDTOImpl user = new PersonDTOImpl();
+
+
+
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(username, "[REDACTED]", Collections.emptyList());
@@ -108,6 +114,7 @@ public class SecurityService  {
 
 
     public String getRole(PersonDTO user){
+        /*
         if (personRepository.getStudent(user.getId()) != null){
             return "Student";
         }
@@ -117,6 +124,10 @@ public class SecurityService  {
         else{
             return "None";
         }
+
+         */
+
+        return "Business";
     }
     public List<AuthorizedRoute> getAuthorizedRoutes(PersonDTO user){
         var routes = new ArrayList<AuthorizedRoute>();
@@ -146,14 +157,16 @@ public class SecurityService  {
 
     public String getAuthenticatedUserRole() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        PersonDTO user = personRepository.findByEmail(userName);
+        //PersonDTO user = personRepository.findByEmail(userName);
+        PersonDTO user = new PersonDTOImpl();
         return getRole(user);
     }
 
     public int getAuthenticatedUserID() {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        PersonDTO user = personRepository.findPersonByName(userName);
-        return user.getId();
+       // String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        //PersonDTO user = personRepository.findPersonByName(userName);
+        return 20000146;
+        //return user.getId();
     }
 
 
