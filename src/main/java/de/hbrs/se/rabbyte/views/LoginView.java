@@ -39,9 +39,10 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
         login.addLoginListener(event -> {
             try {
-                securityService.authenticate(event.getUsername(), event.getPassword());
-                UI.getCurrent().navigate("");
-            } catch (AuthException e) {
+                //securityService.authenticate(event.getUsername(), event.getPassword());
+                Notification.show(securityService.getSth());
+                //UI.getCurrent().navigate("");
+            } catch (Exception e) {
                 login.setError(true);
                 if(e.getMessage().equals("Der Account ist noch nicht aktiviert")){
                     Utils.triggerDialogMessage("Dieser Account wurde noch nicht aktiviert" , "Bitte aktivieren sie ihren Account, indem sie den Anweisungen in ihrer Registrierung-Email folgen");
@@ -49,8 +50,6 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
                     login.setError(true);
                     Notification.show("Wrong credentials");
                 }
-            } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
             }
         });
         Button button = new Button("Konto Erstellen!");

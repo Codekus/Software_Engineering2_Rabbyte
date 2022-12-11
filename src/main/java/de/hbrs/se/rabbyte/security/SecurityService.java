@@ -124,8 +124,12 @@ public class SecurityService  {
             return "Business";
         }
         else{
-            return "Business";
+            return "None";
         }
+    }
+
+    public String getSth(){
+        return personRepository.getBusiness(20000146).getBusinessName();
     }
     public List<AuthorizedRoute> getAuthorizedRoutes(PersonDTO user){
         var routes = new ArrayList<AuthorizedRoute>();
