@@ -31,6 +31,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+
+
+
+
         // Vaadin handles CSRF internally
         http.csrf().disable()
 
@@ -56,6 +61,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Configure logout
                 .and().logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL);
 
+
+
+
+
     }
 
     /*@Bean
@@ -71,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void globalSecurityConfiguration(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        //auth.userDetailsService(userDetailsService);
     }
 
     /**
@@ -79,7 +88,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers(
+
+       /* web.ignoring().antMatchers(
                 // Client-side JS
                 "/VAADIN/**",
 
@@ -101,5 +111,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // (development mode) H2 debugging console
                 "/h2-console/**");
+           */
     }
+
+
 }
