@@ -73,7 +73,7 @@ public class SecurityService  {
         /* Prüfe ob das Passwort aus der Datenbank gleich ist zu dem gehashten Wert, der aus der Eingabe und dem Salt von der Datenbank besteht, ist
            Falls die Passwörter nicht übereinstimmen wird eine Exception geworfen die in der LoginView behandelt wird
         */
-/*
+
         if (!Objects.equals(dbpassword, CryptographyUtil.encryptPassword(password, CryptographyUtil.fromHex(salt)))) {
             throw new AuthException("wrong password");
         }
@@ -84,10 +84,10 @@ public class SecurityService  {
 
         }
 
- */
 
 
-/*
+
+
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(username, "[REDACTED]", Collections.emptyList());
@@ -95,7 +95,7 @@ public class SecurityService  {
         context.setAuthentication(authentication);
         SecurityContextHolder.setContext(context);
 
- */
+
         createRoutes(user);
     }
 
@@ -161,17 +161,17 @@ public class SecurityService  {
     }
 
     public String getAuthenticatedUserRole() {
-        //String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        //PersonDTO user = personRepository.findByEmail(userName);
-        //return getRole(user);
-        return "Business";
+        String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        PersonDTO user = personRepository.findByEmail(userName);
+        return getRole(user);
+
     }
 
     public int getAuthenticatedUserID() {
-        //String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        //PersonDTO user = personRepository.findPersonByName(userName);
-        //return user.getId();
-        return 20000146;
+        String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+        PersonDTO user = personRepository.findPersonByName(userName);
+        return user.getId();
+
     }
 
 

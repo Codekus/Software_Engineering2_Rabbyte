@@ -86,10 +86,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * Allows access to static resources, bypassing Spring Security.
      */
-    //@Override
-    public void configurex(WebSecurity web) {
 
-       /* web.ignoring().antMatchers(
+    public void configure(WebSecurity web) {
+
+        web.ignoring().antMatchers(
                 // Client-side JS
                 "/VAADIN/**",
 
@@ -111,7 +111,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // (development mode) H2 debugging console
                 "/h2-console/**");
-           */
+
     }
 
 

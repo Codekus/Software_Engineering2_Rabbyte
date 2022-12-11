@@ -12,14 +12,14 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import de.hbrs.se.rabbyte.exception.AuthException;
-import de.hbrs.se.rabbyte.repository.PersonRepository;
+
 import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
-import org.aspectj.weaver.ast.Not;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PostConstruct;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
@@ -29,15 +29,11 @@ import java.security.spec.InvalidKeySpecException;
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
     private final LoginForm login = new LoginForm();
-    private Button btn = new Button("test");
-    Paragraph info2 = new Paragraph("testtext");
-    Paragraph info3 = new Paragraph("xxx");
 
     @Autowired
     SecurityService securityService;
 
     public LoginView(){
-        Notification.show("login view");
         addClassName("login-view");
         setSizeFull();
         setAlignItems(Alignment.CENTER);
@@ -65,36 +61,20 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         button.addClickListener(clickEvent -> NavigationUtil.toRegisterView());
         button.setHeight("10px");
 
-        btn.addClickListener(buttonClickEvent -> {
-        //   NavigationUtil.toLoginView();
-            Notification.show("sth");
-            Notification.show(personRepository.getBusiness(20000146).getBusinessName() + " debug");
-            Notification.show("sth2");
-        });
-        add(new H1("Herzlich Willkommen"), login, info, button, btn,info2,info3);
+        add(new H1("Herzlich Willkommen"), login, info, button);
 
-    }
-    @Autowired
-    PersonRepository personRepository;
-    @PostConstruct
-    public void setText(){
-        info3.setText("BITTE");
-        Notification.show("pls");
-        //Notification.show(personRepository.getBusiness(20000146).getBusinessName());
-
-        //info2.setText(personRepository.getBusiness(20000146).getBusinessName());
     }
 
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
         // inform the user about an authentication error
-        /*if(beforeEnterEvent.getLocation()
+        if(beforeEnterEvent.getLocation()
                 .getQueryParameters()
                 .getParameters()
                 .containsKey("error")) {
             login.setError(true);
         }
 
-         */
+
     }
 }
