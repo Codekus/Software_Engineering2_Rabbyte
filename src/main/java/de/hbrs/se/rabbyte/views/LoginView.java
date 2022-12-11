@@ -16,6 +16,7 @@ import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -64,7 +65,11 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         button.addClickListener(clickEvent -> NavigationUtil.toRegisterView());
         button.setHeight("10px");
 
-        btn.addClickListener(buttonClickEvent -> Notification.show(securityService.getSth()));
+        btn.addClickListener(buttonClickEvent -> {
+            NavigationUtil.toLoginView();
+            Notification.show("sth");
+            Notification.show(personRepository.getBusiness(20000146).getBusinessName() + " debug");
+        });
         add(new H1("Herzlich Willkommen"), login, info, button, btn,info2,info3);
 
     }
