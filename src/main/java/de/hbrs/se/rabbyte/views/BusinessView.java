@@ -24,7 +24,7 @@ import de.hbrs.se.rabbyte.service.CrmService;
 import de.hbrs.se.rabbyte.util.NavigationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.context.SecurityContextHolder;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.icon.Icon;

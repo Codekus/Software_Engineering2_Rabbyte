@@ -3,6 +3,7 @@ package de.hbrs.se.rabbyte.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+/*
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -13,22 +14,26 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+ */
+
 
 //@EnableWebSecurity
-@Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Configuration //extends WebSecurityConfigurerAdapter
+public class SecurityConfig  {
 
     private static final String LOGIN_PROCESSING_URL = "/login";
 
     //@Autowired
-    private UserDetailsService userDetailsService;
+    //private UserDetailsService userDetailsService;
     private static final String LOGIN_FAILURE_URL = "/login?error";
     private static final String LOGIN_URL = "/login";
     private static final String LOGOUT_SUCCESS_URL = "/login";
-
+/*
     /**
      * Require login to access internal pages and configure login form.
      */
+
+    /*
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -67,6 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+     */
+
     /*@Bean
     @Override
     public UserDetailsService userDetailsService() {
@@ -79,15 +86,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }*/
 
     //@Autowired
-    public void globalSecurityConfiguration(AuthenticationManagerBuilder auth) throws Exception {
+ //   public void globalSecurityConfiguration(AuthenticationManagerBuilder auth) throws Exception {
         //auth.userDetailsService(userDetailsService);
-    }
+ //   }
 
     /**
      * Allows access to static resources, bypassing Spring Security.
      */
-    //@Override
-    public void configurex(WebSecurity web) {
+//    @Override
+//    public void configure(WebSecurity web) {
 
        /* web.ignoring().antMatchers(
                 // Client-side JS
@@ -112,7 +119,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // (development mode) H2 debugging console
                 "/h2-console/**");
            */
-    }
+ //   }
 
 
 }

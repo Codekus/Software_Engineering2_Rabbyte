@@ -11,11 +11,14 @@ import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.util.CryptographyUtil;
 import de.hbrs.se.rabbyte.views.*;
 import org.springframework.beans.factory.annotation.Autowired;
+/*
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+
+ */
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
@@ -151,10 +154,10 @@ public class SecurityService  {
     }
 
     public PersonDTO getAuthenticatedUser() {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        PersonDTO user = personRepository.findByEmail(userName);
+    //    String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+    //    PersonDTO user = personRepository.findByEmail(userName);
 
-        return user;
+        return null;
     }
 
     public String getAuthenticatedUserRole() {
@@ -174,12 +177,14 @@ public class SecurityService  {
 
 
     public void logout() {
-
+/*
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
         logoutHandler.logout(
                 VaadinServletRequest.getCurrent().getHttpServletRequest(), null,
                 null);
         SecurityContextHolder.getContext().setAuthentication(null);
 
+
+ */
     }
 }
