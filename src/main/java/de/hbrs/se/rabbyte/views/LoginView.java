@@ -80,9 +80,9 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
     public void setText(){
         info3.setText("BITTE");
         Notification.show("pls");
-        Notification.show(personRepository.getBusiness(20000146).getBusinessName());
+        //Notification.show(personRepository.getBusiness(20000146).getBusinessName());
 
-        info2.setText(personRepository.getBusiness(20000146).getBusinessName());
+        //info2.setText(personRepository.getBusiness(20000146).getBusinessName());
     }
 
     @Override
