@@ -67,13 +67,17 @@ public class SecurityService  {
         /* Prüfe ob das Passwort aus der Datenbank gleich ist zu dem gehashten Wert, der aus der Eingabe und dem Salt von der Datenbank besteht, ist
            Falls die Passwörter nicht übereinstimmen wird eine Exception geworfen die in der LoginView behandelt wird
         */
+        /*
         if (!Objects.equals(dbpassword, CryptographyUtil.encryptPassword(password, CryptographyUtil.fromHex(salt)))) {
             throw new AuthException("wrong password");
         }
+
+
         if(!user.getEnabled()) {
             throw new AuthException("Der Account ist noch nicht aktiviert");
 
         }
+         */
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(username, "[REDACTED]", Collections.emptyList());
