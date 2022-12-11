@@ -66,9 +66,10 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         button.setHeight("10px");
 
         btn.addClickListener(buttonClickEvent -> {
-            NavigationUtil.toLoginView();
+        //   NavigationUtil.toLoginView();
             Notification.show("sth");
             Notification.show(personRepository.getBusiness(20000146).getBusinessName() + " debug");
+            Notification.show("sth2");
         });
         add(new H1("Herzlich Willkommen"), login, info, button, btn,info2,info3);
 
