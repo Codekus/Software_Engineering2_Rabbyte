@@ -5,7 +5,7 @@
         <parameter name="browser" value="chrome"/>
         <packages>
             <package name="selenium.tests"></package>
-            <package name="de.hbrs.se.rabbyte.tests.security"></package>
+            <package name="de.hbrs.se.rabbyte.security"></package>
         </packages>
     </test> <!-- Test -->
 </suite> <!-- Suite -->
