@@ -2,15 +2,28 @@ package de.hbrs.se.rabbyte.security;
 
 import com.github.mvysny.kaributesting.v10.MockVaadin;
 import com.github.mvysny.kaributesting.v10.Routes;
+import de.hbrs.se.rabbyte.RabbyteApplication;
 import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.exception.AuthException;
 import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.views.*;
+//import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.*;
+import org.junit.runner.RunWith;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.*;
 import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.testng.annotations.Test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,12 +34,12 @@ import java.util.List;
 import java.util.Properties;
 
 @SpringBootTest
-public class SecurityServiceTest {
+public class SecurityServiceTest extends AbstractTestNGSpringContextTests {
 
-    @Autowired
+    //@Autowired
     SecurityService securityService;
 
-    @Autowired
+    //@Autowired
     PersonRepository personRepository;
 
     static String TEST_STUDENT_USERNAME;
@@ -36,7 +49,7 @@ public class SecurityServiceTest {
 
     Routes routes;
 
-    @BeforeAll
+    @BeforeClass
     static void setUserCredentials() throws IOException {
         Properties prop = new Properties();
         FileInputStream f = null;
@@ -55,19 +68,23 @@ public class SecurityServiceTest {
         TEST_PASSWORD = prop.getProperty("TEST_PASSWORD");
     }
 
-    @BeforeEach
+    @BeforeMethod
     void setup(){
+
+        this.securityService = applicationContext.getBean(SecurityService.class);
+        this.personRepository = applicationContext.getBean(PersonRepository.class);
+
         MockitoAnnotations.initMocks(this);
         routes = new Routes().autoDiscoverViews("de.hbrs.se.rabbyte");
         MockVaadin.setup(routes);
     }
 
-    @AfterEach
+    @AfterMethod
     void destroyAuthentication(){
         SecurityContextHolder.getContext().setAuthentication(null);
     }
 
-    @AfterAll
+    @AfterClass
     static void tearDown(){
         MockVaadin.tearDown();
     }
