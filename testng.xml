@@ -4,7 +4,7 @@
     <test name="Rabbyte">
         <parameter name="browser" value="chrome"/>
         <packages>
-            <package name="de.hbrs.se.rabbyte.security"></package>
+            <package name="de.hbrs.se.rabbyte.tests"></package>
             <package name="selenium.tests"></package>
         </packages>
     </test> <!-- Test -->
