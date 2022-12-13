@@ -10,6 +10,7 @@ import java.time.Duration;
 
 public class BaseFunctions extends TestSetup{
 
+
     public String url = "http://localhost:8080/login";
 
     Duration waitTime = Duration.ofSeconds(7);

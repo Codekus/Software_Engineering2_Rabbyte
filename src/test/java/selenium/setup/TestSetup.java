@@ -18,8 +18,6 @@ import java.util.concurrent.TimeUnit;
 
 
 public class TestSetup {
-
-
     public static RemoteWebDriver driver;
 
     @BeforeClass(alwaysRun = true)
