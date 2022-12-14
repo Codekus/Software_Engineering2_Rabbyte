@@ -1,8 +1,11 @@
 package de.hbrs.se.rabbyte.views;
 
+import com.sun.xml.bind.v2.TODO;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -12,6 +15,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
+import com.vaadin.flow.router.RouterLink;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import com.vaadin.flow.component.textfield.TextField;
@@ -28,11 +32,11 @@ import org.springframework.context.annotation.Scope;
 @CssImport("./styles/views/JobAdvertisementSearchView/job-advertisements-search-view.css")
 //@CssImport(themeFor = "vaadin-grid",value="./styles/views/JobAdvertisementSearchView/job-advertisements-search-view.css")
 public class JobAdvertisementSearchView extends VerticalLayout {
+    private final CrmService service;
     Grid<JobAdvertisement> grid = new Grid<>(JobAdvertisement.class);
     TextField searchField = new TextField();
     H1 infoMessage = new H1();
 
-    private CrmService service;
 
     public JobAdvertisementSearchView(CrmService service){
         this.service = service;
@@ -120,10 +124,13 @@ public class JobAdvertisementSearchView extends VerticalLayout {
     private <T> void findPath(T idType) {
         if (idType instanceof Business) {
             //getUI().get().navigate("create_JobAdvert" +  ((Business) idType).getId());
+
             Notification.show(((Business) idType).getId() + " Business");
         } else if (idType instanceof JobAdvertisement) {
+            //TODO add is present later on
+            getUI().get().navigate(JobAdvertisementView.class, ((JobAdvertisement) idType).getId());
             //getUI().get().navigate("create_JobAdvert" +  ((JobAdvertisement) idType).getId());
-            Notification.show(((JobAdvertisement) idType).getId() + " Job Advert");
+            //Notification.show(((JobAdvertisement) idType).getId() + " Job Advert");
         }
     }
 
