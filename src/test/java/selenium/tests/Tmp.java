@@ -8,17 +8,14 @@ import selenium.setup.RegistrationOP;
 public class Tmp extends BaseFunctions{
 
     LoginPO loginPO = new LoginPO();
-    RegistrationOP registrationOP = new RegistrationOP();
+
     @Test
     void test1(){
         loginPO.openLogin();
         loginPO.enterName("jobad@...");
     }
 
-    @Test
-    void registrationFail() {
-        registrationOP.openRegistration();
-        registrationOP.enterName("kai");    }
+
 
 
 }

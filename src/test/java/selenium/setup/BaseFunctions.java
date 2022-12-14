@@ -15,9 +15,9 @@ public class BaseFunctions extends TestSetup{
 
     Duration waitTime = Duration.ofSeconds(7);
 
-    public void openLogin(){
+    /*public void openLogin(){
         driver.get(url);
-    }
+    }*/
 
     public void clickElement(By by){
         new WebDriverWait(driver, waitTime)
@@ -48,5 +48,10 @@ public class BaseFunctions extends TestSetup{
         SearchContext shadowRoot = shadowHost.getShadowRoot();
         return shadowRoot;
 
+    }
+
+    public String getString(By by){
+        WebElement e = driver.findElement(by);
+        return e.getText();
     }
 }
