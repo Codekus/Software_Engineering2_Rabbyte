@@ -3,9 +3,15 @@
 <suite name="Rabbyte Automation Test">
     <test name="Rabbyte Selenium">
         <parameter name="browser" value="chrome"/>
-        <packages>
-            <package name="selenium.tests"></package>
-        </packages>
-    </test> <!-- Test <package name="de.hbrs.se.rabbyte.security"></package> -->
+
+    <!--
+    <packages>
+        <package name="selenium.tests"></package>
+    </packages>
+    -->
+        <classes>
+            <class name="de.hbrs.se.rabbyte.control.VerificationControlTest"></class>
+        </classes>
+</test> <!-- Test <package name="de.hbrs.se.rabbyte.security"></package> -->
 </suite> <!-- Suite -->
 
