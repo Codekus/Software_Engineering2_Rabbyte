@@ -143,13 +143,13 @@ public class SecurityService  {
             //routes.add(new AuthorizedRoute("main", "Search Job Advertisement", JobAdvertisementSearchView.class));
             routes.add(new AuthorizedRoute("", "Search Job Advertisement", JobAdvertisementSearchView.class));
             routes.add(new AuthorizedRoute("Unternehmenssuche", "Search Company", UnternehmenSearchView.class));
+            routes.add(new AuthorizedRoute("business-profile", "Show business profile", BusinessProfileView.class));
         } else if (Objects.equals(getRole(user), "Business")) {
             routes.add(new AuthorizedRoute("jobAd", "Create Job Advertisement", CreateJobAdvertisementView.class));
             //routes.add(new AuthorizedRoute("main", "Business", BusinessView.class));
             routes.add(new AuthorizedRoute("", "Business", BusinessView.class));
-            routes.add(new AuthorizedRoute("business-profile", "Show business profile", BusinessProfileView.class));
             routes.add(new AuthorizedRoute("edit-jobadvert", "Edit Job Advertisement", JobAdvertEditView.class));
-
+            routes.add(new AuthorizedRoute("business-profile", "Show business profile", BusinessProfileView.class));
         }
         return routes;
     }
