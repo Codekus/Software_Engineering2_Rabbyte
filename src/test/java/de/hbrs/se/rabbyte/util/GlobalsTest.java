@@ -2,7 +2,7 @@ package de.hbrs.se.rabbyte.util;
 
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.data.provider.Query;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;

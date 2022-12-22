@@ -1,8 +1,9 @@
 package de.hbrs.se.rabbyte.entities;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,7 +18,7 @@ class VerificationCodeTest {
 
     @Mock
     Person person;
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
         verificationCode = new VerificationCode();
         person = new Person();

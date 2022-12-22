@@ -36,10 +36,8 @@ import java.util.Properties;
 @SpringBootTest
 public class SecurityServiceTest extends AbstractTestNGSpringContextTests {
 
-    //@Autowired
     SecurityService securityService;
 
-    //@Autowired
     PersonRepository personRepository;
 
     static String TEST_STUDENT_USERNAME;

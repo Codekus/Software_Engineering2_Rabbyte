@@ -1,4 +1,5 @@
 package de.hbrs.se.rabbyte.control;
+
 import com.github.mvysny.kaributesting.v10.MockVaadin;
 import com.github.mvysny.kaributesting.v10.Routes;
 import de.hbrs.se.rabbyte.RabbyteApplication;
@@ -22,10 +23,8 @@ import org.testng.annotations.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//@DataJpaTest
 @SpringBootTest
-@AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY )
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY)
 @Sql(scripts = {"file:src/test/ressources/rabbyte_schema.sql ", "file:src/test/ressources/rabbyte_data.sql"})
 @Transactional()
 class VerificationControlTest extends AbstractTransactionalTestNGSpringContextTests {
@@ -38,7 +37,7 @@ class VerificationControlTest extends AbstractTransactionalTestNGSpringContextTe
     private VerificationCodeRepository verificationCodeRepository;
 
     @BeforeMethod
-    void setup(){
+    void setup() {
         this.verificationControl = applicationContext.getBean(VerificationControl.class);
         this.verificationCodeRepository = applicationContext.getBean(VerificationCodeRepository.class);
     }

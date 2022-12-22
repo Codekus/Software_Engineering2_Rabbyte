@@ -1,8 +1,8 @@
 package de.hbrs.se.rabbyte.entities;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 import org.mockito.Mock;
+import org.testng.annotations.BeforeMethod;
 
 import java.time.LocalDate;
 
@@ -17,7 +17,7 @@ class ApplicationTest {
     JobAdvertisement jobAdvertisement;
     @Mock
     Student student;
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
         jobAdvertisement = new JobAdvertisement();
         student = new Student();

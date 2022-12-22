@@ -2,8 +2,8 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 
 
 import de.hbrs.se.rabbyte.entities.Person;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.mockito.Mock;
 import org.springframework.security.core.parameters.P;
 
@@ -15,7 +15,7 @@ class RegistrationDTOImplTest {
     private static final String REGISTRATION_REPEAT_PW = "12345";
     @Mock
     private Person person;
-    @BeforeEach
+    @BeforeMethod
     void setup() {
         registrationDTO.setRepeatPassword(REGISTRATION_REPEAT_PW);
         person = new Person();

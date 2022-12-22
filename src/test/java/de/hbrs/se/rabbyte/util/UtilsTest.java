@@ -2,7 +2,7 @@ package de.hbrs.se.rabbyte.util;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.VaadinSession;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 import org.mockito.Mockito;
 
 import java.lang.reflect.Constructor;

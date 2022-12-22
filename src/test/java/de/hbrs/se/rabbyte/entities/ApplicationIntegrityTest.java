@@ -1,15 +1,19 @@
 package de.hbrs.se.rabbyte.entities;
 
 
+import de.hbrs.se.rabbyte.control.VerificationControl;
 import de.hbrs.se.rabbyte.dtos.ApplicationDTO;
 import de.hbrs.se.rabbyte.repository.ApplicationRepository;
+import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -19,10 +23,9 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 @AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY )
 @Sql(scripts = {"file:src/test/ressources/rabbyte_schema.sql ", "file:src/test/ressources/rabbyte_data.sql"})
 @AutoConfigureEmbeddedDatabase
-public class ApplicationIntegrityTest {
+public class ApplicationIntegrityTest extends AbstractTransactionalTestNGSpringContextTests {
 
 
-    @Autowired
     ApplicationRepository applicationRepository;
 
     private ApplicationDTO applicationDTO;
@@ -33,8 +36,11 @@ public class ApplicationIntegrityTest {
     private int studentId;
     private String applicationText;
 
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
+
+        this.applicationRepository = applicationContext.getBean(ApplicationRepository.class);
+
         id = 10000001;
         jobAdvertisementId = 30000087;
         studentId = 20000050;

@@ -1,8 +1,9 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -17,7 +18,7 @@ class RegistrationStudentDTOImplTest {
     @Mock
     private StudentDTOImpl studentDTO;
 
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
 
         studentDTO = new StudentDTOImpl();

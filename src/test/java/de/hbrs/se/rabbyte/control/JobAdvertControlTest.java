@@ -6,50 +6,50 @@ import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.repository.JobAdvertisementRepository;
+import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.Ignore;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.util.Properties;
 
 @SpringBootTest
-@AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY )
+@AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY)
 @Sql(scripts = {"file:src/test/ressources/rabbyte_schema.sql ", "file:src/test/ressources/rabbyte_data.sql"})
 @Transactional
-public class JobAdvertControlTest {
+public class JobAdvertControlTest extends AbstractTransactionalTestNGSpringContextTests {
 
-    @Autowired
     private JobAdvertControl jobAdvertControl;
 
-    @Autowired
     JobAdvertisementRepository jobAdvertisementRepository;
 
-    @Autowired
     BusinessRepository businessRepository;
 
     final int jobID = 30000087;
     String editText = "new Text";
     String editTitle = "new Title";
 
+    @BeforeMethod
+    void setup() {
+        this.businessRepository = applicationContext.getBean(BusinessRepository.class);
+        this.jobAdvertisementRepository = applicationContext.getBean(JobAdvertisementRepository.class);
+        this.jobAdvertControl = applicationContext.getBean(JobAdvertControl.class);
+    }
+
 
     @Test
-    @Ignore
-    void editJobAdvert_editJobAdvertValues_valuesChanged(){
-
-        JobAdvertisementDTOImpl JobAdvertisementDTO = new JobAdvertisementDTOImpl();
-
-        Assertions.assertEquals(JobAdvertisementDTO.getText(), editText);
-        Assertions.assertEquals(JobAdvertisementDTO.getTitle(), editTitle);
-
+    void editJobAdvert_editJobAdvertValues_valuesChanged() {
         Business business = PersonFactory.createBusiness(businessRepository
                 .findBusinessById(20000090));
 
-        JobAdvertisementDTO = new JobAdvertisementDTOImpl();
+        JobAdvertisementDTOImpl JobAdvertisementDTO = new JobAdvertisementDTOImpl();
         JobAdvertisementDTO.setBusiness(business);
         JobAdvertisementDTO.setId(jobID);
         JobAdvertisementDTO.setTitle(editTitle);

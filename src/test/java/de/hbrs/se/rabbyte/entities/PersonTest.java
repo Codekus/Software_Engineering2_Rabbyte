@@ -1,7 +1,7 @@
 package de.hbrs.se.rabbyte.entities;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,7 +19,7 @@ class PersonTest {
     private static final String STREET_NUMBER = "1";
     private static final String SALT = "FFFFFFFFF";
 
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
         person.setId(100);
         person.setEmail(EMAIL);

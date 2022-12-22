@@ -1,7 +1,7 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeMethod;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,7 +20,7 @@ class GeneralPersonDTOImplTest {
     private static final String SALT = "5EFA521906785E5E37F2BED9C06712306FDF8CF21A15AB80E58DBF0FDF3161FC3198969B7550B891271CFDA08D5272E08FC1FB47A759CA6526EA0D15858DC56E";
     private static final boolean ENABLED = false;
 
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
         personDTO.setId(100);
         personDTO.setEmail(EMAIL);

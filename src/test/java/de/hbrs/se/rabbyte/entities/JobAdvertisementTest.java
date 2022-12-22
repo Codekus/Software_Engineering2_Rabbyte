@@ -1,8 +1,9 @@
 package de.hbrs.se.rabbyte.entities;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +17,7 @@ class JobAdvertisementTest {
     @Mock
     private Business business;
 
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
         jobAdvertisement = new JobAdvertisement();
         business = new Business();

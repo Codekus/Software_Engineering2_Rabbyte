@@ -6,17 +6,21 @@ import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.entities.Student;
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-@ExtendWith(MockitoExtension.class)
+
 class PersonFactoryTest {
 
     private static final String exceptionMessage =
@@ -45,8 +49,14 @@ class PersonFactoryTest {
 
     private static final String BUSINESS_MAIL = "musterman@gmbh.de";
     private static final String BUSINESS_NAME = "Mustermann Gmbh";
+
+    @BeforeMethod
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+    }
+
     @Test
-    void createStudent()  {
+    void createStudent() {
         Student student;
         when(studentDTO.getPassword()).thenReturn(PASSWORD);
         when(studentDTO.getEmail()).thenReturn(EMAIL_STUDENT);
@@ -57,11 +67,11 @@ class PersonFactoryTest {
         student = PersonFactory.createStudent(studentDTO);
 
         assertTrue(student instanceof Student);
-        assertEquals(128 , student.getPassword().length());
+        assertEquals(128, student.getPassword().length());
         assertEquals(EMAIL_STUDENT, student.getEmail());
         assertEquals(STUDENT_FIRST_NAME, student.getFirstName());
         assertEquals(STUDENT_LAST_NAME, student.getLastName());
-        assertEquals(128 , student.getSalt().length());
+        assertEquals(128, student.getSalt().length());
 
     }
 
@@ -74,10 +84,10 @@ class PersonFactoryTest {
         when(businessDTO.getBusinessName()).thenReturn(BUSINESS_NAME);
 
         business = PersonFactory.createBusiness(businessDTO);
-        assertEquals(128 , business.getPassword().length());
+        assertEquals(128, business.getPassword().length());
         assertEquals(BUSINESS_MAIL, business.getEmail());
         assertEquals(BUSINESS_NAME, business.getBusinessName());
-        assertEquals(128 , business.getSalt().length());
+        assertEquals(128, business.getSalt().length());
 
     }
 
@@ -88,7 +98,7 @@ class PersonFactoryTest {
         Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);
         assertEquals(exceptionMessage, exceptionThatWasThrown.getMessage());
         constructor.setAccessible(true);
-        assertThrows(ReflectiveOperationException.class,constructor::newInstance);
+        assertThrows(ReflectiveOperationException.class, constructor::newInstance);
 
     }
 
@@ -102,16 +112,16 @@ class PersonFactoryTest {
         assertNotNull(personDTO);
         assertTrue(personDTO instanceof PersonDTO);
 
-        assertEquals(ID , personDTO.getId());
-        assertEquals(EMAIL_STUDENT , personDTO.getEmail());
-        assertEquals(PASSWORD , personDTO.getPassword());
-        assertEquals(PLZ , personDTO.getPlz());
-        assertEquals(CITY , personDTO.getCity());
-        assertEquals(COUNTRY , personDTO.getCountry());
-        assertEquals(STREET , personDTO.getStreet());
-        assertEquals(STREETNUMBER , personDTO.getStreetNumber());
-        assertEquals(SALT , personDTO.getSalt());
-        assertEquals(false , personDTO.getEnabled());
+        assertEquals(ID, personDTO.getId());
+        assertEquals(EMAIL_STUDENT, personDTO.getEmail());
+        assertEquals(PASSWORD, personDTO.getPassword());
+        assertEquals(PLZ, personDTO.getPlz());
+        assertEquals(CITY, personDTO.getCity());
+        assertEquals(COUNTRY, personDTO.getCountry());
+        assertEquals(STREET, personDTO.getStreet());
+        assertEquals(STREETNUMBER, personDTO.getStreetNumber());
+        assertEquals(SALT, personDTO.getSalt());
+        assertEquals(false, personDTO.getEnabled());
     }
 
     @Test

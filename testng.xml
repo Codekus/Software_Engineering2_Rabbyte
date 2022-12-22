@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!DOCTYPE suite
+        SYSTEM 'http://testng.org/testng-1.0.dtd'>
 <suite name="Rabbyte Automation Test">
     <test name="Rabbyte Selenium">
         <parameter name="browser" value="chrome"/>
-
-    <!--
-    <packages>
-        <package name="selenium.tests"></package>
-    </packages>
-    -->
-        <classes>
-            <class name="de.hbrs.se.rabbyte.control.VerificationControlTest"></class>
-        </classes>
-</test> <!-- Test <package name="de.hbrs.se.rabbyte.security"></package> -->
-</suite> <!-- Suite -->
-
+        <!--
+    <packages><package name="selenium.tests"></package></packages>-->
+        <packages>
+            <package name="de.hbrs.se.rabbyte.control"/>
+            <package name="de.hbrs.se.rabbyte.control.factory"/>
+            <package name="de.hbrs.se.rabbyte.dtos"/>
+            <package name="de.hbrs.se.rabbyte.dtos.implemented"/>
+            <package name="de.hbrs.se.rabbyte.entities"/>
+            <package name="de.hbrs.se.rabbyte.repository"/>
+            <package name="de.hbrs.se.rabbyte.security"/>
+            <package name="de.hbrs.se.rabbyte.service"/>
+            <package name="de.hbrs.se.rabbyte.util"/>
+            <package name="de.hbrs.se.rabbyte.views"/>
+        </packages>
+    </test>
+</suite>
+        <!-- Suite -->
