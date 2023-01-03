@@ -131,7 +131,7 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
 
         SubMenu moveSubMenu = move.getSubMenu();
 
-        moveSubMenu.addItem("Logout",  e -> securityService.logout());
+        moveSubMenu.addItem("Logout", e -> securityService.logout());
         moveSubMenu.addItem("Dark/Light-Mode", click -> {
             ThemeList themeList = UI.getCurrent().getElement().getThemeList();
             if (themeList.contains(Lumo.DARK)) {

@@ -8,11 +8,17 @@
 .job-advertisement-grid {
     color: black;
 }
+ [theme~="dark"] .job-advertisement-grid{
+    color: white;
+}
 
 .link-columns {
     color: black;
     border-radius: 15px;
     padding: 5px;
+}
+[theme~="dark"] .link-columns {
+color: white;
 }
 
 .link-columns:hover {

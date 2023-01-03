@@ -12,7 +12,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.dom.ThemeList;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.theme.lumo.Lumo;
+import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.service.CrmService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import java.awt.*;
 import java.util.NoSuchElementException;
@@ -25,6 +27,8 @@ import java.util.NoSuchElementException;
 public class JobAdvertisementView extends VerticalLayout
         implements HasUrlParameter<Integer>{
 
+    @Autowired
+    SecurityService securityService;
     private final  CrmService service;
     private Integer jobAdvertID;
 
@@ -73,14 +77,18 @@ public class JobAdvertisementView extends VerticalLayout
     }
 
     private Component createBusinessField(Integer param) {
-
         H2 info = new H2("Kontaktinformationen:");
         Html name = new Html("<span><b><u>"+"Unternehmen:"+"</u></b> "+service.findJobAdvertisementById(param).getBusiness().getBusinessName()+"</br></span>");
         Html email = new Html("<span><b><u>"+"Kontakt-Email:"+"</u></b> "+service.findJobAdvertisementById(param).getBusiness().getEmail()+"</br></span>");
         H2 details= new H2("Details:");
         Html type = new Html("<span><b><u>"+"Art:"+"</u></b> "+service.findJobAdvertisementById(param).getType()+"</br></span>");
+        //TODO if else role handling
+        VerticalLayout contentBusinessField = new VerticalLayout(info, name, email, details, type );
 
-        VerticalLayout contentBusinessField = new VerticalLayout(info,name, email,details,type,createApplyButton(param));
+        if (securityService.getAuthenticatedUserRole().equals("Student")) {
+           contentBusinessField.add(createApplyButton(param));
+        }
+
         contentBusinessField.addClassName("job-advertisement-view-businessField");
         return  contentBusinessField;
 
