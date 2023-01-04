@@ -6,6 +6,7 @@ import de.hbrs.se.rabbyte.repository.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
@@ -40,7 +41,7 @@ public class CrmService {
     }
     public List<JobAdvertisement>filterJobAdvertisementsByKeywordList(List<JobAdvertisement> jobAdvertisements,List<String> keywordList) {
         for (String keyword : keywordList){
-            jobAdvertisements = jobAdvertisements.stream().filter(jobAdvertisement -> (findJobAdvertisements(keyword).stream().map(jobAdv -> jobAdv.getId()).collect(Collectors.toList()).contains(jobAdvertisement.getId()))).collect(Collectors.toList());
+            jobAdvertisements = jobAdvertisements.stream().filter(jobAdvertisement -> (findJobAdvertisements(keyword).stream().map(JobAdvertisement::getId).collect(Collectors.toList()).contains(jobAdvertisement.getId()))).collect(Collectors.toList());
     }
         return jobAdvertisements;
     }
@@ -50,8 +51,7 @@ public class CrmService {
         }else if(indicator.equals("Art")) {
             return jobAdvertisements.stream().filter(jobAdvertisement -> (jobAdvertisement.getType()).equals(keyword)).collect(Collectors.toList());
         }
-        List<String> temp = Arrays.asList(keyword);
-        return filterJobAdvertisementsByKeywordList(jobAdvertisements,temp);
+        return filterJobAdvertisementsByKeywordList(jobAdvertisements, Collections.singletonList(keyword));
     }
     public JobAdvertisementDTO findJobAdvertisementById(int id){
         return jobAdvertisementRepository.findJobAdvertisementById(id);
@@ -78,7 +78,7 @@ public class CrmService {
     }
 
     public List<String> getAllJobAdvertisementTypes(){
-        return jobAdvertisementRepository.findAll().stream().map(jobAdvertisement -> jobAdvertisement.getType()).distinct().collect(Collectors.toList());
+        return jobAdvertisementRepository.findAll().stream().map(JobAdvertisement::getType).distinct().collect(Collectors.toList());
     }
 
     //PersonRepository
@@ -151,7 +151,7 @@ public class CrmService {
     }
 
     public List<String> findAllBusinessNames(){
-        return businessRepository.findAll().stream().map(business -> business.getBusinessName()).distinct().collect(Collectors.toList());
+        return businessRepository.findAll().stream().map(Business::getBusinessName).distinct().collect(Collectors.toList());
     }
 
     //ApplicationRepository

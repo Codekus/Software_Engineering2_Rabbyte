@@ -55,7 +55,7 @@ public class JobAdvertisementSearchView extends VerticalLayout {
 
     HashMap<String,MenuItem> currentSelection = new HashMap<>();
 
-    List<JobAdvertisement> gridSearchList = new ArrayList();
+    List<JobAdvertisement> gridSearchList = new ArrayList<>();
 
     List<String> searchInput = new ArrayList<>();
 
@@ -132,10 +132,7 @@ public class JobAdvertisementSearchView extends VerticalLayout {
     private Component createExtendedSearchComp() {
         MenuBar menuBar = new MenuBar();
         menuBar.addClassName("job-advertisement-search-view-ExtendedSearchComp");
-        //checkmark Unternehmen
-        Icon checkIcon1 = VaadinIcon.CHECK_SQUARE.create();
-        //checkmark Art
-        Icon checkIcon2 = VaadinIcon.CHECK_SQUARE.create();
+
         //filterIcon
         Icon filterIcon = VaadinIcon.FILTER.create();
         filterIcon.getElement().getStyle().set("color", "black");
@@ -143,9 +140,8 @@ public class JobAdvertisementSearchView extends VerticalLayout {
 
         //add menu
         MenuItem extendedSearch = menuBar.addItem(filterIcon);
-        extendedSearch.getElement().addEventListener("mouseover", e -> {
-            e.getSource().getStyle().set("cursor", "pointer");
-        });
+        menuBar.getElement().setProperty("title","Filter");
+        extendedSearch.getElement().addEventListener("mouseover", e -> e.getSource().getStyle().set("cursor", "pointer"));
 
         //add submenu
         SubMenu extendedSearchSubMenu = extendedSearch.getSubMenu();
@@ -224,7 +220,6 @@ public class JobAdvertisementSearchView extends VerticalLayout {
             }).setCheckable(true);
         }
 
-
         return menuBar;
     }
 
@@ -273,10 +268,9 @@ public class JobAdvertisementSearchView extends VerticalLayout {
 
             Notification.show(((Business) idType).getId() + " Business");
         } else if (idType instanceof JobAdvertisement) {
-            //TODO add is present later on
+
             getUI().get().navigate(JobAdvertisementView.class, ((JobAdvertisement) idType).getId());
-            //getUI().get().navigate("create_JobAdvert" +  ((JobAdvertisement) idType).getId());
-            //Notification.show(((JobAdvertisement) idType).getId() + " Job Advert");
+
         }
     }
 
