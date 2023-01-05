@@ -4,13 +4,10 @@
 <suite name="Rabbyte Automation Test">
     <test name="Rabbyte Selenium">
         <parameter name="browser" value="chrome"/>
-        <!--
-    <packages><package name="selenium.tests"></package></packages>-->
+
         <packages>
-            <package name="selenium.tests"></package></packages>
 
-
-            <!--<package name="de.hbrs.se.rabbyte.control"/>
+            <package name="de.hbrs.se.rabbyte.control"/>
             <package name="de.hbrs.se.rabbyte.control.factory"/>
             <package name="de.hbrs.se.rabbyte.dtos"/>
             <package name="de.hbrs.se.rabbyte.dtos.implemented"/>
@@ -20,7 +17,9 @@
             <package name="de.hbrs.se.rabbyte.service"/>
             <package name="de.hbrs.se.rabbyte.util"/>
             <package name="de.hbrs.se.rabbyte.views"/>
-        </packages>-->
+
+            <package name="selenium.tests"/>
+        </packages>
     </test>
 </suite>
         <!-- Suite -->

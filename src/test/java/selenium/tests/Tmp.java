@@ -3,7 +3,6 @@ package selenium.tests;
 import org.testng.annotations.Test;
 import selenium.setup.BaseFunctions;
 import selenium.setup.LoginPO;
-import selenium.setup.RegistrationOP;
 
 public class Tmp extends BaseFunctions{
 

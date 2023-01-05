@@ -2,17 +2,13 @@ package selenium.tests;
 
 
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import selenium.setup.BaseFunctions;
-import selenium.setup.LoginPO;
-import selenium.setup.RegistrationOP;
+import selenium.setup.RegistrationPO;
 
-public class RegistrationInvalid extends BaseFunctions {
+public class RegistrationInvalidStudent extends BaseFunctions {
 
-    RegistrationOP registrationOP = new RegistrationOP();
+    RegistrationPO registrationOP = new RegistrationPO();
 
 
     @Test

@@ -1,23 +1,17 @@
 package selenium.tests;
-
 import org.junit.Assert;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
-import selenium.Utils.OutlookMail;
 import selenium.setup.BaseFunctions;
 import selenium.setup.LoginPO;
-import selenium.setup.RegistrationOP;
+import selenium.setup.RegistrationBusinessPO;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
+public class RegistrationValidBusiness extends BaseFunctions {
 
-public class RegistrationValid extends BaseFunctions {
-
-    RegistrationOP registrationOP = new RegistrationOP();
+    RegistrationBusinessPO registrationOP = new RegistrationBusinessPO();
     LoginPO loginPO = new LoginPO();
 
     @Test
-    void forwardRegTest() throws MessagingException, IOException {
+    void forwardRegTest(){
 
         loginPO.openLogin();
         registrationOP.clickRegForward();
@@ -29,13 +23,8 @@ public class RegistrationValid extends BaseFunctions {
         String headlineExpected = "Registrierung";
         String headlineActual = registrationOP.getHeadLine();
         Assert.assertEquals(headlineExpected, headlineActual);
-
-        String content = OutlookMail.getLatestEmail();
-        String mail = registrationOP.getEmailAndCount();
-        System.out.println(content);
-        System.out.println(mail);
     }
-    @Test(enabled = false)
+    @Test
     void tabTest(){
         registrationOP.openRegistration();
 
@@ -43,8 +32,8 @@ public class RegistrationValid extends BaseFunctions {
         String tabStudentActual = registrationOP.getTabStudent();
         Assert.assertEquals(tabStudentExpected, tabStudentActual);
 
-        //Boolean tabStudentIsSelected = registrationOP.getTabStudentSelected();
-        //Assert.assertTrue(tabStudentIsSelected);
+        String tabBusinessIsSelected = registrationOP.getTabBusinessSelected();
+        Assert.assertEquals(tabBusinessIsSelected, "true");
 
         String tabBusinessExpected = "Business";
         String tabBusinessActual = registrationOP.getTabBusiness();
@@ -52,25 +41,41 @@ public class RegistrationValid extends BaseFunctions {
 
     }
 
-    @Test(enabled = false)
-    void registrationFailWrongFormat() throws InterruptedException {
+    @Test
+    void registrationCorrectFormat() throws InterruptedException {
         //check for wrong input format
         registrationOP.openRegistration();
-        registrationOP.enterFirstName("Firstname");
-        registrationOP.enterSurName("Surname");
+        registrationOP.enterBusinessName("Business");
         registrationOP.enterEmail("test@test.com");
         registrationOP.clickReg();
         Thread.sleep(500);
 
         //After clicking registration with nothing entered an error notification should pop up
         //in the element, although it's a root element it is still accessible as part of the element
-        String actualFirstNameError = registrationOP.getFirstName();
-        String actualSurNameError = registrationOP.getSurName();
+        String actualBusinessName = registrationOP.getBusinessName();
         String actualEmailError = registrationOP.getEmail();
         Assert.assertFalse(actualEmailError.contains("Das Format der Email ist nicht gültig"));
-        Assert.assertFalse(actualFirstNameError.contains("Ungültiger Vorname"));
-        Assert.assertFalse(actualSurNameError.contains("Ungültiger Nachname"));
+        Assert.assertFalse(actualBusinessName.contains("Ungültiger Geschäftsname"));
+      }
+
+    @Test
+    void registrationCorrect() throws InterruptedException {
+        //check for wrong input format
+        registrationOP.openRegistration();
+        registrationOP.enterBusinessName("Business");
+        registrationOP.enterEmail("test@test.com");
+        registrationOP.clickReg();
+        Thread.sleep(500);
+
+        //After clicking registration with nothing entered an error notification should pop up
+        //in the element, although it's a root element it is still accessible as part of the element
+        String actualBusinessName = registrationOP.getBusinessName();
+        String actualEmailError = registrationOP.getEmail();
+        Assert.assertFalse(actualEmailError.contains("Das Format der Email ist nicht gültig"));
+        Assert.assertFalse(actualBusinessName.contains("Ungültiger Geschäftsname"));
 
     }
 
 }
+
+

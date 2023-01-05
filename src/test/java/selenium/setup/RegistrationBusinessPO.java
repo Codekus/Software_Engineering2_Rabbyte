@@ -3,20 +3,14 @@ package selenium.setup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Properties;
-
-public class RegistrationOP extends BaseFunctions {
+public class RegistrationBusinessPO extends BaseFunctions {
 
 
     public String url = "http://localhost:8080/registration";
 
     By forwardRegButton = By.xpath("/html/body/vaadin-vertical-layout/vaadin-button");
     By regButton = By.xpath("//vaadin-button");
-    By firstName = By.xpath("//vaadin-text-field[1]");
-    By surName = By.xpath("//vaadin-text-field[2]");
+    By business = By.xpath("//vaadin-text-field");
     By password = By.xpath("//vaadin-password-field[1]");
     By passwordRepeat = By.xpath("//vaadin-password-field[2]");
     By email = By.xpath("//vaadin-email-field");
@@ -26,18 +20,12 @@ public class RegistrationOP extends BaseFunctions {
 
     public void openRegistration() {
         driver.get(url);
+        clickElement(tabBusiness);
     }
 
-    public Boolean getTabStudentSelected(){
-        WebElement tabStudentSelected = driver.findElement(tabStudent);
-        return  tabStudentSelected.isSelected();
-    }
-    public void enterFirstName(String name) {
-        typeText(name, firstName);
-    }
-
-    public void enterSurName(String name) {
-        typeText(name, surName);
+    public String getTabBusinessSelected(){
+        WebElement tabBusinessSelected = driver.findElement(tabBusiness);
+        return tabBusinessSelected.getAttribute("aria-selected");
     }
 
     public void enterPassword(String pswd) {
@@ -46,6 +34,10 @@ public class RegistrationOP extends BaseFunctions {
 
     public void enterPasswordRepeat(String pswd) {
         typeText(pswd, passwordRepeat);
+    }
+
+    public void enterBusinessName(String name){
+        typeText(name, business);
     }
 
     public void enterEmail(String Email) {
@@ -68,12 +60,8 @@ public class RegistrationOP extends BaseFunctions {
         return getString(tabBusiness);
     }
 
-    public String getFirstName() {
-        return getString(firstName);
-    }
-
-    public String getSurName() {
-        return getString(surName);
+    public String getBusinessName(){
+        return getString(business);
     }
 
     public String getPassword() {
@@ -91,28 +79,5 @@ public class RegistrationOP extends BaseFunctions {
     public void clickReg() {
         clickElement(regButton);
     }
-
-    public String getEmailAndCount() throws IOException {
-
-        String propPath = "src/test/ressources/test_credentials.properties";
-        Properties prop = new Properties();
-        FileInputStream f = null;
-        try{
-            f = new FileInputStream(propPath);
-            prop.load(f);
-        } finally {
-            assert f != null;
-            f.close();
-        }
-
-        String testMailName = prop.getProperty("TEST_SELENIUM_MAIL_NAME");
-        prop.setProperty("SELENIUM_MAIL_COUNT",
-                String.valueOf(Integer.parseInt(prop.getProperty("SELENIUM_MAIL_COUNT")) + 1));
-        FileOutputStream out = new FileOutputStream(propPath);
-        prop.store(out, null);
-        out.close();
-        return testMailName + "+" + prop.getProperty("SELENIUM_MAIL_COUNT") + "@outlook.de";
-    }
-
 
 }
