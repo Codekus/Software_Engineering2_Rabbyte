@@ -267,7 +267,7 @@ public class JobAdvertisementSearchView extends VerticalLayout {
     //routing to grid items
     private <T> void findPath(T idType) {
         if (idType instanceof Business) {
-            //getUI().get().navigate(BusinessProfilView.class, ((JobAdvertisement) idType).getId());
+            getUI().get().navigate(BusinessProfileView.class,  ((Business) idType).getId());
 
             Notification.show(((Business) idType).getId() + " Business");
         } else if (idType instanceof JobAdvertisement) {
