@@ -138,6 +138,7 @@ public class SecurityService  {
         var routes = new ArrayList<AuthorizedRoute>();
         routes.add(new AuthorizedRoute("appview", "AppView", AppView.class));
         routes.add(new AuthorizedRoute("chatview", "ChatView", ChatView.class));
+        routes.add(new AuthorizedRoute("jobAdvertisement", "Stellenausschreibung", JobAdvertisementView.class));
         if (Objects.equals(getRole(user), "Student")){
             routes.add(new AuthorizedRoute("student", "Student", StudentUserView.class));
             //routes.add(new AuthorizedRoute("main", "Search Job Advertisement", JobAdvertisementSearchView.class));

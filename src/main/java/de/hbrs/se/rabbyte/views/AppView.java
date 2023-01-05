@@ -10,6 +10,8 @@ import com.vaadin.flow.component.contextmenu.SubMenu;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -17,7 +19,9 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
+import com.vaadin.flow.dom.ThemeList;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.theme.lumo.Lumo;
 import de.hbrs.se.rabbyte.dtos.*;
 
 import de.hbrs.se.rabbyte.security.SecurityService;
@@ -127,7 +131,15 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
 
         SubMenu moveSubMenu = move.getSubMenu();
 
-        moveSubMenu.addItem("Logout",  e -> securityService.logout());
+        moveSubMenu.addItem("Logout", e -> securityService.logout());
+        moveSubMenu.addItem("Dark/Light-Mode", click -> {
+            ThemeList themeList = UI.getCurrent().getElement().getThemeList();
+            if (themeList.contains(Lumo.DARK)) {
+                themeList.remove(Lumo.DARK);
+            } else {
+                themeList.add(Lumo.DARK);
+            }
+        }).addComponentAsFirst(new Icon(VaadinIcon.MOON));
 
         layout.add(topRightPanel);
         layout.setMaxHeight("80px");
