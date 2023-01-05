@@ -10,34 +10,83 @@ public class RegistrationOP extends BaseFunctions {
     public String url = "http://localhost:8080/registration";
 
     By forwardRegButton = By.xpath("/html/body/vaadin-vertical-layout/vaadin-button");
+    By regButton = By.xpath("//vaadin-button");
     By firstName = By.xpath("//vaadin-text-field[1]");
     By surName = By.xpath("//vaadin-text-field[2]");
-    By password = By.xpath("//vaadin-text-field[3]");
-    By passwordRepeat = By.xpath("//vaadin-text-field[4]");
-    By email = By.xpath("//vaadin-text-field[5]");
+    By password = By.xpath("//vaadin-password-field[1]");
+    By passwordRepeat = By.xpath("//vaadin-password-field[2]");
+    By email = By.xpath("//vaadin-email-field");
     By headline = By.xpath("/html/body/vaadin-vertical-layout/vaadin-vertical-layout/h1");
     By tabStudent = By.xpath("//vaadin-tab[1]");
     By tabBusiness = By.xpath("//vaadin-tab[2]");
 
-    public void openRegistration() { driver.get(url);  }
+    public void openRegistration() {
+        driver.get(url);
+    }
 
-    public void enterName(String name) { typeText(name, firstName);
+    public Boolean getTabStudentSelected(){
+        WebElement tabStudentSelected = driver.findElement(tabStudent);
+        return  tabStudentSelected.isSelected();
     }
-    public void enterSurName(String name) { typeText(name, surName);
+    public void enterFirstName(String name) {
+        typeText(name, firstName);
     }
-    public void enterPassword(String pswd) { typeText(pswd, password);
+
+    public void enterSurName(String name) {
+        typeText(name, surName);
     }
-    public void enterPasswordRepeat(String pswd) { typeText(pswd, passwordRepeat);
+
+    public void enterPassword(String pswd) {
+        typeText(pswd, password);
     }
-    public void enterEmail(String Email) { typeText(Email, email);
+
+    public void enterPasswordRepeat(String pswd) {
+        typeText(pswd, passwordRepeat);
     }
-    public void clickRegForward(){ clickElement(forwardRegButton);
+
+    public void enterEmail(String Email) {
+        typeText(Email, email);
     }
-    public String getHeadLine(){return getString(headline);
+
+    public void clickRegForward() {
+        clickElement(forwardRegButton);
     }
-    public String getTabStudent(){return getString(tabStudent);
+
+    public String getHeadLine() {
+        return getString(headline);
     }
-    public String getTabBusiness(){return getString(tabBusiness);}
+
+    public String getTabStudent() {
+        return getString(tabStudent);
+    }
+
+    public String getTabBusiness() {
+        return getString(tabBusiness);
+    }
+
+    public String getFirstName() {
+        return getString(firstName);
+    }
+
+    public String getSurName() {
+        return getString(surName);
+    }
+
+    public String getPassword() {
+        return getString(password);
+    }
+
+    public String getPasswordRepeat() {
+        return getString(passwordRepeat);
+    }
+
+    public String getEmail() {
+        return getString(email);
+    }
+
+    public void clickReg() {
+        clickElement(regButton);
+    }
 
 
 }

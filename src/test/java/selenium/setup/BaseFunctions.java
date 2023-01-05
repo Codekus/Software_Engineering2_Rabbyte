@@ -54,4 +54,12 @@ public class BaseFunctions extends TestSetup{
         WebElement e = driver.findElement(by);
         return e.getText();
     }
+
+    public WebElement getShadowElement(String shadow_host, String shadow_content){
+        // provide shadow_host as Xpath and shadow content as ccsSelector
+        WebElement shadowHost = driver.findElement(By.xpath(shadow_host));
+        SearchContext shadowRoot = shadowHost.getShadowRoot();
+        WebElement shadowContent = shadowRoot.findElement(By.id(shadow_content));
+        return  shadowContent;
+    }
 }

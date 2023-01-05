@@ -175,6 +175,7 @@
         </dependency>
 
 
+
         <dependency>
             <groupId>io.zonky.test</groupId>
             <artifactId>embedded-postgres</artifactId>
@@ -187,6 +188,9 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
     </dependencies>
+
+
+
 
     <dependencyManagement>
         <dependencies>

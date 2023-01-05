@@ -76,11 +76,11 @@ public class Globals {
 
         public static final String MEMORIZED_SECRET_TOO_COMMON = "Ihr Passwort ist eines der häufigsten Passwörter. Bitte wählen sie ein anderes";
         public static final String MEMORIZED_SECRET_DIFFERENT = "Unterschiedliche Passwörter";
-        public static final String PASSWORD_TOO_SHORT = "Das Password muss mindestens 8 Zeichen sein";
+        public static final String PASSWORD_TOO_SHORT = "Das Password muss mindestens 8 Zeichen lang sein";
         public static final String EMAIL_IN_USE = "Diese E-Mail wird bereits verwendet" ;
         public static final String INVALID_EMAIL = "Das Format der Email ist nicht gültig ";
-        public static final String INVALID_LAST_NAME = "Ungültiger Vorname" ;
-        public static final String INVALID_FIRST_NAME = "Ungültiger Nachname" ;
+        public static final String INVALID_LAST_NAME = "Ungültiger Nachname" ;
+        public static final String INVALID_FIRST_NAME = "Ungültiger Vorname" ;
         public static final String BUSINESS_NAME = "Ungültiger Geschäftsname" ;
         public static final String BUSINESS_NAME_IN_USE = "Geschäftsname wird schon verwendet" ;
     }
