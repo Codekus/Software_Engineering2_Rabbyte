@@ -58,7 +58,7 @@ public class JobAdvertisementSearchView extends VerticalLayout {
     List<JobAdvertisement> gridSearchList = new ArrayList<>();
 
     List<String> searchInput = new ArrayList<>();
-     private int listSize= searchInput.size();
+     private int listSize;
 
 
 
