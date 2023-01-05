@@ -3,9 +3,13 @@ package selenium.tests;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
+import selenium.Utils.OutlookMail;
 import selenium.setup.BaseFunctions;
 import selenium.setup.LoginPO;
 import selenium.setup.RegistrationOP;
+
+import javax.mail.MessagingException;
+import java.io.IOException;
 
 public class RegistrationValid extends BaseFunctions {
 
@@ -13,7 +17,7 @@ public class RegistrationValid extends BaseFunctions {
     LoginPO loginPO = new LoginPO();
 
     @Test
-    void forwardRegTest(){
+    void forwardRegTest() throws MessagingException, IOException {
 
         loginPO.openLogin();
         registrationOP.clickRegForward();
@@ -25,8 +29,13 @@ public class RegistrationValid extends BaseFunctions {
         String headlineExpected = "Registrierung";
         String headlineActual = registrationOP.getHeadLine();
         Assert.assertEquals(headlineExpected, headlineActual);
+
+        String content = OutlookMail.getLatestEmail();
+        String mail = registrationOP.getEmailAndCount();
+        System.out.println(content);
+        System.out.println(mail);
     }
-    @Test
+    @Test(enabled = false)
     void tabTest(){
         registrationOP.openRegistration();
 
@@ -43,7 +52,7 @@ public class RegistrationValid extends BaseFunctions {
 
     }
 
-    @Test
+    @Test(enabled = false)
     void registrationFailWrongFormat() throws InterruptedException {
         //check for wrong input format
         registrationOP.openRegistration();

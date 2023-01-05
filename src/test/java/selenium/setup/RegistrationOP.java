@@ -1,8 +1,12 @@
 package selenium.setup;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 public class RegistrationOP extends BaseFunctions {
 
@@ -86,6 +90,28 @@ public class RegistrationOP extends BaseFunctions {
 
     public void clickReg() {
         clickElement(regButton);
+    }
+
+    public String getEmailAndCount() throws IOException {
+
+        String propPath = "src/test/ressources/test_credentials.properties";
+        Properties prop = new Properties();
+        FileInputStream f = null;
+        try{
+            f = new FileInputStream(propPath);
+            prop.load(f);
+        } finally {
+            assert f != null;
+            f.close();
+        }
+
+        String testMailName = prop.getProperty("TEST_SELENIUM_MAIL_NAME");
+        prop.setProperty("SELENIUM_MAIL_COUNT",
+                String.valueOf(Integer.parseInt(prop.getProperty("SELENIUM_MAIL_COUNT")) + 1));
+        FileOutputStream out = new FileOutputStream(propPath);
+        prop.store(out, null);
+        out.close();
+        return testMailName + "+" + prop.getProperty("SELENIUM_MAIL_COUNT") + "@outlook.de";
     }
 
 
