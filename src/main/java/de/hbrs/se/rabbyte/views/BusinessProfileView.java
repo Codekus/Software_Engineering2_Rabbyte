@@ -1,5 +1,6 @@
 package de.hbrs.se.rabbyte.views;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "business-profile")
 @PageTitle("Unternehmensprofil")
-public class BusinessProfileView extends VerticalLayout implements HasUrlParameter<Integer>, AfterNavigationObserver {
+public class BusinessProfileView extends VerticalLayout implements HasUrlParameter<String>, AfterNavigationObserver {
 
     @Autowired
     CrmService service;
@@ -26,10 +27,17 @@ public class BusinessProfileView extends VerticalLayout implements HasUrlParamet
     }
 
     @Override
-    public void setParameter(BeforeEvent event, Integer paramRequestedBusinessId) {
-        BusinessDTO business = service.findBusinessById(paramRequestedBusinessId);
+    public void setParameter(BeforeEvent event, String paramRequestedBusinessId) {
+        BusinessDTO business;
+        try {
+            Integer id = Integer.parseInt(paramRequestedBusinessId);
+            business = service.findBusinessById(id);
+        } catch(NumberFormatException e) {
+            business = null;
+        }
         if(business == null) {
             // Die requested BusinessId existiert nicht! => reroute to main
+            event.forwardTo("");
         }
         this.requestedBusinessProfile = business;
     }
