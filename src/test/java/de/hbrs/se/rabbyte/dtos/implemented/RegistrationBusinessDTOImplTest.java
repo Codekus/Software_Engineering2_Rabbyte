@@ -1,8 +1,8 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,7 +19,7 @@ class RegistrationBusinessDTOImplTest {
     BusinessDTOImpl  businessDTOTwo;
     private static final String BUSINESSPW = "12345";
 
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
         businessDTO = new BusinessDTOImpl();
         registrationBusinessDTO = new RegistrationBusinessDTOImpl(businessDTO , BUSINESSPW);

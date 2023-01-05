@@ -1,7 +1,7 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,7 +9,7 @@ class VerificationResultDTOImplTest {
 
     VerificationResultDTOImpl verificationResultDTO;
 
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
          verificationResultDTO = new VerificationResultDTOImpl();
          verificationResultDTO.setActivationResult(false);

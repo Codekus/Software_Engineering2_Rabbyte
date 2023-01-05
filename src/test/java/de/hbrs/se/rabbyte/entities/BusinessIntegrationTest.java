@@ -5,10 +5,12 @@ import de.hbrs.se.rabbyte.dtos.BusinessDTO;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,9 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY )
 @Sql(scripts = {"file:src/test/ressources/rabbyte_schema.sql ", "file:src/test/ressources/rabbyte_data.sql"})
 @AutoConfigureEmbeddedDatabase
-class BusinessIntegrationTest {
+class BusinessIntegrationTest extends AbstractTransactionalTestNGSpringContextTests {
 
-    @Autowired
     BusinessRepository businessRepository;
 
     private String businessName;
@@ -34,8 +35,9 @@ class BusinessIntegrationTest {
     BusinessDTO businessDTOId;
 
     Business businessEntity;
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
+        this.businessRepository = applicationContext.getBean(BusinessRepository.class);
         businessName = "MoneyInc";
         email = "money@gmx.de";
         plz = 54321;

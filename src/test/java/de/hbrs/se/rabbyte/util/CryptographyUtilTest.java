@@ -1,6 +1,7 @@
 package de.hbrs.se.rabbyte.util;
 
-import org.junit.jupiter.api.Test;
+
+import org.testng.annotations.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;

@@ -1,6 +1,6 @@
 package de.hbrs.se.rabbyte.util;
 
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NavigationUtilTest {
 
-    String errorMessage = "class org.hbrs.se2.project.coll.util.UtilNavigationTest cannot access a member of class org.hbrs.se2.project.coll.util.UtilNavigation with modifiers \"private\"";
+    String errorMessage = "class de.hbrs.se.rabbyte.util.NavigationUtilTest cannot access a member of class de.hbrs.se.rabbyte.util.NavigationUtil with modifiers \"private\"";
 
     @Test
     void itShouldThrowIllegalAccessExceptionWhenInstancing() throws NoSuchMethodException {
