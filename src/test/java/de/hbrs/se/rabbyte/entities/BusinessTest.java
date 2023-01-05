@@ -1,7 +1,8 @@
 package de.hbrs.se.rabbyte.entities;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,7 +11,7 @@ class BusinessTest {
     private final Business business = new Business();
 
     private static final String BUSINESS_NAME = "Mustermann GMBH";
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
         business.setBusinessName(BUSINESS_NAME);
     }

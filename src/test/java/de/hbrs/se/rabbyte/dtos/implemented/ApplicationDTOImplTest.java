@@ -2,8 +2,8 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import de.hbrs.se.rabbyte.entities.Student;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.mockito.Mock;
 
 import java.time.LocalDate;
@@ -20,7 +20,7 @@ class ApplicationDTOImplTest {
     private Student student;
     private static final String APPLICATION_TEXT = "Application Text";
 
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
 
         applicationDTO.setId(100);

@@ -2,7 +2,6 @@ package de.hbrs.se.rabbyte.repository;
 import de.hbrs.se.rabbyte.entities.Business;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;

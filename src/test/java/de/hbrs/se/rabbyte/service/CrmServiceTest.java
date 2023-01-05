@@ -8,10 +8,12 @@ import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.*;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -20,24 +22,26 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY)
 @Sql(scripts = {"file:src/test/ressources/rabbyte_schema.sql ", "file:src/test/ressources/rabbyte_data.sql"})
 @AutoConfigureEmbeddedDatabase
-public class CrmServiceTest {
+public class CrmServiceTest extends AbstractTransactionalTestNGSpringContextTests {
 
 
-    @Autowired
     private ApplicationRepository applicationRepository;
-    @Autowired
     private BusinessRepository businessRepository;
-    @Autowired
     private PersonRepository personRepository;
-    @Autowired
     private JobAdvertisementRepository jobAdvertisementRepository;
-    @Autowired
     private StudentRepository studentRepository;
 
     private CrmService crmService = null;
 
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
+        this.applicationRepository = applicationContext.getBean(ApplicationRepository.class);
+        this.businessRepository = applicationContext.getBean(BusinessRepository.class);
+        this.personRepository = applicationContext.getBean(PersonRepository.class);
+        this.jobAdvertisementRepository = applicationContext.getBean(JobAdvertisementRepository.class);
+        this.studentRepository = applicationContext.getBean(StudentRepository.class);
+
+
         crmService = new CrmService(applicationRepository, businessRepository, personRepository, jobAdvertisementRepository, studentRepository);
     }
 

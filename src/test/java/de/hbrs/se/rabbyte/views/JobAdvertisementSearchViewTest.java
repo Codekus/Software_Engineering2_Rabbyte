@@ -2,7 +2,9 @@ package de.hbrs.se.rabbyte.views;
 
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +12,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
-public class JobAdvertisementSearchViewTest {
+public class JobAdvertisementSearchViewTest extends AbstractTestNGSpringContextTests {
 
-    @Autowired
     private JobAdvertisementSearchView jobAdvertisementSearchView;
+
+    @BeforeMethod
+    void setup(){
+        this.jobAdvertisementSearchView = applicationContext.getBean(JobAdvertisementSearchView.class);
+    }
 
 
     @Test

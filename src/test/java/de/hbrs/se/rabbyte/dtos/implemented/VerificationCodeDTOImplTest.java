@@ -1,10 +1,10 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.entities.Person;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.mockito.Mock;
-import org.springframework.security.core.parameters.P;
+//import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -21,7 +21,7 @@ class VerificationCodeDTOImplTest {
 
     private VerificationCodeDTOImpl verificationCodeDTO;
 
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
 
         id = 100;

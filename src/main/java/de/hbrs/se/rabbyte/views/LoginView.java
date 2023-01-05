@@ -12,10 +12,13 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import de.hbrs.se.rabbyte.exception.AuthException;
+
 import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -31,7 +34,6 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
     SecurityService securityService;
 
     public LoginView(){
-        Notification.show("login view");
         addClassName("login-view");
         setSizeFull();
         setAlignItems(Alignment.CENTER);
@@ -55,8 +57,10 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         });
         Button button = new Button("Konto Erstellen!");
         Paragraph info = new Paragraph("Sie haben noch kein Rabbyte-Konto?");
+
         button.addClickListener(clickEvent -> NavigationUtil.toRegisterView());
         button.setHeight("10px");
+
         add(new H1("Herzlich Willkommen"), login, info, button);
 
     }
@@ -70,5 +74,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
                 .containsKey("error")) {
             login.setError(true);
         }
+
+
     }
 }

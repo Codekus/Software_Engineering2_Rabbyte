@@ -7,10 +7,13 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.server.ServiceInitEvent;
 import com.vaadin.flow.server.VaadinServiceInitListener;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -27,8 +30,6 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
     }
 
     private void authenticateNavigation(BeforeEnterEvent event) {
-        Notification.show(event.getLocation().getSegments().get(0));
-
         if (!LoginView.class.equals(event.getNavigationTarget())
                 && !SecurityUtils.isUserLoggedIn()) {
             if(event.getLocation().getSegments().get(0).equals("registration")){

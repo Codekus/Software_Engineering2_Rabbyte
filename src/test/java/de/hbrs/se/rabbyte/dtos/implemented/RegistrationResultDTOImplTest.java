@@ -1,8 +1,8 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,7 +15,7 @@ class RegistrationResultDTOImplTest {
 
 
 
-    @BeforeEach
+    @BeforeMethod
     void setUp() {
         registrationResultDTO = new RegistrationResultDTOImpl();
         result = true;
