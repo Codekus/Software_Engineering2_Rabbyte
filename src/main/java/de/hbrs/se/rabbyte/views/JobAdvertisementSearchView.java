@@ -58,6 +58,7 @@ public class JobAdvertisementSearchView extends VerticalLayout {
     List<JobAdvertisement> gridSearchList = new ArrayList<>();
 
     List<String> searchInput = new ArrayList<>();
+     private int listSize= searchInput.size();
 
 
 
@@ -79,8 +80,10 @@ public class JobAdvertisementSearchView extends VerticalLayout {
         //TODO maybe split into new method
         searchInput = Arrays.asList((searchField.getValue()).split(" "));
 
-        //create list of first keyword
-        if (gridSearchList.isEmpty()) {
+
+
+        //create list of first keyword if grid is empty or searchInput shortened
+        if (gridSearchList.isEmpty()||(listSize>searchInput.size())) {
             gridSearchList = new ArrayList<>(service.findJobAdvertisements(searchInput.get(0)));
         }
         if (!searchField.isEmpty()) {
@@ -97,7 +100,7 @@ public class JobAdvertisementSearchView extends VerticalLayout {
                 if (extendedSearchList.get("Art") != null) {
                     gridSearchList = service.filterJobAdvertisementsByKeyword(gridSearchList, extendedSearchList.get("Art"), "Art");
                 }
-
+                listSize= searchInput.size();
                 add(grid);
                 grid.setItems(gridSearchList);
             } else {
