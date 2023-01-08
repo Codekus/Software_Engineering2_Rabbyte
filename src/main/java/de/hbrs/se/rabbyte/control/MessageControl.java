@@ -42,8 +42,6 @@ public class MessageControl {
         return messageRepository.findMessagesByReceiver(receiver);
     }
 
-    private SecurityService securityService;
-
     public String getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -83,7 +81,7 @@ public class MessageControl {
     public void saveMessage(MessageDTOImpl messageDTO) {
 
         messageDTO.setDate(LocalDateTime.now());
-        
+
         String email = getEmail();
         
         try {
@@ -122,7 +120,6 @@ public class MessageControl {
         }
     }
 
-
     public String getPersonName(int id) throws DatabaseUserException {
         try {
             boolean type = getRole(Utils.getCurrentPerson());
@@ -158,8 +155,6 @@ public class MessageControl {
     }
 
     public boolean getRole(PersonDTO user){
-
-
 
         if (personRepository.findByEmail(getEmail()) != null) {
             return true;

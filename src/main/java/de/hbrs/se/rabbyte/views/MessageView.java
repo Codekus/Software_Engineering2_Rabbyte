@@ -77,8 +77,6 @@ public class MessageView extends Div implements BeforeEnterObserver {
         int id = this.messageControl.getId(person);
 
 
-        this.messages = messageControl.getMessages(messageControl.getId(person));
-
         grid = new Grid<>(MessageDTO.class, false);
         grid.setVisible(true);
 
@@ -129,15 +127,17 @@ public class MessageView extends Div implements BeforeEnterObserver {
             }
         });
 
-
+        this.messages = messageControl.getMessages(messageControl.getId(person));
         grid.setItems(messages);
 
+        // Hint if user has no messages
         this.hint = new Div();
         this.hint.setText("Sie haben keine Nachrichten.");
+        setDivStyle(hint);
 
         Div hint2 = new Div();
         hint2.setText("Es wurde keine Nachricht ausgewählt.");
-
+        setDivStyle(hint2);
 
         VerticalLayout inbox = new VerticalLayout(hint, grid);
         VerticalLayout reply = new VerticalLayout(hint2);
@@ -152,11 +152,6 @@ public class MessageView extends Div implements BeforeEnterObserver {
         setSizeFull();
         setHeight("100%");
         add(this.splitLayout);
-
-
-
-
-
     }
 
 
@@ -190,7 +185,7 @@ public class MessageView extends Div implements BeforeEnterObserver {
             // Delete button for messages
             Button delete = new Button("Nachricht löschen");
 
-            /*
+
                        delete.addClickListener(e -> {
                 Runnable yesRunnable = () -> {
                     try {
@@ -204,13 +199,8 @@ public class MessageView extends Div implements BeforeEnterObserver {
                     if(grid.getColumns().isEmpty())
                         splitLayout.addToPrimary(hint);
                 };
-
-                String questionString = "Sind sie sicher, dass Sie diese Nachricht löschen möchten?";
-                Dialog dialog   = Utils.getConfirmationDialog(questionString, yesRunnable);
-                dialog.open();
-
             });
-             */
+
 
 
             // Reply
@@ -300,10 +290,19 @@ public class MessageView extends Div implements BeforeEnterObserver {
     private void cleanSecondary() {
         this.hint = new Div();
         this.hint.setText("Es wurde keine Nachricht ausgewählt.");
+        setDivStyle(this.hint);
         this.splitLayout.remove(this.splitLayout.getSecondaryComponent());
         VerticalLayout vHint = new VerticalLayout(this.hint);
         this.splitLayout.addToSecondary(vHint);
     }
+
+
+    private static void setDivStyle(Div item) {
+        item.getStyle().set("padding", "var(--lumo-size-l)")
+                .set("text-align", "center").set("font-style", "italic")
+                .set("color", "var(--lumo-contrast-70pct)");
+    }
+
 
 
 
@@ -312,10 +311,19 @@ public class MessageView extends Div implements BeforeEnterObserver {
         try {
             if(!Objects.equals(event, "")) {
                 this.setupGrid();
-
+                this.refreshGrid();
             }
         } catch (Exception exception) {
             LOGGER.info(Globals.LogMessage.LOG ,  exception.toString());
         }
     }
+
+    private void removeMessage(MessageDTO message) throws DatabaseUserException {
+        if (message == null)
+            return;
+        messages.remove(message);
+        messageControl.deleteMessage(message);
+        this.refreshGrid();
+    }
+
 }
