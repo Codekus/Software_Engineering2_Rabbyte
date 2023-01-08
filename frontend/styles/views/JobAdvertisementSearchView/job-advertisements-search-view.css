@@ -5,14 +5,27 @@
     padding-bottom: 10vh;
 }
 
+.job-advertisement-search-view-ExtendedSearchComp {
+}
+
+.job-advertisement-search-view-ExtendedSearchComp:hover{
+    cursor: pointer;
+}
+
 .job-advertisement-grid {
     color: black;
+}
+ [theme~="dark"] .job-advertisement-grid{
+    color: white;
 }
 
 .link-columns {
     color: black;
     border-radius: 15px;
     padding: 5px;
+}
+[theme~="dark"] .link-columns {
+color: white;
 }
 
 .link-columns:hover {

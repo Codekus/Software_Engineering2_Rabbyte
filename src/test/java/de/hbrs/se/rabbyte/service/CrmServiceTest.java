@@ -2,7 +2,6 @@ package de.hbrs.se.rabbyte.service;
 
 import de.hbrs.se.rabbyte.control.factory.JobAdvertFactory;
 import de.hbrs.se.rabbyte.control.factory.PersonFactory;
-import de.hbrs.se.rabbyte.dtos.*;
 import de.hbrs.se.rabbyte.entities.*;
 import de.hbrs.se.rabbyte.repository.*;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
@@ -90,10 +89,14 @@ public class CrmServiceTest extends AbstractTransactionalTestNGSpringContextTest
 
         assertAll("FindBy Methods Test",
                 () -> assertEquals("MoneyInc", crmService.findBusinessById(20000090).getBusinessName(), "findBusinessById failed"),
-                () -> assertEquals(20000090, crmService.findBusinessByBusinessName("MoneyInc").getId(), "findBusinessByBusinessName deletion failed"),
-                () -> assertEquals(0, crmService.countBusiness(), "Business deletion failed"),
-                () -> assertEquals(0, crmService.countApplication(), "Application deletion failed"),
-                () -> assertEquals(0, crmService.countStudent(), "Student deletion failed")
+                () -> assertEquals(20000090, crmService.findBusinessByBusinessName("MoneyInc").getId(), "findBusinessByBusinessName failed"),
+                () -> assertEquals(20000090, crmService.findByEmail("money@gmx.de").getId(), "findByEmail failed"),
+                () -> assertEquals("Max", crmService.findStudentById(20000050).getFirstName(), "findStudentById failed"),
+                () -> assertEquals(20000090, crmService.findJobAdvertisementById(30000087).getBusiness().getId(), "findJobAdvertisementById failed"),
+                () -> assertEquals(20000090, crmService.findJobAdvertisements("Advertisement").get(0).getBusiness().getId(), "findJobAdvertisements failed"),
+                () -> assertEquals(20000050, crmService.findByFirstNameAndLastName("Max","Mustermann").getId(), "findByFirstNameAndLastName failed"),
+                () -> assertEquals("money@gmx.de", crmService.findPersonById(20000090).getEmail(), "findPersonById failed")
+
         );
 
 
