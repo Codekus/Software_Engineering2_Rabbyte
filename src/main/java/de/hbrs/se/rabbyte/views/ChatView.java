@@ -1,9 +1,11 @@
 package de.hbrs.se.rabbyte.views;
+import ch.qos.logback.core.net.SMTPAppenderBase;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.StyleSheet;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -13,6 +15,11 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 
+import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
+import de.hbrs.se.rabbyte.entities.JobAdvertisement;
+import de.hbrs.se.rabbyte.entities.Person;
+import de.hbrs.se.rabbyte.entities.Student;
+import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.service.ChatMessage;
 import de.hbrs.se.rabbyte.service.MessageList;
 import reactor.core.publisher.Flux;
@@ -23,10 +30,11 @@ import reactor.core.publisher.UnicastProcessor;
 @Push
 @PWA(name = "Vaadin Chat", shortName = "Chat")
 public class ChatView extends VerticalLayout {
-
+    Grid<JobAdvertisement> grid = new Grid<>(JobAdvertisement.class);
     private final UnicastProcessor<ChatMessage> publisher;
     private final Flux<ChatMessage> messages;
     private String username;
+    SecurityService securityService;
 
     public ChatView(UnicastProcessor<ChatMessage> publisher, Flux<ChatMessage> messages) {
         this.publisher = publisher;
@@ -43,7 +51,10 @@ public class ChatView extends VerticalLayout {
     }
 
     private void askUsername() {
-        HorizontalLayout layout = new HorizontalLayout();
+        username = "username";
+        startChat();
+
+/*        HorizontalLayout layout = new HorizontalLayout();
 
         TextField usernameField = new TextField();
         Button startButton = new Button("Start chatting");
@@ -57,7 +68,7 @@ public class ChatView extends VerticalLayout {
         layout.add(usernameField, startButton);
 
         add(layout);
-    }
+*/    }
 
     private void startChat() {
         MessageList messageList = new MessageList();
