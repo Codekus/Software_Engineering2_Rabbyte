@@ -23,7 +23,7 @@ public class MessageDTOImpl implements MessageDTO {
     }
 
     public void setSender(int senderId) {
-        this.id = id;
+        this.senderId = senderId;
     }
 
     public int getSender() {

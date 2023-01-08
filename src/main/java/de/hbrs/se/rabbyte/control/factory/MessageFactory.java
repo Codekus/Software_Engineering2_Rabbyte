@@ -1,4 +1,4 @@
-package de.hbrs.se.rabbyte.control;
+package de.hbrs.se.rabbyte.control.factory;
 
 import de.hbrs.se.rabbyte.dtos.MessageDTO;
 import de.hbrs.se.rabbyte.entities.Message;
@@ -15,6 +15,7 @@ public class MessageFactory {
         message.setMessageText(messageDTO.getMessageText());
         message.setTitle(messageDTO.getTitle());
         message.setDate(messageDTO.getDate());
+        message.setRead(false);
         return message;
     }
 

@@ -20,4 +20,8 @@ public class NavigationUtil {
         UI.getCurrent().navigate("registration");
     }
 
+    public static void toMessageView() {
+        UI.getCurrent().navigate("message");
+    }
+
 }

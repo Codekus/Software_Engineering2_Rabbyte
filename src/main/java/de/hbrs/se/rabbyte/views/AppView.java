@@ -24,6 +24,7 @@ import de.hbrs.se.rabbyte.security.SecurityService;
 
 import java.util.Optional;
 
+import de.hbrs.se.rabbyte.util.NavigationUtil;
 import de.hbrs.se.rabbyte.util.Utils;
 
 /**
@@ -135,6 +136,8 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         topRightPanel.setJustifyContentMode( FlexComponent.JustifyContentMode.END );
         topRightPanel.setAlignItems( FlexComponent.Alignment.CENTER );
 
+        //Message Button
+
         // Logout-Button am rechts-oberen Rand.
         MenuBar bar = new MenuBar();
         topRightPanel.add(bar);
@@ -144,7 +147,7 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         SubMenu moveSubMenu = move.getSubMenu();
         //moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
         moveSubMenu.addItem("Logout",  e -> securityService.logout());
-
+        moveSubMenu.addItem("Messages" , (e -> NavigationUtil.toMessageView()));
         layout.add(topRightPanel);
         layout.setMaxHeight("80px");
         return layout;
