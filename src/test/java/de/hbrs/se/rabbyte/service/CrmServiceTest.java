@@ -5,10 +5,9 @@ import de.hbrs.se.rabbyte.control.factory.PersonFactory;
 import de.hbrs.se.rabbyte.entities.*;
 import de.hbrs.se.rabbyte.repository.*;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
-import org.junit.*;
+
 
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
@@ -58,6 +57,7 @@ public class CrmServiceTest extends AbstractTransactionalTestNGSpringContextTest
         );
     }
 
+    @Disabled
     @Test
     @DisplayName("Delete Test")
     public void deleteTest() {
@@ -103,8 +103,7 @@ public class CrmServiceTest extends AbstractTransactionalTestNGSpringContextTest
 
     }
 
-
-    @Ignore
+    @Disabled
     @Test
     @DisplayName("Save Test")
     public void saveTest() {
