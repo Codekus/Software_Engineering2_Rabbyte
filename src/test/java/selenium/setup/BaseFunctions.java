@@ -20,6 +20,7 @@ public class BaseFunctions extends TestSetup{
     }*/
 
     public void clickElement(By by){
+        outPrint("Trying to click on Element with the 'by' locator: " + by);
         new WebDriverWait(driver, waitTime)
                 .until(ExpectedConditions.elementToBeClickable(by)).click();
     }
@@ -30,6 +31,7 @@ public class BaseFunctions extends TestSetup{
     }
 
     public void typeText(String text, By by){
+        outPrint("Typing following text: " + text);
         WebElement element = new WebDriverWait(driver, waitTime)
                 .until(ExpectedConditions.elementToBeClickable(by));
         element.sendKeys(text);
@@ -51,6 +53,7 @@ public class BaseFunctions extends TestSetup{
     }
 
     public String getString(By by){
+        outPrint("Trying to get the Text of element with the 'by' locator: " + by);
         WebElement e = driver.findElement(by);
         return e.getText();
     }
