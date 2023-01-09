@@ -1,6 +1,7 @@
 package de.hbrs.se.rabbyte.dtos;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Date;
 
 public interface MessageDTO {
 
@@ -9,7 +10,7 @@ public interface MessageDTO {
         public int getReceiver();
         public String getMessageText();
         public String getTitle();
-        public LocalDateTime getDate();
+        public LocalDate getDate();
         public boolean getRead();
 
 }

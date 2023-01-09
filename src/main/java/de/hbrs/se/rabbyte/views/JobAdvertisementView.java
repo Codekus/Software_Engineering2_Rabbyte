@@ -37,7 +37,8 @@ public class JobAdvertisementView extends VerticalLayout
     public void setParameter(BeforeEvent event,@OptionalParameter Integer parameter) {
         try {
             if ((parameter == null) || service.findJobAdvertisementById(parameter) == null) {
-                getUI().get().navigate(JobAdvertisementSearchView.class);
+               // getUI().get().navigate(JobAdvertisementSearchView.class);
+                event.forwardTo("");
             } else {
                 this.jobAdvertID = parameter;
                 this.add(createTitle(jobAdvertID), createDescription(jobAdvertID), createBusinessField(jobAdvertID));
@@ -48,7 +49,7 @@ public class JobAdvertisementView extends VerticalLayout
             } else {
                 Notification.show("Invalid input.");
             }
-            event.rerouteTo(JobAdvertisementSearchView.class);
+            event.forwardTo("");
 
         }
     }

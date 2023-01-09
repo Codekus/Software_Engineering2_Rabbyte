@@ -2,6 +2,7 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.dtos.MessageDTO;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class MessageDTOImpl implements MessageDTO {
@@ -11,7 +12,7 @@ public class MessageDTOImpl implements MessageDTO {
     private int receiverId;
     private String messageText;
     private String title;
-    private LocalDateTime date;
+    private LocalDate date;
     private boolean read;
 
     public void setId(int id) {
@@ -54,11 +55,11 @@ public class MessageDTOImpl implements MessageDTO {
         return title;
     }
 
-    public void setDate(LocalDateTime localDateTime) {
+    public void setDate(LocalDate localDateTime) {
         this.date = localDateTime;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

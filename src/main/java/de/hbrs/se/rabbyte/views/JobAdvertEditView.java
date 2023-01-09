@@ -1,7 +1,7 @@
 package de.hbrs.se.rabbyte.views;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.UI;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -13,16 +13,14 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.*;
 import de.hbrs.se.rabbyte.control.JobAdvertControl;
-import de.hbrs.se.rabbyte.control.factory.PersonFactory;
-import de.hbrs.se.rabbyte.dtos.BusinessDTO;
+
 import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
-import de.hbrs.se.rabbyte.entities.Business;
-import de.hbrs.se.rabbyte.entities.JobAdvertisement;
-import de.hbrs.se.rabbyte.repository.BusinessRepository;
+
 import de.hbrs.se.rabbyte.security.SecurityService;
+import de.hbrs.se.rabbyte.service.CrmService;
 import de.hbrs.se.rabbyte.util.NavigationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -32,7 +30,8 @@ import java.util.List;
 @org.springframework.stereotype.Component
 @Scope("prototype")
 @PageTitle("Job Ausschreibung bearbeiten")
-public class JobAdvertEditView extends VerticalLayout {
+@Route(value = "edit-jobadvert")
+public class JobAdvertEditView extends VerticalLayout implements HasUrlParameter<Integer>, AfterNavigationObserver {
 
     private TextField title = new TextField("Stellen Titel");
     private TextArea description = new TextArea("Stellenbeschreibung");
@@ -41,7 +40,7 @@ public class JobAdvertEditView extends VerticalLayout {
 
     private Binder<JobAdvertisementDTOImpl> binder = new Binder<>(JobAdvertisementDTOImpl.class);
 
-    JobAdvertisement jobAdvertisement;
+    JobAdvertisementDTO jobAdvertisement;
 
     @Autowired
     SecurityService securityService;
@@ -49,15 +48,14 @@ public class JobAdvertEditView extends VerticalLayout {
     @Autowired
     JobAdvertControl jobAdvertControl;
 
+    @Autowired
+    CrmService service;
+
 
     public JobAdvertEditView(){
-
-        jobAdvertisement = (JobAdvertisement) UI.getCurrent().getSession().getAttribute("EditJobad");
         addClassName("create-jobAdvert-view");
         type.setItems("Vollzeit", "Teilzeit", "Praktikum", "Projektarbeit", "Bachelor/ Master");
-        add(createTitle());
-        add(createFormLayout());
-        add(createButtonLayoutSubmit());
+
 
 
         type.setWidth("200px");
@@ -117,7 +115,7 @@ public class JobAdvertEditView extends VerticalLayout {
         buttonLayout.add(save);
         buttonLayoutVert.add(buttonLayout);
         buttonLayout.setAlignSelf(FlexComponent.Alignment.valueOf("END"));
-        //buttonLayout.setAlignItems(FlexComponent.Alignment.valueOf("END"));
+
         buttonLayoutVert.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.valueOf("CENTER"));
         return buttonLayoutVert;
     }
@@ -158,4 +156,25 @@ public class JobAdvertEditView extends VerticalLayout {
 
     }
 
+    @Override
+    public void setParameter(BeforeEvent beforeEvent, Integer jobAdID) {
+        try {
+            JobAdvertisementDTO jobAd = service.findJobAdvertisementById(jobAdID);
+            int userid = securityService.getAuthenticatedUserID();
+            if(jobAd == null || jobAd.getBusiness().getId() != userid)
+                beforeEvent.forwardTo("");
+
+            this.jobAdvertisement = jobAd;
+        } catch (NullPointerException e) {
+            // Die paramRequestedBusinessId ist kein valider Integer! => reroute to main
+            beforeEvent.forwardTo("");
+        }
+    }
+
+    @Override
+    public void afterNavigation(AfterNavigationEvent afterNavigationEvent) {
+        add(createTitle());
+        add(createFormLayout());
+        add(createButtonLayoutSubmit());
+    }
 }

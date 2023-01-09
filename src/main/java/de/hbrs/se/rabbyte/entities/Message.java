@@ -1,7 +1,9 @@
 package de.hbrs.se.rabbyte.entities;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "message" , schema = "rabbyte")
@@ -12,7 +14,7 @@ public class Message {
     private int receiverId;
     private String messageText;
     private String title;
-    private LocalDateTime date;
+    private LocalDate date;
     private boolean read;
 
     @Id
@@ -67,10 +69,10 @@ public class Message {
     }
 
     @Column(name = "date")
-    public LocalDateTime getDate(){
+    public LocalDate getDate(){
         return date;
     }
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

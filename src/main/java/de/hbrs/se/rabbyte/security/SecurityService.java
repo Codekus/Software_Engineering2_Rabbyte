@@ -1,7 +1,10 @@
 package de.hbrs.se.rabbyte.security;
 
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinServletRequest;
+import de.hbrs.se.rabbyte.dtos.implemented.PersonDTOImpl;
+import de.hbrs.se.rabbyte.views.ChatView;
 import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.exception.AuthException;
 import de.hbrs.se.rabbyte.repository.PersonRepository;
@@ -66,9 +69,12 @@ public class SecurityService  {
         /* Prüfe ob das Passwort aus der Datenbank gleich ist zu dem gehashten Wert, der aus der Eingabe und dem Salt von der Datenbank besteht, ist
            Falls die Passwörter nicht übereinstimmen wird eine Exception geworfen die in der LoginView behandelt wird
         */
+
         if (!Objects.equals(dbpassword, CryptographyUtil.encryptPassword(password, CryptographyUtil.fromHex(salt)))) {
             throw new AuthException("wrong password");
         }
+
+
         if(!user.getEnabled()) {
             throw new AuthException("Der Account ist noch nicht aktiviert");
 
@@ -113,6 +119,10 @@ public class SecurityService  {
             return "None";
         }
     }
+
+    public String getSth(){
+        return personRepository.getBusiness(20000146).getBusinessName();
+    }
     public List<AuthorizedRoute> getAuthorizedRoutes(PersonDTO user){
         var routes = new ArrayList<AuthorizedRoute>();
         routes.add(new AuthorizedRoute("appview", "AppView", AppView.class));
@@ -122,6 +132,8 @@ public class SecurityService  {
             routes.add(new AuthorizedRoute("student", "Student", StudentUserView.class));
             //routes.add(new AuthorizedRoute("main", "Search Job Advertisement", JobAdvertisementSearchView.class));
             routes.add(new AuthorizedRoute("", "Search Job Advertisement", JobAdvertisementSearchView.class));
+            routes.add(new AuthorizedRoute("Unternehmenssuche", "Search Company", UnternehmenSearchView.class));
+            routes.add(new AuthorizedRoute("business-profile", "Show business profile", BusinessProfileView.class));
             routes.add(new AuthorizedRoute("message", "Create Message", MessageView.class));
             routes.add(new AuthorizedRoute("application", "Send Application", ApplicationView.class));
 
@@ -129,8 +141,9 @@ public class SecurityService  {
             routes.add(new AuthorizedRoute("jobAd", "Create Job Advertisement", CreateJobAdvertisementView.class));
             //routes.add(new AuthorizedRoute("main", "Business", BusinessView.class));
             routes.add(new AuthorizedRoute("", "Business", BusinessView.class));
+            routes.add(new AuthorizedRoute("edit-jobadvert", "Edit Job Advertisement", JobAdvertEditView.class));
+            routes.add(new AuthorizedRoute("business-profile", "Show business profile", BusinessProfileView.class));
             routes.add(new AuthorizedRoute("message", "Create Message", MessageView.class));
-
         }
         return routes;
     }
@@ -146,12 +159,14 @@ public class SecurityService  {
         String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         PersonDTO user = personRepository.findByEmail(userName);
         return getRole(user);
+
     }
 
     public int getAuthenticatedUserID() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         PersonDTO user = personRepository.findPersonByName(userName);
         return user.getId();
+
     }
 
 
@@ -163,6 +178,8 @@ public class SecurityService  {
                 VaadinServletRequest.getCurrent().getHttpServletRequest(), null,
                 null);
         SecurityContextHolder.getContext().setAuthentication(null);
+
+
 
     }
 }

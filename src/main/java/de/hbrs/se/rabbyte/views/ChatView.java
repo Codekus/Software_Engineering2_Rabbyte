@@ -15,15 +15,18 @@ import com.vaadin.flow.server.PWA;
 
 import de.hbrs.se.rabbyte.service.ChatMessage;
 import de.hbrs.se.rabbyte.service.MessageList;
+import org.springframework.security.core.context.SecurityContextHolder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.UnicastProcessor;
+import org.springframework.security.core.Authentication;
+
+
 
 @Route("chatview")
 @StyleSheet("frontend://styles/styles.css")
 @Push
 @PWA(name = "Vaadin Chat", shortName = "Chat")
 public class ChatView extends VerticalLayout {
-
     private final UnicastProcessor<ChatMessage> publisher;
     private final Flux<ChatMessage> messages;
     private String username;
@@ -43,7 +46,11 @@ public class ChatView extends VerticalLayout {
     }
 
     private void askUsername() {
-        HorizontalLayout layout = new HorizontalLayout();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        username = authentication.getName();
+        startChat();
+
+/*        HorizontalLayout layout = new HorizontalLayout();
 
         TextField usernameField = new TextField();
         Button startButton = new Button("Start chatting");
@@ -57,7 +64,7 @@ public class ChatView extends VerticalLayout {
         layout.add(usernameField, startButton);
 
         add(layout);
-    }
+*/    }
 
     private void startChat() {
         MessageList messageList = new MessageList();

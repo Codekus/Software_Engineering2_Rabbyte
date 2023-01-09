@@ -1,15 +1,20 @@
 package de.hbrs.se.rabbyte.views;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.*;
 import de.hbrs.se.rabbyte.dtos.BusinessDTO;
+import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import de.hbrs.se.rabbyte.service.CrmService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.NoSuchElementException;
 
 @Route(value = "business-profile")
 @PageTitle("Unternehmensprofil")
@@ -26,12 +31,17 @@ public class BusinessProfileView extends VerticalLayout implements HasUrlParamet
     }
 
     @Override
-    public void setParameter(BeforeEvent event, Integer paramRequestedBusinessId) {
-        BusinessDTO business = service.findBusinessById(paramRequestedBusinessId);
-        if(business == null) {
-            // Die requested BusinessId existiert nicht! => reroute to main
+    public void setParameter(BeforeEvent event, @OptionalParameter Integer paramRequestedBusinessId) {
+        try {
+            BusinessDTO business = service.findBusinessById(paramRequestedBusinessId);
+            if(business == null)
+                // Die requested BusinessId existiert nicht! => reroute to main
+                event.forwardTo("");
+            this.requestedBusinessProfile = business;
+        } catch (NullPointerException e) {
+            // Die paramRequestedBusinessId ist kein valider Integer! => reroute to main
+            event.forwardTo("");
         }
-        this.requestedBusinessProfile = business;
     }
 
     @Override
@@ -51,13 +61,13 @@ public class BusinessProfileView extends VerticalLayout implements HasUrlParamet
         Span strasse = new Span("k.A.");
         Span hausnummer = new Span("k.A.");
 
-        if( requestedBusinessProfile.getCity() != null )
+        if (requestedBusinessProfile.getCity() != null)
             stadt = new Span(requestedBusinessProfile.getCity());
-        if( requestedBusinessProfile.getCountry() != null )
+        if (requestedBusinessProfile.getCountry() != null)
             land = new Span(requestedBusinessProfile.getCountry());
-        if( requestedBusinessProfile.getStreet() != null )
+        if (requestedBusinessProfile.getStreet() != null)
             strasse = new Span(requestedBusinessProfile.getStreet());
-        if( requestedBusinessProfile.getStreetNumber() != null)
+        if (requestedBusinessProfile.getStreetNumber() != null)
             hausnummer = new Span(requestedBusinessProfile.getStreetNumber());
 
         HorizontalLayout horizontalLayoutAdresse = new HorizontalLayout();

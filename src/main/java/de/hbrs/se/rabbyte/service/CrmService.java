@@ -41,8 +41,10 @@ public class CrmService {
     }
     public List<JobAdvertisement>filterJobAdvertisementsByKeywordList(List<JobAdvertisement> jobAdvertisements,List<String> keywordList) {
         for (String keyword : keywordList){
-            jobAdvertisements = jobAdvertisements.stream().filter(jobAdvertisement -> (findJobAdvertisements(keyword).stream().map(JobAdvertisement::getId).collect(Collectors.toList()).contains(jobAdvertisement.getId()))).collect(Collectors.toList());
-    }
+            //jobAdvertisements = jobAdvertisements.stream().filter(jobAdvertisement -> (findJobAdvertisements(keyword).stream().map(JobAdvertisement::getId).collect(Collectors.toList()).contains(jobAdvertisement.getId()))).collect(Collectors.toList());
+            jobAdvertisements = jobAdvertisements.stream().filter(jobAdvertisement -> (jobAdvertisement.getBusiness().getBusinessName().toLowerCase().contains(keyword)||jobAdvertisement.getTitle().toLowerCase().contains(keyword)||jobAdvertisement.getText().toLowerCase().contains(keyword)||jobAdvertisement.getType().toLowerCase().contains(keyword))).collect(Collectors.toList());
+
+        }
         return jobAdvertisements;
     }
     public List<JobAdvertisement>filterJobAdvertisementsByKeyword(List<JobAdvertisement> jobAdvertisements,String keyword,String indicator){

@@ -17,7 +17,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -55,7 +57,7 @@ public class MessageControl {
         newMessage.setSender(selectedMessage.getSender());
         newMessage.setReceiver(selectedMessage.getSender());
         newMessage.setTitle(selectedMessage.getTitle());
-        newMessage.setDate(LocalDateTime.now());
+        newMessage.setDate(LocalDate.now());
         return newMessage;
     }
 
@@ -80,7 +82,7 @@ public class MessageControl {
 
     public void saveMessage(MessageDTOImpl messageDTO) {
 
-        messageDTO.setDate(LocalDateTime.now());
+        messageDTO.setDate(LocalDate.now());
 
         String email = getEmail();
         
