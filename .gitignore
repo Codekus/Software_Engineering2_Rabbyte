@@ -38,3 +38,4 @@ build/
 # Maven
 target/
 /tmp/uploads/screenshots/*.png
+/test-output/
