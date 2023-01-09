@@ -23,7 +23,13 @@ public class RegistrationPO extends BaseFunctions {
     By headline = By.xpath("/html/body/vaadin-vertical-layout/vaadin-vertical-layout/h1");
     By tabStudent = By.xpath("//vaadin-tab[1]");
     By tabBusiness = By.xpath("//vaadin-tab[2]");
+    By successfulRegWindow = By.xpath("/html/body/vaadin-dialog-overlay/flow-component-renderer");
 
+    By successfulRegOkButton = By.xpath("/html/body/vaadin-dialog-overlay/flow-component-renderer/div/vaadin-vertical-layout/vaadin-horizontal-layout[2]/vaadin-button");
+    By activationWindow = By.xpath("/html/body/vaadin-vertical-layout/vaadin-vertical-layout");
+    By activationButton = By.xpath("/html/body/vaadin-vertical-layout/vaadin-vertical-layout/vaadin-button");
+    By activationConfirmation = By.xpath("/html/body/vaadin-dialog-overlay/flow-component-renderer");
+    By loginBanner = By.xpath("/html/body/vaadin-vertical-layout");
     public void openRegistration() {
         driver.get(url);
     }
@@ -92,6 +98,18 @@ public class RegistrationPO extends BaseFunctions {
     public void clickReg() {
         clickElement(regButton);
     }
+
+    public String getRegNotification() {return getString(successfulRegWindow); }
+
+    public void clickSuccessfulRegOkButton (){clickElement(successfulRegOkButton); }
+
+    public String getLoginBanner(){return getString(loginBanner);}
+
+    public String getActivationText (){return getString(activationWindow); }
+
+    public void clickActivationButton(){clickElement(activationButton);}
+
+    public String getActivationConfiramtion(){return getString(activationConfirmation);}
 
     public String getEmailAndCount() throws IOException {
 

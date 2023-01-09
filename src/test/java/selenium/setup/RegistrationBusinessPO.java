@@ -3,6 +3,11 @@ package selenium.setup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 public class RegistrationBusinessPO extends BaseFunctions {
 
 
@@ -17,13 +22,20 @@ public class RegistrationBusinessPO extends BaseFunctions {
     By headline = By.xpath("/html/body/vaadin-vertical-layout/vaadin-vertical-layout/h1");
     By tabStudent = By.xpath("//vaadin-tab[1]");
     By tabBusiness = By.xpath("//vaadin-tab[2]");
+    By successfulRegOkButton = By.xpath("/html/body/vaadin-dialog-overlay/flow-component-renderer/div/vaadin-vertical-layout/vaadin-horizontal-layout[2]/vaadin-button");
+    By activationWindow = By.xpath("/html/body/vaadin-vertical-layout/vaadin-vertical-layout");
+    By activationButton = By.xpath("/html/body/vaadin-vertical-layout/vaadin-vertical-layout/vaadin-button");
+    By activationConfirmation = By.xpath("/html/body/vaadin-dialog-overlay/flow-component-renderer");
+    By loginBanner = By.xpath("/html/body/vaadin-vertical-layout");
+
+    By successfulRegWindow = By.xpath("/html/body/vaadin-dialog-overlay/flow-component-renderer");
 
     public void openRegistration() {
         driver.get(url);
         clickElement(tabBusiness);
     }
 
-    public String getTabBusinessSelected(){
+    public String getTabBusinessSelected() {
         WebElement tabBusinessSelected = driver.findElement(tabBusiness);
         return tabBusinessSelected.getAttribute("aria-selected");
     }
@@ -36,7 +48,7 @@ public class RegistrationBusinessPO extends BaseFunctions {
         typeText(pswd, passwordRepeat);
     }
 
-    public void enterBusinessName(String name){
+    public void enterBusinessName(String name) {
         typeText(name, business);
     }
 
@@ -60,7 +72,7 @@ public class RegistrationBusinessPO extends BaseFunctions {
         return getString(tabBusiness);
     }
 
-    public String getBusinessName(){
+    public String getBusinessName() {
         return getString(business);
     }
 
@@ -78,6 +90,72 @@ public class RegistrationBusinessPO extends BaseFunctions {
 
     public void clickReg() {
         clickElement(regButton);
+    }
+
+    public String getRegNotification() {
+        return getString(successfulRegWindow);
+    }
+
+    public void clickSuccessfulRegOkButton() {
+        clickElement(successfulRegOkButton);
+    }
+
+    public String getLoginBanner() {
+        return getString(loginBanner);
+    }
+
+    public String getActivationText() {
+        return getString(activationWindow);
+    }
+
+    public void clickActivationButton() {
+        clickElement(activationButton);
+    }
+
+    public String getActivationConfiramtion() {
+        return getString(activationConfirmation);
+    }
+
+    public String getEmailAndCount() throws IOException {
+
+        String propPath = "src/test/ressources/test_credentials.properties";
+        Properties prop = new Properties();
+        FileInputStream f = null;
+        try {
+            f = new FileInputStream(propPath);
+            prop.load(f);
+        } finally {
+            assert f != null;
+            f.close();
+        }
+
+        String testMailName = prop.getProperty("TEST_SELENIUM_MAIL_NAME");
+        prop.setProperty("SELENIUM_MAIL_COUNT",
+                String.valueOf(Integer.parseInt(prop.getProperty("SELENIUM_MAIL_COUNT")) + 1));
+        FileOutputStream out = new FileOutputStream(propPath);
+        prop.store(out, null);
+        out.close();
+        return testMailName + "+" + prop.getProperty("SELENIUM_MAIL_COUNT") + "@outlook.de";
+    }
+
+    public String getUniqueBusinessName() throws IOException {
+
+        String propPath = "src/test/ressources/test_credentials.properties";
+        Properties prop = new Properties();
+        FileInputStream f = null;
+        try{
+            f = new FileInputStream(propPath);
+            prop.load(f);
+        } finally {
+            assert f != null;
+            f.close();
+        }
+        prop.setProperty("SELENIUM_MAIL_COUNT",
+                String.valueOf(Integer.parseInt(prop.getProperty("SELENIUM_MAIL_COUNT")) + 1));
+        FileOutputStream out = new FileOutputStream(propPath);
+        prop.store(out, null);
+        out.close();
+        return prop.getProperty("SELENIUM_MAIL_COUNT");
     }
 
 }

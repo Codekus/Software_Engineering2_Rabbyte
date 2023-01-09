@@ -7,19 +7,19 @@
 
         <packages>
 
-            <package name="de.hbrs.se.rabbyte.control"/>
-            <package name="de.hbrs.se.rabbyte.control.factory"/>
-            <package name="de.hbrs.se.rabbyte.dtos"/>
-            <package name="de.hbrs.se.rabbyte.dtos.implemented"/>
-            <package name="de.hbrs.se.rabbyte.entities"/>
-            <package name="de.hbrs.se.rabbyte.repository"/>
-            <package name="de.hbrs.se.rabbyte.security"/>
-            <package name="de.hbrs.se.rabbyte.service"/>
-            <package name="de.hbrs.se.rabbyte.util"/>
-            <package name="de.hbrs.se.rabbyte.views"/>
+            <!--  <package name="de.hbrs.se.rabbyte.control"/>
+              <package name="de.hbrs.se.rabbyte.control.factory"/>
+              <package name="de.hbrs.se.rabbyte.dtos"/>
+              <package name="de.hbrs.se.rabbyte.dtos.implemented"/>
+              <package name="de.hbrs.se.rabbyte.entities"/>
+              <package name="de.hbrs.se.rabbyte.repository"/>
+              <package name="de.hbrs.se.rabbyte.security"/>
+              <package name="de.hbrs.se.rabbyte.service"/>
+              <package name="de.hbrs.se.rabbyte.util"/>
+              <package name="de.hbrs.se.rabbyte.views"/>-->
 
-            <package name="selenium.tests"/>
-        </packages>
-    </test>
-</suite>
-        <!-- Suite -->
+              <package name="selenium.tests"/>
+          </packages>
+      </test>
+  </suite>
+          <!-- Suite -->

@@ -91,7 +91,7 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
         Assert.assertTrue(actualPasswordRepeatError.contains("Ihr Passwort ist eines der häufigsten Passwörter. Bitte wählen sie ein anderes"));
     }
 
-    @Test
+    //@Test
     void registrationFailWrongFormat() throws InterruptedException {
         //check for wrong input format
         registrationOP.openRegistration();

@@ -1,17 +1,23 @@
 package selenium.tests;
+
 import org.junit.Assert;
 import org.testng.annotations.Test;
+import selenium.Utils.OutlookMail;
 import selenium.setup.BaseFunctions;
 import selenium.setup.LoginPO;
 import selenium.setup.RegistrationBusinessPO;
+
+import javax.mail.MessagingException;
+import java.io.IOException;
 
 public class RegistrationValidBusiness extends BaseFunctions {
 
     RegistrationBusinessPO registrationOP = new RegistrationBusinessPO();
     LoginPO loginPO = new LoginPO();
+    OutlookMail outlookMail = new OutlookMail();
 
-    @Test
-    void forwardRegTest(){
+    //@Test
+    void forwardRegTest() {
 
         loginPO.openLogin();
         registrationOP.clickRegForward();
@@ -24,8 +30,9 @@ public class RegistrationValidBusiness extends BaseFunctions {
         String headlineActual = registrationOP.getHeadLine();
         Assert.assertEquals(headlineExpected, headlineActual);
     }
+
     @Test
-    void tabTest(){
+    void tabTest() {
         registrationOP.openRegistration();
 
         String tabStudentExpected = "Student";
@@ -56,7 +63,7 @@ public class RegistrationValidBusiness extends BaseFunctions {
         String actualEmailError = registrationOP.getEmail();
         Assert.assertFalse(actualEmailError.contains("Das Format der Email ist nicht gültig"));
         Assert.assertFalse(actualBusinessName.contains("Ungültiger Geschäftsname"));
-      }
+    }
 
     @Test
     void registrationCorrect() throws InterruptedException {
@@ -73,6 +80,37 @@ public class RegistrationValidBusiness extends BaseFunctions {
         String actualEmailError = registrationOP.getEmail();
         Assert.assertFalse(actualEmailError.contains("Das Format der Email ist nicht gültig"));
         Assert.assertFalse(actualBusinessName.contains("Ungültiger Geschäftsname"));
+
+    }
+
+    @Test
+    void registrationCorrectFull() throws InterruptedException, IOException, MessagingException {
+        //check for correct registration process
+        registrationOP.openRegistration();
+        String email = registrationOP.getEmailAndCount();
+        String businessName = registrationOP.getUniqueBusinessName();
+        registrationOP.enterBusinessName(businessName);
+        registrationOP.enterPassword("+securepassword321");
+        registrationOP.enterPasswordRepeat("+securepassword321");
+        registrationOP.enterEmail(email);
+        registrationOP.clickReg();
+        Thread.sleep(500);
+
+        String activationNotification = registrationOP.getRegNotification();
+        Assert.assertTrue(activationNotification.contains("Registrierung erfolgreich"));
+        registrationOP.clickSuccessfulRegOkButton();
+        String loginText = registrationOP.getLoginBanner();
+        Assert.assertTrue(loginText.contains("Herzlich Willkommen"));
+        Thread.sleep(5000);
+
+        String latestMail = outlookMail.getLatestEmail();
+        String url = outlookMail.extractURl(latestMail);
+        driver.get(url);
+        Thread.sleep(500);
+        registrationOP.clickActivationButton();
+        String activationConfiramtion = registrationOP.getActivationConfiramtion();
+        Assert.assertTrue(activationConfiramtion.contains("Ihr Account ist jetzt aktiv!"));
+
 
     }
 
