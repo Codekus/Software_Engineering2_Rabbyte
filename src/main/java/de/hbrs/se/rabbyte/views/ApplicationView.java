@@ -20,6 +20,8 @@ import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
+
 
 @PageTitle("Bewerbung")
 public class ApplicationView extends Div {
@@ -29,6 +31,9 @@ public class ApplicationView extends Div {
 
     @Autowired
     BusinessRepository businessRepository;
+
+    @Autowired
+    MessageControl messageControl;
 
     private TextArea description = new TextArea("Anschreiben");
     private Button apply = new Button("Bewerben");
@@ -69,18 +74,23 @@ public class ApplicationView extends Div {
     }
 
 
-    public MessageDTO apply(){
+    public void apply(){
         MessageDTOImpl messageDTO = new MessageDTOImpl();
-        MessageControl messageControl = new MessageControl();
+        messageControl = new MessageControl();
+
 
         messageDTO.setMessageText(description.getValue());
+        messageDTO.setTitle("Test");
+        messageDTO.setDate(LocalDateTime.now());
+        messageDTO.setSender(20000143);
+        messageDTO.setReceiver(20000142);
+
+
         try {
             messageControl.sendMessage(messageDTO);
         } catch (DatabaseUserException e) {
             throw new RuntimeException(e);
         }
-
-        return messageDTO;
     }
 
     /*
