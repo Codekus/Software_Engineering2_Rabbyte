@@ -37,5 +37,4 @@ build/
 
 # Maven
 target/
-/test-output/
 /tmp/uploads/screenshots/*.png
