@@ -7,6 +7,8 @@ import javax.mail.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.*;
+import java.util.regex.*;
 
 import java.util.Properties;
 
@@ -50,6 +52,38 @@ public class OutlookMail {
     public static String getLatestEmail() throws MessagingException, IOException {
         List<Message> messages2 = getInboxMessages();
         return messages2.get(messages2.size()-1).getContent().toString();
+    }
+    public static String extractURl(String str){
+
+        // Regular Expression to extract
+        // URL from the string
+        String regex
+                = "(?:(?:https?|ftp|file):\\/\\/|www\\.|ftp\\.)" +
+                "(?:\\([-A-Z0-9+&@#\\/%=~_|$?!:,.]*\\)|[-A-Z0-9+&@#\\/%=~_|$?!:,.])*" +
+                "(?:\\([-A-Z0-9+&@#\\/%=~_|$?!:,.]*\\)|[A-Z0-9+&@#\\/%=~_|$])";
+
+        // Compile the Regular Expression
+        Pattern p = Pattern.compile(
+                regex,
+                Pattern.CASE_INSENSITIVE);
+
+        // Find the match between string
+        // and the regular expression
+        Matcher m = p.matcher(str);
+        String url = null;
+        // Find the next subsequence of
+        // the input subsequence that
+        // find the pattern
+        while (m.find()) {
+
+            // Find the substring from the
+            // first index of match result
+            // to the last index of match
+            // result and add in the list
+            url = str.substring(m.start(0), m.end(0));
+        }
+
+        return url;
     }
 
 }

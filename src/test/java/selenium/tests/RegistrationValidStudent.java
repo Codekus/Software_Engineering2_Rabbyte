@@ -15,6 +15,8 @@ public class RegistrationValidStudent extends BaseFunctions {
     RegistrationPO registrationOP = new RegistrationPO();
     LoginPO loginPO = new LoginPO();
 
+    OutlookMail outlookMail = new OutlookMail();
+
     @Test
     void forwardRegTest() throws MessagingException, IOException {
 
@@ -34,8 +36,9 @@ public class RegistrationValidStudent extends BaseFunctions {
         System.out.println(content);
         System.out.println(mail);
     }
+
     @Test(enabled = false)
-    void tabTest(){
+    void tabTest() {
         registrationOP.openRegistration();
 
         String tabStudentExpected = "Student";
@@ -73,7 +76,7 @@ public class RegistrationValidStudent extends BaseFunctions {
     }
 
     @Test
-    void registrationCorrect() throws InterruptedException {
+    void registrationCorrectFormat2() throws InterruptedException {
         //check for wrong input format
         registrationOP.openRegistration();
         registrationOP.enterFirstName("Firstname");
@@ -90,6 +93,37 @@ public class RegistrationValidStudent extends BaseFunctions {
         Assert.assertFalse(actualEmailError.contains("Das Format der Email ist nicht gültig"));
         Assert.assertFalse(actualFirstNameError.contains("Ungültiger Vorname"));
         Assert.assertFalse(actualSurNameError.contains("Ungültiger Nachname"));
+
+    }
+
+    @Test
+    void registrationCorrectFull() throws InterruptedException, IOException, MessagingException {
+        //check for correct registration process
+        registrationOP.openRegistration();
+        registrationOP.enterFirstName("Firstname");
+        registrationOP.enterSurName("Surname");
+        registrationOP.enterPassword("+securepassword321");
+        registrationOP.enterPasswordRepeat("+securepassword321");
+        String email = registrationOP.getEmailAndCount();
+        registrationOP.enterEmail(email);
+        registrationOP.clickReg();
+        Thread.sleep(500);
+
+        String activationNotification = registrationOP.getRegNotification();
+        Assert.assertTrue(activationNotification.contains("Registrierung erfolgreich"));
+        registrationOP.clickSuccessfulRegOkButton();
+        String loginText = registrationOP.getLoginBanner();
+        Assert.assertTrue(loginText.contains("Herzlich Willkommen"));
+        Thread.sleep(5000);
+
+        String latestMail = outlookMail.getLatestEmail();
+        String url = outlookMail.extractURl(latestMail);
+        driver.get(url);
+        Thread.sleep(500);
+        registrationOP.clickActivationButton();
+        String activationConfiramtion = registrationOP.getActivationConfiramtion();
+        Assert.assertTrue(activationConfiramtion.contains("Ihr Account ist jetzt aktiv!"));
+
 
     }
 
