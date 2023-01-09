@@ -19,10 +19,6 @@ public class Listeners extends TestSetup implements ITestListener {
     }
 
     public void onTestFailure(ITestResult result){
-        logScreenshot(result);
-    }
-
-    private void logScreenshot(ITestResult result){
         try {
             File destFile = TestSetup.takeScreenshots(result.getName());
             Reporter.log("<a href='../../tmp/uploads/screenshots/" + destFile.getName() +

@@ -5,8 +5,10 @@ import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.time.Duration;
+import java.util.List;
 
 public class BaseFunctions extends TestSetup{
 
@@ -64,5 +66,48 @@ public class BaseFunctions extends TestSetup{
         SearchContext shadowRoot = shadowHost.getShadowRoot();
         WebElement shadowContent = shadowRoot.findElement(By.id(shadow_content));
         return  shadowContent;
+    }
+
+    public void checkForPresence(By by) {
+
+        Assert.assertTrue(isDisplayed(by),
+                "Assert-Fehler: Das Element konnte nicht identifiziert werden [Locator: " + by + "]");
+    }
+
+    public boolean isDisplayed(By by) {
+        long endTime = System.currentTimeMillis() + waitTime.toMillis();
+
+        while (retryTimeIsNotUp(endTime)) {
+            try {
+                if (locateElement(by) != null) {
+                    outPrint("Assert-Hinweis: Das Element konnte identifiziert werden [Locator: " + by + "]");
+                    return true;
+                }
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    protected boolean retryTimeIsNotUp(long endTime) {
+        return endTime > System.currentTimeMillis();
+    }
+
+    public WebElement locateElement(By by) {
+
+        try {
+            List<WebElement> locatedElements = new WebDriverWait(driver, waitTime)
+                    .until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
+            if (locatedElements.size() == 1) {
+                return locatedElements.get(0);
+            } else {
+                outPrint("Not Unique: Driver found multiple elements.");
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 }
