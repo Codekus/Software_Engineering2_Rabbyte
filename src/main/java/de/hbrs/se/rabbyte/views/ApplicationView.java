@@ -9,6 +9,8 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import de.hbrs.se.rabbyte.control.JobAdvertControl;
 import de.hbrs.se.rabbyte.control.MessageControl;
@@ -24,7 +26,7 @@ import java.time.LocalDateTime;
 
 
 @PageTitle("Bewerbung")
-public class ApplicationView extends Div {
+public class ApplicationView extends Div implements BeforeEnterObserver {
 
     @Autowired
     SecurityService securityService;
@@ -44,6 +46,11 @@ public class ApplicationView extends Div {
 
 
     public ApplicationView(){
+        // Required for Vaadin
+    }
+
+
+    public void beforeEnter(BeforeEnterEvent bee) {
         addClassName("application-view");
 
         //add(createButtonLayoutBack());
@@ -72,11 +79,8 @@ public class ApplicationView extends Div {
             apply();
         });
     }
-
-
     public void apply(){
         MessageDTOImpl messageDTO = new MessageDTOImpl();
-        messageControl = new MessageControl();
 
 
         messageDTO.setMessageText(description.getValue());
