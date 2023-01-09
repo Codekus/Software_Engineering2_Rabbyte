@@ -10,6 +10,7 @@ public class LoginPO extends BaseFunctions{
     By loginButtonID = By.id("vaadinLoginUsername");
 
     public void openLogin(){
+        outPrint("Trying to open: " + url);
         driver.get(url);
     }
 

@@ -2,24 +2,19 @@
 <!DOCTYPE suite
         SYSTEM 'http://testng.org/testng-1.0.dtd'>
 <suite name="Rabbyte Automation Test">
+    <listeners>
+        <listener class-name="selenium.setup.Listeners"></listener>
+    </listeners>
     <test name="Rabbyte Selenium">
         <parameter name="browser" value="chrome"/>
 
         <packages>
-
-            <package name="de.hbrs.se.rabbyte.control"/>
-            <package name="de.hbrs.se.rabbyte.control.factory"/>
-            <package name="de.hbrs.se.rabbyte.dtos"/>
-            <package name="de.hbrs.se.rabbyte.dtos.implemented"/>
-            <package name="de.hbrs.se.rabbyte.entities"/>
-            <package name="de.hbrs.se.rabbyte.repository"/>
-            <package name="de.hbrs.se.rabbyte.security"/>
-            <package name="de.hbrs.se.rabbyte.service"/>
-            <package name="de.hbrs.se.rabbyte.util"/>
-            <package name="de.hbrs.se.rabbyte.views"/>
-
-            <package name="selenium.tests"/>
+            <package name="selenium.tests"></package>
         </packages>
     </test>
 </suite>
-        <!-- Suite -->
+        <!-- Suite 
+        classes>
+            <class name="selenium.tests.Tmp"></class>
+        </classes>
+        -->
