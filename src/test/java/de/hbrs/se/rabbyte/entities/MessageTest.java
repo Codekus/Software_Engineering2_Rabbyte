@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.shaded.org.bouncycastle.cms.Recipient;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +17,7 @@ class MessageTest {
     private int receiverId;
     private String messageText;
     private String title;
-    private LocalDateTime date;
+    private LocalDate date;
     private boolean read;
 
 
@@ -28,7 +29,7 @@ class MessageTest {
         receiverId = 3000;
         messageText = "Message Text Test";
         title = "Message Title";
-        date = LocalDateTime.of(2000, 1,2,20, 50, 30);
+        date = LocalDate.of(2000, 1,2);
         read = false;
 
         message = new Message();
