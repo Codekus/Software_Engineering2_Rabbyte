@@ -15,7 +15,8 @@ public interface RegistrationResultDTO {
         INVALID_BUSINESS_NAME,
         BUSINESS_NAME_IN_USE,
         PASSWORD_TOO_COMMON,
-        GENERAL_ERROR;
+        GENERAL_ERROR,
+        DATABASE_USER_EXCEPTION;
 
     }
     public void setRegistrationResult(boolean result);

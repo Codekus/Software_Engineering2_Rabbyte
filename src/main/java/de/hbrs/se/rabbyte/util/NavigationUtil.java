@@ -27,4 +27,8 @@ public class NavigationUtil {
 
 
 
+    public static void toMessageView() {
+        UI.getCurrent().navigate("message");
+    }
+
 }

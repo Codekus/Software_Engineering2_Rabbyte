@@ -1,5 +1,6 @@
 package de.hbrs.se.rabbyte.util;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H3;
@@ -7,6 +8,7 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import de.hbrs.se.rabbyte.dtos.PersonDTO;
 
 import java.util.Arrays;
 
@@ -47,4 +49,7 @@ public class Utils {
         dialog.open();
     }
 
+    public static PersonDTO getCurrentPerson() {
+       return (PersonDTO) UI.getCurrent().getSession().getAttribute(Globals.CURRENT_USER);
+    }
 }
