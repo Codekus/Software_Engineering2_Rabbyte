@@ -26,7 +26,11 @@ import de.hbrs.se.rabbyte.util.Globals;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -109,7 +113,7 @@ public class MessageView extends Div implements BeforeEnterObserver {
         }).setHeader("Betreff").setSortable(true);
 
         // Date of received message
-        grid.addColumn(MessageDTO::getDate).setHeader("Datum").setSortable(true);
+        grid.addColumn((MessageDTO::getDate)).setHeader("Datum").setSortable(true);
 
         // Clicking a message opens it in the lower part of the window
         grid.addItemClickListener(message -> {
@@ -326,4 +330,9 @@ public class MessageView extends Div implements BeforeEnterObserver {
         this.refreshGrid();
     }
 
+    private Date convertLocalDateTimeToDateUsingInstant(LocalDateTime dateToConvert) {
+    return java.util.Date
+                .from(dateToConvert.atZone(ZoneId.systemDefault())
+                .toInstant());
+    }
 }
