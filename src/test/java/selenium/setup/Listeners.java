@@ -3,7 +3,7 @@ package selenium.setup;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
-import org.testng.annotations.Test;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +15,7 @@ public class Listeners extends TestSetup implements ITestListener {
     }
 
     public void onTestSuccess(ITestResult result){
+
         try {
             File destFile = TestSetup.takeScreenshots(result.getName());
             System.out.println("before");
