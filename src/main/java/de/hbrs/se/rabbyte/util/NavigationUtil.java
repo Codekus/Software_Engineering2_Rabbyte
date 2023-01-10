@@ -1,6 +1,7 @@
 package de.hbrs.se.rabbyte.util;
 
 import com.vaadin.flow.component.UI;
+import de.hbrs.se.rabbyte.views.JobAdvertEditView;
 
 public class NavigationUtil {
 
@@ -20,6 +21,14 @@ public class NavigationUtil {
         UI.getCurrent().navigate("registration");
     }
 
-    public static void toJobAdvertEditView(){UI.getCurrent().navigate("edit-jobadvert");}
+    public static void toJobAdvertEditView(int jobAdId){
+        UI.getCurrent().navigate(JobAdvertEditView.class, jobAdId);
+    }
+
+
+
+    public static void toMessageView() {
+        UI.getCurrent().navigate("message");
+    }
 
 }

@@ -78,7 +78,7 @@ public class JobAdvertisementSearchView extends VerticalLayout {
     //update grid with search field input
     private void updateList() {
         //TODO maybe split into new method
-        searchInput = Arrays.asList((searchField.getValue()).split(" "));
+        searchInput = Arrays.asList((searchField.getValue().toLowerCase()).split(" "));
 
 
 

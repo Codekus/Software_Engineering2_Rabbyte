@@ -89,9 +89,7 @@ public class BusinessView extends VerticalLayout {
         ).setHeader("Art");
 
         grid.addComponentColumn(jobAdvertisement -> new Button("Bearbeiten", click -> {
-            UI.getCurrent().getSession().setAttribute("EditJobad", jobAdvertisement);
-            NavigationUtil.toJobAdvertEditView();
-
+            NavigationUtil.toJobAdvertEditView(jobAdvertisement.getId());
         })).setKey("EditBtn");
 
         grid.addComponentColumn(jobAdvertisement -> new Button("Löschen", click -> {
