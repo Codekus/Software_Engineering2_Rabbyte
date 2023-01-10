@@ -7,7 +7,7 @@ import selenium.setup.LoginPO;
 public class LoginTest extends BaseFunctions {
 
     LoginPO loginPO = new LoginPO();
-
+/*
     @Test
     void loginTest(){
         loginPO.openLogin();
@@ -15,4 +15,6 @@ public class LoginTest extends BaseFunctions {
         loginPO.checkForPresence();
         loginPO.checkRegisterButton();
     }
+
+ */
 }

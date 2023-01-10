@@ -33,7 +33,7 @@ public class RegistrationInvalidStudent extends BaseFunctions {
     }
 
     @Test
-    void registrationFailName() throws InterruptedException {
+    void registrationFailName() throws Exception {
         //check for empty names
         registrationOP.openRegistration();
         registrationOP.clickReg();
@@ -48,7 +48,7 @@ public class RegistrationInvalidStudent extends BaseFunctions {
     }
 
     @Test
-    void registrationFailPassword() throws InterruptedException {
+    void registrationFailPassword() throws Exception {
         //check for empty passwords
         registrationOP.openRegistration();
         registrationOP.clickReg();
@@ -63,7 +63,7 @@ public class RegistrationInvalidStudent extends BaseFunctions {
     }
 
     @Test
-    void registrationFailEmail() throws InterruptedException {
+    void registrationFailEmail() throws Exception {
         //check for empty passwords
         registrationOP.openRegistration();
         registrationOP.clickReg();
@@ -77,7 +77,7 @@ public class RegistrationInvalidStudent extends BaseFunctions {
 
 
     @Test
-    void registrationFailCommonPassword() throws InterruptedException {
+    void registrationFailCommonPassword() throws Exception {
         //check for empty passwords
         registrationOP.openRegistration();
         registrationOP.enterPassword("12345678");
@@ -94,7 +94,7 @@ public class RegistrationInvalidStudent extends BaseFunctions {
     }
 
     @Test
-    void registrationFailWrongFormat() throws InterruptedException {
+    void registrationFailWrongFormat() throws Exception {
         //check for wrong input format
         registrationOP.openRegistration();
         registrationOP.enterFirstName("12345678");
@@ -115,7 +115,7 @@ public class RegistrationInvalidStudent extends BaseFunctions {
     }
 
     @Test
-    void registrationFailWrongFormat2() throws InterruptedException {
+    void registrationFailWrongFormat2() throws Exception {
         //check for wrong input format
         registrationOP.openRegistration();
         registrationOP.enterFirstName("*-*");

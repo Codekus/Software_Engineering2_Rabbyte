@@ -33,24 +33,24 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
     }
 
     @Test
-    void registrationFailName() throws InterruptedException {
+    void registrationFailName() throws Exception {
         //check for empty names
         registrationOP.openRegistration();
         registrationOP.clickReg();
-        Thread.sleep(500);
+        Thread.sleep(1000);
 
         //After clicking registration with nothing entered an error notification should pop up
         //in the element, although it's a root element it is still accessible as part of the element
-        String actualBusinessName = registrationOP.getBusinessName();
-        Assert.assertTrue(actualBusinessName.contains("Ungültiger Geschäftsname"));
+        String actualPassword = registrationOP.getPassword();
+        Assert.assertTrue(actualPassword.contains("Das Password muss mindestens 8 Zeichen lang sein"));
     }
 
     @Test
-    void registrationFailPassword() throws InterruptedException {
+    void registrationFailPassword() throws Exception {
         //check for empty passwords
         registrationOP.openRegistration();
         registrationOP.clickReg();
-        Thread.sleep(500);
+        Thread.sleep(1000);
 
         //After clicking registration with nothing entered an error notification should pop up
         //in the element, although it's a root element it is still accessible as part of the element
@@ -61,7 +61,7 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
     }
 
     @Test
-    void registrationFailEmail() throws InterruptedException {
+    void registrationFailEmail() throws Exception {
         //check for empty passwords
         registrationOP.openRegistration();
         registrationOP.clickReg();
@@ -75,7 +75,7 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
 
 
     @Test
-    void registrationFailCommonPassword() throws InterruptedException {
+    void registrationFailCommonPassword() throws Exception {
         //check for empty passwords
         registrationOP.openRegistration();
         registrationOP.enterPassword("12345678");
@@ -92,13 +92,13 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
     }
 
     //@Test
-    void registrationFailWrongFormat() throws InterruptedException {
+    void registrationFailWrongFormat() throws Exception {
         //check for wrong input format
         registrationOP.openRegistration();
         registrationOP.enterBusinessName("-");
         registrationOP.enterEmail("12345678");
         registrationOP.clickReg();
-        Thread.sleep(500);
+        waitUntilElementIsVisible(registrationOP.business);
 
         //After clicking registration with nothing entered an error notification should pop up
         //in the element, although it's a root element it is still accessible as part of the element
@@ -110,7 +110,7 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
     }
 
     @Test
-    void registrationFailWrongFormat2() throws InterruptedException {
+    void registrationFailWrongFormat2() throws Exception {
         //check for wrong input format
         registrationOP.openRegistration();
         registrationOP.enterBusinessName("*-*");

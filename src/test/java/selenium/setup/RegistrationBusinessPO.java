@@ -15,20 +15,20 @@ public class RegistrationBusinessPO extends BaseFunctions {
 
     By forwardRegButton = By.xpath("/html/body/vaadin-vertical-layout/vaadin-button");
     By regButton = By.xpath("//vaadin-button");
-    By business = By.xpath("//vaadin-text-field");
-    By password = By.xpath("//vaadin-password-field[1]");
+    public By business = By.xpath("//vaadin-text-field");
+    public By password = By.xpath("//vaadin-password-field[1]");
     By passwordRepeat = By.xpath("//vaadin-password-field[2]");
-    By email = By.xpath("//vaadin-email-field");
+    public By email = By.xpath("//vaadin-email-field");
     By headline = By.xpath("/html/body/vaadin-vertical-layout/vaadin-vertical-layout/h1");
     By tabStudent = By.xpath("//vaadin-tab[1]");
     By tabBusiness = By.xpath("//vaadin-tab[2]");
     By successfulRegOkButton = By.xpath("/html/body/vaadin-dialog-overlay/flow-component-renderer/div/vaadin-vertical-layout/vaadin-horizontal-layout[2]/vaadin-button");
     By activationWindow = By.xpath("/html/body/vaadin-vertical-layout/vaadin-vertical-layout");
-    By activationButton = By.xpath("/html/body/vaadin-vertical-layout/vaadin-vertical-layout/vaadin-button");
+    public By activationButton = By.xpath("/html/body/vaadin-vertical-layout/vaadin-vertical-layout/vaadin-button");
     By activationConfirmation = By.xpath("/html/body/vaadin-dialog-overlay/flow-component-renderer");
     By loginBanner = By.xpath("/html/body/vaadin-vertical-layout");
 
-    By successfulRegWindow = By.xpath("/html/body/vaadin-dialog-overlay/flow-component-renderer");
+    public By successfulRegWindow = By.xpath("/html/body/vaadin-dialog-overlay/flow-component-renderer");
 
     public void openRegistration() {
         driver.get(url);

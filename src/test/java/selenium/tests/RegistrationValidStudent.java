@@ -55,14 +55,14 @@ public class RegistrationValidStudent extends BaseFunctions {
     }
 
     @Test(enabled = false)
-    void registrationCorrectFormat() throws InterruptedException {
+    void registrationCorrectFormat() throws Exception {
         //check for wrong input format
         registrationOP.openRegistration();
         registrationOP.enterFirstName("Firstname");
         registrationOP.enterSurName("Surname");
         registrationOP.enterEmail("test@test.com");
         registrationOP.clickReg();
-        Thread.sleep(500);
+        waitUntilElementIsVisible(registrationOP.firstName);
 
         //After clicking registration with nothing entered an error notification should pop up
         //in the element, although it's a root element it is still accessible as part of the element
@@ -76,14 +76,14 @@ public class RegistrationValidStudent extends BaseFunctions {
     }
 
     @Test
-    void registrationCorrectFormat2() throws InterruptedException {
+    void registrationCorrectFormat2() throws Exception {
         //check for wrong input format
         registrationOP.openRegistration();
         registrationOP.enterFirstName("Firstname");
         registrationOP.enterSurName("Surname");
         registrationOP.enterEmail("test@test.com");
         registrationOP.clickReg();
-        Thread.sleep(500);
+        waitUntilElementIsVisible(registrationOP.firstName);
 
         //After clicking registration with nothing entered an error notification should pop up
         //in the element, although it's a root element it is still accessible as part of the element
@@ -97,7 +97,7 @@ public class RegistrationValidStudent extends BaseFunctions {
     }
 
     @Test
-    void registrationCorrectFull() throws InterruptedException, IOException, MessagingException {
+    void registrationCorrectFull() throws Exception {
         //check for correct registration process
         registrationOP.openRegistration();
         registrationOP.enterFirstName("Firstname");
@@ -107,7 +107,7 @@ public class RegistrationValidStudent extends BaseFunctions {
         String email = registrationOP.getEmailAndCount();
         registrationOP.enterEmail(email);
         registrationOP.clickReg();
-        Thread.sleep(500);
+        waitUntilElementIsVisible(registrationOP.successfulRegWindow);
 
         String activationNotification = registrationOP.getRegNotification();
         Assert.assertTrue(activationNotification.contains("Registrierung erfolgreich"));
@@ -119,7 +119,7 @@ public class RegistrationValidStudent extends BaseFunctions {
         String latestMail = outlookMail.getLatestEmail();
         String url = outlookMail.extractURl(latestMail);
         driver.get(url);
-        Thread.sleep(500);
+        waitUntilElementIsVisible(registrationOP.activationButton);
         registrationOP.clickActivationButton();
         String activationConfiramtion = registrationOP.getActivationConfiramtion();
         Assert.assertTrue(activationConfiramtion.contains("Ihr Account ist jetzt aktiv!"));

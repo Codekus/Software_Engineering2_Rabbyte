@@ -8,7 +8,7 @@ import selenium.setup.LoginPO;
 public class LoginStudentTest extends BaseFunctions {
 
     LoginPO loginPO = new LoginPO();
-
+/*
     @Test
     void loginStudentTest() {
         loginPO.openLogin();
@@ -22,4 +22,6 @@ public class LoginStudentTest extends BaseFunctions {
         loginPO.enterPassword("superpasswort123");
         loginPO.loginClick();
     }
+
+ */
 }

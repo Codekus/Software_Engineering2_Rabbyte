@@ -1,6 +1,7 @@
 package selenium.tests;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import selenium.Utils.OutlookMail;
 import selenium.setup.BaseFunctions;
@@ -16,7 +17,7 @@ public class RegistrationValidBusiness extends BaseFunctions {
     LoginPO loginPO = new LoginPO();
     OutlookMail outlookMail = new OutlookMail();
 
-    //@Test
+    @Test
     void forwardRegTest() {
 
         loginPO.openLogin();
@@ -49,13 +50,13 @@ public class RegistrationValidBusiness extends BaseFunctions {
     }
 
     @Test
-    void registrationCorrectFormat() throws InterruptedException {
+    void registrationCorrectFormat() throws Exception {
         //check for wrong input format
         registrationOP.openRegistration();
         registrationOP.enterBusinessName("Business");
         registrationOP.enterEmail("test@test.com");
         registrationOP.clickReg();
-        Thread.sleep(500);
+        waitUntilElementIsVisible(registrationOP.business);
 
         //After clicking registration with nothing entered an error notification should pop up
         //in the element, although it's a root element it is still accessible as part of the element
@@ -66,13 +67,13 @@ public class RegistrationValidBusiness extends BaseFunctions {
     }
 
     @Test
-    void registrationCorrect() throws InterruptedException {
+    void registrationCorrect() throws Exception {
         //check for wrong input format
         registrationOP.openRegistration();
         registrationOP.enterBusinessName("Business");
         registrationOP.enterEmail("test@test.com");
         registrationOP.clickReg();
-        Thread.sleep(500);
+        waitUntilElementIsVisible(registrationOP.business);
 
         //After clicking registration with nothing entered an error notification should pop up
         //in the element, although it's a root element it is still accessible as part of the element
@@ -84,7 +85,7 @@ public class RegistrationValidBusiness extends BaseFunctions {
     }
 
     @Test
-    void registrationCorrectFull() throws InterruptedException, IOException, MessagingException {
+    void registrationCorrectFull() throws Exception {
         //check for correct registration process
         registrationOP.openRegistration();
         String email = registrationOP.getEmailAndCount();
@@ -94,7 +95,7 @@ public class RegistrationValidBusiness extends BaseFunctions {
         registrationOP.enterPasswordRepeat("+securepassword321");
         registrationOP.enterEmail(email);
         registrationOP.clickReg();
-        Thread.sleep(500);
+        waitUntilElementIsVisible(registrationOP.successfulRegWindow);
 
         String activationNotification = registrationOP.getRegNotification();
         Assert.assertTrue(activationNotification.contains("Registrierung erfolgreich"));
