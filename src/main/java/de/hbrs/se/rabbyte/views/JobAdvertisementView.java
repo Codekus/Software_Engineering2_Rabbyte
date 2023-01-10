@@ -12,6 +12,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.dom.ThemeList;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.theme.lumo.Lumo;
+import de.hbrs.se.rabbyte.entities.Business;
+import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.service.CrmService;
 import de.hbrs.se.rabbyte.util.NavigationUtil;
@@ -97,10 +99,8 @@ public class JobAdvertisementView extends VerticalLayout
     }
     private Component createApplyButton(Integer param){
         Button applyButton = new Button("Bewerben", click ->
-            NavigationUtil.toApplicationView());
+                getUI().get().navigate(ApplicationView.class, (jobAdvertID)));
         applyButton.addClassName("job-advertisement-view-applyButton");
         return applyButton;
     }
-
-
 }

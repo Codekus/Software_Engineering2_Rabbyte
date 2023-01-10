@@ -135,7 +135,7 @@ public class SecurityService  {
             routes.add(new AuthorizedRoute("Unternehmenssuche", "Search Company", UnternehmenSearchView.class));
             routes.add(new AuthorizedRoute("business-profile", "Show business profile", BusinessProfileView.class));
             routes.add(new AuthorizedRoute("message", "Create Message", MessageView.class));
-            routes.add(new AuthorizedRoute("application", "Send Application", ApplicationView.class));
+            routes.add(new AuthorizedRoute("application", "Bewerbung", ApplicationView.class));
 
         } else if (Objects.equals(getRole(user), "Business")) {
             routes.add(new AuthorizedRoute("jobAd", "Create Job Advertisement", CreateJobAdvertisementView.class));

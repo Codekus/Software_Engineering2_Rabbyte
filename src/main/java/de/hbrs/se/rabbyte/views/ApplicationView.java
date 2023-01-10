@@ -3,15 +3,16 @@ package de.hbrs.se.rabbyte.views;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.charts.model.Navigation;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterObserver;
-import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.*;
+import de.hbrs.se.rabbyte.control.ApplicationControl;
 import de.hbrs.se.rabbyte.control.JobAdvertControl;
 import de.hbrs.se.rabbyte.control.MessageControl;
 import de.hbrs.se.rabbyte.dtos.MessageDTO;
@@ -20,23 +21,33 @@ import de.hbrs.se.rabbyte.dtos.implemented.MessageDTOImpl;
 import de.hbrs.se.rabbyte.exception.DatabaseUserException;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
+import de.hbrs.se.rabbyte.service.CrmService;
+import de.hbrs.se.rabbyte.util.NavigationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 
-import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
-
+@org.springframework.stereotype.Component
+@Scope("prototype")
+@Route(value="application")
 @PageTitle("Bewerbung")
-public class ApplicationView extends Div implements BeforeEnterObserver {
+public class ApplicationView extends Div implements HasUrlParameter<Integer> {
 
     @Autowired
     SecurityService securityService;
-
     @Autowired
     BusinessRepository businessRepository;
-
+    @Autowired
+    ApplicationControl applicationControl;
     @Autowired
     MessageControl messageControl;
 
+    private CrmService service;
+
+    private Integer busID;
+
+    private TextArea title = new TextArea("Betreff");
     private TextArea description = new TextArea("Anschreiben");
     private Button apply = new Button("Bewerben");
     private Button back = new Button("Zurück");
@@ -44,13 +55,31 @@ public class ApplicationView extends Div implements BeforeEnterObserver {
     //private PhoneNumberField phone = new PhoneNumberField("Telefonnummer");
 
 
+    @Override
+    public void setParameter(BeforeEvent beforeEvent, @OptionalParameter Integer parameter) {
+        try {
+            if ((parameter == null) || service.findJobAdvertisementById(parameter) == null) {
+                beforeEvent.forwardTo("");
+            } else {
+                busID = service.findJobAdvertisementById(parameter).getBusiness().getId();
+            }
+        } catch (NoSuchElementException ex) {
+            if (parameter != null) {
+                Notification.show(parameter + " does not exist.");
+            } else {
+                Notification.show("Invalid input.");
+            }
+            beforeEvent.forwardTo("");
 
-    public ApplicationView(){
-        // Required for Vaadin
+        }
+        busID = service.findJobAdvertisementById(parameter).getBusiness().getId();
+
     }
 
+    public ApplicationView(CrmService service){
+        this.service = service;
+        setSizeFull();
 
-    public void beforeEnter(BeforeEnterEvent bee) {
         addClassName("application-view");
 
         //add(createButtonLayoutBack());
@@ -79,22 +108,13 @@ public class ApplicationView extends Div implements BeforeEnterObserver {
             apply();
         });
     }
+
+
     public void apply(){
         MessageDTOImpl messageDTO = new MessageDTOImpl();
 
-
-        messageDTO.setMessageText(description.getValue());
-        messageDTO.setTitle("Test");
-        messageDTO.setDate(LocalDateTime.now());
-        messageDTO.setSender(20000143);
-        messageDTO.setReceiver(20000142);
-
-
-        try {
-            messageControl.sendMessage(messageDTO);
-        } catch (DatabaseUserException e) {
-            throw new RuntimeException(e);
-        }
+        applicationControl.apply(messageControl, messageDTO, busID, title.getValue(), description.getValue());
+        NavigationUtil.toMainView();
     }
 
     /*
@@ -107,6 +127,7 @@ public class ApplicationView extends Div implements BeforeEnterObserver {
     }*/
 
     private void clearForm() {
+        title.setValue("");
         description.setValue("");
     }
 
@@ -117,7 +138,7 @@ public class ApplicationView extends Div implements BeforeEnterObserver {
 
         hor2.add(description);
         hor2.setHeightFull();
-        vert3.add(hor2);
+        vert3.add(title, hor2);
         vert3.setWidthFull();
         vert3.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         return vert3;
