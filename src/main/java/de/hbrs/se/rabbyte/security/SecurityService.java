@@ -2,7 +2,6 @@ package de.hbrs.se.rabbyte.security;
 
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinServletRequest;
-import de.hbrs.se.rabbyte.dtos.implemented.PersonDTOImpl;
 import de.hbrs.se.rabbyte.views.ChatView;
 import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.exception.AuthException;
@@ -136,7 +135,6 @@ public class SecurityService  {
     public List<AuthorizedRoute> getAuthorizedRoutes(PersonDTO user){
         var routes = new ArrayList<AuthorizedRoute>();
         routes.add(new AuthorizedRoute("appview", "AppView", AppView.class));
-        routes.add(new AuthorizedRoute("chatview", "ChatView", ChatView.class));
         routes.add(new AuthorizedRoute("jobAdvertisement", "Stellenausschreibung", JobAdvertisementView.class));
         if (Objects.equals(getRole(user), "Student")){
             routes.add(new AuthorizedRoute("student", "Student", StudentUserView.class));
@@ -145,6 +143,7 @@ public class SecurityService  {
             routes.add(new AuthorizedRoute("Unternehmenssuche", "Search Company", UnternehmenSearchView.class));
             routes.add(new AuthorizedRoute("business-profile", "Show business profile", BusinessProfileView.class));
             routes.add(new AuthorizedRoute("message", "Create Message", MessageView.class));
+            routes.add(new AuthorizedRoute("chatview", "ChatView", ChatView.class));
 
         } else if (Objects.equals(getRole(user), "Business")) {
             routes.add(new AuthorizedRoute("jobAd", "Create Job Advertisement", CreateJobAdvertisementView.class));
