@@ -17,12 +17,12 @@ public class LoginStudentTest extends BaseFunctions {
         //Man soll sich nicht ohne Passwort einloggen können
         loginPO.loginClick();
         //Überprüfen dass man sich noch auf der Login Seite befindet
-        loginPO.checkForPresence();
+        loginPO.checkForLoginElements();
 
         //Mit einem falschen Passwort soll der Login nicht möglich sein
         loginPO.enterPassword("superpasswort12");
         loginPO.loginClick();
-        loginPO.checkForPresence();
+        loginPO.checkForLoginElements();
         loginPO.errorMessage();
 
         loginPO.enterPassword("3");

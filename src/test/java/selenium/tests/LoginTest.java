@@ -12,7 +12,7 @@ public class LoginTest extends BaseFunctions {
     void loginTest(){
         loginPO.openLogin();
 
-        loginPO.checkForPresence();
+        loginPO.checkForLoginElements();
         loginPO.checkRegisterButton();
     }
 

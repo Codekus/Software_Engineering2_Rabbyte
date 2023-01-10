@@ -1,7 +1,6 @@
 package selenium.setup;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 
@@ -44,7 +43,7 @@ public class LoginPO extends BaseFunctions {
         clickElement(locateElement(loginButton));
     }
 
-    public void checkForPresence() {
+    public void checkForLoginElements() {
 
         checkForPresence(headerWelcome);
         Assert.assertNotNull(locateElement(vaadinLoginForm).getShadowRoot().findElement(headerLogin));
