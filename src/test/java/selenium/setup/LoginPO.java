@@ -1,6 +1,7 @@
 package selenium.setup;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 
@@ -10,12 +11,13 @@ public class LoginPO extends BaseFunctions {
 
     By loginButton = By.xpath("//vaadin-button[@part=\"vaadin-login-submit\"]");
     By headerWelcome = By.xpath("//h1[text()=\"Herzlich Willkommen\"]");
-    By headerLogin = By.xpath("//h2[text()=\"Log in\"]");
+    By headerLogin = By.cssSelector("section > h2");
     By vaadinLoginForm = By.xpath("//vaadin-login-form-wrapper");
     By usernameInput = By.id("vaadinLoginUsername");
     By passwordInput = By.id("vaadinLoginPassword");
-    By forgotPasswordButton = By.xpath("//vaadin-button[@id=\"forgotPasswordButton\"]");
+    By forgotPasswordButton = By.cssSelector("#forgotPasswordButton");
     By registerButton = By.xpath("/html/body/vaadin-vertical-layout/vaadin-button");
+    By errorMessageText = By.cssSelector("section > div:nth-child(2) > h5");
 
     public void openLogin() {
         outPrint("Trying to open: " + url);
@@ -30,11 +32,19 @@ public class LoginPO extends BaseFunctions {
         typeText(password, passwordInput);
     }
 
-    public void loginClick() {
-        clickElement(loginButton);
+    public void clearPassword() {
+        clearInput(passwordInput);
     }
 
-    /*public void checkForPresence() {
+    public void clearUsername() {
+        clearInput(usernameInput);
+    }
+
+    public void loginClick() {
+        clickElement(locateElement(loginButton));
+    }
+
+    public void checkForPresence() {
 
         checkForPresence(headerWelcome);
         Assert.assertNotNull(locateElement(vaadinLoginForm).getShadowRoot().findElement(headerLogin));
@@ -42,13 +52,18 @@ public class LoginPO extends BaseFunctions {
         checkForPresence(usernameInput);
         checkForPresence(passwordInput);
         checkForPresence(loginButton);
-        //checkForPresence(forgotPasswordButton);
+        Assert.assertNotNull(locateElement(vaadinLoginForm).getShadowRoot().findElement(forgotPasswordButton));
+
         checkForPresence(registerButton);
     }
 
     public void checkRegisterButton() {
         clickElement(registerButton);
         checkForPresence(By.xpath("//h1[text()=\"Registrierung\"]"));
+    }
 
-    }*/
+    public void errorMessage() {
+        Assert.assertNotNull(locateElement(vaadinLoginForm).getShadowRoot().findElement(errorMessageText));
+
+    }
 }

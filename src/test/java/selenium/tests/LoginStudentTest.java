@@ -8,9 +8,9 @@ import selenium.setup.LoginPO;
 public class LoginStudentTest extends BaseFunctions {
 
     LoginPO loginPO = new LoginPO();
-/*
+
     @Test
-    void loginStudentTest() {
+    void loginStudentTest() throws InterruptedException {
         loginPO.openLogin();
 
         loginPO.enterName("rabbyteTestAutomation+student@outlook.de");
@@ -19,9 +19,15 @@ public class LoginStudentTest extends BaseFunctions {
         //Überprüfen dass man sich noch auf der Login Seite befindet
         loginPO.checkForPresence();
 
-        loginPO.enterPassword("superpasswort123");
+        //Mit einem falschen Passwort soll der Login nicht möglich sein
+        loginPO.enterPassword("superpasswort12");
+        loginPO.loginClick();
+        loginPO.checkForPresence();
+        loginPO.errorMessage();
+
+        loginPO.enterPassword("3");
         loginPO.loginClick();
     }
 
- */
+
 }
