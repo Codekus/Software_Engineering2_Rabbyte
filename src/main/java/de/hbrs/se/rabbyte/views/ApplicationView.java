@@ -136,7 +136,6 @@ public class ApplicationView extends Div implements HasUrlParameter<Integer> {
         MessageDTOImpl messageDTO = new MessageDTOImpl();
         ApplicationDTO applicationDTO = createNewApplication();
 
-        applicationControl.createApplication(applicationDTO);
         applicationControl.apply(messageControl, messageDTO, applicationDTO);
         NavigationUtil.toMainView();
     }

@@ -30,18 +30,14 @@ public class ApplicationControl {
         messageDTO.setSender(applicationDTO.getStudent().getId());
         messageDTO.setReceiver(applicationDTO.getJobAdvertisement().getBusiness().getId());
 
+        Application application = ApplicationFactory.createApplication(applicationDTO);
+        this.repository.save(application);
 
         try {
             messageControl.sendMessage(messageDTO);
         } catch (DatabaseUserException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void createApplication(ApplicationDTO applicationDTO) {
-        Application application = ApplicationFactory.createApplication(applicationDTO);
-
-        this.repository.save(application);
     }
 
     public boolean validateDescription(String desc){
