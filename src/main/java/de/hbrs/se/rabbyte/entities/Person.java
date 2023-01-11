@@ -56,7 +56,17 @@ public class Person {
         this.password = password;
 
     }
+/*    @Basic
+    @Column(name = "email")
+    public String getFirstName() {
+        return firstname;
+    }
 
+    public void setFirstName(String firstname) {
+        this.firstname = firstname;
+
+    }
+*/
     @Basic
     @Column(name = "plz")
     public int getPlz() {
