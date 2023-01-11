@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CryptographyUtilTest {
 
-    private static final String error = "class de.hbrs.se.rabbyte.util.CryptographyUtilTest cannot access a member of class de.hbrs.se.rabbyte.util.CryptographyUtil with modifiers \"private\"";
+    private static final String ERROR = "class de.hbrs.se.rabbyte.util.CryptographyUtilTest cannot access a member of class de.hbrs.se.rabbyte.util.CryptographyUtil with modifiers \"private\"";
 
 
     private static final String PW = "Password";
@@ -42,7 +42,7 @@ class CryptographyUtilTest {
         Constructor<CryptographyUtil> constructor = CryptographyUtil.class.getDeclaredConstructor();
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);
-        assertEquals(error, exceptionThatWasThrown.getMessage());
+        assertEquals(ERROR, exceptionThatWasThrown.getMessage());
         constructor.setAccessible(true);
         assertThrows(ReflectiveOperationException.class,constructor::newInstance);
 
