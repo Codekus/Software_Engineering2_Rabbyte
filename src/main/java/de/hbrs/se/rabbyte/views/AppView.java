@@ -21,6 +21,7 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.dom.ThemeList;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.theme.lumo.Lumo;
 import de.hbrs.se.rabbyte.dtos.*;
 
@@ -98,9 +99,13 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         //layout.add(drawerToggle);
 
         HorizontalLayout hlogoLayout = new HorizontalLayout();
+        StreamResource imageResource = new StreamResource("rabbit_logo.png",
+                () -> getClass().getResourceAsStream("/META-INF/ressources/images/rabbit_logo.png"));
 
         // Hinzufügen des Logos
-        Image logo = new Image("images/rabbit_logo.png" , "logoImage");
+
+        Image logo = new Image(imageResource, "logoImage");
+
         logo.setWidth("50px");
         hlogoLayout.setId("logo");
         hlogoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
