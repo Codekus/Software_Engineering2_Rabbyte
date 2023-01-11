@@ -11,12 +11,14 @@ public class ApplicationFactory {
         throw new IllegalStateException("Factory Class");
     }
 
-    public static void createApplication(ApplicationDTO applicationDTO) {
+    public static Application createApplication(ApplicationDTO applicationDTO) {
         Application application = new Application();
         application.setId(applicationDTO.getId());
         application.setJobAdvertisement(applicationDTO.getJobAdvertisement());
         application.setApplicationText(applicationDTO.getApplicationText());
         application.setStudent(applicationDTO.getStudent());
         application.setDate(applicationDTO.getDate());
+
+        return application;
     }
 }

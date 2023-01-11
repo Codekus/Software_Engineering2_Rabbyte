@@ -15,18 +15,29 @@ import com.vaadin.flow.router.*;
 import de.hbrs.se.rabbyte.control.ApplicationControl;
 import de.hbrs.se.rabbyte.control.JobAdvertControl;
 import de.hbrs.se.rabbyte.control.MessageControl;
-import de.hbrs.se.rabbyte.dtos.MessageDTO;
+import de.hbrs.se.rabbyte.control.factory.PersonFactory;
+import de.hbrs.se.rabbyte.dtos.*;
+import de.hbrs.se.rabbyte.dtos.implemented.ApplicationDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.MessageDTOImpl;
+import de.hbrs.se.rabbyte.entities.Business;
+import de.hbrs.se.rabbyte.entities.JobAdvertisement;
+import de.hbrs.se.rabbyte.entities.Student;
 import de.hbrs.se.rabbyte.exception.DatabaseUserException;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
+import de.hbrs.se.rabbyte.repository.StudentRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.service.CrmService;
 import de.hbrs.se.rabbyte.util.NavigationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
+
+import static de.hbrs.se.rabbyte.control.factory.JobAdvertFactory.publishJobAdvert;
 
 @org.springframework.stereotype.Component
 @Scope("prototype")
@@ -44,16 +55,14 @@ public class ApplicationView extends Div implements HasUrlParameter<Integer> {
     MessageControl messageControl;
 
     private CrmService service;
-
-    private Integer busID;
+    private JobAdvertisementDTO jobAdvertisementDTO;
 
     private TextArea title = new TextArea("Betreff");
     private TextArea description = new TextArea("Anschreiben");
     private Button apply = new Button("Bewerben");
     private Button back = new Button("Zurück");
     private TextArea requirements = new TextArea("Anforderungsprofil & Qualifikationen");
-    //private PhoneNumberField phone = new PhoneNumberField("Telefonnummer");
-
+    private final StudentRepository studentRepository;
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, @OptionalParameter Integer parameter) {
@@ -61,7 +70,7 @@ public class ApplicationView extends Div implements HasUrlParameter<Integer> {
             if ((parameter == null) || service.findJobAdvertisementById(parameter) == null) {
                 beforeEvent.forwardTo("");
             } else {
-                busID = service.findJobAdvertisementById(parameter).getBusiness().getId();
+                jobAdvertisementDTO = service.findJobAdvertisementById(parameter);
             }
         } catch (NoSuchElementException ex) {
             if (parameter != null) {
@@ -72,11 +81,11 @@ public class ApplicationView extends Div implements HasUrlParameter<Integer> {
             beforeEvent.forwardTo("");
 
         }
-        busID = service.findJobAdvertisementById(parameter).getBusiness().getId();
 
     }
 
-    public ApplicationView(CrmService service){
+    public ApplicationView(CrmService service,
+                           StudentRepository studentRepository){
         this.service = service;
         setSizeFull();
 
@@ -95,36 +104,51 @@ public class ApplicationView extends Div implements HasUrlParameter<Integer> {
         back.addClickListener(event -> clearForm());
 
         apply.addClickListener(e -> {
-            /*
+
             if(!validate().isEmpty()){
                 Notification.show(validate().toString());
             }else{
                 // Speicherung der Daten über das zuhörige Control-Object.
-                jobAdvertControl.createJobAdvert(createNewJobAdvert());
 
-                Notification.show("Veröffentlicht");
-                clearForm();
-            }*/
-            apply();
+                Notification.show("Bewerbung abgeschickt");
+                apply();
+            }
         });
+        this.studentRepository = studentRepository;
+    }
+
+    public ApplicationDTO createNewApplication(){
+        ApplicationDTOImpl applicationDTO = new ApplicationDTOImpl();
+
+        applicationDTO.setApplicationText(description.getValue());
+        applicationDTO.setDate(LocalDate.now());
+        applicationDTO.setJobAdvertisement(publishJobAdvert(jobAdvertisementDTO));
+
+        StudentDTO studentDTO = studentRepository.findStudentById(securityService.getAuthenticatedUser().getId());
+        Student student = PersonFactory.createStudent(studentDTO);
+        applicationDTO.setStudent(student);    // <- userID
+
+        return applicationDTO;
     }
 
 
     public void apply(){
         MessageDTOImpl messageDTO = new MessageDTOImpl();
+        ApplicationDTO applicationDTO = createNewApplication();
 
-        applicationControl.apply(messageControl, messageDTO, busID, title.getValue(), description.getValue());
+        applicationControl.createApplication(applicationDTO);
+        applicationControl.apply(messageControl, messageDTO, applicationDTO);
         NavigationUtil.toMainView();
     }
 
-    /*
+
     public List<String> validate(){
         List<String> validation = new ArrayList<>();
-        JobAdvertControl jobAdvertControl = new JobAdvertControl();
-        if(jobAdvertControl.validateDescription(description.getValue()) == false){
+        ApplicationControl applicationControl = new ApplicationControl();
+        if(!applicationControl.validateDescription(description.getValue())){
             validation.add("Invalid Description!");        }
         return validation;
-    }*/
+    }
 
     private void clearForm() {
         title.setValue("");
