@@ -10,7 +10,7 @@ import de.hbrs.se.rabbyte.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,6 +48,6 @@ public class ApplicationControl {
     }
 
     private String createTitle(ApplicationDTO applicationDTO) {
-        return applicationDTO.getJobAdvertisement().getId() + " " + applicationDTO.getStudent().getLastName();
+        return applicationDTO.getJobAdvertisement().getTitle() + " " + applicationDTO.getStudent().getLastName();
     }
 }

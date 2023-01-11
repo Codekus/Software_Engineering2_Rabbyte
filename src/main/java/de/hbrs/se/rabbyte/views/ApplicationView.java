@@ -3,27 +3,20 @@ package de.hbrs.se.rabbyte.views;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.charts.model.Navigation;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
-import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.*;
 import de.hbrs.se.rabbyte.control.ApplicationControl;
-import de.hbrs.se.rabbyte.control.JobAdvertControl;
 import de.hbrs.se.rabbyte.control.MessageControl;
 import de.hbrs.se.rabbyte.control.factory.PersonFactory;
 import de.hbrs.se.rabbyte.dtos.*;
 import de.hbrs.se.rabbyte.dtos.implemented.ApplicationDTOImpl;
-import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.MessageDTOImpl;
-import de.hbrs.se.rabbyte.entities.Business;
-import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import de.hbrs.se.rabbyte.entities.Student;
-import de.hbrs.se.rabbyte.exception.DatabaseUserException;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.repository.StudentRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
@@ -57,7 +50,6 @@ public class ApplicationView extends Div implements HasUrlParameter<Integer> {
     private CrmService service;
     private JobAdvertisementDTO jobAdvertisementDTO;
 
-    private TextArea title = new TextArea("Betreff");
     private TextArea description = new TextArea("Anschreiben");
     private Button apply = new Button("Bewerben");
     private Button back = new Button("Zurück");
@@ -150,7 +142,6 @@ public class ApplicationView extends Div implements HasUrlParameter<Integer> {
     }
 
     private void clearForm() {
-        title.setValue("");
         description.setValue("");
     }
 
@@ -161,7 +152,7 @@ public class ApplicationView extends Div implements HasUrlParameter<Integer> {
 
         hor2.add(description);
         hor2.setHeightFull();
-        vert3.add(title, hor2);
+        vert3.add(hor2);
         vert3.setWidthFull();
         vert3.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         return vert3;
