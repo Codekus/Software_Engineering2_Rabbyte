@@ -15,6 +15,7 @@ public class StudentControl {
         this.studentRepository.editStudent(
                 studentDTO.getId(),
                 studentDTO.getEmail(),
+                studentDTO.getPassword(),
                 studentDTO.getFirstName(),
                 studentDTO.getLastName(),
                 studentDTO.getFaculty()

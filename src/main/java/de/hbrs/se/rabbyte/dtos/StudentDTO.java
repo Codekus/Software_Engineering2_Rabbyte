@@ -6,4 +6,5 @@ public interface StudentDTO extends PersonDTO {
     public String getFirstName();
     public String getLastName();
     public String getEmail();
+    public String getPassword();
 }

@@ -176,7 +176,16 @@ public class SecurityService  {
         return user.getId();
 
     }
-
+    public String saltPassword(String username, String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        PersonDTO user = personRepository.findByEmail(username);
+        String salt = user.getSalt();
+        String dbpassword = user.getPassword();
+        if(password.isEmpty()){
+            return dbpassword;
+        }else {
+            return CryptographyUtil.encryptPassword(password, CryptographyUtil.fromHex(salt));
+        }
+    }
     public void logout() {
 
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();

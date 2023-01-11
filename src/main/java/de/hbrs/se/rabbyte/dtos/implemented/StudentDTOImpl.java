@@ -12,6 +12,7 @@ public class StudentDTOImpl extends PersonDTOImpl implements StudentDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
 
     @Override
     public String getFaculty() {
@@ -45,5 +46,12 @@ public class StudentDTOImpl extends PersonDTOImpl implements StudentDTO {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+    @Override
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
