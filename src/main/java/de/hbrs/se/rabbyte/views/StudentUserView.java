@@ -19,27 +19,16 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import de.hbrs.se.rabbyte.control.StudentControl;
-import de.hbrs.se.rabbyte.control.factory.PersonFactory;
-import de.hbrs.se.rabbyte.control.factory.VerificationFactory;
-import de.hbrs.se.rabbyte.dtos.PersonDTO;
-import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
-import de.hbrs.se.rabbyte.dtos.implemented.RegistrationResultDTOImpl;
-import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
-import de.hbrs.se.rabbyte.entities.Student;
-import de.hbrs.se.rabbyte.entities.VerificationCode;
 import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.service.CrmService;
-import de.hbrs.se.rabbyte.util.EmailSenderService;
-import de.hbrs.se.rabbyte.util.Globals;
 import de.hbrs.se.rabbyte.util.NavigationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.List;
+
 
 @Route("settings")
 @PageTitle("Account Einstellungen")
@@ -100,7 +89,7 @@ public class StudentUserView extends VerticalLayout  implements BeforeEnterObser
     public void beforeEnter(BeforeEnterEvent event) {
         verticalLayout = new VerticalLayout();
         tabsLayout = new VerticalLayout();
-        H1 h1 = new H1("User details");
+        H1 h1 = new H1("Profil Einstellungen");
 
         verticalLayout.add(h1);
         verticalLayout.setMaxWidth("80 vw");
