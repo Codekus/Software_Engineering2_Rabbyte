@@ -13,6 +13,7 @@ public class Student extends Person {
     private String faculty;
     private String firstName;
     private String lastName;
+    private String email;
 
     @Basic
     @Column(name = "fachbereich")
@@ -40,6 +41,14 @@ public class Student extends Person {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+    @Basic
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 

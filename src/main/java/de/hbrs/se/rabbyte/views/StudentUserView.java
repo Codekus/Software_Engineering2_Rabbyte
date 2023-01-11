@@ -11,16 +11,35 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
+import de.hbrs.se.rabbyte.control.JobAdvertControl;
+import de.hbrs.se.rabbyte.control.StudentControl;
+import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
+import de.hbrs.se.rabbyte.dtos.StudentDTO;
+import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
+import de.hbrs.se.rabbyte.security.SecurityService;
+import de.hbrs.se.rabbyte.service.CrmService;
+import de.hbrs.se.rabbyte.util.NavigationUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Route("settings")
 @PageTitle("Account Einstellungen")
 @Theme(value = Lumo.class)
 public class StudentUserView extends VerticalLayout //implements View
 {
+
+    StudentControl studentControl;
+
+    private Binder<StudentDTOImpl> binder = new Binder<>(StudentDTOImpl.class);
+    @Autowired
+    SecurityService securityService;
+    @Autowired
+    CrmService service;
     //GeneralUser attributes
     EmailField emailField = new EmailField("Email");
     TextField plz = new TextField("PLZ");
@@ -50,10 +69,11 @@ public class StudentUserView extends VerticalLayout //implements View
             //firstName.setValue(student.getFirstName());
             lastName.setRequiredIndicatorVisible(true);
             //lastName.setValue(student.getLastName());
+    //        binder.bindInstanceFields(this);
 
             FormLayout formLayout = new FormLayout();
             formLayout.setMaxWidth("80 vw");
-            formLayout.add(emailField, firstName, lastName, plz, street, streetNr, state, faculty);
+            formLayout.add(emailField, firstName, lastName, faculty);// plz, street, streetNr, state,
 
             this.add(formLayout);
         }
@@ -73,13 +93,9 @@ public class StudentUserView extends VerticalLayout //implements View
         verticalLayout.setMaxWidth("80 vw");
         save = new Button("Save");
         save.addClickListener(e -> {
-            //StudentDTO studentUserDTO = (StudentDTO) UI.getCurrent().getSession().getAttribute("student");
-            //studentService.createStudent(binder.getBean() ,  studentDTO );
-
-            Notification.show("User details stored.");
-            //redirect to login page
-            save.getUI().ifPresent(ui ->
-                    ui.navigate(""));
+            studentControl.editStudent(createUpdatedStudentDTO());
+        //    Notification.show("Stellausschreibung geändert");
+        //    NavigationUtil.toMainView();
         });
 
         cancel = new Button("Cancel");
@@ -100,6 +116,15 @@ public class StudentUserView extends VerticalLayout //implements View
         add(verticalLayout);
         add(tabs, tabsLayout);
 
+    }
+
+    private StudentDTO createUpdatedStudentDTO() {
+        StudentDTOImpl studentDTO = new StudentDTOImpl();
+        studentDTO.setEmail(emailField.getValue());
+        studentDTO.setFirstName(firstName.getValue());
+        studentDTO.setLastName(lastName.getValue());
+        studentDTO.setFaculty(faculty.getValue());
+        return studentDTO;
     }
 
     private void setContent(Tab tab) {

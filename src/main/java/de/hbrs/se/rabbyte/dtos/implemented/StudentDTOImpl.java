@@ -1,7 +1,7 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
-
+import de.hbrs.se.rabbyte.entities.Student;
 
 
 /**
@@ -12,6 +12,7 @@ public class StudentDTOImpl extends PersonDTOImpl implements StudentDTO {
     private String faculty;
     private String firstName;
     private String lastName;
+    private String email;
 
     @Override
     public String getFaculty() {
@@ -38,5 +39,12 @@ public class StudentDTOImpl extends PersonDTOImpl implements StudentDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+    @Override
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
