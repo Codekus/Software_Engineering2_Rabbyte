@@ -1,13 +1,12 @@
 package de.hbrs.se.rabbyte.control;
 
 import de.hbrs.se.rabbyte.control.factory.MessageFactory;
-import de.hbrs.se.rabbyte.dtos.PersonDTO;
-import de.hbrs.se.rabbyte.exception.DatabaseUserException;
 import de.hbrs.se.rabbyte.dtos.MessageDTO;
+import de.hbrs.se.rabbyte.dtos.PersonDTO;
 import de.hbrs.se.rabbyte.dtos.implemented.MessageDTOImpl;
 import de.hbrs.se.rabbyte.entities.Message;
+import de.hbrs.se.rabbyte.exception.DatabaseUserException;
 import de.hbrs.se.rabbyte.repository.*;
-import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.util.Globals;
 import de.hbrs.se.rabbyte.util.Utils;
 import org.slf4j.Logger;
@@ -18,8 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -36,9 +33,6 @@ public class MessageControl {
 
     @Autowired
     private BusinessRepository businessRepository;
-
-    @Autowired
-    private JobAdvertisementRepository jobAdvertisementRepository;
 
     public List<MessageDTO> getMessages(int receiver) {
         return messageRepository.findMessagesByReceiver(receiver);

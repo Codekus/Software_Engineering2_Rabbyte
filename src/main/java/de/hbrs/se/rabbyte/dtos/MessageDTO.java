@@ -1,7 +1,7 @@
 package de.hbrs.se.rabbyte.dtos;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 
 public interface MessageDTO {
 

@@ -24,14 +24,14 @@ public class VerificationControl {
     @Autowired
     private  PersonRepository personRepository;
 
-    private Person person;
+
 
     public VerificationResultDTOImpl activate(String token) {
         VerificationResultDTOImpl activationResult = new VerificationResultDTOImpl();
         try {
 
             VerificationCodeDTO verificationCode = getVerificationCode(token);
-
+            Person person;
             person = verificationCode.getPerson();
             person.setEnabled(true);
 
@@ -40,6 +40,7 @@ public class VerificationControl {
 
             return activationResult;
         } catch (Exception exception) {
+            LOGGER.info("INFO: {}" ,  exception.getMessage());
             activationResult.setActivationResult(false);
         }
         return activationResult;
