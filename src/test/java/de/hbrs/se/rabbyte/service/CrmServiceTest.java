@@ -57,8 +57,7 @@ public class CrmServiceTest extends AbstractTransactionalTestNGSpringContextTest
         );
     }
 
-    @Disabled
-    @Test
+    @Test(enabled = false)
     @DisplayName("Delete Test")
     public void deleteTest() {
         //ApplicationDTO application =  crmService.findApplicationById(10000001);
@@ -103,8 +102,8 @@ public class CrmServiceTest extends AbstractTransactionalTestNGSpringContextTest
 
     }
 
-    @Disabled
-    @Test
+
+    @Test(enabled = false)
     @DisplayName("Save Test")
     public void saveTest() {
 
