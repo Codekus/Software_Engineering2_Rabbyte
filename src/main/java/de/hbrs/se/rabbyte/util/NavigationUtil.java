@@ -31,4 +31,10 @@ public class NavigationUtil {
         UI.getCurrent().navigate("message");
     }
 
+    public static void toApplicationView() {
+        UI.getCurrent().navigate("application");
+    }
+
+    public static void toJobAdvertEditView() {
+    }
 }

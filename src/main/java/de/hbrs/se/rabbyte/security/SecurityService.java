@@ -1,5 +1,6 @@
 package de.hbrs.se.rabbyte.security;
 
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.server.VaadinServletRequest;
 import de.hbrs.se.rabbyte.views.ChatView;
@@ -9,14 +10,11 @@ import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.util.CryptographyUtil;
 import de.hbrs.se.rabbyte.views.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-
-
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
@@ -38,7 +36,6 @@ public class SecurityService  {
     PersonRepository personRepository;
 
     public void authenticate(String username, String password) throws AuthException, InvalidKeySpecException, NoSuchAlgorithmException {
-
 
         //Erzeuge einen Regulären Ausdruck zum prüfen von wohlgeformtheit
         Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
@@ -81,19 +78,12 @@ public class SecurityService  {
             throw new AuthException("Der Account ist noch nicht aktiviert");
 
         }
-
-
-
-
-
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(username, "[REDACTED]", Collections.emptyList());
 
         context.setAuthentication(authentication);
         SecurityContextHolder.setContext(context);
-
-
         createRoutes(user);
     }
 
@@ -144,6 +134,7 @@ public class SecurityService  {
             routes.add(new AuthorizedRoute("business-profile", "Show business profile", BusinessProfileView.class));
             routes.add(new AuthorizedRoute("message", "Create Message", MessageView.class));
             routes.add(new AuthorizedRoute("chatview", "ChatView", ChatView.class));
+            routes.add(new AuthorizedRoute("application", "Bewerbung", ApplicationView.class));
 
         } else if (Objects.equals(getRole(user), "Business")) {
             routes.add(new AuthorizedRoute("jobAd", "Create Job Advertisement", CreateJobAdvertisementView.class));
