@@ -1,8 +1,8 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
 
-import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

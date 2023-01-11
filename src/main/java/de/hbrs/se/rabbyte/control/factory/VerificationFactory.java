@@ -10,6 +10,11 @@ import java.util.UUID;
 
 public class VerificationFactory {
 
+    private VerificationFactory() {
+        throw new IllegalStateException("Factory Class");
+    }
+
+
     public static VerificationCode createVerificationToken(Person person) {
 
         VerificationCode verificationCode = new VerificationCode();

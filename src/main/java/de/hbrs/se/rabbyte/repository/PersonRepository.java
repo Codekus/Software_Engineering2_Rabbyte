@@ -27,5 +27,6 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
     @Query("select g from Person g where g.email = ?1 ")
     PersonDTO findPersonByName(String userName);
 
+    PersonDTO findPersonByEmail(String email);
 
 }

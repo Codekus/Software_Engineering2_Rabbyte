@@ -2,9 +2,9 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.entities.JobAdvertisement;
 import de.hbrs.se.rabbyte.entities.Student;
+import org.mockito.Mock;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.mockito.Mock;
 
 import java.time.LocalDate;
 

@@ -1,13 +1,10 @@
 package de.hbrs.se.rabbyte.entities;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 

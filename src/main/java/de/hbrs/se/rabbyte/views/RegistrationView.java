@@ -19,7 +19,10 @@ import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 import de.hbrs.se.rabbyte.control.RegistrationControl;
 import de.hbrs.se.rabbyte.dtos.RegistrationResultDTO;
-import de.hbrs.se.rabbyte.dtos.implemented.*;
+import de.hbrs.se.rabbyte.dtos.implemented.BusinessDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.RegistrationBusinessDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.RegistrationStudentDTOImpl;
+import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
 import de.hbrs.se.rabbyte.repository.BusinessRepository;
 import de.hbrs.se.rabbyte.util.Globals;
 import de.hbrs.se.rabbyte.util.NavigationUtil;
@@ -209,7 +212,7 @@ public class RegistrationView extends VerticalLayout {
     }
 
     private static void successfulRegistration() {
-        Utils.triggerDialogMessage("Registrierung erfolgreich", "Um ihren Account zu aktivieren, bitte klicken sie auf den Link in der E-Mail");
+        //Utils.triggerDialogMessage("Registrierung erfolgreich", "Um ihren Account zu aktivieren, bitte klicken sie auf den Link in der E-Mail");
         NavigationUtil.toLoginView();
     }
 

@@ -23,7 +23,7 @@ public interface JobAdvertisementRepository extends JpaRepository<JobAdvertiseme
 
 
     @Query("select j from JobAdvertisement j " +
-            "where lower(j.business.businessName) like lower(concat('%', :searchTerm, '%')) " +
+            "where lower(j.business.businessName) like lower(concat('%', :searchTerm, '%'))" +
             "or lower(j.title) like lower(concat('%', :searchTerm, '%'))" +
             "or lower(j.text) like lower(concat('%', :searchTerm, '%'))" +
             "or lower(j.type) like lower(concat('%', :searchTerm, '%'))")

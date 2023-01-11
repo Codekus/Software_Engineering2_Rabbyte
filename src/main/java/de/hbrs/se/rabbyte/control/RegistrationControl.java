@@ -61,15 +61,18 @@ public class RegistrationControl {
 
             if(registrationResultDTO.getReasons().isEmpty()) {
                 Student newStudent = PersonFactory.createStudent(registrationStudentDTO.getStudentDTO());
+                newStudent.setEnabled(true);
                 this.studentRepository.save(newStudent);
 
                 try {
                     VerificationCode verificationCode = VerificationFactory.createVerificationToken(newStudent );
                     verificationCodeRepository.save(verificationCode);
 
+                    /*
+
                     emailSenderService = new EmailSenderService(verificationCode);
                     emailSenderService.sendEmail();
-
+                    */
                 } catch (Exception exception) {
                     LOGGER.info("INFO Verification: {}"  ,  exception.getMessage());
                 }

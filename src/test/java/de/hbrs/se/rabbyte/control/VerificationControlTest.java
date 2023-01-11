@@ -1,27 +1,16 @@
 package de.hbrs.se.rabbyte.control;
 
-import com.github.mvysny.kaributesting.v10.MockVaadin;
-import com.github.mvysny.kaributesting.v10.Routes;
-import de.hbrs.se.rabbyte.RabbyteApplication;
-import de.hbrs.se.rabbyte.repository.PersonRepository;
 import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
-import de.hbrs.se.rabbyte.security.SecurityService;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY)

@@ -6,12 +6,8 @@ import de.hbrs.se.rabbyte.dtos.StudentDTO;
 import de.hbrs.se.rabbyte.entities.Business;
 import de.hbrs.se.rabbyte.entities.Person;
 import de.hbrs.se.rabbyte.entities.Student;
-//import org.junit.jupiter.api.Test;
-//import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -23,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 class PersonFactoryTest {
 
-    private static final String exceptionMessage =
+    private static final String EXCEPTION_MESSAGE =
             "class de.hbrs.se.rabbyte.control.factory.PersonFactoryTest cannot access a member of class de.hbrs.se.rabbyte.control.factory.PersonFactory with modifiers \"private\"";
     @Mock
     private StudentDTO studentDTO;
@@ -96,7 +92,7 @@ class PersonFactoryTest {
         Constructor<PersonFactory> constructor = PersonFactory.class.getDeclaredConstructor();
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         Throwable exceptionThatWasThrown = assertThrows(IllegalAccessException.class, constructor::newInstance);
-        assertEquals(exceptionMessage, exceptionThatWasThrown.getMessage());
+        assertEquals(EXCEPTION_MESSAGE, exceptionThatWasThrown.getMessage());
         constructor.setAccessible(true);
         assertThrows(ReflectiveOperationException.class, constructor::newInstance);
 
