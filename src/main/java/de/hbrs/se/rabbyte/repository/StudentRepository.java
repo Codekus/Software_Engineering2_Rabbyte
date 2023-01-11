@@ -12,11 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
-    public StudentDTO findStudentById(int id);
+    StudentDTO findStudentById(int id);
 
     @Query("select s from Student s where s.firstName = ?1 and s.lastName = ?2")
     StudentDTO findByFirstNameAndLastName(String firstName, String lastName);
 
-    @Query("update Student j set j.email = :email, j.firstName = :firstname, j.lastName = :lastname, j.faculty = :faculty where j.email = 'test1@test.de'")
-    void editStudent(@Param("email") String email, @Param("firstname") String firstname, @Param("lastname") String lastname, @Param("faculty") String faculty);
+    @Transactional
+    @Modifying
+    @Query("update Student j set j.email = :email, j.firstName = :firstname, j.lastName = :lastname, j.faculty = :faculty where j.id = :ID")
+    void editStudent(@Param("ID") int ID, @Param("email") String email, @Param("firstname") String firstname, @Param("lastname") String lastname, @Param("faculty") String faculty);
 }

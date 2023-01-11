@@ -11,18 +11,14 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
-import de.hbrs.se.rabbyte.control.JobAdvertControl;
 import de.hbrs.se.rabbyte.control.StudentControl;
-import de.hbrs.se.rabbyte.dtos.JobAdvertisementDTO;
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
-import de.hbrs.se.rabbyte.dtos.implemented.JobAdvertisementDTOImpl;
 import de.hbrs.se.rabbyte.dtos.implemented.StudentDTOImpl;
 import de.hbrs.se.rabbyte.security.SecurityService;
 import de.hbrs.se.rabbyte.service.CrmService;
@@ -37,8 +33,6 @@ public class StudentUserView extends VerticalLayout  implements BeforeEnterObser
 
     @Autowired
     StudentControl studentControl;
-
-    private Binder<StudentDTOImpl> binder = new Binder<>(StudentDTOImpl.class);
     @Autowired
     SecurityService securityService;
     @Autowired
@@ -90,15 +84,13 @@ public class StudentUserView extends VerticalLayout  implements BeforeEnterObser
         tabsLayout = new VerticalLayout();
         H1 h1 = new H1("User details");
 
-        StudentForm studentForm = new StudentForm();
-
         verticalLayout.add(h1);
         verticalLayout.setMaxWidth("80 vw");
         save = new Button("Save");
         save.addClickListener(e -> {
             studentControl.editStudent(createUpdatedStudentDTO());
-            //    Notification.show("Stellausschreibung geändert");
-            //    NavigationUtil.toMainView();
+                Notification.show("Profil überarbeitet");
+                NavigationUtil.toMainView();
         });
 
         cancel = new Button("Cancel");
@@ -121,14 +113,9 @@ public class StudentUserView extends VerticalLayout  implements BeforeEnterObser
 
     }
 
-    public StudentUserView() {
-
-
-
-    }
-
     private StudentDTO createUpdatedStudentDTO() {
         StudentDTOImpl studentDTO = new StudentDTOImpl();
+        studentDTO.setId(securityService.getAuthenticatedUserID());
         studentDTO.setEmail(emailField.getValue());
         studentDTO.setFirstName(firstName.getValue());
         studentDTO.setLastName(lastName.getValue());

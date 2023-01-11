@@ -13,6 +13,7 @@ public class StudentControl {
     public void editStudent(StudentDTO studentDTO){
 
         this.studentRepository.editStudent(
+                studentDTO.getId(),
                 studentDTO.getEmail(),
                 studentDTO.getFirstName(),
                 studentDTO.getLastName(),
