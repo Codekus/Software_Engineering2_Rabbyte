@@ -3,19 +3,17 @@ package selenium.tests;
 import org.testng.annotations.Test;
 import selenium.setup.BaseFunctions;
 import selenium.setup.LoginPO;
-import selenium.setup.RegistrationOP;
 
-public class Tmp extends BaseFunctions{
+public class LoginTest extends BaseFunctions {
 
     LoginPO loginPO = new LoginPO();
 
     @Test
-    void test1(){
+    void loginTest(){
         loginPO.openLogin();
-        loginPO.enterName("jobad@...");
+
+        loginPO.checkForLoginElements();
+        loginPO.checkRegisterButton();
     }
-
-
-
 
 }
