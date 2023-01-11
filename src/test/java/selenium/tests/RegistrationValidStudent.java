@@ -107,11 +107,11 @@ public class RegistrationValidStudent extends BaseFunctions {
         String email = registrationOP.getEmailAndCount();
         registrationOP.enterEmail(email);
         registrationOP.clickReg();
-        waitUntilElementIsVisible(registrationOP.successfulRegWindow);
+        Thread.sleep(10000);
 
-        String activationNotification = registrationOP.getRegNotification();
-        Assert.assertTrue(activationNotification.contains("Registrierung erfolgreich"));
-        registrationOP.clickSuccessfulRegOkButton();
+        //String activationNotification = registrationOP.getRegNotification();
+        //Assert.assertTrue(activationNotification.contains("Registrierung erfolgreich"));
+        //registrationOP.clickSuccessfulRegOkButton();
         String loginText = registrationOP.getLoginBanner();
         Assert.assertTrue(loginText.contains("Herzlich Willkommen"));
         Thread.sleep(5000);

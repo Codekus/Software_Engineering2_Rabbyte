@@ -4,16 +4,17 @@ import org.junit.Assert;
 import org.testng.annotations.Test;
 import selenium.setup.BaseFunctions;
 import selenium.setup.LoginPO;
-import selenium.setup.RegistrationBusinessPO;
+import selenium.setup.RegistrationPO;
 
 public class RegistrationInvalidBusiness extends BaseFunctions{
 
-    RegistrationBusinessPO registrationOP = new RegistrationBusinessPO();
+    RegistrationPO registrationOP = new RegistrationPO();
     LoginPO loginPO = new LoginPO();
 
     @Test
     void tabTest() {
         registrationOP.openRegistration();
+        registrationOP.clickBusiness();
 
         String tabStudentExpected = "Student";
         String tabStudentActual = registrationOP.getTabStudent();
@@ -28,6 +29,7 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
     @Test
     void titleHeadline(){
         registrationOP.openRegistration();
+        registrationOP.clickBusiness();
         String headline = registrationOP.getHeadLine();
         Assert.assertEquals(headline, "Registrierung");
     }
@@ -36,6 +38,7 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
     void registrationFailName() throws Exception {
         //check for empty names
         registrationOP.openRegistration();
+        registrationOP.clickBusiness();
         registrationOP.clickReg();
         Thread.sleep(1000);
 
@@ -49,6 +52,7 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
     void registrationFailPassword() throws Exception {
         //check for empty passwords
         registrationOP.openRegistration();
+        registrationOP.clickBusiness();
         registrationOP.clickReg();
         Thread.sleep(1000);
 
@@ -64,6 +68,7 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
     void registrationFailEmail() throws Exception {
         //check for empty passwords
         registrationOP.openRegistration();
+        registrationOP.clickBusiness();
         registrationOP.clickReg();
         Thread.sleep(500);
 
@@ -78,6 +83,7 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
     void registrationFailCommonPassword() throws Exception {
         //check for empty passwords
         registrationOP.openRegistration();
+        registrationOP.clickBusiness();
         registrationOP.enterPassword("12345678");
         registrationOP.enterPasswordRepeat("12345678");
         registrationOP.clickReg();
@@ -95,6 +101,7 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
     void registrationFailWrongFormat() throws Exception {
         //check for wrong input format
         registrationOP.openRegistration();
+        registrationOP.clickBusiness();
         registrationOP.enterBusinessName("-");
         registrationOP.enterEmail("12345678");
         registrationOP.clickReg();
@@ -113,6 +120,7 @@ public class RegistrationInvalidBusiness extends BaseFunctions{
     void registrationFailWrongFormat2() throws Exception {
         //check for wrong input format
         registrationOP.openRegistration();
+        registrationOP.clickBusiness();
         registrationOP.enterBusinessName("*-*");
         registrationOP.enterEmail("name");
         registrationOP.clickReg();

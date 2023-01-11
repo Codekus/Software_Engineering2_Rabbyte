@@ -15,6 +15,7 @@ public class RegistrationInvalidStudent extends BaseFunctions {
     void tabTest() {
         registrationOP.openRegistration();
 
+
         String tabStudentExpected = "Student";
         String tabStudentActual = registrationOP.getTabStudent();
         Assert.assertEquals(tabStudentExpected, tabStudentActual);
