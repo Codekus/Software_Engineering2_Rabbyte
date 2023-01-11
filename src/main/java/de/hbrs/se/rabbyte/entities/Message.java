@@ -2,8 +2,6 @@ package de.hbrs.se.rabbyte.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "message" , schema = "rabbyte")

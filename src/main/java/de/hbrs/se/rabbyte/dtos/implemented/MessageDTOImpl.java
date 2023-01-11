@@ -3,7 +3,6 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 import de.hbrs.se.rabbyte.dtos.MessageDTO;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class MessageDTOImpl implements MessageDTO {
 
