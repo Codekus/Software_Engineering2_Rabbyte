@@ -12,6 +12,8 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
@@ -30,9 +32,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Route("settings")
 @PageTitle("Account Einstellungen")
 @Theme(value = Lumo.class)
-public class StudentUserView extends VerticalLayout //implements View
+public class StudentUserView extends VerticalLayout  implements BeforeEnterObserver//implements View
 {
 
+    @Autowired
     StudentControl studentControl;
 
     private Binder<StudentDTOImpl> binder = new Binder<>(StudentDTOImpl.class);
@@ -81,8 +84,8 @@ public class StudentUserView extends VerticalLayout //implements View
 
     }
 
-    public StudentUserView() {
-
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
         verticalLayout = new VerticalLayout();
         tabsLayout = new VerticalLayout();
         H1 h1 = new H1("User details");
@@ -94,8 +97,8 @@ public class StudentUserView extends VerticalLayout //implements View
         save = new Button("Save");
         save.addClickListener(e -> {
             studentControl.editStudent(createUpdatedStudentDTO());
-        //    Notification.show("Stellausschreibung geändert");
-        //    NavigationUtil.toMainView();
+            //    Notification.show("Stellausschreibung geändert");
+            //    NavigationUtil.toMainView();
         });
 
         cancel = new Button("Cancel");
@@ -107,14 +110,20 @@ public class StudentUserView extends VerticalLayout //implements View
         studentTab = new Tab("Student");
         Tabs tabs = new Tabs(studentTab);
 
-        tabs.addSelectedChangeListener(event ->
-                setContent(event.getSelectedTab())
+        tabs.addSelectedChangeListener(e ->
+                setContent(e.getSelectedTab())
         );
 
         setContent(tabs.getSelectedTab());
         verticalLayout.add(h1);
         add(verticalLayout);
         add(tabs, tabsLayout);
+
+    }
+
+    public StudentUserView() {
+
+
 
     }
 
