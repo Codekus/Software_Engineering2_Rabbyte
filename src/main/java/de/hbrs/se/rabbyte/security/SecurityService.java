@@ -177,8 +177,6 @@ public class SecurityService  {
 
     }
 
-
-
     public void logout() {
 
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();

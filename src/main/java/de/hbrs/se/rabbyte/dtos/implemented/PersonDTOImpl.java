@@ -95,6 +95,7 @@ public class PersonDTOImpl implements PersonDTO {
         return salt;
     }
 
+
     public void setSalt(String salt) {
         this.salt = salt;
     }

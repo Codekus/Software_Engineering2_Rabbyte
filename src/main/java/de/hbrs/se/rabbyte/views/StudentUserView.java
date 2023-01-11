@@ -71,7 +71,7 @@ public class StudentUserView extends VerticalLayout  implements BeforeEnterObser
             FormLayout formLayout = new FormLayout();
             formLayout.setMaxWidth("80 vw");
             formLayout.add(emailField, firstName, lastName, faculty);// plz, street, streetNr, state,
-
+            initTextFields();
             this.add(formLayout);
         }
 
@@ -121,6 +121,14 @@ public class StudentUserView extends VerticalLayout  implements BeforeEnterObser
         studentDTO.setLastName(lastName.getValue());
         studentDTO.setFaculty(faculty.getValue());
         return studentDTO;
+    }
+    private void initTextFields(){
+        StudentDTO studentDTO = studentControl.getStudent(securityService.getAuthenticatedUserID());
+
+        emailField.setValue(securityService.getAuthenticatedUser().getEmail());
+        firstName.setValue(studentDTO.getFirstName());
+        lastName.setValue(studentDTO.getLastName());
+        faculty.setValue(studentDTO.getFaculty());
     }
 
     private void setContent(Tab tab) {

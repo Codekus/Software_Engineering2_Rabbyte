@@ -1,7 +1,6 @@
 package de.hbrs.se.rabbyte.dtos.implemented;
 
 import de.hbrs.se.rabbyte.dtos.StudentDTO;
-import de.hbrs.se.rabbyte.entities.Student;
 
 
 /**

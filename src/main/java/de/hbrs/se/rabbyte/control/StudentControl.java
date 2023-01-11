@@ -20,4 +20,9 @@ public class StudentControl {
                 studentDTO.getFaculty()
         );
     }
+    public StudentDTO getStudent(int id){
+
+        return this.studentRepository.findStudentById(id);
+
+    }
 }
