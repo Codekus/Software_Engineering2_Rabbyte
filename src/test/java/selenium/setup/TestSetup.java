@@ -42,7 +42,7 @@ public class TestSetup {
             try{
                 driver = new ChromeDriver(options);
             } catch (Exception e){
-                e.printStackTrace();
+                System.out.println("Failed setting up ChromeDriver");
             }
         } else if (browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
@@ -51,7 +51,7 @@ public class TestSetup {
             try{
                 driver = new FirefoxDriver(options);
             } catch (Exception e){
-                e.printStackTrace();
+                System.out.println("Failed setting up FirefoxDriver");
             }
         }
 
@@ -107,8 +107,8 @@ public class TestSetup {
 
         try {
             Reporter.log(formattedText);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception e){
+            System.out.println("Failed Reporter.log");
         }
     }
 }
