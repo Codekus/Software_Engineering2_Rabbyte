@@ -7,8 +7,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+import java.util.Properties;
 
 public class BaseFunctions extends TestSetup{
 
@@ -120,6 +124,61 @@ public class BaseFunctions extends TestSetup{
         Duration duration = Duration.ofSeconds(30);
         WebDriverWait wait = new WebDriverWait(driver, duration);
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(by)));
+    }
+
+    public String getEmailAndCount() throws IOException {
+
+        String propPath = "src/test/ressources/test_credentials.properties";
+        Properties prop = new Properties();
+        FileInputStream f = null;
+        try{
+            f = new FileInputStream(propPath);
+            prop.load(f);
+        } finally {
+            assert f != null;
+            f.close();
+        }
+
+        String testMailName = prop.getProperty("TEST_SELENIUM_MAIL_NAME");
+        prop.setProperty("SELENIUM_MAIL_COUNT",
+                String.valueOf(Integer.parseInt(prop.getProperty("SELENIUM_MAIL_COUNT")) + 1));
+        FileOutputStream out = null;
+
+        try {
+            out = new FileOutputStream(propPath);
+            prop.store(out, null);
+        } finally {
+            assert out != null;
+            out.close();
+        }
+        return testMailName + "+" + prop.getProperty("SELENIUM_MAIL_COUNT") + "@outlook.de";
+    }
+
+    public String getUniqueBusinessName() throws IOException {
+
+        String propPath = "src/test/ressources/test_credentials.properties";
+        Properties prop = new Properties();
+        FileInputStream f = null;
+        try{
+            f = new FileInputStream(propPath);
+            prop.load(f);
+        } finally {
+            assert f != null;
+            f.close();
+        }
+        prop.setProperty("SELENIUM_MAIL_COUNT",
+                String.valueOf(Integer.parseInt(prop.getProperty("SELENIUM_MAIL_COUNT")) + 1));
+        FileOutputStream out = null;
+
+
+        try {
+            out = new FileOutputStream(propPath);
+            prop.store(out, null);
+        } finally {
+            assert out != null;
+            out.close();
+        }
+        return prop.getProperty("SELENIUM_MAIL_COUNT");
     }
 
 }

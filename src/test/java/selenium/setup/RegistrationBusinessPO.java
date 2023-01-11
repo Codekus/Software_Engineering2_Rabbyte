@@ -116,46 +116,7 @@ public class RegistrationBusinessPO extends BaseFunctions {
         return getString(activationConfirmation);
     }
 
-    public String getEmailAndCount() throws IOException {
 
-        String propPath = "src/test/ressources/test_credentials.properties";
-        Properties prop = new Properties();
-        FileInputStream f = null;
-        try {
-            f = new FileInputStream(propPath);
-            prop.load(f);
-        } finally {
-            assert f != null;
-            f.close();
-        }
 
-        String testMailName = prop.getProperty("TEST_SELENIUM_MAIL_NAME");
-        prop.setProperty("SELENIUM_MAIL_COUNT",
-                String.valueOf(Integer.parseInt(prop.getProperty("SELENIUM_MAIL_COUNT")) + 1));
-        FileOutputStream out = new FileOutputStream(propPath);
-        prop.store(out, null);
-        out.close();
-        return testMailName + "+" + prop.getProperty("SELENIUM_MAIL_COUNT") + "@outlook.de";
-    }
-
-    public String getUniqueBusinessName() throws IOException {
-
-        String propPath = "src/test/ressources/test_credentials.properties";
-        Properties prop = new Properties();
-        FileInputStream f = null;
-        try{
-            f = new FileInputStream(propPath);
-            prop.load(f);
-        } finally {
-            assert f != null;
-            f.close();
-        }
-        prop.setProperty("SELENIUM_MAIL_COUNT",
-                String.valueOf(Integer.parseInt(prop.getProperty("SELENIUM_MAIL_COUNT")) + 1));
-        FileOutputStream out = new FileOutputStream(propPath);
-        prop.store(out, null);
-        out.close();
-        return prop.getProperty("SELENIUM_MAIL_COUNT");
-    }
 
 }
