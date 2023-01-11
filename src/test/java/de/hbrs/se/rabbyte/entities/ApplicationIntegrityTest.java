@@ -1,14 +1,10 @@
 package de.hbrs.se.rabbyte.entities;
 
 
-import de.hbrs.se.rabbyte.control.VerificationControl;
 import de.hbrs.se.rabbyte.dtos.ApplicationDTO;
 import de.hbrs.se.rabbyte.repository.ApplicationRepository;
-import de.hbrs.se.rabbyte.repository.VerificationCodeRepository;
 import io.zonky.test.db.AutoConfigureEmbeddedDatabase;
 import org.junit.Assert;
-import org.junit.jupiter.api.BeforeEach;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
@@ -16,8 +12,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @DataJpaTest
 @AutoConfigureEmbeddedDatabase(provider = AutoConfigureEmbeddedDatabase.DatabaseProvider.ZONKY )

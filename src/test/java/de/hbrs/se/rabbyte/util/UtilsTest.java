@@ -2,8 +2,8 @@ package de.hbrs.se.rabbyte.util;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.VaadinSession;
-import org.testng.annotations.Test;
 import org.mockito.Mockito;
+import org.testng.annotations.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;

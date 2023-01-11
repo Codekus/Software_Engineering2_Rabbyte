@@ -3,7 +3,8 @@ package de.hbrs.se.rabbyte.dtos.implemented;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class VerificationResultDTOImplTest {
 

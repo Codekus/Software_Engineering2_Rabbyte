@@ -1,8 +1,8 @@
 package de.hbrs.se.rabbyte.entities;
 
-import org.testng.annotations.Test;
 import org.mockito.Mock;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.time.LocalDate;
 
