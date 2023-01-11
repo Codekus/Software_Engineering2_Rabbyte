@@ -1,7 +1,6 @@
 package de.hbrs.se.rabbyte.util;
 
 import com.vaadin.flow.component.combobox.ComboBox;
-import de.hbrs.se.rabbyte.dtos.PersonDTO;
 
 public class Globals {
 
