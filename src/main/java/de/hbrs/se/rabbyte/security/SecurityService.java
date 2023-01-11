@@ -143,6 +143,7 @@ public class SecurityService  {
             routes.add(new AuthorizedRoute("edit-jobadvert", "Edit Job Advertisement", JobAdvertEditView.class));
             routes.add(new AuthorizedRoute("business-profile", "Show business profile", BusinessProfileView.class));
             routes.add(new AuthorizedRoute("message", "Create Message", MessageView.class));
+            routes.add(new AuthorizedRoute("studentensuche", "Search Students", SearchStudentsView.class));
         }
         return routes;
     }

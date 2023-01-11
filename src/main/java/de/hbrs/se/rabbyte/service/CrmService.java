@@ -175,4 +175,8 @@ public class CrmService {
         return applicationRepository.findApplicationById(id);
     }
 
+    public List<Student> getAllStudents() {return studentRepository.findAll();}
+
+    public List<Student> findStudentsByStrings(String string){ return studentRepository.findStudentsByFirstNameContainsIgnoreCaseOrLastNameContainsIgnoreCaseOrEmailContainsIgnoreCaseOrCityContainsIgnoreCaseOrFacultyContainingIgnoreCase(string,string,string,string,string);}
+
 }
