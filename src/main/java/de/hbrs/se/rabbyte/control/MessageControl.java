@@ -40,10 +40,8 @@ public class MessageControl {
 
     public String getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        return currentPrincipalName;
+        return authentication.getName();
     }
-
 
     public MessageDTO prepareSending(MessageDTO selectedMessage, String message) {
         MessageDTOImpl newMessage = new MessageDTOImpl();
@@ -118,14 +116,13 @@ public class MessageControl {
 
     public String getPersonName(int id) throws DatabaseUserException {
         try {
-            boolean type = getRole(Utils.getCurrentPerson());
-            if(true) {
+
+            if(getRole(Utils.getCurrentPerson())) {
                 return studentRepository.findStudentById(id).getFirstName() + " " +
                 studentRepository.findStudentById(id).getLastName();
             }
             else {
-                businessRepository.findBusinessByBusinessID(id);
-                return "Business Name";
+                return businessRepository.findBusinessByBusinessID(id).getBusinessName();
             }
         } catch (Exception exception) {
             LOGGER.info(Globals.LogMessage.LOG,  exception.toString());

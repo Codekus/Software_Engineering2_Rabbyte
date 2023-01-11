@@ -29,8 +29,8 @@ public class Message {
     public int getId() {
         return id;
     }
-    public void setId(int MessageId) {
-        this.id = MessageId;
+    public void setId(int messageId) {
+        this.id = messageId;
     }
 
     @Column(name = "sender_id")

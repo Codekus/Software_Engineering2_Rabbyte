@@ -38,9 +38,6 @@ public class MessageView extends Div implements BeforeEnterObserver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationControl.class);
 
-    public NumberField recieverId;
-    int id;
-
     @Autowired
     MessageControl messageControl;
 
@@ -78,8 +75,6 @@ public class MessageView extends Div implements BeforeEnterObserver {
     private void setupGrid() {
 
         String person = messageControl.getCurrentUser();
-        int id = this.messageControl.getId(person);
-
 
         grid = new Grid<>(MessageDTO.class, false);
         grid.setVisible(true);
@@ -184,7 +179,7 @@ public class MessageView extends Div implements BeforeEnterObserver {
 
             // Visit profile button
             Button profile = new Button("Profil besuchen");
-            //profileButton(message, profile);
+
 
             // Delete button for messages
             Button delete = new Button("Nachricht löschen");
@@ -330,9 +325,4 @@ public class MessageView extends Div implements BeforeEnterObserver {
         this.refreshGrid();
     }
 
-    private Date convertLocalDateTimeToDateUsingInstant(LocalDateTime dateToConvert) {
-    return java.util.Date
-                .from(dateToConvert.atZone(ZoneId.systemDefault())
-                .toInstant());
-    }
 }
