@@ -76,7 +76,7 @@ public class LoginPO extends BaseFunctions {
     }
 
     public void checkMeinProfil() {
-        checkForPresence(By.xpath("//vaadin-menu-bar"));
+        checkForPresence(By.cssSelector("#header > vaadin-horizontal-layout > vaadin-menu-bar"));
     }
 
 }
