@@ -1,7 +1,13 @@
 package selenium.setup;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import java.time.Duration;
 
 
 public class LoginPO extends BaseFunctions {
@@ -17,6 +23,7 @@ public class LoginPO extends BaseFunctions {
     By forgotPasswordButton = By.cssSelector("#forgotPasswordButton");
     By registerButton = By.xpath("/html/body/vaadin-vertical-layout/vaadin-button");
     By errorMessageText = By.cssSelector("section > div:nth-child(2) > h5");
+    By alertMessage = By.id("vaadin-notification-card");
 
     public void openLogin() {
         outPrint("Trying to open: " + url);
@@ -31,27 +38,24 @@ public class LoginPO extends BaseFunctions {
         typeText(password, passwordInput);
     }
 
-    public void clearPassword() {
-        clearInput(passwordInput);
-    }
-
-    public void clearUsername() {
-        clearInput(usernameInput);
-    }
-
     public void loginClick() {
-        clickElement(locateElement(loginButton));
+        outPrint("Trying to click on Element: Log in Button");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(loginButton));
+        ((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
     }
 
     public void checkForLoginElements() {
 
         checkForPresence(headerWelcome);
         Assert.assertNotNull(locateElement(vaadinLoginForm).getShadowRoot().findElement(headerLogin));
+        outPrint("Log in konnte gelesen werden.");
 
         checkForPresence(usernameInput);
         checkForPresence(passwordInput);
         checkForPresence(loginButton);
         Assert.assertNotNull(locateElement(vaadinLoginForm).getShadowRoot().findElement(forgotPasswordButton));
+        outPrint("Passwort vergessen Button ist vorhanden.");
 
         checkForPresence(registerButton);
     }
@@ -59,10 +63,20 @@ public class LoginPO extends BaseFunctions {
     public void checkRegisterButton() {
         clickElement(registerButton);
         checkForPresence(By.xpath("//h1[text()=\"Registrierung\"]"));
+        outPrint("Die Registrierung Seite wurde aufgerufen.");
     }
 
     public void errorMessage() {
         Assert.assertNotNull(locateElement(vaadinLoginForm).getShadowRoot().findElement(errorMessageText));
-
+        outPrint("Die Error Message konnte gelesen werden.");
     }
+
+    public void alertMessage() {
+        checkForPresence(alertMessage);
+    }
+
+    public void checkMeinProfil() {
+        checkForPresence(By.xpath("//vaadin-menu-bar"));
+    }
+
 }

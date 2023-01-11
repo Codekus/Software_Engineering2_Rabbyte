@@ -28,6 +28,7 @@ public class BaseFunctions extends TestSetup{
     }
 
     public void clickElement(WebElement el){
+        outPrint("Trying to click on Element: " + el.getTagName());
         new WebDriverWait(driver, waitTime)
                 .until(ExpectedConditions.elementToBeClickable(el)).click();
     }

@@ -22,11 +22,15 @@ public class LoginStudentTest extends BaseFunctions {
         //Mit einem falschen Passwort soll der Login nicht möglich sein
         loginPO.enterPassword("superpasswort12");
         loginPO.loginClick();
+        loginPO.alertMessage();
+
         loginPO.checkForLoginElements();
         loginPO.errorMessage();
 
         loginPO.enterPassword("3");
         loginPO.loginClick();
+
+        loginPO.checkMeinProfil();
     }
 
 
