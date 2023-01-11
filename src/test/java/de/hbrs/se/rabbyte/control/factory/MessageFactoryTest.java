@@ -26,7 +26,6 @@ class MessageFactoryTest {
     @Mock
     private MessageDTOImpl messageDTO;
 
-    @Mock
     private Message message;
     @BeforeEach
     void setUp() {

@@ -212,7 +212,7 @@ public class RegistrationView extends VerticalLayout {
     }
 
     private static void successfulRegistration() {
-        Utils.triggerDialogMessage("Registrierung erfolgreich", "Um ihren Account zu aktivieren, bitte klicken sie auf den Link in der E-Mail");
+        //Utils.triggerDialogMessage("Registrierung erfolgreich", "Um ihren Account zu aktivieren, bitte klicken sie auf den Link in der E-Mail");
         NavigationUtil.toLoginView();
     }
 
