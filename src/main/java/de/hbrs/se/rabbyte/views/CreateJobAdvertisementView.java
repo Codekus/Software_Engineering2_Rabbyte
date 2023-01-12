@@ -63,7 +63,26 @@ public class CreateJobAdvertisementView extends Div {
         //add(createButtonLayoutBack());
         add(createTitle());
         add(createFormLayout());
-        add(createButtonLayoutSubmit());
+
+        HorizontalLayout buttonLayout = new HorizontalLayout();
+
+        VerticalLayout buttonLayoutVert = new VerticalLayout();
+
+        buttonLayout.addClassName("button-layout");
+
+        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+
+        buttonLayout.add(save);
+
+        buttonLayoutVert.add(buttonLayout);
+
+        buttonLayout.setAlignSelf(FlexComponent.Alignment.valueOf("END"));
+
+        //buttonLayout.setAlignItems(FlexComponent.Alignment.valueOf("END"));
+
+        buttonLayoutVert.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.valueOf("CENTER"));
+
+        add(buttonLayoutVert);
 
         type.setItems("Vollzeit", "Teilzeit", "Praktikum", "Projektarbeit", "Bachelor/ Master");
         type.setWidth("200px");
@@ -148,18 +167,7 @@ public class CreateJobAdvertisementView extends Div {
         return vert3;
     }
 
-    private Component createButtonLayoutSubmit() {
-        HorizontalLayout buttonLayout = new HorizontalLayout();
-        VerticalLayout buttonLayoutVert = new VerticalLayout();
-        buttonLayout.addClassName("button-layout");
-        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        buttonLayout.add(save);
-        buttonLayoutVert.add(buttonLayout);
-        buttonLayout.setAlignSelf(FlexComponent.Alignment.valueOf("END"));
-        //buttonLayout.setAlignItems(FlexComponent.Alignment.valueOf("END"));
-        buttonLayoutVert.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.valueOf("CENTER"));
-        return buttonLayoutVert;
-    }
+
 
     /*
     private Component createButtonLayoutBack() {
