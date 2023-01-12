@@ -33,12 +33,6 @@ public class NavigationUtil {
     }
 
 
-    public static void businessProfile(int sender) {
-        UI.getCurrent().navigate(Globals.Path.BUSINESS_PROFILE + "/" + sender);
 
-    }
 
-    public static void studentProfile(int sender) {
-
-    }
 }
