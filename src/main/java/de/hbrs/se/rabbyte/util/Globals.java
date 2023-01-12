@@ -41,7 +41,9 @@ public class Globals {
 
         private Path() { throw new IllegalStateException(IllegalState.MESSAGE_UTILS);}
         public static final String REGISTRATION_VIEW = "registration";
+
         public static final String BUSINESS_PROFILE = "business-profile" ;
+
         public static final String COMMON_PASSWORD_LIST = "src/main/resources/commonPasswordList.txt";
     }
 
