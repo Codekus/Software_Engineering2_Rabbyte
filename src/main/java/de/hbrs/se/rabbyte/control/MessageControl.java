@@ -102,7 +102,8 @@ public class MessageControl {
     public Message deleteMessage(MessageDTO messageDTO) throws DatabaseUserException {
         try {
             Message message = MessageFactory.createMessage(messageDTO);
-            this.messageRepository.delete(message);
+
+            this.messageRepository.deleteById(messageDTO.getId());
             return message;
         } catch (Exception exception) {
             LOGGER.info(Globals.LogMessage.LOG, exception.toString());
@@ -158,6 +159,16 @@ public class MessageControl {
             }
     }
 
+    public boolean businessSentMessage(MessageDTO message) {
+        businessRepository.findBusinessById(message.getSender());
+
+        if (businessRepository.findBusinessById(message.getSender()) != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     public Message setMessageAsRead(MessageDTO message) throws DatabaseUserException {
         MessageDTOImpl readMessage = new MessageDTOImpl();
@@ -182,5 +193,4 @@ public class MessageControl {
             }
         }
     }
-
 }

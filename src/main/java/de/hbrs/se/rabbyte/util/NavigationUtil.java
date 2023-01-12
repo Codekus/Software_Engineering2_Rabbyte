@@ -1,6 +1,8 @@
 package de.hbrs.se.rabbyte.util;
 
 import com.vaadin.flow.component.UI;
+import de.hbrs.se.rabbyte.entities.Business;
+import de.hbrs.se.rabbyte.views.BusinessProfileView;
 import de.hbrs.se.rabbyte.views.JobAdvertEditView;
 
 public class NavigationUtil {
@@ -26,15 +28,17 @@ public class NavigationUtil {
     }
 
 
-
     public static void toMessageView() {
         UI.getCurrent().navigate("message");
     }
 
-    public static void toApplicationView() {
-        UI.getCurrent().navigate("application");
+
+    public static void businessProfile(int sender) {
+        UI.getCurrent().navigate(Globals.Path.BUSINESS_PROFILE + "/" + sender);
+
     }
 
-    public static void toJobAdvertEditView() {
+    public static void studentProfile(int sender) {
+
     }
 }

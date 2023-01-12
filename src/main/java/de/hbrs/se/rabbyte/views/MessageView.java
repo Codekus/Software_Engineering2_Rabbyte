@@ -23,6 +23,7 @@ import de.hbrs.se.rabbyte.dtos.implemented.MessageDTOImpl;
 import de.hbrs.se.rabbyte.exception.DatabaseUserException;
 import de.hbrs.se.rabbyte.util.Globals;
 
+import de.hbrs.se.rabbyte.util.NavigationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,14 +52,6 @@ public class MessageView extends Div implements BeforeEnterObserver {
 
     public MessageView() {
         //Vaadin required
-    }
-
-    public MessageDTOImpl createMessageDTO() {
-        MessageDTOImpl messageDTO = new MessageDTOImpl();
-        messageDTO.setMessageText(messageText.getValue());
-        messageDTO.setTitle(title.getValue());
-        messageDTO.setReceiver(Integer.parseInt(receiver.getValue()));
-        return messageDTO;
     }
 
     private void refreshGrid() {
@@ -180,6 +173,19 @@ public class MessageView extends Div implements BeforeEnterObserver {
             // Visit profile button
             Button profile = new Button("Profil besuchen");
 
+            profile.addClickListener( e -> {
+
+
+                if(messageControl.businessSentMessage(message)) {
+                    getUI().get().navigate(BusinessProfileView.class,  message.getSender());
+
+                } else {
+                    NavigationUtil.studentProfile(message.getSender());
+                }
+
+                NavigationUtil.toMainView();
+
+            });
 
             // Delete button for messages
             Button delete = new Button("Nachricht löschen");
@@ -217,10 +223,10 @@ public class MessageView extends Div implements BeforeEnterObserver {
             cancelButton.addClickListener(e -> messageReply.setValue(""));
 
             HorizontalLayout header = new HorizontalLayout(sender, senderVal, subject, subjectVal, date, dateVal);
-            HorizontalLayout hButtons1 = new HorizontalLayout(profile, delete);
+
             HorizontalLayout hButtons2 = new HorizontalLayout(replyButton, cancelButton);
 
-            VerticalLayout inboxReply = new VerticalLayout(header, mess, messageContent, hButtons1,
+            VerticalLayout inboxReply = new VerticalLayout(header, mess, messageContent,
                     messageReply, hButtons2);
             inboxReply.setWidth("100%");
 
@@ -230,6 +236,7 @@ public class MessageView extends Div implements BeforeEnterObserver {
         else
             cleanSecondary();
     }
+
 
     private void replyButton(TextArea messageReply, Button replyButton) {
         replyButton.addClickListener(e -> {
@@ -324,5 +331,7 @@ public class MessageView extends Div implements BeforeEnterObserver {
         messageControl.deleteMessage(message);
         this.refreshGrid();
     }
+
+
 
 }
