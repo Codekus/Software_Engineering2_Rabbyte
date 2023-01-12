@@ -151,8 +151,6 @@ public class AppView extends AppLayout implements BeforeEnterObserver {
         }).addComponentAsFirst(new Icon(VaadinIcon.MOON));
 
         //moveSubMenu.addItem("Einstellungen",  e -> securityService.settings());
-        moveSubMenu.addItem("Logout",  e -> securityService.logout());
-        moveSubMenu.addItem("Messages" , (e -> NavigationUtil.toMessageView()));
         layout.add(topRightPanel);
         layout.setMaxHeight("80px");
         return layout;
