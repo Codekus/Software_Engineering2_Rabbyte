@@ -170,43 +170,6 @@ public class MessageView extends Div implements BeforeEnterObserver {
             messageContent.setWidth("80%");
             messageContent.setMinHeight("150px");
 
-            // Visit profile button
-            Button profile = new Button("Profil besuchen");
-
-            profile.addClickListener( e -> {
-
-
-                if(messageControl.businessSentMessage(message)) {
-                    getUI().get().navigate(BusinessProfileView.class,  message.getSender());
-
-                } else {
-                    NavigationUtil.studentProfile(message.getSender());
-                }
-
-                NavigationUtil.toMainView();
-
-            });
-
-            // Delete button for messages
-            Button delete = new Button("Nachricht löschen");
-
-
-                       delete.addClickListener(e -> {
-                Runnable yesRunnable = () -> {
-                    try {
-                        this.removeMessage(message);
-                    } catch (DatabaseUserException ex) {
-                        ex.printStackTrace();
-                    }
-                    splitLayout.setSplitterPosition(1000);
-                    grid.deselectAll();
-                    cleanSecondary();
-                    if(grid.getColumns().isEmpty())
-                        splitLayout.addToPrimary(hint);
-                };
-            });
-
-
 
             // Reply
             TextArea messageReply = new TextArea();
