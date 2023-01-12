@@ -44,8 +44,21 @@ public class UnternehmenSearchView extends VerticalLayout {
         setSizeFull();
 
         configureGrid();
+        addClassName("job-advertisement-search-view-searchFieldComp");
+
+        searchField.setPlaceholder("Nach Unternehmen suchen...");
+
+        searchField.setClearButtonVisible(true);
+
+        searchField.setValueChangeMode(ValueChangeMode.LAZY);
+
+        searchField.addValueChangeListener(e -> updateList());
+
+        searchField.setPrefixComponent(VaadinIcon.SEARCH.create());
+
+        searchField.setMinWidth("20vW");
         add(this.createTitle(),
-                getSearchFieldComp()
+                searchField
         );
         updateList();
 
@@ -69,23 +82,12 @@ public class UnternehmenSearchView extends VerticalLayout {
         }
     }
 
-    //create search field component
-    private Component getSearchFieldComp() {
-        addClassName("job-advertisement-search-view-searchFieldComp");
-        searchField.setPlaceholder("Nach Ausschreibungen suchen...");
-        searchField.setClearButtonVisible(true);
-        searchField.setValueChangeMode(ValueChangeMode.LAZY);
-        searchField.addValueChangeListener(e -> updateList());
-        searchField.setPrefixComponent(VaadinIcon.SEARCH.create());
-        searchField.setMinWidth("20vW");
-
-        return searchField;
-    }
-
     //grid creation
     private void configureGrid() {
         grid.addClassName("job-advertisement-grid");
+
         grid.setSizeFull();
+
         grid.removeAllColumns();
 
         //creating and styling the grid columns
