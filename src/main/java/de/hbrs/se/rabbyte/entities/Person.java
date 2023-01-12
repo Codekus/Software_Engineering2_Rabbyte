@@ -7,16 +7,21 @@ import javax.persistence.*;
 @Table(name = "person", schema = "rabbyte")
 public class Person {
 
-    private int id;
+
     private String email;
-    private String password;
+    private int id;
+
     private int plz;
-    private String city;
+    private String password;
+
     private String country;
-    private String street;
+    private String city;
+
     private String streetNumber;
-    private String salt;
+    private String street;
+
     private boolean enabled;
+    private String salt;
 
     @Id
     @GeneratedValue(
